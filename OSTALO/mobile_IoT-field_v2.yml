@@ -1,0 +1,370 @@
+openapi: '3.0.3'
+info:
+  title: Mobile IoT-field
+  version: '2.0'
+servers:
+  - url: https://localhost:8080/
+paths:
+  /scene:
+    get:
+      summary: 'get all scenes by access right'
+      responses:
+        '200':
+          description: 'returns list of all scenes'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SceneSummary'
+    post:
+      summary: 'create new scene'
+      responses:
+        '200':
+          description: 'creates new scene'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Scene'
+        description: 'id is ignored'
+  /scene/{id}:
+    parameters:
+      - in: path
+        description: user id
+        name: id
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: 'get one scene'
+      responses:
+        '200':
+          description: 'returns one scene with details'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+    put:
+      summary: 'update one scene'
+      responses:
+        '200':
+          description: 'creates new scene'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Scene'
+        description: 'id is ignored'
+
+  /tags:
+    get:
+      summary: 'get array of tags for specific user'
+      responses:
+        '200':
+          description: 'returns list of filtered scenes by access right'
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  type: 'string'
+  /keys:
+    get:
+      summary: 'returns map of keys and values for specific user'
+      responses:
+        '200':
+          description: 'returns object with keys and values'
+          content:
+            application/json:
+              schema:
+                type: object
+              example: { "token1": "dgfhreth56", "token2": "546thtdsghdgyre" }
+components:
+  schemas:
+    SceneSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 135
+        title:
+          type: string
+          example: FER SAP01
+        subtitle:
+          type: string
+          example: uz zid
+        tags:
+          type: array
+          items:
+            type: string
+          example: [ "fer", "ferit" ]
+    Scene:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "135"
+          required: false
+          description: 'not needed when update or create scene'
+        title:
+          type: string
+          example: FER SAP01
+        subtitle:
+          type: string
+          example: uz zid
+        pictureLink:
+          type: string
+          example: "http://example.com/some.png"
+        layout:
+          type: string
+          enum: [
+            "list",
+            "grid"
+          ]
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["fer", "ferit"]
+        "views":
+          type: array
+          items:
+            $ref: '#/components/schemas/View'
+        roles:
+          type: array
+          items: 
+            type: string
+          required: false
+          description: 'used only when creating or updating scene'
+        keys:
+          type: array
+          items: 
+            type: string
+          required: false
+          description: 'key names. Used only when creating or updating scene'
+    View:
+      oneOf:
+      - $ref: '#/components/schemas/MeasurementsView'
+      - $ref: '#/components/schemas/ActuationView'
+    MeasurementsView:
+      type: object
+      properties:
+        title:
+          type: string
+          example: view title
+        viewType:
+          type: string
+          enum: [
+            "single",
+            "series"
+          ]
+        measurementUnit:
+          type: string
+          example: "C"
+        query:
+          $ref: '#/components/schemas/Query'
+        payload:
+          type: string
+          example: template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}
+        responseExtracting:
+          $ref: '#/components/schemas/DataExtractor'
+    ActuationView:
+      type: object
+      properties:
+        title:
+          type: string
+          example: view title
+        viewType:
+          type: string
+          enum: [
+            "actuation"
+          ]
+        query:
+          $ref: '#/components/schemas/Query'
+        payload:
+          type: string
+          example: template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}
+        form:
+          oneOf:
+          - $ref: '#/components/schemas/BooleanInput'
+          - $ref: '#/components/schemas/IntegerInput'
+          - $ref: '#/components/schemas/DecimalInput'
+          - $ref: '#/components/schemas/DateInput'
+          - $ref: '#/components/schemas/TimeInput'
+          - $ref: '#/components/schemas/StringInput'
+          - $ref: '#/components/schemas/SubmitButton'
+    Query:
+      type: object
+      properties:
+        URI:
+          type: string
+          example: http://localhost:80/some/path/{{var1}}
+        method:
+          type: string
+          enum: [
+            "GET",
+            "POST"
+          ]
+        headers:
+          type: object
+          example: { "Authorization": "{{accessToken}} {{token1}} ...", "Content-Type": "application/csv", ...  }
+    DataExtractor:
+      oneOf:
+      - $ref: '#/components/schemas/DataExtractorCsv'
+      - $ref: '#/components/schemas/DataExtractorJson'
+    DataExtractorJson:
+      type: object
+      properties:
+        dataFormat:
+          type: string
+          enum: [ 
+            "json" 
+          ]
+        timeJsonPath:
+          type: string
+          example: "$.data[*][0]"
+          description: "JSON Path that results in array"
+        valueJsonPath:
+          type: string
+          example: "$.data[*][1]"
+          description: "JSON Path that results in array"
+    DataExtractorCsv:
+      type: object
+      properties:
+        dataFormat:
+          type: string
+          enum: [ 
+            "csv" 
+          ]
+        timeColumn:
+          type: string
+          example: "_time"
+          description: "Column name in CSV"
+        valueColumn:
+          type: string
+          example: "_value"
+          description: "Column name in CSV"
+    BooleanInput:
+      type: object
+      properties:
+        inputType:
+          type: string
+          enum: [
+            "boolean"
+          ]
+        title:
+          type: string
+        description:
+          type: string
+    IntegerInput:
+      type: object
+      properties:
+        inputType:
+          type: string
+          enum: [
+            "integer"
+          ]
+        title:
+          type: string
+        description:
+          type: string
+        min:
+          type: integer
+          required: false
+        max:
+          type: integer
+          required: false
+    DecimalInput:
+      type: object
+      properties:
+        inputType:
+          type: string
+          enum: [
+            "decimal"
+          ]
+        title:
+          type: string
+        description:
+          type: string
+        min:
+          type: number
+          required: false
+        max:
+          type: number
+          required: false
+    DateInput:
+      type: object
+      properties:
+        inputType:
+          type: string
+          enum: [
+            "date"
+          ]
+        title:
+          type: string
+        description:
+          type: string
+    TimeInput:
+      type: object
+      properties:
+        inputType:
+          type: string
+          enum: [
+            "time"
+          ]
+        title:
+          type: string
+        description:
+          type: string
+    StringInput:
+      type: object
+      properties:
+        inputType:
+          type: string
+          enum: [
+            "string"
+          ]
+        title:
+          type: string
+        description:
+          type: string
+        pattern:
+          type: string
+          required: false
+        "enum":
+          type: array
+          items: 
+            type: string
+          required: false
+    SubmitButton:
+      type: object
+      properties:
+        inputType:
+          type: string
+          enum: [
+            "submit"
+          ]
+        title:
+          type: string
+
+
+# - dohvaćanje ključeva za nekog korisnika 
+#   - oni se spremaju u aplikaciju
+#   - ako nemamo pravo pristupiti nekom viewu (query) onda probamo ponovno dohvatiti nove ključeve
+#   - ako s novim ključevima ne možemo pristupiti onda nemamo pravo pristupa tome
+# - vremenske jedinice:
+# 	- 24h - sva mjerenja
+# 	- 7d - prosjeci 1-4h
+# 	- 30d - dnevni min, max, prosjek po danu
+# - slike uz scene će biti URI
+# 	- parametar s rezolucijom width ili height
+# 		- server renderira i pošalje takvu sliku natrag
