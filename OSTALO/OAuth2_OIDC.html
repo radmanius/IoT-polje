@@ -1,0 +1,849 @@
+<!DOCTYPE html><html><head>
+      <title>OAuth2_OIDC</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////Users/mario/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.6.3/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="oauth2-i-oidc">OAuth2 i OIDC</h1>
+
+<h2 class="mume-header" id="primjer-kori%C5%A1tenja">Primjer kori&#x161;tenja</h2>
+
+<p>Primjer kori&#x161;tenja prikazan je sljede&#x107;im slijednim dijagramom:</p>
+<p><!--?xml version="1.0" encoding="UTF-8" standalone="no"?--><svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" contentscripttype="application/ecmascript" contentstyletype="text/css" height="2321px" preserveAspectRatio="none" style="width:1430px;height:2321px;background:#FFFFFF;" version="1.1" viewBox="0 0 1430 2321" width="1430px" zoomAndPan="magnify"><defs><filter height="300%" id="fy3u6d4gc5bz4" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#fy3u6d4gc5bz4)" height="75.9316" style="stroke:#000000;stroke-width:2.0;" width="965.5" x="216.5" y="455.7871"/><rect fill="#FFFFFF" filter="url(#fy3u6d4gc5bz4)" height="134.5527" style="stroke:#000000;stroke-width:2.0;" width="1172" x="10" y="545.7188"/><rect fill="#FFFFFF" filter="url(#fy3u6d4gc5bz4)" height="134.5527" style="stroke:#000000;stroke-width:2.0;" width="1172" x="10" y="694.2715"/><rect fill="#FFFFFF" filter="url(#fy3u6d4gc5bz4)" height="161.1738" style="stroke:#000000;stroke-width:2.0;" width="965.5" x="216.5" y="842.8242"/><rect fill="#FFFFFF" filter="url(#fy3u6d4gc5bz4)" height="377.5898" style="stroke:#000000;stroke-width:2.0;" width="1071.5" x="216.5" y="1017.998"/><rect fill="#FFFFFF" filter="url(#fy3u6d4gc5bz4)" height="702.7637" style="stroke:#000000;stroke-width:2.0;" width="1406" x="10" y="1409.5879"/><rect fill="#FFFFFF" filter="url(#fy3u6d4gc5bz4)" height="130.5527" style="stroke:#000000;stroke-width:2.0;" width="1223" x="183" y="1945.4883"/><rect fill="#FFFFFF" filter="url(#fy3u6d4gc5bz4)" height="171.1738" style="stroke:#000000;stroke-width:2.0;" width="965.5" x="216.5" y="2126.3516"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="85" x2="85" y1="232.3711" y2="2314.5254"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="270.5" x2="270.5" y1="232.3711" y2="2314.5254"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="702.5" x2="702.5" y1="232.3711" y2="2314.5254"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1092" x2="1092" y1="232.3711" y2="2314.5254"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1246" x2="1246" y1="232.3711" y2="2314.5254"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1358" x2="1358" y1="232.3711" y2="2314.5254"/><rect fill="#FEFECE" filter="url(#fy3u6d4gc5bz4)" height="46.9766" style="stroke:#A80036;stroke-width:1.5;" width="126" x="20" y="180.3945"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112" x="27" y="200.9297">Resource Owner</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="63" y="217.418">(user)</text><rect fill="#FEFECE" filter="url(#fy3u6d4gc5bz4)" height="46.9766" style="stroke:#A80036;stroke-width:1.5;" width="85" x="226.5" y="180.3945"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="249" y="200.9297">Client</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71" x="233.5" y="217.418">(mob app)</text><rect fill="#FEFECE" filter="url(#fy3u6d4gc5bz4)" height="46.9766" style="stroke:#A80036;stroke-width:1.5;" width="127" x="637.5" y="180.3945"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="76" x="663" y="200.9297">User Agent</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="113" x="644.5" y="217.418">(in app browser)</text><rect fill="#FEFECE" filter="url(#fy3u6d4gc5bz4)" height="46.9766" style="stroke:#A80036;stroke-width:1.5;" width="156" x="1012" y="180.3945"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142" x="1019" y="200.9297">Authorization Server</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="69" x="1055.5" y="217.418">(keycloak)</text><rect fill="#FEFECE" filter="url(#fy3u6d4gc5bz4)" height="46.9766" style="stroke:#A80036;stroke-width:1.5;" width="124" x="1182" y="180.3945"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="110" x="1189" y="200.9297">Resource Server</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="82" x="1203" y="217.418">(rest server)</text><rect fill="#FEFECE" filter="url(#fy3u6d4gc5bz4)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="72" x="1320" y="196.8828"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="58" x="1327" y="217.418">InfluxDB</text><polygon fill="#A80036" points="259,259.6816,269,263.6816,259,267.6816,263,263.6816" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="85" x2="265" y1="263.6816" y2="263.6816"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="92" y="258.9395">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="78" x="105" y="258.9395">login button</text><path d="M44,276.6816 L44,439.6816 L493,439.6816 L493,286.6816 L483,276.6816 L44,276.6816 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M483,276.6816 L483,286.6816 L493,286.6816 L483,276.6816 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="409" x="50" y="294.25">generate random secret (PKCE Code Verifier) - 43-128 characters</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="323" x="50" y="309.5605">calculate hash of it (PKCE Code Callenge) - SHA256</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="428" x="50" y="324.8711">generate URL for Authorization Server (Authorization Code Request):</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="131" x="58" y="340.1816">response_type=code</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="290" x="58" y="355.4922">PKCE Code Challenge: code_challenge=...hash</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="193" x="58" y="370.8027">code_challenge_method=S256</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="135" x="58" y="386.1133">ClientID: client_id=...</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="227" x="58" y="401.4238">Redirect URL: redirect_uri=deep link</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="104" x="58" y="416.7344">Scope: scope=...</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="126" x="58" y="432.0449">state=random value</text><path d="M216.5,455.7871 L352.5,455.7871 L352.5,462.7871 L342.5,472.7871 L216.5,472.7871 L216.5,455.7871 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="75.9316" style="stroke:#000000;stroke-width:2.0;" width="965.5" x="216.5" y="455.7871"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="91" x="231.5" y="469.3555">front channel</text><polygon fill="#A80036" points="691,490.4082,701,494.4082,691,498.4082,695,494.4082" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="697" y1="494.4082" y2="494.4082"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="278" y="489.666">2</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="125" x="291" y="489.666">open generated URL</text><polygon fill="#A80036" points="1080,519.7188,1090,523.7188,1080,527.7188,1084,523.7188" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="703" x2="1086" y1="523.7188" y2="523.7188"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="710" y="518.9766">3</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="176" x="723" y="518.9766">Authorization Code Request</text><path d="M10,545.7188 L248,545.7188 L248,552.7188 L238,562.7188 L10,562.7188 L10,545.7188 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="134.5527" style="stroke:#000000;stroke-width:2.0;" width="1172" x="10" y="545.7188"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="193" x="25" y="559.2871">login to authorization server</text><polygon fill="#A80036" points="714,580.3398,704,584.3398,714,588.3398,710,584.3398" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="708" x2="1091" y1="584.3398" y2="584.3398"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="720" y="579.5977">4</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="69" x="733" y="579.5977">Login page</text><polygon fill="#A80036" points="96,609.6504,86,613.6504,96,617.6504,92,613.6504" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="90" x2="702" y1="613.6504" y2="613.6504"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="102" y="608.9082">5</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="69" x="115" y="608.9082">Login page</text><polygon fill="#A80036" points="691,638.9609,701,642.9609,691,646.9609,695,642.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="85" x2="697" y1="642.9609" y2="642.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="92" y="638.2188">6</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="108" x="105" y="638.2188">Login credentials</text><polygon fill="#A80036" points="1080,668.2715,1090,672.2715,1080,676.2715,1084,672.2715" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="703" x2="1086" y1="672.2715" y2="672.2715"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="710" y="667.5293">7</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="108" x="723" y="667.5293">Login credentials</text><path d="M10,694.2715 L157,694.2715 L157,701.2715 L147,711.2715 L10,711.2715 L10,694.2715 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="134.5527" style="stroke:#000000;stroke-width:2.0;" width="1172" x="10" y="694.2715"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="102" x="25" y="707.8398">consent screen</text><polygon fill="#A80036" points="714,728.8926,704,732.8926,714,736.8926,710,732.8926" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="708" x2="1091" y1="732.8926" y2="732.8926"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="720" y="728.1504">8</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="258" x="733" y="728.1504">Consent page to login to this application</text><polygon fill="#A80036" points="96,758.2031,86,762.2031,96,766.2031,92,762.2031" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="90" x2="702" y1="762.2031" y2="762.2031"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="102" y="757.4609">9</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="258" x="115" y="757.4609">Consent page to login to this application</text><polygon fill="#A80036" points="691,787.5137,701,791.5137,691,795.5137,695,791.5137" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="85" x2="697" y1="791.5137" y2="791.5137"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="92" y="786.7715">10</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="137" x="114" y="786.7715">Consent confirmation</text><polygon fill="#A80036" points="1080,816.8242,1090,820.8242,1080,824.8242,1084,820.8242" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="703" x2="1086" y1="820.8242" y2="820.8242"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="710" y="816.082">11</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="137" x="732" y="816.082">Consent confirmation</text><path d="M216.5,842.8242 L352.5,842.8242 L352.5,849.8242 L342.5,859.8242 L216.5,859.8242 L216.5,842.8242 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="161.1738" style="stroke:#000000;stroke-width:2.0;" width="965.5" x="216.5" y="842.8242"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="91" x="231.5" y="856.3926">front channel</text><path d="M918,865.1348 L918,936.1348 L1083,936.1348 L1083,875.1348 L1073,865.1348 L918,865.1348 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1073,865.1348 L1073,875.1348 L1083,875.1348 L1073,865.1348 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="83" x="924" y="882.7031">Redirect URL:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="127" x="932" y="898.0137">base URL (deep link)</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="136" x="932" y="913.3242">code=generated code</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="134" x="932" y="928.6348">state=...from request</text><polygon fill="#A80036" points="714,962.6875,704,966.6875,714,970.6875,710,966.6875" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="708" x2="1091" y1="966.6875" y2="966.6875"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="720" y="961.9453">12</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="343" x="742" y="961.9453">Authorization Code Response, Redirect URL (deep link)</text><polygon fill="#A80036" points="282,991.998,272,995.998,282,999.998,278,995.998" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="276" x2="702" y1="995.998" y2="995.998"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="288" y="991.2559">13</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="386" x="310" y="991.2559">open mobile app: Authorization Code Response, Redirect URL</text><path d="M216.5,1017.998 L351.5,1017.998 L351.5,1024.998 L341.5,1034.998 L216.5,1034.998 L216.5,1017.998 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="377.5898" style="stroke:#000000;stroke-width:2.0;" width="1071.5" x="216.5" y="1017.998"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="90" x="231.5" y="1031.5664">back channel</text><path d="M276,1040.3086 L276,1141.3086 L744,1141.3086 L744,1050.3086 L734,1040.3086 L276,1040.3086 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M734,1040.3086 L734,1050.3086 L744,1050.3086 L734,1040.3086 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="447" x="282" y="1057.877">create Exchange Code for Token with Authorization Code POST request</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="201" x="290" y="1073.1875">grand_type=authorization_code</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="150" x="290" y="1088.498">code=from redirect URL</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="94" x="290" y="1103.8086">redirect_uri=...</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="207" x="290" y="1119.1191">code_verifier=PKCE Code Verifier</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="76" x="290" y="1134.4297">client_id=...</text><polygon fill="#A80036" points="1080,1168.4824,1090,1172.4824,1080,1176.4824,1084,1172.4824" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="1086" y1="1172.4824" y2="1172.4824"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="278" y="1167.7402">14</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="505" x="300" y="1167.7402">Exchange Code for Token with Authorization Code, PKCE Code Verifier, Clinet ID</text><path d="M905,1185.4824 L905,1286.4824 L1274,1286.4824 L1274,1195.4824 L1264,1185.4824 L905,1185.4824 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1264,1185.4824 L1264,1195.4824 L1274,1195.4824 L1264,1185.4824 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="163" x="911" y="1203.0508">check Authorization Code</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="67" x="919" y="1218.3613">I created it</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="128" x="919" y="1233.6719">It has not been used</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="212" x="919" y="1248.9824">It is valid in time (passed &lt;1 min)</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="133" x="919" y="1264.293">It is for this Client ID</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="340" x="919" y="1279.6035">Calcualate hash and copare with PKCE Code Challenge</text><polygon fill="#A80036" points="282,1313.6563,272,1317.6563,282,1321.6563,278,1317.6563" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="276" x2="1091" y1="1317.6563" y2="1317.6563"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="288" y="1312.9141">15</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="185" x="310" y="1312.9141">Access Token, Refresh Token</text><path d="M276,1330.6563 L276,1385.6563 L596,1385.6563 L596,1340.6563 L586,1330.6563 L276,1330.6563 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M586,1330.6563 L586,1340.6563 L596,1340.6563 L586,1330.6563 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="299" x="282" y="1348.2246">check that state value is the same as in request</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="287" x="282" y="1363.5352">save refresh token in secure storage in phone</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="185" x="282" y="1378.8457">save access token in memory</text><path d="M10,1409.5879 L133,1409.5879 L133,1416.5879 L123,1426.5879 L10,1426.5879 L10,1409.5879 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="702.7637" style="stroke:#000000;stroke-width:2.0;" width="1406" x="10" y="1409.5879"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="78" x="25" y="1423.1563">access data</text><polygon fill="#A80036" points="1234,1444.209,1244,1448.209,1234,1452.209,1238,1448.209" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="1240" y1="1448.209" y2="1448.209"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="278" y="1443.4668">16</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="276" x="300" y="1443.4668">GET keys (resource data with Access Token)</text><path d="M1192,1461.209 L1192,1501.209 L1295,1501.209 L1295,1471.209 L1285,1461.209 L1192,1461.209 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1285,1461.209 L1285,1471.209 L1295,1471.209 L1285,1461.209 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="49" x="1198" y="1478.7773">validate</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="82" x="1198" y="1494.0879">access token</text><polygon fill="#A80036" points="282,1528.1406,272,1532.1406,282,1536.1406,278,1532.1406" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="276" x2="1245" y1="1532.1406" y2="1532.1406"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="288" y="1527.3984">17</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53" x="310" y="1527.3984">key lista</text><polygon fill="#A80036" points="1234,1557.4512,1244,1561.4512,1234,1565.4512,1238,1561.4512" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="1240" y1="1561.4512" y2="1561.4512"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="278" y="1556.709">18</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="178" x="300" y="1556.709">get tags (with Access token)</text><path d="M1192,1574.4512 L1192,1614.4512 L1295,1614.4512 L1295,1584.4512 L1285,1574.4512 L1192,1574.4512 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1285,1574.4512 L1285,1584.4512 L1295,1584.4512 L1285,1574.4512 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="49" x="1198" y="1592.0195">validate</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="82" x="1198" y="1607.3301">access token</text><polygon fill="#A80036" points="282,1641.3828,272,1645.3828,282,1649.3828,278,1645.3828" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="276" x2="1245" y1="1645.3828" y2="1645.3828"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="288" y="1640.6406">19</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="44" x="310" y="1640.6406">tag list</text><polygon fill="#A80036" points="1234,1670.6934,1244,1674.6934,1234,1678.6934,1238,1674.6934" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="1240" y1="1674.6934" y2="1674.6934"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="278" y="1669.9512">20</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="264" x="300" y="1669.9512">get scenes [with tags] (with Access token)</text><path d="M1192,1687.6934 L1192,1727.6934 L1295,1727.6934 L1295,1697.6934 L1285,1687.6934 L1192,1687.6934 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1285,1687.6934 L1285,1697.6934 L1295,1697.6934 L1285,1687.6934 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="49" x="1198" y="1705.2617">validate</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="82" x="1198" y="1720.5723">access token</text><polygon fill="#A80036" points="282,1754.625,272,1758.625,282,1762.625,278,1758.625" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="276" x2="1245" y1="1758.625" y2="1758.625"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="288" y="1753.8828">21</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="60" x="310" y="1753.8828">scene list</text><polygon fill="#A80036" points="96,1783.9355,86,1787.9355,96,1791.9355,92,1787.9355" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="90" x2="270" y1="1787.9355" y2="1787.9355"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="102" y="1783.1934">22</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="80" x="124" y="1783.1934">show scenes</text><polygon fill="#A80036" points="259,1813.2461,269,1817.2461,259,1821.2461,263,1817.2461" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="85" x2="265" y1="1817.2461" y2="1817.2461"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="92" y="1812.5039">23</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="85" x="114" y="1812.5039">choose scene</text><polygon fill="#A80036" points="1234,1842.5566,1244,1846.5566,1234,1850.5566,1238,1846.5566" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="1240" y1="1846.5566" y2="1846.5566"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="278" y="1841.8145">24</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="187" x="300" y="1841.8145">get scene (with Access token)</text><path d="M1192,1859.5566 L1192,1899.5566 L1295,1899.5566 L1295,1869.5566 L1285,1859.5566 L1192,1859.5566 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1285,1859.5566 L1285,1869.5566 L1295,1869.5566 L1285,1859.5566 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="49" x="1198" y="1877.125">validate</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="82" x="1198" y="1892.4355">access token</text><polygon fill="#A80036" points="282,1926.4883,272,1930.4883,282,1934.4883,278,1930.4883" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="276" x2="1245" y1="1930.4883" y2="1930.4883"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="288" y="1925.7461">25</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="106" x="310" y="1925.7461">scene with views</text><path d="M183,1945.4883 L257,1945.4883 L257,1952.4883 L247,1962.4883 L183,1962.4883 L183,1945.4883 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="130.5527" style="stroke:#000000;stroke-width:2.0;" width="1223" x="183" y="1945.4883"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="29" x="198" y="1959.0566">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="151" x="272" y="1958.123">[for each view from scene]</text><path d="M193,1967.7988 L193,2007.7988 L344,2007.7988 L344,1977.7988 L334,1967.7988 L193,1967.7988 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M334,1967.7988 L334,1977.7988 L344,1977.7988 L334,1967.7988 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="130" x="199" y="1985.3672">fill template for view</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="118" x="199" y="2000.6777">send HTTP request</text><polygon fill="#A80036" points="1346,2034.7305,1356,2038.7305,1346,2042.7305,1350,2038.7305" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="1352" y1="2038.7305" y2="2038.7305"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="278" y="2033.9883">26</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="237" x="300" y="2033.9883">fetch data for view based on template</text><polygon fill="#A80036" points="282,2064.041,272,2068.041,282,2072.041,278,2068.041" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="276" x2="1357" y1="2068.041" y2="2068.041"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="288" y="2063.2988">27</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="117" x="310" y="2063.2988">data in CSV format</text><polygon fill="#A80036" points="96,2100.3516,86,2104.3516,96,2108.3516,92,2104.3516" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="90" x2="270" y1="2104.3516" y2="2104.3516"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="102" y="2099.6094">28</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="140" x="124" y="2099.6094">Show screen with data</text><path d="M216.5,2126.3516 L352.5,2126.3516 L352.5,2133.3516 L342.5,2143.3516 L216.5,2143.3516 L216.5,2126.3516 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="171.1738" style="stroke:#000000;stroke-width:2.0;" width="965.5" x="216.5" y="2126.3516"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="91" x="231.5" y="2139.9199">refresh token</text><path d="M276,2148.6621 L276,2219.6621 L472,2219.6621 L472,2158.6621 L462,2148.6621 L276,2148.6621 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M462,2148.6621 L462,2158.6621 L472,2158.6621 L462,2148.6621 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="99" x="282" y="2166.2305">Token endpoint</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="167" x="290" y="2181.541">grand_type=refresh_token</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="109" x="290" y="2196.8516">refresh_token=...</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="76" x="290" y="2212.1621">client_id=...</text><polygon fill="#A80036" points="1080,2246.2148,1090,2250.2148,1080,2254.2148,1084,2250.2148" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="1086" y1="2250.2148" y2="2250.2148"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="278" y="2245.4727">29</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="138" x="300" y="2245.4727">Refresh token request</text><path d="M887,2263.2148 L887,2288.2148 L1083,2288.2148 L1083,2273.2148 L1073,2263.2148 L887,2263.2148 " fill="#FBFB77" filter="url(#fy3u6d4gc5bz4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1073,2263.2148 L1073,2273.2148 L1083,2273.2148 L1073,2263.2148 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="175" x="893" y="2280.7832">generate new pair of tokens</text><rect fill="#DDDDDD" height="158.3945" rx="5" ry="5" style="stroke:#000000;stroke-width:1.0;" width="788" x="8" y="13"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="375" x="14" y="31.5352">App is using only Client ID. It is not using Client Secret.</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="18" y="48.0234"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="309" x="14" y="64.5117">For starting web browser to login to app use:</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="196" x="22" y="81">- iOS SFSafariVeiwController</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="213" x="22" y="97.4883">- Android ChromeCustomTabs</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="18" y="113.9766"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="246" x="14" y="130.4648">Deep linking is used for redirectURI:</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="685" x="18" y="146.9531">- iOS - UniversalLink https://abhimuralidharan.medium.com/universal-links-in-ios-79c4ee038272</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="772" x="18" y="163.4414">- Android - Verify Android App Links https://developer.android.com/training/app-links/verify-site-associations</text><!--MD5=[3058c787785031c9c81fb92be86c96aa]
+@startuml
+autonumber
+
+
+autonumber
+hide footbox
+
+participant "Resource Owner\n(user)" as RO
+participant "Client\n(mob app)" as UAM
+participant "User Agent\n(in app browser)" as UAB
+participant "Authorization Server\n(keycloak)" as AS
+participant "Resource Server\n(rest server)" as RS
+participant InfluxDB as i
+
+
+legend top left
+App is using only Client ID. It is not using Client Secret.
+
+For starting web browser to login to app use:
+  - iOS SFSafariVeiwController
+  - Android ChromeCustomTabs
+
+Deep linking is used for redirectURI:
+ - iOS - UniversalLink https://abhimuralidharan.medium.com/universal-links-in-ios-79c4ee038272
+ - Android - Verify Android App Links https://developer.android.com/training/app-links/verify-site-associations
+endlegend
+
+
+RO -> UAM: login button
+note over UAM
+generate random secret (PKCE Code Verifier) - 43-128 characters
+calculate hash of it (PKCE Code Callenge) - SHA256
+generate URL for Authorization Server (Authorization Code Request):
+  response_type=code
+  PKCE Code Challenge: code_challenge=...hash
+  code_challenge_method=S256
+  ClientID: client_id=...
+  Redirect URL: redirect_uri=deep link
+  Scope: scope=...
+  state=random value
+end note
+
+  group front channel
+    UAM -> UAB: open generated URL
+    UAB -> AS: Authorization Code Request
+  end
+
+  group login to authorization server
+    AS - -> UAB: Login page
+    UAB - -> RO: Login page
+    RO -> UAB: Login credentials
+    UAB -> AS: Login credentials
+  end
+
+  group consent screen
+    AS - -> UAB: Consent page to login to this application
+    UAB - -> RO: Consent page to login to this application
+    RO -> UAB: Consent confirmation
+    UAB -> AS: Consent confirmation
+  end
+
+  group front channel
+    note left AS
+    Redirect URL:
+      base URL (deep link)
+      code=generated code
+      state=...from request
+    end note
+    AS - -> UAB: Authorization Code Response, Redirect URL (deep link)  
+    UAB - -> UAM: open mobile app: Authorization Code Response, Redirect URL
+  end
+
+  group back channel
+    note right UAM
+    create Exchange Code for Token with Authorization Code POST request
+      grand_type=authorization_code
+      code=from redirect URL
+      redirect_uri=...
+      code_verifier=PKCE Code Verifier
+      client_id=...
+    end note
+    UAM -> AS: Exchange Code for Token with Authorization Code, PKCE Code Verifier, Clinet ID
+    note over AS
+    check Authorization Code
+      I created it
+      It has not been used
+      It is valid in time (passed <1 min)
+      It is for this Client ID
+      Calcualate hash and copare with PKCE Code Challenge
+    end note
+  AS - -> UAM: Access Token, Refresh Token
+  note right UAM
+  check that state value is the same as in request
+  save refresh token in secure storage in phone
+  save access token in memory
+  end note
+  end
+
+group access data
+  UAM -> RS: GET keys (resource data with Access Token)
+  note over RS: validate\naccess token
+  RS - -> UAM: key lista
+  UAM -> RS: get tags (with Access token)
+  note over RS: validate\naccess token
+  RS - -> UAM: tag list
+  UAM -> RS: get scenes [with tags] (with Access token)
+  note over RS: validate\naccess token
+  RS - -> UAM: scene list
+
+  
+  UAM - -> RO: show scenes
+  RO -> UAM: choose scene
+  UAM -> RS: get scene (with Access token)
+  note over RS: validate\naccess token
+  RS - -> UAM: scene with views
+
+
+  loop for each view from scene
+    note over UAM: fill template for view\nsend HTTP request
+    UAM -> i: fetch data for view based on template
+    i - -> UAM: data in CSV format
+  end
+
+  UAM - -> RO: Show screen with data
+end
+
+
+group refresh token
+note right UAM
+Token endpoint
+  grand_type=refresh_token
+  refresh_token=...
+  client_id=...
+end note
+UAM -> AS: Refresh token request
+note left AS
+generate new pair of tokens
+end note
+end
+
+
+@enduml
+
+PlantUML version 1.2021.12(Tue Oct 05 18:01:58 CEST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: HR
+--></g></svg></p><p>Slijedi primjer poruka:</p>
+<h3 class="mume-header" id="poruke-1-i-2-nije-dobro-">Poruke <strong>1</strong> i <strong>2</strong> -- nije dobro --</h3>
+
+<p><code>client_secret</code> promijenite tako da ga uzmete iz <code>application.properties</code>.</p>
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token function">curl</span> -X POST <span class="token string">&apos;http://localhost:8080/auth/realms/spring/protocol/openid-connect/token&apos;</span> <span class="token punctuation">\</span>
+ --header <span class="token string">&apos;Content-Type: application/x-www-form-urlencoded&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&apos;grant_type=password&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&apos;client_id=rest-keycloak&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&apos;client_secret=e7f4f3e4-7503-467d-bb8e-e0463ba59020&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&apos;username=u1&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&apos;password=u1&apos;</span>
+
+<span class="token punctuation">{</span>
+  <span class="token string">&quot;access_token&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhSHZmV3p1Y05qZU12a3d2aGxreGpvbWY4MzJhdlQtZmdURmloNzMwbmtNIn0.eyJleHAiOjE2NDAxNjE4MDIsImlhdCI6MTY0MDE2MTUwMiwianRpIjoiMWNjOGJkY2YtY2U3Zi00MzUxLWFmNDctYTBlMTcyMjVlNzg5IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MTgwL2F1dGgvcmVhbG1zL3NwcmluZyIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiI3YjM0MTdmNi1iMzAzLTRiOTUtYTNkMS01YWYzNGJmZWQ2YjUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJyZXN0LWtleWNsb2FrIiwic2Vzc2lvbl9zdGF0ZSI6ImFjMTRhYmUzLTgzYjQtNGZkNi04MTg4LTg5MGY5MGU5MWQ4OCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXNwcmluZyIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJhcHAtdXNlciJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJlc3Qta2V5Y2xvYWsiOnsicm9sZXMiOlsiaW90LXJlYWQiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImFjMTRhYmUzLTgzYjQtNGZkNi04MTg4LTg5MGY5MGU5MWQ4OCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1MSJ9.SW4aWdGWFyPBf2jNvrHdEluJBRErd_JYhkf2Q8k-2YT2L4pTlCWQ2-85W37UFDtLBrPhbFSDffiE5ZJSTU6R6p0bVsUVLBxLm67PBeTUM-Bhx2PbzVJmXpM3nzpeVSji2fpIQ2SKW3anKQhAoWpKV3Z7XDNJmRkw5cCNt9xGdPs57ABTmldJvAWSPq0yKNUVP5vlO_TRjdEWWoHsVB7j9m0zSD26Cn3LOXB6I4UOjWGKl7uQjJ7uFvC9Ujlg30cPBUN75LHqI9Nn12Wgy4_pkKkctGpeT7WrAw3jxeTmbkZj7bkCdQKTZ-wFtjC-eIcVLIasVOX2iIcWevqabkYReQ&quot;</span>,
+  <span class="token string">&quot;expires_in&quot;</span><span class="token builtin class-name">:</span> <span class="token number">300</span>,
+  <span class="token string">&quot;refresh_expires_in&quot;</span><span class="token builtin class-name">:</span> <span class="token number">1800</span>,
+  <span class="token string">&quot;refresh_token&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiZTI0Zjk1NS1lMzEzLTRlMTktOWM1Ni01YjM4OGRiNjJkZGIifQ.eyJleHAiOjE2NDAxNjMzMDIsImlhdCI6MTY0MDE2MTUwMiwianRpIjoiMTk2MzFlYzctNWQzZS00MDNiLTg2YTAtZGQxNThiYjgwODUwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MTgwL2F1dGgvcmVhbG1zL3NwcmluZyIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODE4MC9hdXRoL3JlYWxtcy9zcHJpbmciLCJzdWIiOiI3YjM0MTdmNi1iMzAzLTRiOTUtYTNkMS01YWYzNGJmZWQ2YjUiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoicmVzdC1rZXljbG9hayIsInNlc3Npb25fc3RhdGUiOiJhYzE0YWJlMy04M2I0LTRmZDYtODE4OC04OTBmOTBlOTFkODgiLCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhYzE0YWJlMy04M2I0LTRmZDYtODE4OC04OTBmOTBlOTFkODgifQ.RfD3MktbiiMlWcH2DDQWv0hd2gVDgNcwrbnUjhezadg&quot;</span>,
+  <span class="token string">&quot;token_type&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;Bearer&quot;</span>,
+  <span class="token string">&quot;not-before-policy&quot;</span><span class="token builtin class-name">:</span> <span class="token number">0</span>,
+  <span class="token string">&quot;session_state&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;ac14abe3-83b4-4fd6-8188-890f90e91d88&quot;</span>,
+  <span class="token string">&quot;scope&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;profile email&quot;</span>
+<span class="token punctuation">}</span>
+</pre><h4 class="mume-header" id="dohva%C4%87anje-tokena-i-spremenje-u-varijable">Dohva&#x107;anje tokena i spremenje u varijable</h4>
+
+<p>Prvo trebamo postaviti csecret (mo&#x17E;emp pogledati u application.properties):</p>
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">csecret</span><span class="token operator">=</span>e7f4f3e4-7503-467d-bb8e-e0463ba59020
+</pre><p>Kako je Access token kratkog vijeka najbolje je da ga se spremi u varijablu da ne tro&#x161;imo vrijeme na kopiranje. Pomo&#x107;u git bash-a mo&#x17E;emo spremiti tokene u varijable okoline <code>keycloak_access</code> i <code>keycloak_refresh</code> na sljede&#x107;i na&#x10D;in:</p>
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">keycloak_response</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">curl</span> -X POST <span class="token string">&apos;http://localhost:8080/auth/realms/spring/protocol/openid-connect/token&apos;</span> <span class="token punctuation">\</span>
+ --header <span class="token string">&apos;Content-Type: application/x-www-form-urlencoded&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&apos;grant_type=password&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&apos;client_id=rest-keycloak&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&quot;client_secret=<span class="token variable">$csecret</span>&quot;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&apos;username=u1&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&apos;password=u1&apos;</span><span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>
+ <span class="token builtin class-name">export</span> <span class="token assign-left variable">keycloak_access</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">echo</span> $keycloak_response <span class="token operator">|</span> jq -r <span class="token string">&apos;.access_token&apos;</span><span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>
+ <span class="token builtin class-name">export</span> <span class="token assign-left variable">keycloak_refresh</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">echo</span> $keycloak_response <span class="token operator">|</span> jq -r <span class="token string">&apos;.refresh_token&apos;</span><span class="token variable">)</span></span>
+</pre><p>Komandom <code>env</code> mo&#x17E;emo porovjeriti jesu li postavljene varijable okoline.</p>
+<h4 class="mume-header" id="refreshanje-tokena-i-spremanje-u-varijable">Refreshanje tokena i spremanje u varijable</h4>
+
+<p>Za obv nam je potreban alat jq kojeg mo&#x17E;ete skinuto s <a href="https://stedolan.github.io/jq/download/">ove stranice</a>.</p>
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">keycloak_response</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">curl</span> -X POST <span class="token string">&apos;http://localhost:8080/auth/realms/spring/protocol/openid-connect/token&apos;</span> <span class="token punctuation">\</span>
+ --header <span class="token string">&apos;Content-Type: application/x-www-form-urlencoded&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&apos;grant_type=refresh_token&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&apos;client_id=rest-keycloak&apos;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&quot;client_secret=<span class="token variable">$csecret</span>&quot;</span> <span class="token punctuation">\</span>
+ --data-urlencode <span class="token string">&quot;refresh_token=<span class="token variable">$keycloak_refresh</span>&quot;</span><span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>
+ <span class="token builtin class-name">export</span> <span class="token assign-left variable">keycloak_access</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">echo</span> $keycloak_response <span class="token operator">|</span> jq -r <span class="token string">&apos;.access_token&apos;</span><span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>
+ <span class="token builtin class-name">export</span> <span class="token assign-left variable">keycloak_refresh</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">echo</span> $keycloak_response <span class="token operator">|</span> jq -r <span class="token string">&apos;.refresh_token&apos;</span><span class="token variable">)</span></span>
+</pre><h3 class="mume-header" id="poruke-16-i-17">Poruke 16 i 17</h3>
+
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token function">curl</span> -X GET <span class="token string">&apos;http://localhost:8081/keys&apos;</span> <span class="token punctuation">\</span>
+--header <span class="token string">&apos;Authorization: bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhSHZmV3p1Y05qZU12a3d2aGxreGpvbWY4MzJhdlQtZmdURmloNzMwbmtNIn0.eyJleHAiOjE2NDAxNjE4MDIsImlhdCI6MTY0MDE2MTUwMiwianRpIjoiMWNjOGJkY2YtY2U3Zi00MzUxLWFmNDctYTBlMTcyMjVlNzg5IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MTgwL2F1dGgvcmVhbG1zL3NwcmluZyIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiI3YjM0MTdmNi1iMzAzLTRiOTUtYTNkMS01YWYzNGJmZWQ2YjUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJyZXN0LWtleWNsb2FrIiwic2Vzc2lvbl9zdGF0ZSI6ImFjMTRhYmUzLTgzYjQtNGZkNi04MTg4LTg5MGY5MGU5MWQ4OCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXNwcmluZyIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJhcHAtdXNlciJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJlc3Qta2V5Y2xvYWsiOnsicm9sZXMiOlsiaW90LXJlYWQiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImFjMTRhYmUzLTgzYjQtNGZkNi04MTg4LTg5MGY5MGU5MWQ4OCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1MSJ9.SW4aWdGWFyPBf2jNvrHdEluJBRErd_JYhkf2Q8k-2YT2L4pTlCWQ2-85W37UFDtLBrPhbFSDffiE5ZJSTU6R6p0bVsUVLBxLm67PBeTUM-Bhx2PbzVJmXpM3nzpeVSji2fpIQ2SKW3anKQhAoWpKV3Z7XDNJmRkw5cCNt9xGdPs57ABTmldJvAWSPq0yKNUVP5vlO_TRjdEWWoHsVB7j9m0zSD26Cn3LOXB6I4UOjWGKl7uQjJ7uFvC9Ujlg30cPBUN75LHqI9Nn12Wgy4_pkKkctGpeT7WrAw3jxeTmbkZj7bkCdQKTZ-wFtjC-eIcVLIasVOX2iIcWevqabkYReQ&apos;</span>
+
+<span class="token punctuation">{</span>
+  <span class="token string">&quot;token1&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==&quot;</span>,
+  <span class="token string">&quot;token2&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;546thtdsghdgyre&quot;</span>
+<span class="token punctuation">}</span>
+</pre><p>ili preko varijabli:</p>
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token function">curl</span> -X GET <span class="token string">&apos;http://localhost:8081/keys&apos;</span> <span class="token punctuation">\</span>
+--header <span class="token string">&quot;Authorization: bearer <span class="token variable">$keycloak_access</span>&quot;</span>
+
+<span class="token punctuation">{</span>
+  <span class="token string">&quot;token1&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==&quot;</span>,
+  <span class="token string">&quot;token2&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;546thtdsghdgyre&quot;</span>
+<span class="token punctuation">}</span>
+</pre><p>ako se ni&#x161;ta ne ispi&#x161;e mogu&#x107;e je da je istekao token. Mo&#x17E;emo poslati upit s ocijom -v koja &#x107;e nam ispisati zahtjev i odgovor te &#x107;emo u odgovoru vidjeti da smo dobili 401 &#x161;to zna&#x10D;i da je istekao access token.</p>
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token function">curl</span> -v -X GET <span class="token string">&apos;http://localhost:8081/keys&apos;</span> <span class="token punctuation">\</span>
+--header <span class="token string">&quot;Authorization: bearer <span class="token variable">$keycloak_access</span>&quot;</span>
+
+Note: Unnecessary use of -X or --request, GET is already inferred.
+*   Trying ::1<span class="token punctuation">..</span>.
+* TCP_NODELAY <span class="token builtin class-name">set</span>
+* Connected to localhost <span class="token punctuation">(</span>::1<span class="token punctuation">)</span> port <span class="token number">8081</span> <span class="token punctuation">(</span><span class="token comment">#0)</span>
+<span class="token operator">&gt;</span> GET /keys HTTP/1.1
+<span class="token operator">&gt;</span> Host: localhost:8081
+<span class="token operator">&gt;</span> User-Agent: curl/7.64.1
+<span class="token operator">&gt;</span> Accept: */*
+<span class="token operator">&gt;</span> Authorization: bearer null
+<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span> HTTP/1.1 <span class="token number">401</span>
+<span class="token operator">&lt;</span> WWW-Authenticate: Bearer <span class="token assign-left variable">realm</span><span class="token operator">=</span><span class="token string">&quot;spring&quot;</span>, <span class="token assign-left variable">error</span><span class="token operator">=</span><span class="token string">&quot;invalid_token&quot;</span>, <span class="token assign-left variable">error_description</span><span class="token operator">=</span><span class="token string">&quot;Failed to parse JWT&quot;</span>
+<span class="token operator">&lt;</span> X-Content-Type-Options: nosniff
+<span class="token operator">&lt;</span> X-XSS-Protection: <span class="token number">1</span><span class="token punctuation">;</span> <span class="token assign-left variable">mode</span><span class="token operator">=</span>block
+<span class="token operator">&lt;</span> Cache-Control: no-cache, no-store, max-age<span class="token operator">=</span><span class="token number">0</span>, must-revalidate
+<span class="token operator">&lt;</span> Pragma: no-cache
+<span class="token operator">&lt;</span> Expires: <span class="token number">0</span>
+<span class="token operator">&lt;</span> X-Frame-Options: DENY
+<span class="token operator">&lt;</span> WWW-Authenticate: Bearer <span class="token assign-left variable">realm</span><span class="token operator">=</span><span class="token string">&quot;spring&quot;</span>, <span class="token assign-left variable">error</span><span class="token operator">=</span><span class="token string">&quot;invalid_token&quot;</span>, <span class="token assign-left variable">error_description</span><span class="token operator">=</span><span class="token string">&quot;Failed to parse JWT&quot;</span>
+<span class="token operator">&lt;</span> Content-Length: <span class="token number">0</span>
+<span class="token operator">&lt;</span> Date: Wed, <span class="token number">22</span> Dec <span class="token number">2021</span> 08:40:09 GMT
+<span class="token operator">&lt;</span>
+* Connection <span class="token comment">#0 to host localhost left intact</span>
+* Closing connection <span class="token number">0</span>
+</pre><p>Tada je potrebno obnoviti token kako je obja&#x161;njeno ranije.</p>
+<h3 class="mume-header" id="poruke-18-i-19">Poruke 18 i 19</h3>
+
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token function">curl</span> -X GET <span class="token string">&apos;http://localhost:8081/tags&apos;</span> <span class="token punctuation">\</span>
+--header <span class="token string">&quot;Authorization: bearer <span class="token variable">$keycloak_access</span>&quot;</span>
+
+<span class="token punctuation">[</span>
+  <span class="token string">&quot;fer&quot;</span>,
+  <span class="token string">&quot;sap01&quot;</span>
+<span class="token punctuation">]</span>
+</pre><h3 class="mume-header" id="poruke-20-i-21">Poruke 20 i 21</h3>
+
+<p>Popis svih scena:</p>
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token function">curl</span> -X GET <span class="token string">&apos;http://localhost:8081/scene&apos;</span> <span class="token punctuation">\</span>
+--header <span class="token string">&quot;Authorization: bearer <span class="token variable">$keycloak_access</span>&quot;</span>
+
+<span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token string">&quot;id&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;scena1&quot;</span>,
+    <span class="token string">&quot;title&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;testnaScena&quot;</span>,
+    <span class="token string">&quot;subtitle&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;testScena&quot;</span>
+  <span class="token punctuation">}</span>,
+  <span class="token punctuation">{</span>
+    <span class="token string">&quot;id&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;scena2&quot;</span>,
+    <span class="token string">&quot;title&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;HUM_sap01AG&quot;</span>,
+    <span class="token string">&quot;subtitle&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;dohvaca AVG vrijednost podataka HUM za sap01 senzor &quot;</span>
+  <span class="token punctuation">}</span>,
+  <span class="token punctuation">{</span>
+    <span class="token string">&quot;id&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;scena3&quot;</span>,
+    <span class="token string">&quot;title&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;sap01 scene&quot;</span>,
+    <span class="token string">&quot;subtitle&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;dohvaca sva mjerenja za sap01 senzor&quot;</span>
+  <span class="token punctuation">}</span>,
+  <span class="token punctuation">{</span>
+    <span class="token string">&quot;id&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;scena4&quot;</span>,
+    <span class="token string">&quot;title&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;HUM_LW_sap02&quot;</span>,
+    <span class="token string">&quot;subtitle&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;dohvaca HUM i LW mjerenja za sap02 senzor&quot;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</pre><p>Popis scena s tagom &quot;fer&quot;:</p>
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token function">curl</span> -X POST <span class="token string">&apos;http://localhost:8081/scene&apos;</span> <span class="token punctuation">\</span>
+--header <span class="token string">&quot;Authorization: bearer <span class="token variable">$keycloak_access</span>&quot;</span> <span class="token punctuation">\</span>
+--header <span class="token string">&quot;Content-type: application/json&quot;</span> <span class="token punctuation">\</span>
+-d <span class="token string">&apos;[ &quot;fer&quot; ]&apos;</span> 
+
+<span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token string">&quot;id&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;scena1&quot;</span>,
+    <span class="token string">&quot;title&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;testnaScena&quot;</span>,
+    <span class="token string">&quot;subtitle&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;testScena&quot;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</pre><h3 class="mume-header" id="dohva%C4%87anje-jedne-scene-poruke-26-i-27">Dohva&#x107;anje jedne scene - poruke 26 i 27</h3>
+
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token function">curl</span> -X GET <span class="token string">&apos;http://localhost:8081/scene/scena2&apos;</span> <span class="token punctuation">\</span>
+--header <span class="token string">&quot;Authorization: bearer <span class="token variable">$keycloak_access</span>&quot;</span>
+
+<span class="token punctuation">{</span>
+  <span class="token string">&quot;id&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;scena2&quot;</span>,
+  <span class="token string">&quot;title&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;HUM_sap01AG&quot;</span>,
+  <span class="token string">&quot;subtitle&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;dohvaca AVG vrijednost podataka HUM za sap01 senzor &quot;</span>,
+  <span class="token string">&quot;layout&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;LIST&quot;</span>,
+  <span class="token string">&quot;tags&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+    <span class="token string">&quot;sap01&quot;</span>
+  <span class="token punctuation">]</span>,
+  <span class="token string">&quot;views&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token string">&quot;title&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;HUM_sap01_agregatedAVG&quot;</span>,
+      <span class="token string">&quot;query&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+        <span class="token string">&quot;method&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;POST&quot;</span>,
+        <span class="token string">&quot;headers&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+          <span class="token string">&quot;Authorization&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+            <span class="token string">&quot;Token {{token1}}&quot;</span>
+          <span class="token punctuation">]</span>,
+          <span class="token string">&quot;Accept&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+            <span class="token string">&quot;application/csv&quot;</span>
+          <span class="token punctuation">]</span>,
+          <span class="token string">&quot;Content-Type&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+            <span class="token string">&quot;application/vnd.flux&quot;</span>
+          <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>,
+        <span class="token string">&quot;uri&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;https://iotat.tel.fer.hr:57786/api/v2/query?org=fer&quot;</span>
+      <span class="token punctuation">}</span>,
+      <span class="token string">&quot;payload&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;from(bucket:<span class="token entity" title="\&quot;">\&quot;</span>telegraf<span class="token entity" title="\&quot;">\&quot;</span>)<span class="token entity" title="\n">\n</span>        |&gt; range(start: {{startTimeISO}})<span class="token entity" title="\n">\n</span>        |&gt; filter(fn: (r) =&gt; r._measurement == <span class="token entity" title="\&quot;">\&quot;</span>HUM<span class="token entity" title="\&quot;">\&quot;</span> and r.id_wasp == <span class="token entity" title="\&quot;">\&quot;</span>SAP01<span class="token entity" title="\&quot;">\&quot;</span> and r._field == <span class="token entity" title="\&quot;">\&quot;</span>value<span class="token entity" title="\&quot;">\&quot;</span>)<span class="token entity" title="\n">\n</span>        |&gt; drop(columns: [<span class="token entity" title="\&quot;">\&quot;</span>_start<span class="token entity" title="\&quot;">\&quot;</span>, <span class="token entity" title="\&quot;">\&quot;</span>_stop<span class="token entity" title="\&quot;">\&quot;</span>, <span class="token entity" title="\&quot;">\&quot;</span>_field<span class="token entity" title="\&quot;">\&quot;</span>, <span class="token entity" title="\&quot;">\&quot;</span>host<span class="token entity" title="\&quot;">\&quot;</span>, <span class="token entity" title="\&quot;">\&quot;</span>id<span class="token entity" title="\&quot;">\&quot;</span>])<span class="token entity" title="\n">\n</span>        |&gt; window(every: {{agregationRange}})<span class="token entity" title="\n">\n</span>        |&gt; mean()<span class="token entity" title="\n">\n</span>        |&gt; duplicate(column: <span class="token entity" title="\&quot;">\&quot;</span>_stop<span class="token entity" title="\&quot;">\&quot;</span>, as: <span class="token entity" title="\&quot;">\&quot;</span>_time<span class="token entity" title="\&quot;">\&quot;</span>)<span class="token entity" title="\n">\n</span>        |&gt; drop(columns: [<span class="token entity" title="\&quot;">\&quot;</span>_start<span class="token entity" title="\&quot;">\&quot;</span>, <span class="token entity" title="\&quot;">\&quot;</span>_stop<span class="token entity" title="\&quot;">\&quot;</span>])<span class="token entity" title="\n">\n</span><span class="token entity" title="\n">\n</span>&quot;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</pre><h3 class="mume-header" id="popuniti-predlo%C5%BEak">Popuniti predlo&#x17E;ak</h3>
+
+<p>Opis upita je:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>      &quot;query&quot;: {
+        &quot;method&quot;: &quot;POST&quot;,
+        &quot;headers&quot;: {
+          &quot;Authorization&quot;: [
+            &quot;Token {{token1}}&quot;
+          ],
+          &quot;Accept&quot;: [
+            &quot;application/csv&quot;
+          ],
+          &quot;Content-Type&quot;: [
+            &quot;application/vnd.flux&quot;
+          ]
+        },
+        &quot;uri&quot;: &quot;https://iotat.tel.fer.hr:57786/api/v2/query?org=fer&quot;
+      },
+      &quot;payload&quot;: &quot;from(bucket:\&quot;telegraf\&quot;)\n        |&gt; range(start: {{startTimeISO}})\n        |&gt; filter(fn: (r) =&gt; r._measurement == \&quot;HUM\&quot; and r.id_wasp == \&quot;SAP01\&quot; and r._field == \&quot;value\&quot;)\n        |&gt; drop(columns: [\&quot;_start\&quot;, \&quot;_stop\&quot;, \&quot;_field\&quot;, \&quot;host\&quot;, \&quot;id\&quot;])\n        |&gt; window(every: {{agregationRange}})\n        |&gt; mean()\n        |&gt; duplicate(column: \&quot;_stop\&quot;, as: \&quot;_time\&quot;)\n        |&gt; drop(columns: [\&quot;_start\&quot;, \&quot;_stop\&quot;])\n\n&quot;
+    }
+</code></pre><p>Iz toga vidimo da moramo poslati sljede&#x107;i HTTP zahtjev:</p>
+<ul>
+<li>metoda: POST</li>
+<li>zaglavlja:
+<ul>
+<li>Authorization: Token {{token1}}
+<ul>
+<li>tu moramo {{token1}} zamijeniti s tokenom koji smo dobili ranije. Rezultat je</li>
+<li>Authorization: Token bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==</li>
+</ul>
+</li>
+<li>Accept: application/csv</li>
+<li>Content-Type: application/vnd.flux</li>
+</ul>
+</li>
+<li>URI: <a href="https://iotat.tel.fer.hr:57786/api/v2/query?org=fer">https://iotat.tel.fer.hr:57786/api/v2/query?org=fer</a></li>
+<li>body je zapravo payload koji se isto treba gledati kao predlo&#x17E;ak u kojem treba mijenjati dijelove:</li>
+</ul>
+<pre data-role="codeBlock" data-info class="language-"><code>from(bucket:&quot;telegraf&quot;)
+        |&gt; range(start: 2021-12-01T00:00:00Z)
+        |&gt; filter(fn: (r) =&gt; r._measurement == &quot;HUM&quot; and r.id_wasp == &quot;SAP01&quot; and r._field == &quot;value&quot;)
+        |&gt; drop(columns: [&quot;_start&quot;, &quot;_stop&quot;, &quot;_field&quot;, &quot;host&quot;, &quot;id&quot;])
+        |&gt; window(every: 3h)
+        |&gt; mean()
+        |&gt; duplicate(column: &quot;_stop&quot;, as: &quot;_time&quot;)
+        |&gt; drop(columns: [&quot;_start&quot;, &quot;_stop&quot;])
+
+
+</code></pre><h3 class="mume-header" id="poruke-26-i-27">Poruke 26 i 27</h3>
+
+<p>Sada upit onda izgleda ovako:</p>
+<pre data-role="codeBlock" data-info="sh" class="language-bash"><span class="token function">curl</span> -X POST <span class="token string">&apos;https://iotat.tel.fer.hr:57786/api/v2/query?org=fer&apos;</span> <span class="token punctuation">\</span>
+--header <span class="token string">&quot;Authorization: Token bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==&quot;</span> <span class="token punctuation">\</span>
+--header <span class="token string">&quot;Accept: application/csv&quot;</span> <span class="token punctuation">\</span>
+--header <span class="token string">&quot;Content-type: application/vnd.flux&quot;</span> <span class="token punctuation">\</span>
+-d <span class="token string">&apos;from(bucket:&quot;telegraf&quot;)
+        |&gt; range(start: 2021-12-01T00:00:00Z)
+        |&gt; filter(fn: (r) =&gt; r._measurement == &quot;HUM&quot; and r.id_wasp == &quot;SAP01&quot; and r._field == &quot;value&quot;)
+        |&gt; drop(columns: [&quot;_start&quot;, &quot;_stop&quot;, &quot;_field&quot;, &quot;host&quot;, &quot;id&quot;])
+        |&gt; window(every: 3h)
+        |&gt; mean()
+        |&gt; duplicate(column: &quot;_stop&quot;, as: &quot;_time&quot;)
+        |&gt; drop(columns: [&quot;_start&quot;, &quot;_stop&quot;])&apos;</span>
+
+,result,table,_measurement,id_wasp,_value,_time
+,_result,0,HUM,SAP01,66.11124674479167,2021-12-01T03:00:00Z
+,_result,0,HUM,SAP01,68.50276692708333,2021-12-01T06:00:00Z
+,_result,0,HUM,SAP01,69.373046875,2021-12-01T09:00:00Z
+,_result,0,HUM,SAP01,54.148111979166664,2021-12-01T12:00:00Z
+,_result,0,HUM,SAP01,60.23073508522727,2021-12-01T15:00:00Z
+,_result,0,HUM,SAP01,66.94108072916667,2021-12-01T18:00:00Z
+,_result,0,HUM,SAP01,76.647216796875,2021-12-01T21:00:00Z
+,_result,0,HUM,SAP01,84.67578125,2021-12-02T00:00:00Z
+,_result,0,HUM,SAP01,97.99568684895833,2021-12-02T03:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-02T06:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-02T09:00:00Z
+,_result,0,HUM,SAP01,94.422607421875,2021-12-02T12:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-02T15:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-02T18:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-02T21:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-03T00:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-03T03:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-03T06:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-03T09:00:00Z
+,_result,0,HUM,SAP01,86.17268880208333,2021-12-03T12:00:00Z
+,_result,0,HUM,SAP01,70.369873046875,2021-12-03T15:00:00Z
+,_result,0,HUM,SAP01,65.26481119791667,2021-12-03T18:00:00Z
+,_result,0,HUM,SAP01,77.614501953125,2021-12-03T21:00:00Z
+,_result,0,HUM,SAP01,87.94051106770833,2021-12-04T00:00:00Z
+,_result,0,HUM,SAP01,97.99918619791667,2021-12-04T03:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-04T06:00:00Z
+,_result,0,HUM,SAP01,99.87125651041667,2021-12-04T09:00:00Z
+,_result,0,HUM,SAP01,92.520263671875,2021-12-04T12:00:00Z
+,_result,0,HUM,SAP01,74.400146484375,2021-12-04T15:00:00Z
+,_result,0,HUM,SAP01,75.23388671875,2021-12-04T18:00:00Z
+,_result,0,HUM,SAP01,78.45157877604167,2021-12-04T21:00:00Z
+,_result,0,HUM,SAP01,83.89949544270833,2021-12-05T00:00:00Z
+,_result,0,HUM,SAP01,86.80113636363636,2021-12-05T03:00:00Z
+,_result,0,HUM,SAP01,97.4482421875,2021-12-05T06:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-05T09:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-05T12:00:00Z
+,_result,0,HUM,SAP01,99.92545572916667,2021-12-05T15:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-05T18:00:00Z
+,_result,0,HUM,SAP01,99.74462890625,2021-12-05T21:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-06T00:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-06T03:00:00Z
+,_result,0,HUM,SAP01,99.92529296875,2021-12-06T06:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-06T09:00:00Z
+,_result,0,HUM,SAP01,91.4493075284091,2021-12-06T12:00:00Z
+,_result,0,HUM,SAP01,72.97265625,2021-12-06T15:00:00Z
+,_result,0,HUM,SAP01,69.265380859375,2021-12-06T18:00:00Z
+,_result,0,HUM,SAP01,79.03922526041667,2021-12-06T21:00:00Z
+,_result,0,HUM,SAP01,91.64388020833333,2021-12-07T00:00:00Z
+,_result,0,HUM,SAP01,98.99886067708333,2021-12-07T03:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-07T06:00:00Z
+,_result,0,HUM,SAP01,98.89461263020833,2021-12-07T09:00:00Z
+,_result,0,HUM,SAP01,81.49055989583333,2021-12-07T12:00:00Z
+,_result,0,HUM,SAP01,85.135986328125,2021-12-07T15:00:00Z
+,_result,0,HUM,SAP01,76.005615234375,2021-12-07T18:00:00Z
+,_result,0,HUM,SAP01,84.87166341145833,2021-12-07T21:00:00Z
+,_result,0,HUM,SAP01,92.11669921875,2021-12-08T00:00:00Z
+,_result,0,HUM,SAP01,99.78743489583333,2021-12-08T03:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-08T06:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-08T09:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-08T12:00:00Z
+,_result,0,HUM,SAP01,91.77986653645833,2021-12-08T15:00:00Z
+,_result,0,HUM,SAP01,78.51318359375,2021-12-08T18:00:00Z
+,_result,0,HUM,SAP01,75.21142578125,2021-12-08T21:00:00Z
+,_result,0,HUM,SAP01,72.04207356770833,2021-12-09T00:00:00Z
+,_result,0,HUM,SAP01,88.48299153645833,2021-12-09T03:00:00Z
+,_result,0,HUM,SAP01,96.95646158854167,2021-12-09T06:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-09T09:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-09T12:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-09T15:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-09T18:00:00Z
+,_result,0,HUM,SAP01,99.98990885416667,2021-12-09T21:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-10T00:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-10T03:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-10T06:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-10T09:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-10T12:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-10T15:00:00Z
+,_result,0,HUM,SAP01,97.14396158854167,2021-12-10T18:00:00Z
+,_result,0,HUM,SAP01,99.755859375,2021-12-10T21:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-11T00:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-11T03:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-11T06:00:00Z
+,_result,0,HUM,SAP01,99.65999348958333,2021-12-11T09:00:00Z
+,_result,0,HUM,SAP01,91.76399739583333,2021-12-11T12:00:00Z
+,_result,0,HUM,SAP01,82.371826171875,2021-12-11T15:00:00Z
+,_result,0,HUM,SAP01,89.459716796875,2021-12-11T18:00:00Z
+,_result,0,HUM,SAP01,90.313232421875,2021-12-11T21:00:00Z
+,_result,0,HUM,SAP01,93.30322265625,2021-12-12T00:00:00Z
+,_result,0,HUM,SAP01,90.94099934895833,2021-12-12T03:00:00Z
+,_result,0,HUM,SAP01,94.79964192708333,2021-12-12T06:00:00Z
+,_result,0,HUM,SAP01,98.58650716145833,2021-12-12T09:00:00Z
+,_result,0,HUM,SAP01,76.0224609375,2021-12-12T12:00:00Z
+,_result,0,HUM,SAP01,70.41373697916667,2021-12-12T15:00:00Z
+,_result,0,HUM,SAP01,75.58528645833333,2021-12-12T18:00:00Z
+,_result,0,HUM,SAP01,87.47062174479167,2021-12-12T21:00:00Z
+,_result,0,HUM,SAP01,95.053955078125,2021-12-13T00:00:00Z
+,_result,0,HUM,SAP01,96.49332682291667,2021-12-13T03:00:00Z
+,_result,0,HUM,SAP01,97.34285481770833,2021-12-13T06:00:00Z
+,_result,0,HUM,SAP01,94.03743489583333,2021-12-13T09:00:00Z
+,_result,0,HUM,SAP01,97.33620383522727,2021-12-13T12:00:00Z
+,_result,0,HUM,SAP01,85.15076622596153,2021-12-13T15:00:00Z
+,_result,0,HUM,SAP01,87.94200721153847,2021-12-13T18:00:00Z
+,_result,0,HUM,SAP01,87.01985677083333,2021-12-13T21:00:00Z
+,_result,0,HUM,SAP01,84.46022727272727,2021-12-14T00:00:00Z
+,_result,0,HUM,SAP01,86.40608723958333,2021-12-14T03:00:00Z
+,_result,0,HUM,SAP01,96.92757161458333,2021-12-14T06:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-14T09:00:00Z
+,_result,0,HUM,SAP01,99.73307291666667,2021-12-14T12:00:00Z
+,_result,0,HUM,SAP01,89.13688151041667,2021-12-14T15:00:00Z
+,_result,0,HUM,SAP01,88.27591646634616,2021-12-14T18:00:00Z
+,_result,0,HUM,SAP01,93.6826171875,2021-12-14T21:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-15T00:00:00Z
+,_result,0,HUM,SAP01,99.97884114583333,2021-12-15T03:00:00Z
+,_result,0,HUM,SAP01,99.97501627604167,2021-12-15T06:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-15T09:00:00Z
+,_result,0,HUM,SAP01,98.3573467548077,2021-12-15T12:00:00Z
+,_result,0,HUM,SAP01,92.369873046875,2021-12-15T15:00:00Z
+,_result,0,HUM,SAP01,86.96988932291667,2021-12-15T18:00:00Z
+,_result,0,HUM,SAP01,90.60701497395833,2021-12-15T21:00:00Z
+,_result,0,HUM,SAP01,89.75423177083333,2021-12-16T00:00:00Z
+,_result,0,HUM,SAP01,95.24405924479167,2021-12-16T03:00:00Z
+,_result,0,HUM,SAP01,98.29972330729167,2021-12-16T06:00:00Z
+,_result,0,HUM,SAP01,99.71321614583333,2021-12-16T09:00:00Z
+,_result,0,HUM,SAP01,94.92024739583333,2021-12-16T12:00:00Z
+,_result,0,HUM,SAP01,85.13028971354167,2021-12-16T15:00:00Z
+,_result,0,HUM,SAP01,83.04874674479167,2021-12-16T18:00:00Z
+,_result,0,HUM,SAP01,90.14493815104167,2021-12-16T21:00:00Z
+,_result,0,HUM,SAP01,92.84554036458333,2021-12-17T00:00:00Z
+,_result,0,HUM,SAP01,94.888916015625,2021-12-17T03:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-17T06:00:00Z
+,_result,0,HUM,SAP01,99.65641276041667,2021-12-17T09:00:00Z
+,_result,0,HUM,SAP01,87.91975911458333,2021-12-17T12:00:00Z
+,_result,0,HUM,SAP01,81.4267578125,2021-12-17T15:00:00Z
+,_result,0,HUM,SAP01,83.42431640625,2021-12-17T18:00:00Z
+,_result,0,HUM,SAP01,92.165771484375,2021-12-17T21:00:00Z
+,_result,0,HUM,SAP01,88.99951171875,2021-12-18T00:00:00Z
+,_result,0,HUM,SAP01,100,2021-12-18T03:00:00Z
+,_result,0,HUM,SAP01,90.70792643229167,2021-12-18T06:00:00Z
+,_result,0,HUM,SAP01,94.503662109375,2021-12-18T09:00:00Z
+,_result,0,HUM,SAP01,76.50056966145833,2021-12-18T12:00:00Z
+,_result,0,HUM,SAP01,68.064453125,2021-12-18T15:00:00Z
+,_result,0,HUM,SAP01,74.10986328125,2021-12-18T18:00:00Z
+,_result,0,HUM,SAP01,89.11843039772727,2021-12-18T21:00:00Z
+,_result,0,HUM,SAP01,91.34028764204545,2021-12-19T00:00:00Z
+,_result,0,HUM,SAP01,96.28043619791667,2021-12-19T03:00:00Z
+,_result,0,HUM,SAP01,95.825439453125,2021-12-19T06:00:00Z
+,_result,0,HUM,SAP01,96.34659830729167,2021-12-19T09:00:00Z
+,_result,0,HUM,SAP01,83.50520833333333,2021-12-19T12:00:00Z
+,_result,0,HUM,SAP01,70.1396484375,2021-12-19T15:00:00Z
+,_result,0,HUM,SAP01,71.82666015625,2021-12-19T18:00:00Z
+,_result,0,HUM,SAP01,79.28629557291667,2021-12-19T21:00:00Z
+,_result,0,HUM,SAP01,81.93953450520833,2021-12-20T00:00:00Z
+,_result,0,HUM,SAP01,92.961669921875,2021-12-20T03:00:00Z
+,_result,0,HUM,SAP01,95.14339192708333,2021-12-20T06:00:00Z
+,_result,0,HUM,SAP01,94.93829900568181,2021-12-20T09:00:00Z
+,_result,0,HUM,SAP01,78.36876502403847,2021-12-20T12:00:00Z
+,_result,0,HUM,SAP01,73.41455078125,2021-12-20T15:00:00Z
+,_result,0,HUM,SAP01,76.05257161458333,2021-12-20T18:00:00Z
+,_result,0,HUM,SAP01,84.822998046875,2021-12-20T21:00:00Z
+,_result,0,HUM,SAP01,79.14168294270833,2021-12-21T00:00:00Z
+,_result,0,HUM,SAP01,86.503662109375,2021-12-21T03:00:00Z
+,_result,0,HUM,SAP01,92.09749348958333,2021-12-21T06:00:00Z
+,_result,0,HUM,SAP01,93.42032877604167,2021-12-21T09:00:00Z
+,_result,0,HUM,SAP01,80.603515625,2021-12-21T12:00:00Z
+,_result,0,HUM,SAP01,68.27303059895833,2021-12-21T15:00:00Z
+,_result,0,HUM,SAP01,63.658772786458336,2021-12-21T18:00:00Z
+,_result,0,HUM,SAP01,64.82405598958333,2021-12-21T21:00:00Z
+,_result,0,HUM,SAP01,75.2275390625,2021-12-22T00:00:00Z
+,_result,0,HUM,SAP01,78.05029296875,2021-12-22T03:00:00Z
+,_result,0,HUM,SAP01,81.39217122395833,2021-12-22T06:00:00Z
+,_result,0,HUM,SAP01,80.153564453125,2021-12-22T09:00:00Z
+,_result,0,HUM,SAP01,60.95703125,2021-12-22T11:15:31.236992505Z
+</pre>
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
