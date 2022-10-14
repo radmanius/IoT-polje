@@ -1,16 +1,17 @@
-# pdp2022
+# Flutter client for pdp2022
 
-A new Flutter project.
+App is used to present data gathered from smart iot gardens.
 
-## Getting Started
+### How to run the app
 
-This project is a starting point for a Flutter application.
+`fvm flutter run`
 
-A few resources to get you started if this is your first Flutter project:
+If you don't have fvm you can install it from [here](https://fvm.app/)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## API Docs
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- API is created by other students in Spring
+- Swagger docs: TODO: insert docs link
+- Open api definition: https://gitlab.tel.fer.hr/kusek-studenti/pdp/pdp2022/-/blob/main/OSTALO/mobile_IoT-field_v2.yml
+- Server access data: https://gitlab.tel.fer.hr/kusek-studenti/pdp/pdp2022/-/blob/main/OSTALO/pristupniPodaci.txt
+
