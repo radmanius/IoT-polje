@@ -1,0 +1,52 @@
+OAuth2 i OIDC - podaci
+
+
+Authorization server
+--------------------
+
+authorizationServerUrl = https://iotat.tel.fer.hr:58443/auth
+realm = spring
+clientId = mobile-keycloak
+
+za mobilne aplikacije
+  redirectUrl = fer.tel.iot.polje.iotpolje:/oauth2Callback
+ili za web
+  redirectUrl = https://iotat.tel.fer.hr:58443/*
+
+authorizationServerAuthorizeUrl = authorizationServerUrl + "/realms/" + realm + "/protocol/openid-connect/auth";
+authorizationServerTokenUrl = authorizationServerUrl + "/realms/" + realm + "/protocol/openid-connect/token";
+
+Uloge
+-----
+fer - koristi se kao tag
+ferit - koristi se kao tag
+iot-read - za pristup URI-jima kao čitač (flutter aplikacija)
+iot-write - za prisup URI-i za promjenu scena i ključeva (web-aplikacija)
+
+Korisnici
+---------
+korisnici imaju isti username i password
+
+korisnik: u1
+uloge: fer, ferit, iot-read
+
+korisnik: u2
+uloge: iot-write
+
+korisnik: u3
+uloge: fer, ferit, iot-read, iot-write
+
+korisnik: u4
+uloge: fer, iot-read
+
+
+REST server
+-----------
+
+URI https://iotat.tel.fer.hr:58443/rest
+
+svi URI-ji u OpenAPI specifikaciji su relativni u odnosu na ovaj URI
+
+
+
+
