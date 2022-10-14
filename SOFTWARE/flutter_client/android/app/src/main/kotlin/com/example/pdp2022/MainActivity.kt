@@ -1,4 +1,4 @@
-package com.example.pdp2020
+package com.example.pdp2022
 
 import io.flutter.embedding.android.FlutterActivity
 
