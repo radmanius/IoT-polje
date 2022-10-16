@@ -2,6 +2,10 @@
 
 App is used to present data gathered from smart iot gardens.
 
+## Architecture
+
+This app uses [Infinum Flutter architecture](https://infinum.com/handbook/flutter).
+
 ### How to run the app
 
 `fvm flutter run`
