@@ -1,0 +1,30 @@
+@import "./reactTypescriptVariables";
+
+.app {
+    scrollbar-width: none;
+
+    .app-body-lazy {
+        height: calc(100% - $default-footer-height);
+        width: 100%;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+html,
+body,
+#root,
+.app {
+    background-color: $default-background-color;
+    font-family: $default-font-family;
+    font-size: $default-font-size;
+    font-weight: $default-font-weight;
+    line-height: $default-line-height;
+    margin: 0px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}

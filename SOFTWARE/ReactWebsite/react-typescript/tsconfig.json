@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "baseUrl": "src",
+        "target": "ES5",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "lib": ["DOM", "ESNext"],
+        "jsx": "react-jsx",
+        "noEmit": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "noEmitOnError": true,
+        "noFallthroughCasesInSwitch": true, // Make sure all switch cases are handled
+        "allowUnusedLabels": false, // Raise error when label is unused
+        "noUnusedLocals": true // Raise error when var is unused
+    },
+    "include": ["src", "src/**/*", "index.d.ts"]
+}

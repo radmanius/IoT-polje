@@ -1,0 +1,12 @@
+{
+    "name": "react-typescripts",
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "react-typescript"
+        ]
+    },
+    "dependencies": {
+        "react-typescript": "file:react-typescript"
+    }
+}
