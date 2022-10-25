@@ -1,37 +1,37 @@
-openapi: '3.0.3'
+openapi: "3.0.3"
 info:
   title: Mobile IoT-field
-  version: '2.0'
+  version: "2.0"
 servers:
   - url: https://localhost:8080/
 paths:
   /scene:
     get:
-      summary: 'get all scenes by access right'
+      summary: "get all scenes by access right"
       responses:
-        '200':
-          description: 'returns list of all scenes'
+        "200":
+          description: "returns list of all scenes"
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SceneSummary'
+                  $ref: "#/components/schemas/SceneSummary"
     post:
-      summary: 'create new scene'
+      summary: "create new scene"
       responses:
-        '200':
-          description: 'creates new scene'
+        "200":
+          description: "creates new scene"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Scene'
+                $ref: "#/components/schemas/Scene"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Scene'
-        description: 'id is ignored'
+              $ref: "#/components/schemas/Scene"
+        description: "id is ignored"
   /scene/{id}:
     parameters:
       - in: path
@@ -41,93 +41,93 @@ paths:
         schema:
           type: integer
     get:
-      summary: 'get one scene'
+      summary: "get one scene"
       responses:
-        '200':
-          description: 'returns one scene with details'
+        "200":
+          description: "returns one scene with details"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Scene'
+                $ref: "#/components/schemas/Scene"
     put:
-      summary: 'update one scene'
+      summary: "update one scene"
       responses:
-        '200':
-          description: 'creates new scene'
+        "200":
+          description: "creates new scene"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Scene'
+                $ref: "#/components/schemas/Scene"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Scene'
-        description: 'id is ignored'
+              $ref: "#/components/schemas/Scene"
+        description: "id is ignored"
     delete:
-      summary: 'delete the scene'
+      summary: "delete the scene"
       responses:
-        '204':
-          description: 'delete the scene'
+        "204":
+          description: "delete the scene"
   /tags:
     get:
-      summary: 'get array of tags for specific user'
+      summary: "get array of tags for specific user"
       responses:
-        '200':
-          description: 'returns list of filtered scenes by access right'
+        "200":
+          description: "returns list of filtered scenes by access right"
           content:
             application/json:
               schema:
                 type: array
-                items: 
-                  type: 'string'
+                items:
+                  type: "string"
   /keys:
     get:
-      summary: 'returns array of keys and values for specific user'
+      summary: "returns array of keys and values for specific user"
       responses:
-        '200':
-          description: 'returns object with keys and values'
+        "200":
+          description: "returns object with keys and values"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Keys'
+                $ref: "#/components/schemas/Keys"
     post:
-      summary: 'create new key with value'
-      description: 'user must have rights'
+      summary: "create new key with value"
+      description: "user must have rights"
       responses:
-        '200':
-          description: 'creates new key'
+        "200":
+          description: "creates new key"
           content:
             application/json:
               schema:
                 type: object
-              example: { "token1": "value of token1"}
+              example: { "token1": "value of token1" }
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Scene'
-        description: 'id is ignored'
+              $ref: "#/components/schemas/Scene"
+        description: "id is ignored"
   /key/{token}:
     put:
-      summary: 'update token'
-      description: 'user must have rights'
+      summary: "update token"
+      description: "user must have rights"
       responses:
-        '200':
-          description: 'returns object with keys and values'
+        "200":
+          description: "returns object with keys and values"
           content:
             application/json:
               schema:
                 type: string
               example: "token value"
     delete:
-      summary: 'delete token'
-      description: 'user must have rights and no scene is using it'
+      summary: "delete token"
+      description: "user must have rights and no scene is using it"
       responses:
-        '204':
-          description: 'token deleted'
-        '400':
-          description: 'token is used by at least one scene and can not be deleted'
+        "204":
+          description: "token deleted"
+        "400":
+          description: "token is used by at least one scene and can not be deleted"
 components:
   schemas:
     SceneSummary:
@@ -146,7 +146,7 @@ components:
           type: array
           items:
             type: string
-          example: [ "fer", "ferit" ]
+          example: ["fer", "ferit"]
     Scene:
       type: object
       required:
@@ -160,7 +160,7 @@ components:
         id:
           type: string
           example: "135"
-          description: 'not needed when update or create scene'
+          description: "not needed when update or create scene"
         title:
           type: string
           example: FER SAP01
@@ -172,10 +172,7 @@ components:
           example: "http://example.com/some.png"
         layout:
           type: string
-          enum: [
-            "list",
-            "grid"
-          ]
+          enum: ["list", "grid"]
         tags:
           type: array
           items:
@@ -184,21 +181,21 @@ components:
         "views":
           type: array
           items:
-            $ref: '#/components/schemas/View'
+            $ref: "#/components/schemas/View"
         roles:
           type: array
-          items: 
+          items:
             type: string
-          description: 'used only when creating or updating scene'
+          description: "used only when creating or updating scene"
         keys:
           type: array
-          items: 
+          items:
             type: string
-          description: 'key names. Used only when creating or updating scene'
+          description: "key names. Used only when creating or updating scene"
     View:
       oneOf:
-      - $ref: '#/components/schemas/MeasurementsView'
-      - $ref: '#/components/schemas/ActuationView'
+        - $ref: "#/components/schemas/MeasurementsView"
+        - $ref: "#/components/schemas/ActuationView"
     MeasurementsView:
       type: object
       properties:
@@ -207,19 +204,16 @@ components:
           example: view title
         viewType:
           type: string
-          enum: [
-            "single",
-            "series"
-          ]
+          enum: ["single", "series"]
         measurementUnit:
           type: string
           example: "C"
         selectForm:
-          $ref: '#/components/schemas/MeasurementSelectForm'
+          $ref: "#/components/schemas/MeasurementSelectForm"
         query:
-          $ref: '#/components/schemas/Request'
+          $ref: "#/components/schemas/Request"
         responseExtracting:
-          $ref: '#/components/schemas/DataExtractor'
+          $ref: "#/components/schemas/DataExtractor"
     ActuationView:
       type: object
       properties:
@@ -228,41 +222,39 @@ components:
           example: view title
         viewType:
           type: string
-          enum: [
-            "actuation"
-          ]
+          enum: ["actuation"]
         form:
-          $ref: '#/components/schemas/ActuationForm'
+          $ref: "#/components/schemas/ActuationForm"
     ActuationForm:
       type: object
       properties:
         defaultValuesRequest:
-          $ref: '#/components/schemas/Request'
+          $ref: "#/components/schemas/Request"
         submitFormRequest:
-          $ref: '#/components/schemas/Request'
+          $ref: "#/components/schemas/Request"
         inputs:
           oneOf:
-          - $ref: '#/components/schemas/BooleanInput'
-          - $ref: '#/components/schemas/IntegerInput'
-          - $ref: '#/components/schemas/DecimalInput'
-          - $ref: '#/components/schemas/DateInput'
-          - $ref: '#/components/schemas/TimeInput'
-          - $ref: '#/components/schemas/StringInput'
-          - $ref: '#/components/schemas/SubmitButton'
+            - $ref: "#/components/schemas/BooleanInput"
+            - $ref: "#/components/schemas/IntegerInput"
+            - $ref: "#/components/schemas/DecimalInput"
+            - $ref: "#/components/schemas/DateInput"
+            - $ref: "#/components/schemas/TimeInput"
+            - $ref: "#/components/schemas/StringInput"
+            - $ref: "#/components/schemas/SubmitButton"
     MeasurementSelectForm:
       type: object
       properties:
         submitSelectionRequest:
-          $ref: '#/components/schemas/Request'
+          $ref: "#/components/schemas/Request"
         inputs:
           oneOf:
-          - $ref: '#/components/schemas/BooleanInput'
-          - $ref: '#/components/schemas/IntegerInput'
-          - $ref: '#/components/schemas/DecimalInput'
-          - $ref: '#/components/schemas/DateInput'
-          - $ref: '#/components/schemas/TimeInput'
-          - $ref: '#/components/schemas/StringInput'
-          - $ref: '#/components/schemas/SubmitButton'
+            - $ref: "#/components/schemas/BooleanInput"
+            - $ref: "#/components/schemas/IntegerInput"
+            - $ref: "#/components/schemas/DecimalInput"
+            - $ref: "#/components/schemas/DateInput"
+            - $ref: "#/components/schemas/TimeInput"
+            - $ref: "#/components/schemas/StringInput"
+            - $ref: "#/components/schemas/SubmitButton"
     Request:
       type: object
       required:
@@ -275,28 +267,28 @@ components:
           example: http://localhost:80/some/path/{{var1}}
         method:
           type: string
-          enum: [
-            "GET",
-            "POST"
-          ]
+          enum: ["GET", "POST"]
         headers:
           type: object
-          example: { "Authorization": "{{accessToken}} {{token1}} ...", "Content-Type": "application/csv", ...  }
+          example:
+            {
+              "Authorization": "{{accessToken}} {{token1}} ...",
+              "Content-Type": "application/csv",
+              ...,
+            }
         payload:
           type: string
           example: template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}
     DataExtractor:
       oneOf:
-      - $ref: '#/components/schemas/DataExtractorCsv'
-      - $ref: '#/components/schemas/DataExtractorJson'
+        - $ref: "#/components/schemas/DataExtractorCsv"
+        - $ref: "#/components/schemas/DataExtractorJson"
     DataExtractorJson:
       type: object
       properties:
         dataFormat:
           type: string
-          enum: [ 
-            "json" 
-          ]
+          enum: ["json"]
         timeJsonPath:
           type: string
           example: "$.data[*][0]"
@@ -310,9 +302,7 @@ components:
       properties:
         dataFormat:
           type: string
-          enum: [ 
-            "csv" 
-          ]
+          enum: ["csv"]
         timeColumn:
           type: string
           example: "_time"
@@ -331,9 +321,7 @@ components:
       properties:
         inputType:
           type: string
-          enum: [
-            "boolean"
-          ]
+          enum: ["boolean"]
         name:
           type: string
         title:
@@ -352,9 +340,7 @@ components:
       properties:
         inputType:
           type: string
-          enum: [
-            "integer"
-          ]
+          enum: ["integer"]
         name:
           type: string
         title:
@@ -377,9 +363,7 @@ components:
       properties:
         inputType:
           type: string
-          enum: [
-            "decimal"
-          ]
+          enum: ["decimal"]
         name:
           type: string
         title:
@@ -402,9 +386,7 @@ components:
       properties:
         inputType:
           type: string
-          enum: [
-            "date"
-          ]
+          enum: ["date"]
         name:
           type: string
         title:
@@ -423,9 +405,7 @@ components:
       properties:
         inputType:
           type: string
-          enum: [
-            "time"
-          ]
+          enum: ["time"]
         name:
           type: string
         title:
@@ -444,9 +424,7 @@ components:
       properties:
         inputType:
           type: string
-          enum: [
-            "string"
-          ]
+          enum: ["string"]
         name:
           type: string
         title:
@@ -459,16 +437,14 @@ components:
           type: string
         "enum":
           type: array
-          items: 
+          items:
             type: string
     SubmitButton:
       type: object
       properties:
         inputType:
           type: string
-          enum: [
-            "submit"
-          ]
+          enum: ["submit"]
         name:
           type: string
         title:
@@ -476,7 +452,7 @@ components:
     Keys:
       type: array
       items:
-        $ref: '#/components/schemas/Key'
+        $ref: "#/components/schemas/Key"
     Key:
       type: object
       required:
@@ -491,9 +467,7 @@ components:
           example: "value of token 1"
         canDelete:
           type: boolean
-
-
-# - dohvaćanje ključeva za nekog korisnika 
+# - dohvaćanje ključeva za nekog korisnika
 #   - oni se spremaju u aplikaciju
 #   - ako nemamo pravo pristupiti nekom viewu (query) onda probamo ponovno dohvatiti nove ključeve
 #   - ako s novim ključevima ne možemo pristupiti onda nemamo pravo pristupa tome
