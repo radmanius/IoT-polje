@@ -11,6 +11,7 @@ i18n.use(initReactI18next).init({
                 [Res.DefaultErrorMessage]: "Something went wrong. Please try again later.",
                 [Res.NotFound]: "Page not found",
                 [Res.GhostStoleThisPage]: "Ghost stole this page",
+                [Res.LoginPage]: "Login page"
             },
         },
         [SupportedLanguageEnum[SupportedLanguageEnum.Croatian]]: {
@@ -19,6 +20,7 @@ i18n.use(initReactI18next).init({
                 [Res.DefaultErrorMessage]: "Nešto nije u redu. Molimo Vas, pokušajte ponovno kasnije.",
                 [Res.NotFound]: "Stranica nije pronađena",
                 [Res.GhostStoleThisPage]: "Duh je ukrao ovu stranicu",
+                [Res.LoginPage]: "Prijavi se"
             },
         },
     },
