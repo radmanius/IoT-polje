@@ -1,3 +1,5 @@
+import { StringResources as Res, translate as t } from "utils/language/languageResource";
+
 const LandingPage = () => {
     return (
         <div>
