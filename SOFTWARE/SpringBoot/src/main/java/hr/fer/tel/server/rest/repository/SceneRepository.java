@@ -1,14 +1,15 @@
 package hr.fer.tel.server.rest.repository;
 
 import hr.fer.tel.server.rest.model.Scene;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface SceneRepository extends MongoRepository<Scene, String> {
+public interface SceneRepository extends JpaRepository<Scene, String> {
 
 
     //index po tagovima i rolama-DODATI
@@ -18,7 +19,6 @@ public interface SceneRepository extends MongoRepository<Scene, String> {
     //index po rolama-DODATI
     @Query(value = "{roles:{$in : ?0 }}")
     List<Scene> getByRoles(String[] roles);
-
 
 
 }

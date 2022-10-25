@@ -1,6 +1,6 @@
 package hr.fer.tel.server.rest.controller;
 
-import hr.fer.tel.server.rest.model.KeyDTO;
+import hr.fer.tel.server.rest.dto.KeyDTO;
 import hr.fer.tel.server.rest.service.KeyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

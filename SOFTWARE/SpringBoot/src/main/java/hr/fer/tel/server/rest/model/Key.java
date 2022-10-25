@@ -1,12 +1,18 @@
 package hr.fer.tel.server.rest.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Table;
 
-@Document
+import org.springframework.data.annotation.Id;
+
+@Entity
+@Table(name = "Key")
 public class Key {
 
-    @Id
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String token1;
     private String token2;

@@ -1,7 +1,7 @@
 package hr.fer.tel.server.rest.service;
 
+import hr.fer.tel.server.rest.dto.KeyDTO;
 import hr.fer.tel.server.rest.model.Key;
-import hr.fer.tel.server.rest.model.KeyDTO;
 import hr.fer.tel.server.rest.repository.KeyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

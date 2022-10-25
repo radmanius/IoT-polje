@@ -1,5 +1,7 @@
 package hr.fer.tel.server.rest.model;
 
+import hr.fer.tel.server.rest.dto.SceneDTO;
+
 public class ShortScene {
 
     private String id;

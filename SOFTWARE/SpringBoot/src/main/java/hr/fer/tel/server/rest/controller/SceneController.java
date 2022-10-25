@@ -1,7 +1,7 @@
 package hr.fer.tel.server.rest.controller;
 
+import hr.fer.tel.server.rest.dto.SceneDTO;
 import hr.fer.tel.server.rest.model.Scene;
-import hr.fer.tel.server.rest.model.SceneDTO;
 import hr.fer.tel.server.rest.model.ShortScene;
 import hr.fer.tel.server.rest.service.SceneService;
 import org.springframework.beans.factory.annotation.Autowired;

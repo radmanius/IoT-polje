@@ -1,7 +1,9 @@
-package hr.fer.tel.server.rest.model;
+package hr.fer.tel.server.rest.dto;
 
 import java.util.Comparator;
 import java.util.Objects;
+
+import hr.fer.tel.server.rest.model.Key;
 
 public class KeyDTO implements Comparable<KeyDTO>, Comparator<KeyDTO> {
 

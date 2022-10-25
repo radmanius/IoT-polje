@@ -1,9 +1,10 @@
 package hr.fer.tel.server.rest.repository;
 
-import hr.fer.tel.server.rest.model.Key;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import hr.fer.tel.server.rest.model.Key;
+
 @Repository
-public interface KeyRepository extends MongoRepository<Key, String> {
+public interface KeyRepository extends JpaRepository<Key, String> {
 }

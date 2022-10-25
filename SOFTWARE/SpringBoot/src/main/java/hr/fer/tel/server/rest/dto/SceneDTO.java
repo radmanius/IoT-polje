@@ -1,14 +1,10 @@
-package hr.fer.tel.server.rest.model;
+package hr.fer.tel.server.rest.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.util.MimeType;
-
-import java.net.URI;
 import java.util.List;
+
+import hr.fer.tel.server.rest.model.Scene;
+import hr.fer.tel.server.rest.model.View;
+import hr.fer.tel.server.rest.model.enums.Layout;
 
 public class SceneDTO {
 

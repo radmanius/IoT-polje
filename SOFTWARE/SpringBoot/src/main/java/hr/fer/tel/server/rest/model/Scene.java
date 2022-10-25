@@ -3,18 +3,28 @@ package hr.fer.tel.server.rest.model;
 import java.net.URI;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Table;
+
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.util.MimeType;
 
-@Document
+import hr.fer.tel.server.rest.model.enums.Layout;
+import hr.fer.tel.server.rest.model.enums.UserRole;
+
+@Entity
+@Table(name = "Scene")
 public class Scene {
 
-    @Id
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+	
     private String title;
     private String subtitle;
     private Layout layout;

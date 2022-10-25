@@ -13,10 +13,10 @@ import org.springframework.boot.test.json.JsonContent;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 
-import hr.fer.tel.server.rest.model.Layout;
 import hr.fer.tel.server.rest.model.Query;
 import hr.fer.tel.server.rest.model.Scene;
 import hr.fer.tel.server.rest.model.View;
+import hr.fer.tel.server.rest.model.enums.Layout;
 
 @JsonTest
 public class SceneJsonTest {
