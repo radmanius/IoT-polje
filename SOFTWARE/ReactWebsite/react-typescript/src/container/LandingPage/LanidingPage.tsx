@@ -1,7 +1,7 @@
 const LandingPage = () => {
     return (
         <div>
-            <span>Landing page</span>
+            <span>{t(Res.LandingPage)}</span>
         </div>
     );
 };

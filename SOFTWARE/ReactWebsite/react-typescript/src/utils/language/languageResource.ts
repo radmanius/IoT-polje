@@ -5,7 +5,8 @@ export enum StringResources {
     DefaultErrorMessage = "DefaultErrorMessage",
     NotFound = "NotFound",
     GhostStoleThisPage = "GhostStoleThisPage",
-    LoginPage = "LoginPage"
+    LoginPage = "LoginPage",
+    LandingPage = "LandingPage"
 }
 
 export function translate(stringResources: StringResources) {
