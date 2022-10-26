@@ -1,6 +1,10 @@
 package hr.fer.tel.server.rest.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "View")
 public class View {
     private String title;
     private Query query;

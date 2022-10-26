@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class NoSuchElement extends RuntimeException{
 
-    public NoSuchElement(String message) {
+	private static final long serialVersionUID = 1L;
+
+	public NoSuchElement(String message) {
         super(message);
     }
 

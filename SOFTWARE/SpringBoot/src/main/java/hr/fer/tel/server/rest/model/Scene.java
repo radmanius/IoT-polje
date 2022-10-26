@@ -34,7 +34,9 @@ public class Scene {
     private List<UserRole> roles; //roles required for specific scene
     private List<Key> keys; // keys required for specific scene
 
-    public Scene(){}
+    public Scene(){
+    	
+    }
 
     public Scene(String id, String title, String subtitle, Layout layout, String pictureLink, List<String> tags, List<View> views, List<UserRole> roles, List<Key> keys) {
         this.id = id;

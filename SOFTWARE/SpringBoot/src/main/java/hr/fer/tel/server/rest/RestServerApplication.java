@@ -8,6 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
+//Ovo je obican init dummy vrijednostima za testiranje
+
+
 @SpringBootApplication
 public class RestServerApplication {
 

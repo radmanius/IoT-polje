@@ -3,7 +3,7 @@ package hr.fer.tel.server.rest.service;
 import hr.fer.tel.server.rest.dto.KeyDTO;
 import hr.fer.tel.server.rest.dto.SceneDTO;
 import hr.fer.tel.server.rest.model.*;
-import hr.fer.tel.server.rest.repository.SceneRepository;
+import hr.fer.tel.server.rest.repository.dao.SceneRepository;
 import hr.fer.tel.server.rest.utils.KeycloakSecurityConfig;
 import hr.fer.tel.server.rest.utils.NoSuchElement;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,20 @@
 package hr.fer.tel.server.rest.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Table;
+
+import org.springframework.data.annotation.Id;
+
 import hr.fer.tel.server.rest.dto.SceneDTO;
 
+@Entity
+@Table(name = "ShortScene")
 public class ShortScene {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String title;
     private String subtitle;

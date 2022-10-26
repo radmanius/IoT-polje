@@ -5,6 +5,11 @@ import org.springframework.http.HttpMethod;
 
 import java.net.URI;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Query")
 public class Query {
     private URI URI;
     private HttpMethod method;
