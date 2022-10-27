@@ -9,7 +9,6 @@ import { PATHS } from "utils/paths";
 const ReactTypescriptWrapperNonLoggedIn = () => {
     const userState = useSelector((state: RootState) => state.reactTypescript.userState);
     const navigate = useNavigate();
-
     useEffect(() => {
         if (userState === UserLoggedInStateEnum.LoggedIn) {
             navigate(PATHS.Global.Home);

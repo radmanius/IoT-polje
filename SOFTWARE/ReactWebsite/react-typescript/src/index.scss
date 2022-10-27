@@ -4,7 +4,7 @@
     scrollbar-width: none;
 
     .app-body-lazy {
-        height: calc(100% - $default-footer-height);
+        height: calc(100% - ($default-footer-height - $default-header-height));
         width: 100%;
     }
 }

@@ -1,0 +1,12 @@
+@import "reactTypescriptVariables";
+
+.app-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: $white-color;
+    height: $default-header-height;
+    background-color: green;
+    z-index: 99999;
+}
