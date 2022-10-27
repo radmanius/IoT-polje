@@ -4,6 +4,7 @@ import hr.fer.tel.server.rest.dto.SceneDTO;
 import hr.fer.tel.server.rest.model.Scene;
 import hr.fer.tel.server.rest.model.ShortScene;
 import hr.fer.tel.server.rest.service.SceneService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,49 +15,59 @@ import java.util.List;
 @RestController
 public class SceneController {
 
-    private final SceneService sceneService;
+	private final SceneService sceneService;
 
-    @Autowired
-    public SceneController(SceneService sceneService) {
-        this.sceneService = sceneService;
-    }
+	@Autowired
+	public SceneController(SceneService sceneService) {
+		this.sceneService = sceneService;
+	}
+	
+	//returns list of all scenes
+	@RolesAllowed("iot-read")
+	@GetMapping("/scene")
+	public ResponseEntity<List<ShortScene>> getScenes() { // vraca sve scene
 
-    @RolesAllowed( "iot-write")
-    @PostMapping("/scene/add")
-    public ResponseEntity<Scene> sceneAdd(@RequestBody Scene scene){
-        return ResponseEntity.status(201).body(sceneService.addScene(scene));
-    }
+		List<ShortScene> scenes = sceneService.getAllScenes().stream().map(s -> ShortScene.from(s)).toList();
+		// ili ShortScene::from
+		return ResponseEntity.ok(scenes);
+	}
+	
+	//create new scene
+	@RolesAllowed("iot-write")
+	@PostMapping("/scene")
+	public ResponseEntity<Scene> sceneAdd(@RequestBody Scene scene) {
+		Scene saved = sceneService.addScene(scene);
+		return ResponseEntity.status(201).body(saved);
+	}
+	
+	//get one scene
+	@RolesAllowed("iot-read")
+	@GetMapping("/scene/{id}")
+	public ResponseEntity<SceneDTO> getSceneById(@PathVariable("id") String id) {
+		SceneDTO scene = sceneService.getById(id);
+		return ResponseEntity.ok(scene);
+	}
+	
+	//update one scene
+	@RolesAllowed("iot-write")
+	@PutMapping("/scene/{id}")
+	public ResponseEntity<Scene> sceneEdit(@PathVariable("id") String id, @RequestBody Scene scene) {
+		Scene saved = sceneService.editScene(id, scene);
+		return ResponseEntity.ok(saved);
+	}
 
-    @RolesAllowed( "iot-write")
-    @PostMapping("/scene/edit")
-    public ResponseEntity<Scene> sceneEdit(@RequestBody Scene scene){
-        return ResponseEntity.ok(sceneService.editScene(scene));
-    }
-
-    @RolesAllowed( "iot-read")
-    @GetMapping("/scene")
-    public ResponseEntity<List<ShortScene>> getScenes(){
-
-        List<ShortScene> scenes = sceneService.getAllScenes().stream()
-            .map(ShortScene::from)
-            .toList();
-        return ResponseEntity.ok(scenes);
-    }
-
-    @RolesAllowed( "iot-read")
-    @PostMapping("/scene")
-    public ResponseEntity<List<ShortScene>> getSceneByTags(@RequestBody List<String> tags){
-
-      return ResponseEntity.ok(sceneService.getByTags(tags).stream()
-          .map(ShortScene::from)
-          .toList());
-    }
-
-    @RolesAllowed( "iot-read")
-    @GetMapping("/scene/{id}")
-    public ResponseEntity<SceneDTO> getSceneById(@PathVariable String id){
-
-        return ResponseEntity.ok(sceneService.getById(id));
-
-    }
+//	@RolesAllowed("iot-read")
+//	@PostMapping("/scene")
+//	public ResponseEntity<List<ShortScene>> getSceneByTags(@RequestBody List<String> tags) {
+//		List<ShortScene> scenes = sceneService.getByTags(tags).stream().map(ShortScene::from).toList();
+//		return ResponseEntity.ok(scenes);
+//	}
+	
+	//delete scene
+	@RolesAllowed("iot-write")
+	@DeleteMapping("/scene/{id}")
+	public ResponseEntity<Scene> deleteSceneById(@PathVariable("id") String id) {
+		Scene scene = sceneService.deleteSceneById(id);
+		return ResponseEntity.ok(scene);
+	}
 }
