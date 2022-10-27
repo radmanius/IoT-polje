@@ -1,0 +1,517 @@
+<!DOCTYPE html><html><head>
+      <title>OAuth2DesktopAuthorizationWithPKCE</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////Users/mario/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.6.3/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <p><!--?xml version="1.0" encoding="UTF-8" standalone="no"?--><svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" contentscripttype="application/ecmascript" contentstyletype="text/css" height="1761px" preserveAspectRatio="none" style="width:1389px;height:1761px;background:#FFFFFF;" version="1.1" viewBox="0 0 1389 1761" width="1389px" zoomAndPan="magnify"><defs><filter height="300%" id="fgq5r6x34e9yy" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#fgq5r6x34e9yy)" height="75.9316" style="stroke:#000000;stroke-width:2.0;" width="1046.5" x="204.5" y="356.8574"/><rect fill="#FFFFFF" filter="url(#fgq5r6x34e9yy)" height="134.5527" style="stroke:#000000;stroke-width:2.0;" width="1241" x="10" y="446.7891"/><rect fill="#FFFFFF" filter="url(#fgq5r6x34e9yy)" height="134.5527" style="stroke:#000000;stroke-width:2.0;" width="1241" x="10" y="595.3418"/><rect fill="#FFFFFF" filter="url(#fgq5r6x34e9yy)" height="190.4844" style="stroke:#000000;stroke-width:2.0;" width="1046.5" x="204.5" y="743.8945"/><rect fill="#FFFFFF" filter="url(#fgq5r6x34e9yy)" height="377.5898" style="stroke:#000000;stroke-width:2.0;" width="1155.5" x="204.5" y="948.3789"/><rect fill="#FFFFFF" filter="url(#fgq5r6x34e9yy)" height="255.1055" style="stroke:#000000;stroke-width:2.0;" width="1046.5" x="204.5" y="1482.5215"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="85" x2="85" y1="133.4414" y2="1754.627"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="270.5" x2="270.5" y1="133.4414" y2="1754.627"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="772" x2="772" y1="133.4414" y2="1754.627"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1161" x2="1161" y1="133.4414" y2="1754.627"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1315" x2="1315" y1="133.4414" y2="1754.627"/><rect fill="#FEFECE" filter="url(#fgq5r6x34e9yy)" height="46.9766" style="stroke:#A80036;stroke-width:1.5;" width="126" x="20" y="81.4648"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112" x="27" y="102">Resource Owner</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="63" y="118.4883">(user)</text><rect fill="#FEFECE" filter="url(#fgq5r6x34e9yy)" height="46.9766" style="stroke:#A80036;stroke-width:1.5;" width="109" x="214.5" y="81.4648"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="249" y="102">Client</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="95" x="221.5" y="118.4883">(desktop app)</text><rect fill="#FEFECE" filter="url(#fgq5r6x34e9yy)" height="46.9766" style="stroke:#A80036;stroke-width:1.5;" width="90" x="725" y="81.4648"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="76" x="732" y="102">User Agent</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="66" x="737" y="118.4883">(browser)</text><rect fill="#FEFECE" filter="url(#fgq5r6x34e9yy)" height="46.9766" style="stroke:#A80036;stroke-width:1.5;" width="156" x="1081" y="81.4648"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142" x="1088" y="102">Authorization Server</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="69" x="1124.5" y="118.4883">(keycloak)</text><rect fill="#FEFECE" filter="url(#fgq5r6x34e9yy)" height="46.9766" style="stroke:#A80036;stroke-width:1.5;" width="124" x="1251" y="81.4648"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="110" x="1258" y="102">Resource Server</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="82" x="1272" y="118.4883">(rest server)</text><polygon fill="#A80036" points="259,160.752,269,164.752,259,168.752,263,164.752" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="85" x2="265" y1="164.752" y2="164.752"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="92" y="160.0098">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="56" x="105" y="160.0098">start app</text><path d="M44,177.752 L44,340.752 L493,340.752 L493,187.752 L483,177.752 L44,177.752 " fill="#FBFB77" filter="url(#fgq5r6x34e9yy)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M483,177.752 L483,187.752 L493,187.752 L483,177.752 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="409" x="50" y="195.3203">generate random secret (PKCE Code Verifier) - 43-128 characters</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="323" x="50" y="210.6309">calculate hash of it (PKCE Code Callenge) - SHA256</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="428" x="50" y="225.9414">generate URL for Authorization Server (Authorization Code Request):</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="131" x="58" y="241.252">response_type=code</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="290" x="58" y="256.5625">PKCE Code Challenge: code_challenge=...hash</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="193" x="58" y="271.873">code_challenge_method=S256</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="135" x="58" y="287.1836">ClientID: client_id=...</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="314" x="58" y="302.4941">Redirect URL: redirect_uri=http://localhost:8080/</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="104" x="58" y="317.8047">Scope: scope=...</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="126" x="58" y="333.1152">state=random value</text><path d="M204.5,356.8574 L340.5,356.8574 L340.5,363.8574 L330.5,373.8574 L204.5,373.8574 L204.5,356.8574 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="75.9316" style="stroke:#000000;stroke-width:2.0;" width="1046.5" x="204.5" y="356.8574"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="91" x="219.5" y="370.4258">front channel</text><polygon fill="#A80036" points="760,391.4785,770,395.4785,760,399.4785,764,395.4785" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="766" y1="395.4785" y2="395.4785"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="278" y="390.7363">2</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="125" x="291" y="390.7363">open generated URL</text><polygon fill="#A80036" points="1149,420.7891,1159,424.7891,1149,428.7891,1153,424.7891" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="772" x2="1155" y1="424.7891" y2="424.7891"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="779" y="420.0469">3</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="176" x="792" y="420.0469">Authorization Code Request</text><path d="M10,446.7891 L248,446.7891 L248,453.7891 L238,463.7891 L10,463.7891 L10,446.7891 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="134.5527" style="stroke:#000000;stroke-width:2.0;" width="1241" x="10" y="446.7891"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="193" x="25" y="460.3574">login to authorization server</text><polygon fill="#A80036" points="783,481.4102,773,485.4102,783,489.4102,779,485.4102" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="777" x2="1160" y1="485.4102" y2="485.4102"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="789" y="480.668">4</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="69" x="802" y="480.668">Login page</text><polygon fill="#A80036" points="96,510.7207,86,514.7207,96,518.7207,92,514.7207" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="90" x2="771" y1="514.7207" y2="514.7207"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="102" y="509.9785">5</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="69" x="115" y="509.9785">Login page</text><polygon fill="#A80036" points="760,540.0313,770,544.0313,760,548.0313,764,544.0313" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="85" x2="766" y1="544.0313" y2="544.0313"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="92" y="539.2891">6</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="108" x="105" y="539.2891">Login credentials</text><polygon fill="#A80036" points="1149,569.3418,1159,573.3418,1149,577.3418,1153,573.3418" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="772" x2="1155" y1="573.3418" y2="573.3418"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="779" y="568.5996">7</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="108" x="792" y="568.5996">Login credentials</text><path d="M10,595.3418 L161,595.3418 L161,602.3418 L151,612.3418 L10,612.3418 L10,595.3418 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="134.5527" style="stroke:#000000;stroke-width:2.0;" width="1241" x="10" y="595.3418"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="102" x="25" y="608.9102">consent screen</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="241" x="176" y="607.9766">[if authorization server needs to ask for it]</text><polygon fill="#A80036" points="783,629.9629,773,633.9629,783,637.9629,779,633.9629" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="777" x2="1160" y1="633.9629" y2="633.9629"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="789" y="629.2207">8</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="258" x="802" y="629.2207">Consent page to login to this application</text><polygon fill="#A80036" points="96,659.2734,86,663.2734,96,667.2734,92,663.2734" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="90" x2="771" y1="663.2734" y2="663.2734"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="102" y="658.5313">9</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="258" x="115" y="658.5313">Consent page to login to this application</text><polygon fill="#A80036" points="760,688.584,770,692.584,760,696.584,764,692.584" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="85" x2="766" y1="692.584" y2="692.584"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="92" y="687.8418">10</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="137" x="114" y="687.8418">Consent confirmation</text><polygon fill="#A80036" points="1149,717.8945,1159,721.8945,1149,725.8945,1153,721.8945" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="772" x2="1155" y1="721.8945" y2="721.8945"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="779" y="717.1523">11</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="137" x="801" y="717.1523">Consent confirmation</text><path d="M204.5,743.8945 L340.5,743.8945 L340.5,750.8945 L330.5,760.8945 L204.5,760.8945 L204.5,743.8945 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="190.4844" style="stroke:#000000;stroke-width:2.0;" width="1046.5" x="204.5" y="743.8945"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="91" x="219.5" y="757.4629">front channel</text><path d="M987,766.2051 L987,837.2051 L1152,837.2051 L1152,776.2051 L1142,766.2051 L987,766.2051 " fill="#FBFB77" filter="url(#fgq5r6x34e9yy)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1142,766.2051 L1142,776.2051 L1152,776.2051 L1142,766.2051 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="83" x="993" y="783.7734">Redirect URL:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="127" x="1001" y="799.084">base URL (localhost)</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="136" x="1001" y="814.3945">code=generated code</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="134" x="1001" y="829.7051">state=...from request</text><polygon fill="#A80036" points="783,863.7578,773,867.7578,783,871.7578,779,867.7578" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="777" x2="1160" y1="867.7578" y2="867.7578"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="789" y="863.0156">12</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="343" x="811" y="863.0156">Authorization Code Response, Redirect URL (localhost)</text><polygon fill="#A80036" points="282,893.0684,272,897.0684,282,901.0684,278,897.0684" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="276" x2="771" y1="897.0684" y2="897.0684"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="288" y="892.3262">13</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="388" x="310" y="892.3262">HTTP request to localhost with: Authorization Code Response</text><polygon fill="#A80036" points="760,922.3789,770,926.3789,760,930.3789,764,926.3789" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="271" x2="766" y1="926.3789" y2="926.3789"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="278" y="921.6367">14</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="455" x="300" y="921.6367">web page that the user is successfully authorized and can close browser</text><path d="M204.5,948.3789 L339.5,948.3789 L339.5,955.3789 L329.5,965.3789 L204.5,965.3789 L204.5,948.3789 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="377.5898" style="stroke:#000000;stroke-width:2.0;" width="1155.5" x="204.5" y="948.3789"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="90" x="219.5" y="961.9473">back channel</text><path d="M276,970.6895 L276,1071.6895 L744,1071.6895 L744,980.6895 L734,970.6895 L276,970.6895 " fill="#FBFB77" filter="url(#fgq5r6x34e9yy)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M734,970.6895 L734,980.6895 L744,980.6895 L734,970.6895 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="447" x="282" y="988.2578">create Exchange Code for Token with Authorization Code POST request</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="201" x="290" y="1003.5684">grand_type=authorization_code</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="150" x="290" y="1018.8789">code=from redirect URL</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="94" x="290" y="1034.1895">redirect_uri=...</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="207" x="290" y="1049.5">code_verifier=PKCE Code Verifier</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="76" x="290" y="1064.8105">client_id=...</text><polygon fill="#A80036" points="1149,1098.8633,1159,1102.8633,1149,1106.8633,1153,1102.8633" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="1155" y1="1102.8633" y2="1102.8633"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="278" y="1098.1211">15</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="505" x="300" y="1098.1211">Exchange Code for Token with Authorization Code, PKCE Code Verifier, Clinet ID</text><path d="M972,1115.8633 L972,1216.8633 L1346,1216.8633 L1346,1125.8633 L1336,1115.8633 L972,1115.8633 " fill="#FBFB77" filter="url(#fgq5r6x34e9yy)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1336,1115.8633 L1336,1125.8633 L1346,1125.8633 L1336,1115.8633 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="163" x="978" y="1133.4316">check Authorization Code</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="67" x="986" y="1148.7422">I created it</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="128" x="986" y="1164.0527">It has not been used</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="212" x="986" y="1179.3633">It is valid in time (passed &lt;1 min)</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="133" x="986" y="1194.6738">It is for this Client ID</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="345" x="986" y="1209.9844">Calculate hash and compare with PKCE Code Challenge</text><polygon fill="#A80036" points="282,1244.0371,272,1248.0371,282,1252.0371,278,1248.0371" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="276" x2="1160" y1="1248.0371" y2="1248.0371"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="288" y="1243.2949">16</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="185" x="310" y="1243.2949">Access Token, Refresh Token</text><path d="M276,1261.0371 L276,1316.0371 L596,1316.0371 L596,1271.0371 L586,1261.0371 L276,1261.0371 " fill="#FBFB77" filter="url(#fgq5r6x34e9yy)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M586,1261.0371 L586,1271.0371 L596,1271.0371 L586,1261.0371 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="299" x="282" y="1278.6055">check that state value is the same as in request</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="228" x="282" y="1293.916">save refresh token in secure storage</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="185" x="282" y="1309.2266">save access token in memory</text><polygon fill="#A80036" points="1303,1350.2793,1313,1354.2793,1303,1358.2793,1307,1354.2793" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="1309" y1="1354.2793" y2="1354.2793"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="278" y="1349.5371">17</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="235" x="300" y="1349.5371">GET resource data with Access Token</text><path d="M1261,1367.2793 L1261,1407.2793 L1364,1407.2793 L1364,1377.2793 L1354,1367.2793 L1261,1367.2793 " fill="#FBFB77" filter="url(#fgq5r6x34e9yy)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1354,1367.2793 L1354,1377.2793 L1364,1377.2793 L1354,1367.2793 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="49" x="1267" y="1384.8477">validate</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="82" x="1267" y="1400.1582">access token</text><polygon fill="#A80036" points="282,1434.2109,272,1438.2109,282,1442.2109,278,1438.2109" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="276" x2="1314" y1="1438.2109" y2="1438.2109"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="288" y="1433.4688">18</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="122" x="310" y="1433.4688">Response with data</text><polygon fill="#A80036" points="96,1463.5215,86,1467.5215,96,1471.5215,92,1467.5215" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="90" x2="270" y1="1467.5215" y2="1467.5215"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="102" y="1462.7793">19</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="140" x="124" y="1462.7793">Show screen with data</text><path d="M204.5,1482.5215 L340.5,1482.5215 L340.5,1489.5215 L330.5,1499.5215 L204.5,1499.5215 L204.5,1482.5215 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="255.1055" style="stroke:#000000;stroke-width:2.0;" width="1046.5" x="204.5" y="1482.5215"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="91" x="219.5" y="1496.0898">refresh token</text><path d="M276,1504.832 L276,1575.832 L472,1575.832 L472,1514.832 L462,1504.832 L276,1504.832 " fill="#FBFB77" filter="url(#fgq5r6x34e9yy)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M462,1504.832 L462,1514.832 L472,1514.832 L462,1504.832 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="99" x="282" y="1522.4004">Token endpoint</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="167" x="290" y="1537.7109">grand_type=refresh_token</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="109" x="290" y="1553.0215">refresh_token=...</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="76" x="290" y="1568.332">client_id=...</text><polygon fill="#A80036" points="1149,1602.3848,1159,1606.3848,1149,1610.3848,1153,1606.3848" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="271" x2="1155" y1="1606.3848" y2="1606.3848"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="278" y="1601.6426">20</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="138" x="300" y="1601.6426">Refresh token request</text><path d="M956,1619.3848 L956,1644.3848 L1152,1644.3848 L1152,1629.3848 L1142,1619.3848 L956,1619.3848 " fill="#FBFB77" filter="url(#fgq5r6x34e9yy)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1142,1619.3848 L1142,1629.3848 L1152,1629.3848 L1142,1619.3848 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="175" x="962" y="1636.9531">generate new pair of tokens</text><polygon fill="#A80036" points="282,1671.0059,272,1675.0059,282,1679.0059,278,1675.0059" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="276" x2="1160" y1="1675.0059" y2="1675.0059"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="288" y="1670.2637">21</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="185" x="310" y="1670.2637">Access Token, Refresh Token</text><path d="M276,1688.0059 L276,1728.0059 L525,1728.0059 L525,1698.0059 L515,1688.0059 L276,1688.0059 " fill="#FBFB77" filter="url(#fgq5r6x34e9yy)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M515,1688.0059 L515,1698.0059 L525,1698.0059 L515,1688.0059 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="228" x="282" y="1705.5742">save refresh token in secure storage</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="185" x="282" y="1720.8848">save access token in memory</text><rect fill="#DDDDDD" height="59.4648" rx="5" ry="5" style="stroke:#000000;stroke-width:1.0;" width="626" x="8" y="13"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="375" x="14" y="31.5352">App is using only Client ID. It is not using Client Secret.</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="18" y="48.0234"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="614" x="14" y="64.5117">For redirectURI is used http://localhost:8080/ - desktop app need to listen HTTP on 8080</text><!--MD5=[7bef2b4f92295c34ab8412d418cc908e]
+@startuml
+autonumber
+hide footbox
+
+participant "Resource Owner\n(user)" as RO
+participant "Client\n(desktop app)" as UAM
+participant "User Agent\n(browser)" as UAB
+participant "Authorization Server\n(keycloak)" as AS
+participant "Resource Server\n(rest server)" as RS
+
+
+legend top left
+App is using only Client ID. It is not using Client Secret.
+
+For redirectURI is used http://localhost:8080/ - desktop app need to listen HTTP on 8080
+ endlegend
+
+
+RO -> UAM: start app
+note over UAM
+generate random secret (PKCE Code Verifier) - 43-128 characters
+calculate hash of it (PKCE Code Callenge) - SHA256
+generate URL for Authorization Server (Authorization Code Request):
+  response_type=code
+  PKCE Code Challenge: code_challenge=...hash
+  code_challenge_method=S256
+  ClientID: client_id=...
+  Redirect URL: redirect_uri=http://localhost:8080/
+  Scope: scope=...
+  state=random value
+end note
+
+  group front channel
+    UAM -> UAB: open generated URL
+    UAB -> AS: Authorization Code Request
+  end
+
+  group login to authorization server
+    AS - -> UAB: Login page
+    UAB - -> RO: Login page
+    RO -> UAB: Login credentials
+    UAB -> AS: Login credentials
+  end
+
+  group consent screen [if authorization server needs to ask for it]
+    AS - -> UAB: Consent page to login to this application
+    UAB - -> RO: Consent page to login to this application
+    RO -> UAB: Consent confirmation
+    UAB -> AS: Consent confirmation
+  end
+
+  group front channel
+    note left AS
+    Redirect URL:
+      base URL (localhost)
+      code=generated code
+      state=...from request
+    end note
+    AS - -> UAB: Authorization Code Response, Redirect URL (localhost)  
+    UAB -> UAM: HTTP request to localhost with: Authorization Code Response
+    UAM - -> UAB: web page that the user is successfully authorized and can close browser
+  end
+
+  group back channel
+    note right UAM
+    create Exchange Code for Token with Authorization Code POST request
+      grand_type=authorization_code
+      code=from redirect URL
+      redirect_uri=...
+      code_verifier=PKCE Code Verifier
+      client_id=...
+    end note
+    UAM -> AS: Exchange Code for Token with Authorization Code, PKCE Code Verifier, Clinet ID
+    note over AS
+    check Authorization Code
+      I created it
+      It has not been used
+      It is valid in time (passed <1 min)
+      It is for this Client ID
+      Calculate hash and compare with PKCE Code Challenge
+    end note
+  AS - -> UAM: Access Token, Refresh Token
+  note right UAM
+  check that state value is the same as in request
+  save refresh token in secure storage
+  save access token in memory
+  end note
+  end
+
+UAM -> RS: GET resource data with Access Token
+note over RS: validate\naccess token
+RS - -> UAM: Response with data
+UAM - -> RO: Show screen with data
+
+group refresh token
+note right UAM
+Token endpoint
+  grand_type=refresh_token
+  refresh_token=...
+  client_id=...
+end note
+UAM -> AS: Refresh token request
+note left AS
+generate new pair of tokens
+end note
+  AS - -> UAM: Access Token, Refresh Token
+  note right UAM
+  save refresh token in secure storage
+  save access token in memory
+end note
+end
+@enduml
+
+PlantUML version 1.2021.12(Tue Oct 05 18:01:58 CEST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: HR
+--></g></svg></p><h2 class="mume-header" id="poruke">Poruke</h2>
+
+<h3 class="mume-header" id="3-browser-keycloak">3 browser -&gt; keycloak</h3>
+
+<pre data-role="codeBlock" data-info="HTTP" class="language-http"><span class="token request-line"><span class="token method property">GET</span> <span class="token request-target url">/auth/realms/spring/protocol/openid-connect/auth?redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F&amp;scope=openid%20profile&amp;response_type=code&amp;client_id=mobile-keycloak&amp;code_challenge=eGJ_4NXVEF30etTFnQN4WItrwgavQTiWHWaXC26eseE&amp;code_challenge_method=S256&amp;response_mode=query</span> <span class="token http-version property">HTTP/1.1</span></span>[\r][\n]
+<span class="token header-name keyword">Host:</span> iotat.tel.fer.hr:58443[\r][\n]
+...
+[\r][\n]
+</pre><h3 class="mume-header" id="4-browser-keycloak">4 browser &lt;- keycloak</h3>
+
+<pre data-role="codeBlock" data-info="HTTP" class="language-http"><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">200</span> <span class="token reason-phrase string">OK[\r][\n]</span></span>
+<span class="token header-name keyword">Content-Type:</span> text/html;charset=utf-8[\r][\n]
+<span class="token header-name keyword">Content-Length:</span> 3676[\r][\n]
+...
+[\r][\n]
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;  &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;[\n]&quot; 
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;login-pf&quot;&gt;[\n]&quot; 
+page for entering login and password
+&lt;/html&gt;[\n]&quot; 
+</pre><h3 class="mume-header" id="7-browser-keycloak">7 browser -&gt; keycloak</h3>
+
+<p>Sending login credentials to server</p>
+<pre data-role="codeBlock" data-info="HTTP" class="language-http"><span class="token request-line"><span class="token method property">POST</span> <span class="token request-target url">/auth/realms/spring/login-actions/authenticate?session_code=GCsfCdBW3FqBHL1S3n2xDT5gI82Wp2XjPr5hz3Kx8kc&amp;execution=042e325a-4d5a-44dc-a878-1c292f7a8a01&amp;client_id=mobile-keycloak&amp;tab_id=ykinAXfdsyg</span> <span class="token http-version property">HTTP/1.1</span></span>[\r][\n]
+<span class="token header-name keyword">Content-Type:</span> application/x-www-form-urlencoded[\r][\n]
+<span class="token header-name keyword">Host:</span> iotat.tel.fer.hr:58443[\r][\n]
+<span class="token header-name keyword">Connection:</span> keep-alive[\r][\n]
+<span class="token header-name keyword">Cookie:</span> AUTH_SESSION_ID=d011fbe2-55ed-47ec-a60e-c5bceae7a54d.4890d19e3622; AUTH_SESSION_ID_LEGACY=d011fbe2-55ed-47ec-a60e-c5bceae7a54d.4890d19e3622; KC_RESTART=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlZjA2MTY5YS1lZDllLTQ4NTEtOGJhYi02NTVmYTlmN2Y0MjUifQ.eyJjaWQiOiJtb2JpbGUta2V5Y2xvYWsiLCJwdHkiOiJvcGVuaWQtY29ubmVjdCIsInJ1cmkiOiJmZXIudGVsLmlvdC5wb2xqZS5pb3Rwb2xqZTovb2F1dGgyQ2FsbGJhY2siLCJhY3QiOiJBVVRIRU5USUNBVEUiLCJub3RlcyI6eyJzY29wZSI6Im9wZW5pZCBwcm9maWxlIiwiaXNzIjoiaHR0cHM6Ly9pb3RhdC50ZWwuZmVyLmhyOjU4NDQzL2F1dGgvcmVhbG1zL3NwcmluZyIsInJlc3BvbnNlX3R5cGUiOiJjb2RlIiwiY29kZV9jaGFsbGVuZ2VfbWV0aG9kIjoiUzI1NiIsInJlZGlyZWN0X3VyaSI6ImZlci50ZWwuaW90LnBvbGplLklvVFBvbGplOi9vYXV0aDJDYWxsYmFjayIsImNvZGVfY2hhbGxlbmdlIjoiZUdKXzROWFZFRjMwZXRURm5RTjRXSXRyd2dhdlFUaVdIV2FYQzI2ZXNlRSIsInJlc3BvbnNlX21vZGUiOiJxdWVyeSJ9fQ.RCIU9lMTsAjzsN9flAbdllIau1pNi80fqu9rFG7YF-Y[\r][\n]
+...
+[\r][\n]
+username=someusername&amp;password=somepassword&amp;credentialId=
+</pre><h3 class="mume-header" id="12-browser-keycloak">12 browser &lt;- keycloak</h3>
+
+<p>Redirect response (Authorization code response)</p>
+<pre data-role="codeBlock" data-info="HTTP" class="language-http"><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">302</span> <span class="token reason-phrase string">Found[\r][\n]</span></span>
+<span class="token header-name keyword">Location:</span> http://localhost:8080/?session_state=d011fbe2-55ed-47ec-a60e-c5bceae7a54d&amp;code=d0a77753-d2bd-4a4b-88b4-ce3d8f7a7604.d011fbe2-55ed-47ec-a60e-c5bceae7a54d.3e5ff0c8-21da-4b1e-bdf2-20a011df1f6b[\r][\n]
+...
+[\r][\n]
+</pre><h3 class="mume-header" id="13-browser-desktop-app">13 browser -&gt; desktop app</h3>
+
+<p>HTTP request to redirectURI (desktop app that is listening).</p>
+<pre data-role="codeBlock" data-info="HTTP" class="language-http"><span class="token request-line"><span class="token method property">GET</span> <span class="token request-target url">/?session_state=d011fbe2-55ed-47ec-a60e-c5bceae7a54d&amp;code=d0a77753-d2bd-4a4b-88b4-ce3d8f7a7604.d011fbe2-55ed-47ec-a60e-c5bceae7a54d.3e5ff0c8-21da-4b1e-bdf2-20a011df1f6b</span> <span class="token http-version property">HTTP/1.1</span></span>[\r][\n] 
+<span class="token header-name keyword">Host:</span> localhost:8080[\r][\n] 
+...
+[\r][\n]
+</pre><h3 class="mume-header" id="14-browser-desktop-app">14 browser &lt;- desktop app</h3>
+
+<pre data-role="codeBlock" data-info="HTTP" class="language-http"><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">200</span> <span class="token reason-phrase string">OK[\r][\n]</span></span>
+<span class="token header-name keyword">Content-Type:</span> text/html[\r][\n]
+[\r][\n]
+&lt;html&gt;[\n]
+&lt;body&gt;[\n]
+&lt;p&gt;Sucessfull login! You can now close browser.&lt;/p&gt;[\n]
+&lt;script&gt;[\n]
+      window.close();[\n]
+&lt;/script&gt;[\n]
+&lt;/body&gt;[\n]
+&lt;/html&gt;[\n]
+</pre><h3 class="mume-header" id="15-desktop-app-keycloak">15 desktop app -&gt; keycloak</h3>
+
+<pre data-role="codeBlock" data-info="HTTP" class="language-http"><span class="token request-line"><span class="token method property">POST</span> <span class="token request-target url">/auth/realms/spring/protocol/openid-connect/token</span> <span class="token http-version property">HTTP/1.1</span></span>[\r][\n]
+<span class="token header-name keyword">Content-Type:</span> application/x-www-form-urlencoded[\r][\n]
+<span class="token header-name keyword">Host:</span> iotat.tel.fer.hr:58443[\r][\n]
+...
+[\r][\n]
+grant_type=authorization_code&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F&amp;code=d0a77753-d2bd-4a4b-88b4-ce3d8f7a7604.d011fbe2-55ed-47ec-a60e-c5bceae7a54d.3e5ff0c8-21da-4b1e-bdf2-20a011df1f6b&amp;code_verifier=lc557ehHJ6x5rrzQkqskfitxMT1T5e8NPatx87tmIs5e0kzp0r&amp;client_id=mobile-keycloak
+</pre><h3 class="mume-header" id="16-desktop-app-keycloak">16 desktop app &lt;- keycloak</h3>
+
+<pre data-role="codeBlock" data-info="http" class="language-http"><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">200</span> <span class="token reason-phrase string">OK[\r][\n]</span></span>
+<span class="token header-name keyword">Server:</span> nginx/1.21.0[\r][\n]
+<span class="token header-name keyword">Content-Type:</span> application/json[\r][\n]
+...
+[\r][\n]
+{&quot;access_token&quot;:&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwLXRPRm0yYUVTQXoydTh3N084WE9RQ0psOFJBNlBwYWFVY3lfeFRaVWxZIn0.eyJleHAiOjE2NjY3NzI2NzgsImlhdCI6MTY2Njc3MjM3OCwiYXV0aF90aW1lIjoxNjY2NzcyMzc4LCJqdGkiOiJjZGFmM2FkNy0wY2FmLTRjMmEtYTc1My1hNmZkZDA5NTE2ZTQiLCJpc3MiOiJodHRwczovL2lvdGF0LnRlbC5mZXIuaHI6NTg0NDMvYXV0aC9yZWFsbXMvc3ByaW5nIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjA4NDM1N2M1LTcyYzktNGEzNi1iMTNmLWJiMGEyNjM4N2IzMCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1vYmlsZS1rZXljbG9hayIsInNlc3Npb25fc3RhdGUiOiI2NjE1MzM4My05NTQyLTQzODctODcwOC1hNzlhYTk0N2UzNTUiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vaW90YXQudGVsLmZlci5ocjo1ODQ0MyJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZmVyaXQiLCJmZXIiLCJkZWZhdWx0LXJvbGVzLXNwcmluZyIsImlvdC1yZWFkIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImFwcC11c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInNpZCI6IjY2MTUzMzgzLTk1NDItNDM4Ny04NzA4LWE3OWFhOTQ3ZTM1NSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1MSJ9.MiVwzDZfznw9uSPklp8RIzwbPCt3-YtfHESgaBY7XbUklGT20uVdjhCzh0nucMxnUcu9g3vKLLihoTNLb7ss5zJvQwtHp34KihkbzOu7pGoW6jYF8ppxJyKllGH-LtXYCmnkAv1JenFz4bROPvx8dGx4hGdJ15Nx7y29hblpY1HoE-5DkIcjEKff0nn9oeUFSKTQgjIag24ULTMG7lPDd82HcxRPI_alL1l7RzKxfPtRyw6uJrpbeAAZQ2V3Jg3nju8BCPTJcw3WCt_KvmG1_ZbDCtVy-TY14F6uEDO7LDC_-wXTXp8L-vTa876raJPxJNTagbSZnQ3QMo2xTDM4Rw&quot;,
+&quot;expires_in&quot;:300,
+&quot;refresh_expires_in&quot;:1800,
+&quot;refresh_token&quot;:&quot;eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlZjA2MTY5YS1lZDllLTQ4NTEtOGJhYi02NTVmYTlmN2Y0MjUifQ.eyJleHAiOjE2NjY3NzQxNzgsImlhdCI6MTY2Njc3MjM3OCwianRpIjoiOTE2NjA3NjItYTQwYy00YzIwLWJiODctYTU3ODkxMDFlMzk0IiwiaXNzIjoiaHR0cHM6Ly9pb3RhdC50ZWwuZmVyLmhyOjU4NDQzL2F1dGgvcmVhbG1zL3NwcmluZyIsImF1ZCI6Imh0dHBzOi8vaW90YXQudGVsLmZlci5ocjo1ODQ0My9hdXRoL3JlYWxtcy9zcHJpbmciLCJzdWIiOiIwODQzNTdjNS03MmM5LTRhMzYtYjEzZi1iYjBhMjYzODdiMzAiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoibW9iaWxlLWtleWNsb2FrIiwic2Vzc2lvbl9zdGF0ZSI6IjY2MTUzMzgzLTk1NDItNDM4Ny04NzA4LWE3OWFhOTQ3ZTM1NSIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJzaWQiOiI2NjE1MzM4My05NTQyLTQzODctODcwOC1hNzlhYTk0N2UzNTUifQ.Ui1wAJcnWBZmjIHAxFjgzO3HhZQ0XLxDkgQ1ecxQOIE&quot;,
+&quot;token_type&quot;:&quot;Bearer&quot;,
+&quot;id_token&quot;:&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwLXRPRm0yYUVTQXoydTh3N084WE9RQ0psOFJBNlBwYWFVY3lfeFRaVWxZIn0.eyJleHAiOjE2NjY3NzI2NzgsImlhdCI6MTY2Njc3MjM3OCwiYXV0aF90aW1lIjoxNjY2NzcyMzc4LCJqdGkiOiI1MmIyYmZjYy0wNTM2LTQ5ZWUtODMwZC0xODIwMmQ3ZjJjNTAiLCJpc3MiOiJodHRwczovL2lvdGF0LnRlbC5mZXIuaHI6NTg0NDMvYXV0aC9yZWFsbXMvc3ByaW5nIiwiYXVkIjoibW9iaWxlLWtleWNsb2FrIiwic3ViIjoiMDg0MzU3YzUtNzJjOS00YTM2LWIxM2YtYmIwYTI2Mzg3YjMwIiwidHlwIjoiSUQiLCJhenAiOiJtb2JpbGUta2V5Y2xvYWsiLCJzZXNzaW9uX3N0YXRlIjoiNjYxNTMzODMtOTU0Mi00Mzg3LTg3MDgtYTc5YWE5NDdlMzU1IiwiYXRfaGFzaCI6ImVIc2tJSTVOSXdGNExWd084akZVM3ciLCJhY3IiOiIxIiwic2lkIjoiNjYxNTMzODMtOTU0Mi00Mzg3LTg3MDgtYTc5YWE5NDdlMzU1IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInByZWZlcnJlZF91c2VybmFtZSI6InUxIn0.Kbjmqc6_5Hg2bElpGJ0AgGLgbV8tV6uciV9Vn4BEp3-fsgkP1BlLqsZOAI50tQeiwDPoZlvVN58lOUMh86aWc-HMmgG15tX3wGT1uH7jwtAMZ02gRxo5R_p3LL6DAytdtbA0dxw6hOWmQFLC6CNH3-gQDan8vFcjWnNF6dGa9orN-ARwU2eC6TZqYMF2oN7yF6jxCLEv_WaIZkm5VQ4FMpakA8G4PYYFLrL7Gw_M3Li99-hb3djMtf-9BEiAcP5i15GvskFRCQ9Mj89BRXI6vA5AbUrWmZbBT41iTY07s7vzrHZC7z_Sq_2ii_ryA4zvzG2JKN17K1eimZZMB4ig9A&quot;,
+&quot;not-before-policy&quot;:0,&quot;session_state&quot;:&quot;66153383-9542-4387-8708-a79aa947e355&quot;,
+&quot;scope&quot;:&quot;openid profile email&quot;}&quot; 
+</pre><h3 class="mume-header" id="17-desktop-app-rest-server">17 desktop app -&gt; rest server</h3>
+
+<pre data-role="codeBlock" data-info="http" class="language-http"><span class="token request-line"><span class="token method property">GET</span> <span class="token request-target url">/rest/keys</span> <span class="token http-version property">HTTP/1.1</span></span>[\r][\n]&quot; 
+<span class="token header-name keyword">Authorization:</span> bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwLXRPRm0yYUVTQXoydTh3N084WE9RQ0psOFJBNlBwYWFVY3lfeFRaVWxZIn0.eyJleHAiOjE2NjY3NzI2NzgsImlhdCI6MTY2Njc3MjM3OCwiYXV0aF90aW1lIjoxNjY2NzcyMzc4LCJqdGkiOiJjZGFmM2FkNy0wY2FmLTRjMmEtYTc1My1hNmZkZDA5NTE2ZTQiLCJpc3MiOiJodHRwczovL2lvdGF0LnRlbC5mZXIuaHI6NTg0NDMvYXV0aC9yZWFsbXMvc3ByaW5nIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjA4NDM1N2M1LTcyYzktNGEzNi1iMTNmLWJiMGEyNjM4N2IzMCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1vYmlsZS1rZXljbG9hayIsInNlc3Npb25fc3RhdGUiOiI2NjE1MzM4My05NTQyLTQzODctODcwOC1hNzlhYTk0N2UzNTUiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vaW90YXQudGVsLmZlci5ocjo1ODQ0MyJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZmVyaXQiLCJmZXIiLCJkZWZhdWx0LXJvbGVzLXNwcmluZyIsImlvdC1yZWFkIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImFwcC11c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInNpZCI6IjY2MTUzMzgzLTk1NDItNDM4Ny04NzA4LWE3OWFhOTQ3ZTM1NSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1MSJ9.MiVwzDZfznw9uSPklp8RIzwbPCt3-YtfHESgaBY7XbUklGT20uVdjhCzh0nucMxnUcu9g3vKLLihoTNLb7ss5zJvQwtHp34KihkbzOu7pGoW6jYF8ppxJyKllGH-LtXYCmnkAv1JenFz4bROPvx8dGx4hGdJ15Nx7y29hblpY1HoE-5DkIcjEKff0nn9oeUFSKTQgjIag24ULTMG7lPDd82HcxRPI_alL1l7RzKxfPtRyw6uJrpbeAAZQ2V3Jg3nju8BCPTJcw3WCt_KvmG1_ZbDCtVy-TY14F6uEDO7LDC_-wXTXp8L-vTa876raJPxJNTagbSZnQ3QMo2xTDM4Rw[\r][\n]&quot; 
+<span class="token header-name keyword">Accept-Encoding:</span> gzip, x-gzip, deflate[\r][\n]&quot; 
+<span class="token header-name keyword">Host:</span> iotat.tel.fer.hr:58443[\r][\n]&quot; 
+<span class="token header-name keyword">Connection:</span> keep-alive[\r][\n]&quot; 
+<span class="token header-name keyword">User-Agent:</span> Apache-HttpClient/5.1.3 (Java/17.0.2)[\r][\n]&quot; 
+[\r][\n]&quot; 
+</pre><h3 class="mume-header" id="18-desktop-app-rest-server">18 desktop app &lt;- rest server</h3>
+
+<pre data-role="codeBlock" data-info="http" class="language-http"><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">200</span> <span class="token reason-phrase string">[\r][\n]</span></span>
+<span class="token header-name keyword">Content-Type:</span> application/json[\r][\n]
+...
+[\r][\n]
+73[\r][\n]
+[{&quot;token1&quot;:&quot;bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==&quot;,
+&quot;token2&quot;:&quot;&quot;}][\r][\n] 
+</pre><h3 class="mume-header" id="20-desktop-app-keycloak">20 desktop app -&gt; keycloak</h3>
+
+<pre data-role="codeBlock" data-info="http" class="language-http"><span class="token request-line"><span class="token method property">POST</span> <span class="token request-target url">/auth/realms/spring/protocol/openid-connect/token</span> <span class="token http-version property">HTTP/1.1</span></span>[\r][\n]
+<span class="token header-name keyword">Content-Type:</span> application/x-www-form-urlencoded[\r][\n]
+<span class="token header-name keyword">Host:</span> iotat.tel.fer.hr:58443[\r][\n]
+...
+[\r][\n]
+grant_type=refresh_token&amp;client_id=mobile-keycloak&amp;refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlZjA2MTY5YS1lZDllLTQ4NTEtOGJhYi02NTVmYTlmN2Y0MjUifQ.eyJleHAiOjE2NjY3ODQ3MjgsImlhdCI6MTY2Njc4MjkyOCwianRpIjoiOTFhMDRiYWEtMmI1MC00YWFiLTg3N2EtYTcyNDhlZGU0NGQ0IiwiaXNzIjoiaHR0cHM6Ly9pb3RhdC50ZWwuZmVyLmhyOjU4NDQzL2F1dGgvcmVhbG1zL3NwcmluZyIsImF1ZCI6Imh0dHBzOi8vaW90YXQudGVsLmZlci5ocjo1ODQ0My9hdXRoL3JlYWxtcy9zcHJpbmciLCJzdWIiOiIwODQzNTdjNS03MmM5LTRhMzYtYjEzZi1iYjBhMjYzODdiMzAiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoibW9iaWxlLWtleWNsb2FrIiwic2Vzc2lvbl9zdGF0ZSI6ImI0YjA2OTc4LTU1YmItNGU3My05MGJkLTNlYmM5ZDMzM2Y5YyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJzaWQiOiJiNGIwNjk3OC01NWJiLTRlNzMtOTBiZC0zZWJjOWQzMzNmOWMifQ.EGzBSF3IEGeaqP7z8QeYwSoYz0XPLZtNMX6LSkNMC9Y
+</pre><h3 class="mume-header" id="21-desktop-app-keycloak">21 desktop app &lt;- keycloak</h3>
+
+<pre data-role="codeBlock" data-info="http" class="language-http"><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">200</span> <span class="token reason-phrase string">OK[\r][\n]</span></span>
+<span class="token header-name keyword">Content-Type:</span> application/json[\r][\n]
+...
+[\r][\n]
+{&quot;access_token&quot;:&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwLXRPRm0yYUVTQXoydTh3N084WE9RQ0psOFJBNlBwYWFVY3lfeFRaVWxZIn0.eyJleHAiOjE2NjY3ODMwNTMsImlhdCI6MTY2Njc4Mjk5MywiYXV0aF90aW1lIjoxNjY2Nzc4Njc3LCJqdGkiOiI0MDRiZDk2Ni0yN2Q4LTQ3NmUtODA5Mi1jN2YzMDM0NzI5NTgiLCJpc3MiOiJodHRwczovL2lvdGF0LnRlbC5mZXIuaHI6NTg0NDMvYXV0aC9yZWFsbXMvc3ByaW5nIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjA4NDM1N2M1LTcyYzktNGEzNi1iMTNmLWJiMGEyNjM4N2IzMCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1vYmlsZS1rZXljbG9hayIsInNlc3Npb25fc3RhdGUiOiJiNGIwNjk3OC01NWJiLTRlNzMtOTBiZC0zZWJjOWQzMzNmOWMiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vaW90YXQudGVsLmZlci5ocjo1ODQ0MyJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZmVyaXQiLCJmZXIiLCJkZWZhdWx0LXJvbGVzLXNwcmluZyIsImlvdC1yZWFkIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImFwcC11c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInNpZCI6ImI0YjA2OTc4LTU1YmItNGU3My05MGJkLTNlYmM5ZDMzM2Y5YyIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1MSJ9.fXHhlQjypaHgxZmcJEwjQ-VqjQs8IkfhoGUdxdRheDplRIegUSLr9GrYU63aLKpoOF_q2MX0Ob66eGbLnKz0yeWdUwsqrNJ7lEsI4yEy0cfS_JN6F4I7yEa2EQY8YpGbQPOqGlvJmL-lo92rkal-Hel2drPDVAMKml49cB2I2YUa2hTKfEuMcFqAav7AgSAXUhmMDIWgz3LRydScdrRYhHOkaXMz59bchnxd7RzxXV1kHMoRiyk5u9dli8LELQyBxuia7ZXMGWrzmqCGUQu41qBGs7TGv_dHl0A5KNSBGH84XIw6k5nsQKwQGpz8fUG0VBPSss0y1-CynL7wVI9GYQ&quot;,
+&quot;expires_in&quot;:60,
+&quot;refresh_expires_in&quot;:1800,
+&quot;refresh_token&quot;:&quot;eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlZjA2MTY5YS1lZDllLTQ4NTEtOGJhYi02NTVmYTlmN2Y0MjUifQ.eyJleHAiOjE2NjY3ODQ3OTMsImlhdCI6MTY2Njc4Mjk5MywianRpIjoiYmVjYzliZTgtODAzMS00YWZhLTllYjktOTNmZTJkYTZlNDdjIiwiaXNzIjoiaHR0cHM6Ly9pb3RhdC50ZWwuZmVyLmhyOjU4NDQzL2F1dGgvcmVhbG1zL3NwcmluZyIsImF1ZCI6Imh0dHBzOi8vaW90YXQudGVsLmZlci5ocjo1ODQ0My9hdXRoL3JlYWxtcy9zcHJpbmciLCJzdWIiOiIwODQzNTdjNS03MmM5LTRhMzYtYjEzZi1iYjBhMjYzODdiMzAiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoibW9iaWxlLWtleWNsb2FrIiwic2Vzc2lvbl9zdGF0ZSI6ImI0YjA2OTc4LTU1YmItNGU3My05MGJkLTNlYmM5ZDMzM2Y5YyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJzaWQiOiJiNGIwNjk3OC01NWJiLTRlNzMtOTBiZC0zZWJjOWQzMzNmOWMifQ.5bLmPku7o5UCIub3OV4oPhUt76QRYvwjyAqgrLLW9pc&quot;,&quot;token_type&quot;:&quot;Bearer&quot;,&quot;id_token&quot;:&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwLXRPRm0yYUVTQXoydTh3N084WE9RQ0psOFJBNlBwYWFVY3lfeFRaVWxZIn0.eyJleHAiOjE2NjY3ODMwNTMsImlhdCI6MTY2Njc4Mjk5MywiYXV0aF90aW1lIjoxNjY2Nzc4Njc3LCJqdGkiOiI3OTAwODI5Ny0xMTBjLTQxYzAtODUyMi1mYmZlMTkzYjRjYjUiLCJpc3MiOiJodHRwczovL2lvdGF0LnRlbC5mZXIuaHI6NTg0NDMvYXV0aC9yZWFsbXMvc3ByaW5nIiwiYXVkIjoibW9iaWxlLWtleWNsb2FrIiwic3ViIjoiMDg0MzU3YzUtNzJjOS00YTM2LWIxM2YtYmIwYTI2Mzg3YjMwIiwidHlwIjoiSUQiLCJhenAiOiJtb2JpbGUta2V5Y2xvYWsiLCJzZXNzaW9uX3N0YXRlIjoiYjRiMDY5NzgtNTViYi00ZTczLTkwYmQtM2ViYzlkMzMzZjljIiwiYXRfaGFzaCI6IlR6Nl9yLW9ZQWhZQnhRMUU2Qk9jV3ciLCJhY3IiOiIwIiwic2lkIjoiYjRiMDY5NzgtNTViYi00ZTczLTkwYmQtM2ViYzlkMzMzZjljIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInByZWZlcnJlZF91c2VybmFtZSI6InUxIn0.FOJh2F5suoXOrhVV-ZVjXPbz7WL0bJ-t7x26j3Aj0VDu4rmq3Nw6vAhscLlLCRJ-X0xLzv7J_ctAFywzSeLpub6-R1qMtlNfXTp8jfpgSButu8HCBal2xxRk6sA0ge0SCpSHMzEGpxOq3udaXCtZwMS3sPy64H4Wpjm4wpJELcn2hoTcUEwr5D_g8tvgeAz0DRdHlxHbVCvvVnP5azeBKuJh0lJFVYB8Hxse6_Ga1nwSmtOfo1OXFieSTFmHoYMH_z1DmlPTzf1BaR2nv-l3I_Dc4TkUbJmYirM3ye641Yb8yUc4Tj6NvWVlk4tuO8AOK5TW1o9cz_mQ8HC2vrET7Q&quot;,
+&quot;not-before-policy&quot;:0,
+&quot;session_state&quot;:&quot;b4b06978-55bb-4e73-90bd-3ebc9d333f9c&quot;,
+&quot;scope&quot;:&quot;openid profile email&quot;}
+</pre>
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
