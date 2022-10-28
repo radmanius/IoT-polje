@@ -58,7 +58,7 @@ public class SceneService {
 		if (roles.length < 1)
 			throw new NoSuchElement("No roles at all");
 
-		Scene scene = sceneRepository.getByRoles(roles).stream().filter(sc -> sc.getId().equals(id)).findAny()
+		Scene scene = sceneRepository.getByRoles(roles).stream().filter(sc -> Long.valueOf(sc.getId()).equals(id)).findAny()
 				.orElseThrow(() -> new NoSuchElement("Access denied, no required roles for given scene id: " + id));
 	
 		return scene;
@@ -66,7 +66,7 @@ public class SceneService {
 
 	//add scene - OK - OK
 	public Scene addScene(Scene scene) {
-		if (!sceneRepository.existsById(scene.getId())) {
+		if (!sceneRepository.existsById(Long.valueOf(scene.getId()).toString())) {
 			return sceneRepository.save(scene);
 		}
 
@@ -122,14 +122,14 @@ public class SceneService {
 	
 	
 	
-	//ini dummy scenes for testing
-	public List<Scene> generate() {
-		var scenes = Scene.generateScenes();
-		for (var scene : scenes) {
-			sceneRepository.save(scene);
-		}
-		return sceneRepository.findAll();
-	}
+//	//ini dummy scenes for testing
+//	public List<Scene> generate() {
+//		var scenes = Scene.generateScenes();
+//		for (var scene : scenes) {
+//			sceneRepository.save(scene);
+//		}
+//		return sceneRepository.findAll();
+//	}
 	
 	
 	

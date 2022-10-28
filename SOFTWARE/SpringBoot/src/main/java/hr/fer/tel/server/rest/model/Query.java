@@ -1,16 +1,18 @@
 package hr.fer.tel.server.rest.model;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
+import java.net.http.HttpHeaders;
 
+import javax.persistence.*;
+
+import org.springframework.http.*;
 import java.net.URI;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "Query")
 public class Query {
+	
+
+    private long id;
+	
     private URI URI;
     private HttpMethod method;
     private HttpHeaders headers;
@@ -42,7 +44,15 @@ public class Query {
         this.headers = headers;
     }
 
-    public Query(java.net.URI URI, HttpMethod method, HttpHeaders headers) {
+    public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Query(java.net.URI URI, HttpMethod method, HttpHeaders headers) {
         this.URI = URI;
         this.method = method;
         this.headers = headers;

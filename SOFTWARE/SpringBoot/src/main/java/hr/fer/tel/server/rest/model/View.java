@@ -1,11 +1,17 @@
 package hr.fer.tel.server.rest.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "View")
 public class View {
+    @Id
+    @GeneratedValue
+	private long id;
+    
     private String title;
     private Query query;
     private String payload;
@@ -42,8 +48,18 @@ public class View {
         this.query = query;
         this.payload = payload;
     }
+    
 
-    @Override
+
+    public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@Override
     public String toString() {
         return "View{" +
                 "title='" + title + '\'' +

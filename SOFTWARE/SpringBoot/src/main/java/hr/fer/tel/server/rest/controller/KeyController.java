@@ -21,9 +21,9 @@ public class KeyController {
         this.keyService = keyService;
     }
 
-    @RolesAllowed("iot-read")
-    @GetMapping("/keys")
-    public ResponseEntity<Set<KeyDTO>> getKeys(){
-        return ResponseEntity.ok(keyService.getAll());
-    }
+//    @RolesAllowed("iot-read")
+//    @GetMapping("/keys")
+//    public ResponseEntity<Set<KeyDTO>> getKeys(){
+//        return ResponseEntity.ok(keyService.getAll());
+//    }
 }

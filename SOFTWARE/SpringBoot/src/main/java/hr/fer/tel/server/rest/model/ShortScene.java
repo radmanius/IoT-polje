@@ -2,10 +2,9 @@ package hr.fer.tel.server.rest.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.*;
 
 import hr.fer.tel.server.rest.dto.SceneDTO;
 
@@ -13,9 +12,9 @@ import hr.fer.tel.server.rest.dto.SceneDTO;
 @Table(name = "ShortScene")
 public class ShortScene {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @Id
+    @GeneratedValue
+    private long id;
     private String title;
     private String subtitle;
     private String pictureLink;
@@ -23,7 +22,7 @@ public class ShortScene {
     public ShortScene() {
     }
 
-    public ShortScene(String id, String title, String subtitle, String pictureLink) {
+    public ShortScene(long id, String title, String subtitle, String pictureLink) {
         this.id = id;
         this.title = title;
         this.subtitle = subtitle;
@@ -38,11 +37,11 @@ public class ShortScene {
         this.pictureLink = pictureLink;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

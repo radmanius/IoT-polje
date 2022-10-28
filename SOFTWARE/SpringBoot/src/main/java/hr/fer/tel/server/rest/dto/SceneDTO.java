@@ -8,7 +8,7 @@ import hr.fer.tel.server.rest.model.View;
 
 public class SceneDTO {
 
-	private String id;
+	private long id;
 	private String title;
 	private String subtitle;
 	private String pictureLink;
@@ -20,7 +20,7 @@ public class SceneDTO {
 		
 	}
 
-	public SceneDTO(String id, String title, String subtitle, String pictureLink, Layout layout, List<String> tags,
+	public SceneDTO(long id, String title, String subtitle, String pictureLink, Layout layout, List<String> tags,
 			List<View> views) {
 		this.id = id;
 		this.title = title;
@@ -39,11 +39,11 @@ public class SceneDTO {
 		this.pictureLink = pictureLink;
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

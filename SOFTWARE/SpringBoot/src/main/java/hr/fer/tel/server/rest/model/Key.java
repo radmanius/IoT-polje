@@ -1,22 +1,21 @@
 package hr.fer.tel.server.rest.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
-
-import org.springframework.data.annotation.Id;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "Key")
+@Table(name = "Key213")
 public class Key {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @Id
+    @GeneratedValue
+    private long id;
 	
     private String token1;
     private String token2;
+    
+    public Key() {
+    	
+    }
 
     public Key(String token1, String token2) {
         this.token1 = token1;
@@ -27,8 +26,17 @@ public class Key {
         this.token1 = token1;
         this.token2 = null;
     }
+    
+    
+    public long getId() {
+		return id;
+	}
 
-    public String getToken1() {
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getToken1() {
         return token1;
     }
 
