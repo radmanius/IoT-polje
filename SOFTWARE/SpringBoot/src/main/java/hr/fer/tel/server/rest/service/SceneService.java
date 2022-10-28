@@ -37,7 +37,7 @@ public class SceneService {
 		return sceneRepository.findById(id);
 	}
 		
-	//get all scenesDTO
+	//get all scenesDTO - OK - OK
 	public List<SceneDTO> getAllScenes() {
 
 		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1]).toArray(String[]::new);
@@ -49,6 +49,79 @@ public class SceneService {
 		return sceneRepository.getByRoles(roles).stream().map(SceneDTO::from).collect(Collectors.toList());
 	}
 
+	//get scene by id defined by roles - OK - OK
+	public Scene getById(String id) {
+		
+		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
+				.toArray(String[]::new);
+		
+		if (roles.length < 1)
+			throw new NoSuchElement("No roles at all");
+
+		Scene scene = sceneRepository.getByRoles(roles).stream().filter(sc -> sc.getId().equals(id)).findAny()
+				.orElseThrow(() -> new NoSuchElement("Access denied, no required roles for given scene id: " + id));
+	
+		return scene;
+	}
+
+	//add scene - OK - OK
+	public Scene addScene(Scene scene) {
+		if (!sceneRepository.existsById(scene.getId())) {
+			return sceneRepository.save(scene);
+		}
+
+		throw new NoSuchElement("Scene " + scene.getId() + " already exists!");
+	}
+
+	//edit scene - OK - OK
+	public Scene editScene(String id, Scene scene) {
+		
+		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
+				.toArray(String[]::new);
+		
+		if (roles.length < 1)
+			throw new NoSuchElement("No roles at all");
+		
+		if (sceneRepository.existsById(id)) {
+			return sceneRepository.save(scene);
+		}
+		
+		throw new NoSuchElement("Scene " + id + " does not exists!");
+	}
+
+	
+	//delete scene - OK - OK
+	public Scene deleteSceneById(String id) {
+		
+		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
+				.toArray(String[]::new);
+		
+		if (roles.length < 1)
+			throw new NoSuchElement("No roles at all");
+		
+		Scene scene = this.fetch(id);
+		
+		sceneRepository.delete(scene);
+		
+		return scene;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//ini dummy scenes for testing
 	public List<Scene> generate() {
 		var scenes = Scene.generateScenes();
@@ -57,23 +130,10 @@ public class SceneService {
 		}
 		return sceneRepository.findAll();
 	}
-
-	//get scene by id defined by roles
-	public Scene getById(String id) {
-		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
-				.toArray(String[]::new);
-		if (roles.length < 1)
-			throw new NoSuchElement("No roles at all");
-
-		Scene scene = sceneRepository.getByRoles(roles).stream().filter(sc -> sc.getId().equals(id)).findAny()
-				.orElseThrow(() -> new NoSuchElement("Access denied, no required roles for given scene id: " + id));
-		
-		
-		return scene;
-//		return new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), scene.getPictureLink(),
-//				scene.getLayout(), scene.getTags(), scene.getViews());
-	}
-
+	
+	
+	
+	
 	//get tags
 	public List<SceneDTO> getByTags(List<String> tags) {
 
@@ -98,31 +158,6 @@ public class SceneService {
 			keys.addAll(l1.getKeys().stream().map(KeyDTO::from).collect(Collectors.toList()));
 		}
 		return keys;
-	}
-
-	//add scene
-	public Scene addScene(Scene scene) {
-		if (!sceneRepository.existsById(scene.getId())) {
-			return sceneRepository.save(scene);
-		}
-
-		throw new NoSuchElement("Scene " + scene.getId() + " already exists!");
-	}
-
-	//edit scene
-	public Scene editScene(String id, Scene scene) {
-		if (sceneRepository.existsById(id)) {
-			return sceneRepository.save(scene);
-		}
-		throw new NoSuchElement("Scene " + id + " does not exists!");
-	}
-
-	
-	//delete scene
-	public Scene deleteSceneById(String id) {
-		Scene scene = this.fetch(id);
-		sceneRepository.delete(scene);
-		return scene;
 	}
 
 }
