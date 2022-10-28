@@ -2,9 +2,9 @@ package hr.fer.tel.server.rest.dto;
 
 import java.util.List;
 
+import hr.fer.tel.server.rest.model.Layout;
 import hr.fer.tel.server.rest.model.Scene;
 import hr.fer.tel.server.rest.model.View;
-import hr.fer.tel.server.rest.model.enums.Layout;
 
 public class SceneDTO {
 

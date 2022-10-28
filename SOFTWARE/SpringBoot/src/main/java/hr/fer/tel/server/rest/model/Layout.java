@@ -16,8 +16,7 @@ public class Layout {
 
     }
 
-    public Layout(String id, String name) {
-        this.id = id;
+    public Layout(String name) {
         this.name = name;
     }
 

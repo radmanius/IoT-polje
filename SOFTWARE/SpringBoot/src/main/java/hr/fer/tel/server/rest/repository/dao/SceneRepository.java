@@ -1,8 +1,7 @@
 package hr.fer.tel.server.rest.repository.dao;
 
 import hr.fer.tel.server.rest.model.Scene;
-import opp.model.Group;
-import opp.model.Student;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,10 +21,7 @@ public interface SceneRepository extends JpaRepository<Scene, String> {
     List<Scene> findByTags(String[] tags, String[] roles);
 
     
-	//----------------Naprvit SQL Query
-
-    //index po rolama-DODATI
-    @Query(value = "{roles:{$in : ?0 }}")
+    @Query(value = "SELECT * FROM Scene AS s WHERE s.roles IN :roles_input")
     List<Scene> getByRoles(@Param("roles_input") String[] roles);
 
     
