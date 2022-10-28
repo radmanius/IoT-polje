@@ -22,7 +22,7 @@ public class SceneController {
 		this.sceneService = sceneService;
 	}
 	
-	//returns list of all scenes - OK
+	//returns list of all scenes - OK - OK
 	@RolesAllowed("iot-read")
 	@GetMapping("/scene")
 	public ResponseEntity<List<ShortScene>> getScenes() { // vraca sve scene
@@ -31,8 +31,8 @@ public class SceneController {
 		// ili ShortScene::from
 		return ResponseEntity.ok(scenes);
 	}
-	
-	//create new scene - OK
+	 
+	//create new scene - OK - OK
 	@RolesAllowed("iot-write")
 	@PostMapping("/scene")
 	public ResponseEntity<Scene> sceneAdd(@RequestBody Scene scene) {
@@ -40,7 +40,7 @@ public class SceneController {
 		return ResponseEntity.status(201).body(saved);
 	}
 	
-	//get one scene - OK
+	//get one scene - OK - OK
 	@RolesAllowed("iot-read")
 	@GetMapping("/scene/{id}")
 	public ResponseEntity<Scene> getSceneById(@PathVariable("id") String id) {
@@ -48,7 +48,7 @@ public class SceneController {
 		return ResponseEntity.ok(scene);
 	}
 	
-	//update one scene - OK
+	//update one scene - OK - OK
 	@RolesAllowed("iot-write")
 	@PutMapping("/scene/{id}")
 	public ResponseEntity<Scene> sceneEdit(@PathVariable("id") String id, @RequestBody Scene scene) {
@@ -56,7 +56,7 @@ public class SceneController {
 		return ResponseEntity.ok(saved);
 	}
 	
-	//delete scene - OK
+	//delete scene - OK - OK
 	@RolesAllowed("iot-write")
 	@DeleteMapping("/scene/{id}")
 	public ResponseEntity<Scene> deleteSceneById(@PathVariable("id") String id) {
