@@ -14,11 +14,9 @@ public class Key {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+	
     private String token1;
     private String token2;
-
-    public Key() {
-    }
 
     public Key(String token1, String token2) {
         this.token1 = token1;

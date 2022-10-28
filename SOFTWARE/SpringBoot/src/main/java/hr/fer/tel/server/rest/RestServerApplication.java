@@ -18,10 +18,10 @@ public class RestServerApplication {
 		SpringApplication.run(RestServerApplication.class, args);
 	}
 
-	@Bean @Profile("dev")
-	public CommandLineRunner init(SceneService sceneService, KeyService keyService){
-		sceneService.generate();
-		keyService.generate();
-		return null;
-	}
+//	@Bean @Profile("dev")
+//	public CommandLineRunner init(SceneService sceneService, KeyService keyService){
+//		sceneService.generate();
+//		keyService.generate();
+//		return null;
+//	}
 }
