@@ -6,9 +6,7 @@
 import { take, call, put, race } from "redux-saga/effects";
 import axios from "axios";
 import { CLEAR_LOGIN_ERROR, CLEAR_USER, LoginRequestData, logout, LOGOUT, REQUEST_LOGIN_ERROR, SENDING_LOGIN_REQUEST, SET_AUTH, SET_USER } from "redux/actions/autentificationActions";
-//import { CLEAR_TOAST_MESSAGES } from "../actions/toastMessageActions";
  
-
 function getErrorMessage(error: Error) {
     if (axios.isAxiosError(error)) {
         return error.response?.data;
@@ -80,7 +78,6 @@ export function* logoutFlow() {
         yield take(LOGOUT);
         yield put({ type: SET_AUTH, newAuthState: false });
         yield put({ type: CLEAR_USER });
-        //yield put({ type: CLEAR_TOAST_MESSAGES });
         yield call(logout);
     }
 }

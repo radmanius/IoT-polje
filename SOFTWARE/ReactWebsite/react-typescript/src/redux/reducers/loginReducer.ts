@@ -1,6 +1,5 @@
 import { Reducer } from "redux";
 import { AuthentificationActionType, CLEAR_LOGIN_ERROR, REQUEST_LOGIN_ERROR, SENDING_LOGIN_REQUEST, SET_AUTH } from "redux/actions/autentificationActions";
- 
 
 export interface LoginState {
     error?: string;
