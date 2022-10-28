@@ -40,8 +40,7 @@ public class SceneService {
 	//get all scenesDTO
 	public List<SceneDTO> getAllScenes() {
 
-		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
-				.toArray(String[]::new);
+		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1]).toArray(String[]::new);
 		
 		
 		if (roles.length < 1)

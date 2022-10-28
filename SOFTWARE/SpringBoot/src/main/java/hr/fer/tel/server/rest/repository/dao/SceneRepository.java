@@ -1,12 +1,16 @@
 package hr.fer.tel.server.rest.repository.dao;
 
 import hr.fer.tel.server.rest.model.Scene;
+import opp.model.Group;
+import opp.model.Student;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SceneRepository extends JpaRepository<Scene, String> {
@@ -22,7 +26,10 @@ public interface SceneRepository extends JpaRepository<Scene, String> {
 
     //index po rolama-DODATI
     @Query(value = "{roles:{$in : ?0 }}")
-    List<Scene> getByRoles(String[] roles);
+    List<Scene> getByRoles(@Param("roles_input") String[] roles);
 
+    
+//    @Query("SELECT g FROM SGROUP g WHERE :s MEMBER OF g.members")
+//    Optional<Group> findByMember(@Param("s") Student student);
  
 }
