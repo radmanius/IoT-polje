@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
-import { RootState } from "redux/store/store";
-import { UserLoggedInStateEnum } from "utils/enums";
-import "./reactTypescriptWrapper.scss";
-import { useEffect } from "react";
-import { PATHS } from "utils/paths";
+//import { useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
+//import { UserLoggedInStateEnum } from "utils/enums";
+//import "./reactTypescriptWrapper.scss";
+//import { useEffect } from "react";
+//import { PATHS } from "utils/paths";
 
 const ReactTypescriptWrapperLoggedIn = () => {
+    /*
     const userState = useSelector((state: RootState) => state.reactTypescript.userState);
     const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const ReactTypescriptWrapperLoggedIn = () => {
 
     if (userState === UserLoggedInStateEnum.Unauthorized || userState === UserLoggedInStateEnum.Expired) {
         return <></>;
-    }
+    }*/
 
     return (
         <div>

@@ -1,14 +1,12 @@
 import "./app.scss";
 import "react-toastify/dist/ReactToastify.css";
 import "rsuite/dist/rsuite.min.css";
-import ReactTypescriptMainLoader from "container/reactTypescriptMainLoader/reactTypescriptMainLoader";
 //import { ToastContainer } from "react-toastify";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { PAGE_ROUTES } from "utils/paths";
 import AppFooter from "container/appFooter/appFooter";
 //import ReactTypescriptModalContainer from "container/reactTypescriptModalContainer/reactTypescriptModalContainer";
-import { displayLoaderSelector } from "redux/selectors/reactTypescriptSelectors";
 import PathsAndElementsLoggedIn from "utils/pathsAndElementsLoggedIn";
 import PathsAndElementsNonLoggedIn from "utils/pathsAndElementsNonLoggedIn";
 import NotFound from "container/notFound/notFound";
@@ -25,7 +23,6 @@ const App = () => {
     return (
         <div className="app">
             <AppHeader />
-            <ReactTypescriptMainLoader displayLoaderSelector={displayLoaderSelector} />
             {/*
             <ReactTypescriptModalContainer />
             <ToastContainer
