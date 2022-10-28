@@ -3,17 +3,22 @@ package hr.fer.tel.server.rest.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "View")
 public class View {
+	
     @Id
     @GeneratedValue
 	private long id;
     
     private String title;
+    
+    @OneToOne
     private Query query;
+    
     private String payload;
 
     public View() {

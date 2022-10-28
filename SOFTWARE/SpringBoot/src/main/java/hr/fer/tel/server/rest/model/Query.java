@@ -7,14 +7,20 @@ import javax.persistence.*;
 import org.springframework.http.*;
 import java.net.URI;
 
-
+@Entity
 public class Query {
 	
-
+    @Id
+    @GeneratedValue
     private long id;
 	
+    @Column(columnDefinition = "varchar(255)")
     private URI URI;
+    
+    @Column(columnDefinition = "varchar(255)")
     private HttpMethod method;
+    
+    @OneToOne
     private HttpHeaders headers;
 
     public Query() {

@@ -9,7 +9,8 @@ public class Layout {
     @Id
     @GeneratedValue
     private long id;
-
+    
+    @Column
     private String name;
 
     public Layout() {

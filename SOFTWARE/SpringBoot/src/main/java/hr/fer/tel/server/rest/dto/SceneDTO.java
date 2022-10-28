@@ -4,6 +4,7 @@ import java.util.List;
 
 import hr.fer.tel.server.rest.model.Layout;
 import hr.fer.tel.server.rest.model.Scene;
+import hr.fer.tel.server.rest.model.Tag;
 import hr.fer.tel.server.rest.model.View;
 
 public class SceneDTO {
@@ -13,14 +14,14 @@ public class SceneDTO {
 	private String subtitle;
 	private String pictureLink;
 	private Layout layout;
-	private List<String> tags;
+	private List<Tag> tags;
 	private List<View> views;
 
 	public SceneDTO() {
 		
 	}
 
-	public SceneDTO(long id, String title, String subtitle, String pictureLink, Layout layout, List<String> tags,
+	public SceneDTO(long id, String title, String subtitle, String pictureLink, Layout layout, List<Tag> tags,
 			List<View> views) {
 		this.id = id;
 		this.title = title;
@@ -71,11 +72,11 @@ public class SceneDTO {
 		this.layout = layout;
 	}
 
-	public List<String> getTags() {
+	public List<Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<String> tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 

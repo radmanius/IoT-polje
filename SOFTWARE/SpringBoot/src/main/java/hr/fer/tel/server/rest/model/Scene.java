@@ -1,43 +1,51 @@
 package hr.fer.tel.server.rest.model;
 
-import java.net.URI;
 import java.util.List;
-import java.util.UUID;
-
 import javax.persistence.*;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.util.MimeType;
+
 
 
 
 @Entity
-@Table(name = "Scene")
+@Table(name = "scene")
 public class Scene {
 
     @Id
     @GeneratedValue
     private long id;
-	
+    
+	@Column
     private String title;
+	
+	@Column
     private String subtitle;
+	
+	@OneToOne
     private Layout layout;
+	
+	@Column
     private String pictureLink;
-    @OneToMany
-    private List<String> tags;
-    @OneToMany
+	
+	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tag> tags;
+    
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<View> views;
-    @OneToMany
+    
+    
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Role> roles; //roles required for specific scene
-    @OneToMany
+    
+    
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Key> keys; // keys required for specific scene
 
     public Scene(){
     	
     }
 
-    public Scene(long id, String title, String subtitle, Layout layout, String pictureLink, List<String> tags, List<View> views, List<Role> roles, List<Key> keys) {
+    public Scene(long id, String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views, List<Role> roles, List<Key> keys) {
         this.id = id;
         this.title = title;
         this.subtitle = subtitle;
@@ -89,11 +97,11 @@ public class Scene {
         this.layout = layout;
     }
 
-    public List<String> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 

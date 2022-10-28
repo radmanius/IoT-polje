@@ -1,5 +1,6 @@
 package hr.fer.tel.server.rest.controller;
 
+import hr.fer.tel.server.rest.model.Tag;
 import hr.fer.tel.server.rest.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class TagController {
 
     @RolesAllowed( "iot-read")
     @GetMapping("/tags")
-    public ResponseEntity<Set<String>> getTags(){
+    public ResponseEntity<Set<Tag>> getTags(){
         return ResponseEntity.ok(tagService.getAll());
 
     }
