@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { logout } from "redux/actions/autentificationActions";
 
 export const login = async (username: string, password: string) => {
     const res = await axios.post("/users/authenticate", { username, password });
@@ -20,4 +19,10 @@ const handleResponse = async (res: AxiosResponse) => {
         return Promise.reject(error);
     }
     return data || res.status === 200;
+};
+
+export const logout = () => {
+    sessionStorage.removeItem("user");
+    sessionStorage.setItem("loggedIn", JSON.stringify(false));
+    localStorage.setItem("language", "de");
 };
