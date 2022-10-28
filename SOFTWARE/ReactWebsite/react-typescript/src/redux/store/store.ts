@@ -1,26 +1,25 @@
-import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import reactTypescriptReducer from "../reducers/reactTypescriptReducer";
-import { useDispatch } from "react-redux";
-import { loaderMiddleware } from "redux/store/storeActionMiddleware";
-import modalReducer from "redux/reducers/modalReducer";
+import { applyMiddleware, combineReducers, compose, createStore } from "redux";
+import { UserData } from "../models/userData";
 import { LoginState } from "redux/reducers/loginReducer";
-import { UserData } from "redux/models/userData";
+import createSagaMiddleware from "redux-saga";
+
 
 export interface AppState {
     login: LoginState;
     user: UserData;
 }
 
-export const store = configureStore({
-    reducer: combineReducers({
-        reactTypescript: reactTypescriptReducer,
-        modal: modalReducer,
-    }),
-    middleware: () => getDefaultMiddleware().prepend(loaderMiddleware),
-});
+const configureStore = (initialState?: AppState) => {
+    const rootReducer = combineReducers<AppState>({
+        
+    });
 
-export type RootState = ReturnType<typeof store.getState>;
+    const sagaMiddleware = createSagaMiddleware();
+
+    
+
+};
+
+export const store = configureStore();
+
 export type AppDispatch = typeof store.dispatch;
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-
-export default store;
