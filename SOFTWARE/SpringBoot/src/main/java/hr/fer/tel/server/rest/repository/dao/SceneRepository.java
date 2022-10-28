@@ -19,7 +19,7 @@ public interface SceneRepository extends JpaRepository<Scene, String> {
     //index po tagovima i rolama-DODATI
     //@Query(value = "{$and: [{tags:{$in : ?0 }},{roles:{$in : ?1 }}]}")
     @Query(value = "SELECT * FROM Scene AS s WHERE s.tags IN :tags_input AND s.roles IN :roles_input")
-    List<Scene> findbyTags(@Param("tags_input") String[] tags, @Param("roles_input") String[] roles);
+    List<Scene> findByTags(@Param("tags_input") String[] tags, @Param("roles_input") String[] roles);
     //List<Scene> findByTags(String[] tags, String[] roles);
 
     
