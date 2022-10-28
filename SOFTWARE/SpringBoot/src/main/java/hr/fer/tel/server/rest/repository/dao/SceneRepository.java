@@ -24,5 +24,5 @@ public interface SceneRepository extends JpaRepository<Scene, String> {
     @Query(value = "{roles:{$in : ?0 }}")
     List<Scene> getByRoles(String[] roles);
 
-
+ 
 }

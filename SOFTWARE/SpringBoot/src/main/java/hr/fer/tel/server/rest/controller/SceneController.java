@@ -1,6 +1,5 @@
 package hr.fer.tel.server.rest.controller;
 
-import hr.fer.tel.server.rest.dto.SceneDTO;
 import hr.fer.tel.server.rest.model.Scene;
 import hr.fer.tel.server.rest.model.ShortScene;
 import hr.fer.tel.server.rest.service.SceneService;
@@ -15,6 +14,7 @@ import java.util.List;
 @RestController
 public class SceneController {
 
+	@Autowired
 	private final SceneService sceneService;
 
 	@Autowired
@@ -22,7 +22,7 @@ public class SceneController {
 		this.sceneService = sceneService;
 	}
 	
-	//returns list of all scenes
+	//returns list of all scenes - OK
 	@RolesAllowed("iot-read")
 	@GetMapping("/scene")
 	public ResponseEntity<List<ShortScene>> getScenes() { // vraca sve scene
@@ -32,7 +32,7 @@ public class SceneController {
 		return ResponseEntity.ok(scenes);
 	}
 	
-	//create new scene
+	//create new scene - OK
 	@RolesAllowed("iot-write")
 	@PostMapping("/scene")
 	public ResponseEntity<Scene> sceneAdd(@RequestBody Scene scene) {
@@ -40,30 +40,23 @@ public class SceneController {
 		return ResponseEntity.status(201).body(saved);
 	}
 	
-	//get one scene
+	//get one scene - OK
 	@RolesAllowed("iot-read")
 	@GetMapping("/scene/{id}")
-	public ResponseEntity<SceneDTO> getSceneById(@PathVariable("id") String id) {
-		SceneDTO scene = sceneService.getById(id);
+	public ResponseEntity<Scene> getSceneById(@PathVariable("id") String id) {
+		Scene scene = sceneService.getById(id);
 		return ResponseEntity.ok(scene);
 	}
 	
-	//update one scene
+	//update one scene - OK
 	@RolesAllowed("iot-write")
 	@PutMapping("/scene/{id}")
 	public ResponseEntity<Scene> sceneEdit(@PathVariable("id") String id, @RequestBody Scene scene) {
 		Scene saved = sceneService.editScene(id, scene);
 		return ResponseEntity.ok(saved);
 	}
-
-//	@RolesAllowed("iot-read")
-//	@PostMapping("/scene")
-//	public ResponseEntity<List<ShortScene>> getSceneByTags(@RequestBody List<String> tags) {
-//		List<ShortScene> scenes = sceneService.getByTags(tags).stream().map(ShortScene::from).toList();
-//		return ResponseEntity.ok(scenes);
-//	}
 	
-	//delete scene
+	//delete scene - OK
 	@RolesAllowed("iot-write")
 	@DeleteMapping("/scene/{id}")
 	public ResponseEntity<Scene> deleteSceneById(@PathVariable("id") String id) {

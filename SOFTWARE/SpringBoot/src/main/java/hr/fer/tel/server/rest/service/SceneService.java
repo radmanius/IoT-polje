@@ -36,14 +36,14 @@ public class SceneService {
 	public Optional<Scene> findById(String id) {
 		return sceneRepository.findById(id);
 	}
-
-	
-	
-	//get all scenes
+		
+	//get all scenesDTO
 	public List<SceneDTO> getAllScenes() {
 
 		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
 				.toArray(String[]::new);
+		
+		
 		if (roles.length < 1)
 			throw new NoSuchElement("No roles at all");
 
@@ -60,16 +60,19 @@ public class SceneService {
 	}
 
 	//get scene by id defined by roles
-	public SceneDTO getById(String id) {
+	public Scene getById(String id) {
 		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
 				.toArray(String[]::new);
 		if (roles.length < 1)
 			throw new NoSuchElement("No roles at all");
 
-		var scene = sceneRepository.getByRoles(roles).stream().filter(sc -> sc.getId().equals(id)).findAny()
+		Scene scene = sceneRepository.getByRoles(roles).stream().filter(sc -> sc.getId().equals(id)).findAny()
 				.orElseThrow(() -> new NoSuchElement("Access denied, no required roles for given scene id: " + id));
-		return new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), scene.getPictureLink(),
-				scene.getLayout(), scene.getTags(), scene.getViews());
+		
+		
+		return scene;
+//		return new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), scene.getPictureLink(),
+//				scene.getLayout(), scene.getTags(), scene.getViews());
 	}
 
 	//get tags

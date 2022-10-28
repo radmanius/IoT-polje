@@ -23,9 +23,9 @@ public class Main {
         realm,
         clientId);
 
-    callIoTLabRestServer(oauthClient);
+//    callIoTLabRestServer(oauthClient);
 
-//    callLocalRestServer(oauthClient);
+    callLocalRestServer(oauthClient);
   }
 
   private static void callIoTLabRestServer(OAtuh2AuthorizationFlowPKCEClient oauthClient) throws Exception {
