@@ -12,7 +12,8 @@ import java.util.Set;
 
 @RestController
 public class KeyController {
-
+	
+	@Autowired
     private final KeyService keyService;
 
     @Autowired

@@ -9,6 +9,7 @@ import java.util.Set;
 @Service
 public class TagService {
 
+	@Autowired
     private final SceneService sceneService;
 
     @Autowired

@@ -11,7 +11,8 @@ import java.util.Set;
 
 @RestController
 public class TagController {
-
+	
+	@Autowired
     private final TagService tagService;
 
     @Autowired
