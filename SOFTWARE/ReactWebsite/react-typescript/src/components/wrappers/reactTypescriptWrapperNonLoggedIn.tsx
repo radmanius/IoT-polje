@@ -7,6 +7,7 @@ import "./reactTypescriptWrapper.scss";
 //import { PATHS } from "utils/paths";
 
 const ReactTypescriptWrapperNonLoggedIn = () => {
+    return null;
     /*
     const userState = useSelector((state: RootState) => state.reactTypescript.userState);
     const navigate = useNavigate();

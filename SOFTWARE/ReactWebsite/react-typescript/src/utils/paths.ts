@@ -1,5 +1,6 @@
 export const PAGE_ROUTES = {
     Global: "/",
+    SceneView: "/scene-view"
 };
 
 export const PATHS = {
