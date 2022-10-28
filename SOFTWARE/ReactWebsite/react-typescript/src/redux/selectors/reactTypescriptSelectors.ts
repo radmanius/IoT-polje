@@ -1,5 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { RootState } from "redux/store";
+import { RootState } from "redux/store/store";
 
 export const isActionLoadingSelector = createSelector(
     [(state: RootState) => state.reactTypescript.loadingActions, (state, actions: Array<string>) => actions],

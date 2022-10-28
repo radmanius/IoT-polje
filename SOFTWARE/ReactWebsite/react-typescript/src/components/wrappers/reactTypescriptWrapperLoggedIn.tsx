@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
-import { RootState } from "redux/store";
+import { RootState } from "redux/store/store";
 import { UserLoggedInStateEnum } from "utils/enums";
 import "./reactTypescriptWrapper.scss";
 import { useEffect } from "react";

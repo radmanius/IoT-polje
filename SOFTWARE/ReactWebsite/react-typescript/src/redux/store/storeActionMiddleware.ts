@@ -1,5 +1,5 @@
 import { isPending, isRejected, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
-import { addLoaderAction, removeLoaderAction, unAuthorized } from "./reducers/reactTypescriptReducer";
+import { addLoaderAction, removeLoaderAction, unAuthorized } from "../reducers/reactTypescriptReducer";
 
 export const loaderMiddleware: Middleware = (api: MiddlewareAPI) => next => action => {
     if (isRejected(action)) {

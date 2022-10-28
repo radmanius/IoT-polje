@@ -1,6 +1,6 @@
 import { AsyncThunk } from "@reduxjs/toolkit";
 import { useState, useEffect } from "react";
-import { useAppDispatch } from "redux/store";
+import { useAppDispatch } from "redux/store/store";
 
 export function useContainerThunkDispatch<ReturnType, ArgumentType>(
     thunkAction?: AsyncThunk<ReturnType, ArgumentType, {}>,
