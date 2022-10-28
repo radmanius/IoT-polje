@@ -13,10 +13,10 @@ import org.springframework.boot.test.json.JsonContent;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 
+import hr.fer.tel.server.rest.model.Layout;
 import hr.fer.tel.server.rest.model.Query;
 import hr.fer.tel.server.rest.model.Scene;
 import hr.fer.tel.server.rest.model.View;
-import hr.fer.tel.server.rest.model.enums.Layout;
 
 @JsonTest
 public class SceneJsonTest {
@@ -48,7 +48,7 @@ public class SceneJsonTest {
         scene.setId("id scene");
         scene.setTitle("naslov");
         scene.setSubtitle("podnaslov");
-        scene.setLayout(Layout.LIST);
+        scene.setLayout(new Layout("LIST"));
 
         scene.setTags(List.of("fer", "sap01"));
         Query query = new Query();
@@ -101,8 +101,8 @@ public class SceneJsonTest {
         assertThat(result.getId()).isEqualTo("id scene");
         assertThat(result.getTitle()).isEqualTo("naslov");
         assertThat(result.getSubtitle()).isEqualTo("podnaslov");
-        Layout l1 = Layout.GRID;
-        Layout l2  = Layout.LIST;
+        Layout l1 = new Layout("GRID");
+        Layout l2  = new Layout("LIST");
         assertThat(result.getLayout()).isEqualTo(l2);
         Query query = new Query();
         query.setURI(URI.create("/neki/uri"));
