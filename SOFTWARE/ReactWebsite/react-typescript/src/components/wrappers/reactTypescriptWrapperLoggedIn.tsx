@@ -8,18 +8,16 @@ import { Outlet } from "react-router-dom";
 const ReactTypescriptWrapperLoggedIn = () => {
     /*
     const userState = useSelector((state: RootState) => state.reactTypescript.userState);
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (userState === UserLoggedInStateEnum.Unauthorized || userState === UserLoggedInStateEnum.Expired) {
-            navigate(PATHS.Global.Login);
         }
     }, [userState]);
 
     if (userState === UserLoggedInStateEnum.Unauthorized || userState === UserLoggedInStateEnum.Expired) {
         return <></>;
     }*/
-
+    return null;
     return (
         <div>
             <div className="react-typescript__wrapper">

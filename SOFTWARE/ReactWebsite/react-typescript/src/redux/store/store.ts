@@ -1,39 +1,20 @@
-import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import { UserData } from "../models/userData";
-import { loginReducer, LoginState } from "redux/reducers/loginReducer";
-import createSagaMiddleware from "redux-saga";
-import root from "sagas/root";
-import userReducer from "redux/reducers/userReducer";
 
-export interface AppState {
-    loginReducer: LoginState;
-    userReducer: UserData;
-}
+import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import modalReducer from "redux/reducers/modalReducer";
+import reactTypescriptReducer from "redux/reducers/reactTypescriptReducer";
+import { loaderMiddleware } from "redux/store/storeActionMiddleware";
 
-const configureStore = (initialState?: AppState) => {
-    const rootReducer = combineReducers<AppState>({
-        loginReducer,
-        userReducer,
-    });
-    const sagaMiddleware = createSagaMiddleware();
+export const store = configureStore({
+    reducer: combineReducers({
+        reactTypescript: reactTypescriptReducer,
+        modal: modalReducer,
+    }),
+    middleware: () => getDefaultMiddleware().prepend(loaderMiddleware),
+});
 
-    const enhancers = [];
-    const windowIfDefined = typeof window === "undefined" ? null : (window as any);
-    if (windowIfDefined && windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__) {
-        enhancers.push(windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__());
-    }
-
-    const result = createStore(
-        rootReducer,
-        initialState,
-        compose(applyMiddleware(sagaMiddleware), ...enhancers)
-    );
-
-    sagaMiddleware.run(root);
-
-    return result;
-};
-
-export const store = configureStore();
-
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+
+export default store;
