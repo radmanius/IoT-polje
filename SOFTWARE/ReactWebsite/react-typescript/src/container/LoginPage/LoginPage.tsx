@@ -1,16 +1,35 @@
-//import { StringResources as Res, translate as t } from "utils/language/languageResource";
-import Keycloak from "keycloak-js";
+import { useKeycloak } from "@react-keycloak/web";
+import { useEffect } from "react";
 
 const LoginPage = () => {
+    const { keycloak, initialized } = useKeycloak();
+
+    useEffect(() => {}, []);
+    console.log(initialized);
+    return (
+        <div>
+            <div>{`User is ${!keycloak.authenticated ? "NOT " : ""}authenticated`}</div>
+
+            {!keycloak.authenticated && (
+                <button
+                    type="button"
+                    onClick={() => keycloak.login()}
+                >
+                    Login
+                </button>
+            )}
+        </div>
+    );
+
     /*const [data1, setData1] = useState();
     const [adminPrivilages, setAdminPrivilages] = useState(false);
     const [data2, setData2] = useState();
     const [customerPrivilages, setCustomerPrivilages] = useState(false);
-*/
+
     let initOptions = {
         url: "https://iotat.tel.fer.hr:58443/auth",
         realm: "spring",
-        clientId: "mobile-keycloak",
+        clientId: "react-mobile-client",
     };
 
     const keycloak = new Keycloak(initOptions);
@@ -111,16 +130,6 @@ const LoginPage = () => {
             });
         };
 */
-    return (
-        <>
-            <p>
-                {" "}
-                Check Admin privilages at <strong>/check/admin</strong> and check Customer privilages at{" "}
-                <strong>/check/customer</strong>
-            </p>
-            {/*<button onClick={check}>Check</button>*/}
-        </>
-    );
 };
 
 export default LoginPage;

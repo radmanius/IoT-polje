@@ -9,13 +9,17 @@ import { Provider } from "react-redux"; // import the provider
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import App from "./app";
+import { ReactKeycloakProvider } from "@react-keycloak/web";
+import keycloak from "keycloak";
 
 const rootElement = document.getElementById("root");
 render(
-    <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </Provider>,
+    <ReactKeycloakProvider authClient={keycloak}>
+        <Provider store={store}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </Provider>
+    </ReactKeycloakProvider>,
     rootElement
 );
