@@ -1,7 +1,5 @@
 package hr.fer.tel.server.rest.model;
 
-import java.net.http.HttpHeaders;
-
 import javax.persistence.*;
 
 import org.springframework.http.*;
@@ -19,8 +17,8 @@ public class Query {
     
     @Column(columnDefinition = "varchar(255)")
     private HttpMethod method;
-    
-    @OneToOne
+
+    @Column(columnDefinition = "varchar(255)")
     private HttpHeaders headers;
 
     public Query() {
