@@ -14,7 +14,14 @@ import keycloak from "keycloak";
 
 const rootElement = document.getElementById("root");
 render(
-    <ReactKeycloakProvider authClient={keycloak}>
+    <ReactKeycloakProvider
+        authClient={keycloak}
+        initOptions={{
+            redirectUri: "fer.tel.iot.polje.iotpolje:/oauth2Callback",
+            pkceMethod: "S256",
+            onLoad: "login-required",
+        }}
+    >
         <Provider store={store}>
             <BrowserRouter>
                 <App />

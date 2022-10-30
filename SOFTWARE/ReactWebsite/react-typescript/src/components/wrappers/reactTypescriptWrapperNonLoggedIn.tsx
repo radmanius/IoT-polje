@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { PATHS } from "utils/paths";
 
 const ReactTypescriptWrapperNonLoggedIn = () => {
+    return null;
     const navigate = useNavigate();
     useEffect(() => {
         navigate(PATHS.Global.Login);

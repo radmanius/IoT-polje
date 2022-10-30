@@ -17,7 +17,7 @@ const ReactTypescriptWrapperLoggedIn = () => {
     if (userState === UserLoggedInStateEnum.Unauthorized || userState === UserLoggedInStateEnum.Expired) {
         return <></>;
     }*/
-    return null;
+
     return (
         <div>
             <div className="react-typescript__wrapper">

@@ -2,10 +2,10 @@ import { useKeycloak } from "@react-keycloak/web";
 import { useEffect } from "react";
 
 const LoginPage = () => {
-    const { keycloak, initialized } = useKeycloak();
+    const { keycloak } = useKeycloak();
+    console.log(keycloak);
 
     useEffect(() => {}, []);
-    console.log(initialized);
     return (
         <div>
             <div>{`User is ${!keycloak.authenticated ? "NOT " : ""}authenticated`}</div>
