@@ -12,6 +12,7 @@ java {
 
 group = 'hr.fer.tel'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
@@ -27,7 +28,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.keycloak:keycloak-spring-boot-starter:15.0.2'
-	implementation 'org.projectlombok:lombok:1.18.18'
+	//implementation 'org.projectlombok:lombok:1.18.18'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
