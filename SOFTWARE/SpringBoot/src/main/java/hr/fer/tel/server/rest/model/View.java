@@ -1,8 +1,10 @@
 package hr.fer.tel.server.rest.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -15,6 +17,9 @@ public class View {
 	private long id;
     
     private String title;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Scene scene;
     
     @OneToOne
     private Query query;

@@ -1,9 +1,5 @@
 package hr.fer.tel.server.rest.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
-
 import javax.persistence.*;
 
 import hr.fer.tel.server.rest.dto.SceneDTO;
@@ -18,6 +14,9 @@ public class ShortScene {
     private String title;
     private String subtitle;
     private String pictureLink;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Scene scene;
 
     public ShortScene() {
     }

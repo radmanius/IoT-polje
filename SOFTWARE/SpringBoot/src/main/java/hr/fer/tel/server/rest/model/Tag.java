@@ -15,6 +15,9 @@ public class Tag {
     private long id;
     private String name;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Scene scene;
+    
     public Tag() {
     	
     }

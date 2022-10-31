@@ -20,6 +20,9 @@ public class Query {
 
     @Column(columnDefinition = "varchar(255)")
     private HttpHeaders headers;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Scene scene;
 
     public Query() {
     }

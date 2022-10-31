@@ -24,18 +24,17 @@ public class Scene {
     private String pictureLink;
 	
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tags;
     
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<View> views;
     
     
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Role> roles; //roles required for specific scene
     
-    
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Key> keys; // keys required for specific scene
 
     public Scene(){

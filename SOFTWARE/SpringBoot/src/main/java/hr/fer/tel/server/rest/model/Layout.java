@@ -12,6 +12,9 @@ public class Layout {
     
     @Column
     private String name;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Scene scene;
 
     public Layout() {
 

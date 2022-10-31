@@ -13,6 +13,9 @@ public class Key {
     private String token1;
     private String token2;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Scene scene;
+    
     public Key() {
     	
     }

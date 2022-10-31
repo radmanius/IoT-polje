@@ -11,6 +11,9 @@ public class Role {
     private long id;
 
     private String name;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Scene scene;
 
     public Role() {
 
