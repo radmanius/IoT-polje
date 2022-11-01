@@ -24,12 +24,23 @@ public class KeyService {
         this.sceneService = sceneService;
     }
 
-//    public List<Key> generate() {
-//        Key influxDbToken = new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "");
-//        return keyRepository.saveAll(List.of(influxDbToken));
-//    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //testing
+    public List<Key> generate() {
+        Key influxDbToken = new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "");
+        return keyRepository.saveAll(List.of(influxDbToken));
+    }
 
-//    public Set<KeyDTO> getAll(){
-//        return sceneService.getAllKeys();
-//    }
+    public Set<KeyDTO> getAll(){
+        return sceneService.getAllKeys();
+    }
 }

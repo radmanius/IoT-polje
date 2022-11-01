@@ -18,14 +18,14 @@ public class View {
     
     private String title;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Scene scene;
-    
     @OneToOne
     private Query query;
     
     private String payload;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Scene scene;
+    
     public View() {
     }
 

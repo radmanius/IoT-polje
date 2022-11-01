@@ -122,14 +122,14 @@ public class SceneService {
 	
 	
 	
-//	//ini dummy scenes for testing
-//	public List<Scene> generate() {
-//		var scenes = Scene.generateScenes();
-//		for (var scene : scenes) {
-//			sceneRepository.save(scene);
-//		}
-//		return sceneRepository.findAll();
-//	}
+	//ini dummy scenes for testing
+	public List<Scene> generate() {
+		var scenes = Scene.generateScenes();
+		for (var scene : scenes) {
+			sceneRepository.save(scene);
+		}
+		return sceneRepository.findAll();
+	}
 	
 	
 	
