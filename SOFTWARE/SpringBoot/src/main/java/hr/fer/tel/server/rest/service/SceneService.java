@@ -115,12 +115,7 @@ public class SceneService {
 	
 	
 	
-	
-	
-	
-	
-	
-	
+
 	
 	//ini dummy scenes for testing
 	public List<Scene> generate() {

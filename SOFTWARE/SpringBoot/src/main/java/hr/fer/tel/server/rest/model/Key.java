@@ -3,7 +3,7 @@ package hr.fer.tel.server.rest.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Key213")
+@Table(name = "Key")
 public class Key {
 
     @Id
