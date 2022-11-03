@@ -37,11 +37,11 @@ const App = () => {
                     element={
                         <React.Suspense
                             fallback={<LazyLoadingFallbackComponent />}
-                            children={<ReactTypescriptWrapperNonLoggedInLazy />}
+                            children={<ReactTypescriptWrapperLoggedInLazy />}
                         />
                     }
                 >
-                    {PathsAndElementsNonLoggedIn.map((route, index) => (
+                    {PathsAndElementsLoggedIn.map((route, index) => (
                         <Route
                             path={route.path}
                             key={index}
@@ -59,11 +59,11 @@ const App = () => {
                     element={
                         <React.Suspense
                             fallback={<LazyLoadingFallbackComponent />}
-                            children={<ReactTypescriptWrapperLoggedInLazy />}
+                            children={<ReactTypescriptWrapperNonLoggedInLazy />}
                         />
                     }
                 >
-                    {PathsAndElementsLoggedIn.map((route, index) => (
+                    {PathsAndElementsNonLoggedIn.map((route, index) => (
                         <Route
                             path={route.path}
                             key={index}

@@ -1,5 +1,10 @@
-.landing-page {
+.scene-page {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     text-align: center;
+}
+
+.button-container {
+
 }

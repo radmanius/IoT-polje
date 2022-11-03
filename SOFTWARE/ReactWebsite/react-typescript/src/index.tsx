@@ -17,7 +17,7 @@ render(
     <ReactKeycloakProvider
         authClient={keycloak}
         initOptions={{
-            redirectUri: "fer.tel.iot.polje.iotpolje:/oauth2Callback",
+            redirectUri: "http://localhost:8001/",
             pkceMethod: "S256",
             onLoad: "login-required",
         }}
