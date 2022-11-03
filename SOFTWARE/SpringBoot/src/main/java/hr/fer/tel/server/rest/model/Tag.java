@@ -34,4 +34,8 @@ public class Tag {
         return name;
     }
 
+	public void setScene(Scene sc) {
+		this.scene=sc;
+	}
+
 }

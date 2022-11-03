@@ -18,11 +18,9 @@ public class Query {
     @Column(columnDefinition = "varchar(255)")
     private HttpMethod method;
 
-    @Column(columnDefinition = "varchar(255)")
+    @Column(columnDefinition = "varchar(max)")
+    //private String headers;
     private HttpHeaders headers;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Scene scene;
 
     public Query() {
     }
@@ -44,10 +42,12 @@ public class Query {
     }
 
     public HttpHeaders getHeaders() {
+    //public String getHeaders(){
         return headers;
     }
 
     public void setHeaders(HttpHeaders headers) {
+    //public void setHeaders(String headers) {
         this.headers = headers;
     }
 
@@ -60,6 +60,7 @@ public class Query {
 	}
 
 	public Query(java.net.URI URI, HttpMethod method, HttpHeaders headers) {
+	//public Query(java.net.URI URI, HttpMethod method, String headers) {
         this.URI = URI;
         this.method = method;
         this.headers = headers;

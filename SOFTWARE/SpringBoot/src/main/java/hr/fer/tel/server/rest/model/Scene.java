@@ -1,6 +1,7 @@
 package hr.fer.tel.server.rest.model;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Scene {
 
     @Id
     @GeneratedValue
+    //private String id;
     private long id;
     
 	@Column
@@ -26,7 +28,7 @@ public class Scene {
 	@Column
     private String subtitle;
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
     private Layout layout;
 	
 	@Column
@@ -34,23 +36,25 @@ public class Scene {
 	
 	
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Tag> tags;
+    private List<Tag> tags = new ArrayList<>();
     
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<View> views;
+	//@OneToMany(mappedBy = "scene")
+    private List<View> views = new ArrayList<>();
     
     
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Role> roles; //roles required for specific scene
+    private List<Role> roles = new ArrayList<>(); //roles required for specific scene
     
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Key> keys; // keys required for specific scene
+    private List<Key> keys = new ArrayList<>(); // keys required for specific scene
 
     public Scene(){
     	
     }
 
     public Scene(long id, String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views, List<Role> roles, List<Key> keys) {
+    //public Scene(String id, String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views, List<Role> roles, List<Key> keys) {
         this.id = id;
         this.title = title;
         this.subtitle = subtitle;
@@ -60,6 +64,20 @@ public class Scene {
         this.views = views;
         this.roles = roles;
         this.keys = keys;
+        
+        for (Tag tag : tags) {
+        	tag.setScene(this);
+		}
+        for (View view : views) {
+        	view.setScene(this);
+		}
+        for (Role role : roles) {
+        	role.setScene(this);
+		}
+        for (Key key : keys) {
+        	key.setScene(this);
+		}
+        
     }
 
     public String getPictureLink() {
@@ -71,10 +89,12 @@ public class Scene {
     }
 
     public long getId() {
+    //public String getId() {
         return id;
     }
 
     public void setId(long id) {
+    //public void setId(String id) {
         this.id = id;
     }
 
@@ -134,15 +154,25 @@ public class Scene {
         this.keys = keys;
     }
     
+    public void addTag(Tag tag) {
+    	this.tags.add(tag);
+    	tag.setScene(this);
+    }
+    
     
     
 
     public static List<Scene> generateScenes(){
         Scene scene = new Scene();
-        scene.setId(1);
+        scene.setId(0);
         scene.setTitle("SOILTC:min_TC:min_SAP01");
         scene.setSubtitle("dohvaca min temperaturu zemlje i zraka za senzor SAP01");
+        
+        //Layout testLayout = new Layout("LIST");
+        //testLayout.setId(0);
+        //scene.setLayout(testLayout);
         scene.setLayout(new Layout("LIST"));
+        
         scene.setTags(List.of(new Tag("fer")));
         scene.setRoles(List.of(new Role("admin")));
         scene.setRoles(List.of(new Role("ferit"), new Role("fer"), new Role("admin")));
@@ -160,7 +190,7 @@ public class Scene {
         header.setAccept(List.of(MediaType.asMediaType(MimeType.valueOf("application/csv"))));
         header.setContentType(MediaType.asMediaType(MimeType.valueOf("application/vnd.flux")));
         query.setHeaders(header);
-
+        //query.setHeaders("headers");
 
         View view = new View("sap01_SOILTC:min", query, """
                 from(bucket:"telegraf")       
@@ -171,6 +201,9 @@ public class Scene {
                        |> duplicate(column: "_stop", as: "_time")
                        |> drop(columns: ["_start", "_stop"])
                 """);
+        
+        //smanjio sam duljinu stringa iz payload param jer su u zakomentiranom iznad preko 255 chara
+        //View view = new View("sap01_SOILTC:min", query, "from(bucket:\"telegraf\")");
         
         View view6 = new View("sap01_SOILTC:mean", query, """
                 from(bucket:"telegraf")       
@@ -225,18 +258,22 @@ public class Scene {
                 """);
 
         scene.setViews(List.of(view));
+        
+        
+        //dodao objekte Tag-ova, bili su stringovi
+        Scene scene1 = new Scene(1, "HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01")), List.of(view4)
+        , List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
+        
+        Scene scene2 = new Scene(2, "sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(view6)
+        ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
+        
+        Scene scene3 = new Scene(3, "HUM:max_LW:max_sap02_FER", "dohvaca HUM:max i LW:max mjerenja za sap02 senzor",   new Layout("LIST"),"https://freesvg.org/img/taking-shelter-from-the-rain.png", List.of(new Tag("sap02")), List.of(view2, view3)
+        ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
 
-//        Scene scene1 = new Scene("scena2", "HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of("sap01"), List.of(view4)
-//        , List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
-//        Scene scene2 = new Scene("scena3", "sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of("sap01"), List.of(view6)
-//        ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
-//        Scene scene3 = new Scene("scena4", "HUM:max_LW:max_sap02_FER", "dohvaca HUM:max i LW:max mjerenja za sap02 senzor",   new Layout("LIST"),"https://freesvg.org/img/taking-shelter-from-the-rain.png", List.of("sap02"), List.of(view2, view3)
-//        ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
-//
-//        Scene scene4 = new Scene("scena5", "HUM:max_LW:max_sap02_FERIT", "dohvaca HUM:max i LW:max mjerenja za sap02 senzor",   new Layout("LIST"),"https://freesvg.org/img/taking-shelter-from-the-rain.png", List.of("sap02", "ferit"), List.of(view2, view3)
-//                ,List.of(new Role("ferit"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
+        Scene scene4 = new Scene(4, "HUM:max_LW:max_sap02_FERIT", "dohvaca HUM:max i LW:max mjerenja za sap02 senzor",   new Layout("LIST"),"https://freesvg.org/img/taking-shelter-from-the-rain.png", List.of(new Tag("sap02"), new Tag("ferit")), List.of(view2, view3)
+                ,List.of(new Role("ferit"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
 
-        return List.of(scene);
-//        return List.of(scene, scene1, scene2, scene3, scene4);
+        //return List.of(scene);
+        return List.of(scene, scene1, scene2, scene3, scene4);
     }
 }

@@ -2,6 +2,8 @@ package hr.fer.tel.server.rest.model;
 
 import javax.persistence.*;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+
 @Entity
 @Table(name = "Role")
 public class Role {
@@ -12,6 +14,8 @@ public class Role {
 
     private String name;
     
+//    @ManyToOne(fetch = FetchType.EAGER) 
+//    @JoinColumn()
     @ManyToOne(fetch = FetchType.LAZY)
     private Scene scene;
 
@@ -37,6 +41,12 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public void setScene(Scene scene) {
+		this.scene = scene;
+	}
+    public Scene getScene() {
+    	return this.scene;
     }
 
     @Override

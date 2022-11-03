@@ -1,5 +1,7 @@
 package hr.fer.tel.server.rest.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,9 +20,11 @@ public class View {
     
     private String title;
     
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private Query query;
     
+
+	@Column(columnDefinition = "varchar(max)")
     private String payload;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,6 +33,12 @@ public class View {
     public View() {
     }
 
+    public View(String title, Query query, String payload) {
+    	this.title = title;
+    	this.query = query;
+    	this.payload = payload;
+    }
+    
     public String getTitle() {
         return title;
     }
@@ -53,12 +63,6 @@ public class View {
         this.payload = payload;
     }
 
-    public View(String title, Query query, String payload) {
-        this.title = title;
-        this.query = query;
-        this.payload = payload;
-    }
-    
 
 
     public long getId() {
@@ -69,6 +73,13 @@ public class View {
 		this.id = id;
 	}
 
+	public Scene getScene() {
+		return scene;
+	}
+	
+	public void setScene(Scene scene) {
+		this.scene = scene;
+	}
 	@Override
     public String toString() {
         return "View{" +

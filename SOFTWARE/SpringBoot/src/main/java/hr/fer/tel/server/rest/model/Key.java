@@ -54,7 +54,12 @@ public class Key {
     public void setToken2(String token2) {
         this.token2 = token2;
     }
-
+    public void setScene(Scene scene) {
+		this.scene = scene;
+	}
+    public Scene getScene() {
+		return this.scene;
+	}
     @Override
     public String toString() {
         return "Key{" +
