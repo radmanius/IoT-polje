@@ -53,10 +53,10 @@ public class Scene {
     	
     }
 
-    public Scene(long id, String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views, List<Role> roles, List<Key> keys) {
+    public Scene(int i, String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views, List<Role> roles, List<Key> keys) {
     //public Scene(String id, String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views, List<Role> roles, List<Key> keys) {
-        this.id = id;
-        this.title = title;
+    	this.id = i;
+    	this.title = title;
         this.subtitle = subtitle;
         this.layout = layout;
         this.pictureLink = pictureLink;
@@ -163,27 +163,9 @@ public class Scene {
     
 
     public static List<Scene> generateScenes(){
-        Scene scene = new Scene();
-        scene.setId(0);
-        scene.setTitle("SOILTC:min_TC:min_SAP01");
-        scene.setSubtitle("dohvaca min temperaturu zemlje i zraka za senzor SAP01");
-        
-        //Layout testLayout = new Layout("LIST");
-        //testLayout.setId(0);
-        //scene.setLayout(testLayout);
-        scene.setLayout(new Layout("LIST"));
-        
-        scene.setTags(List.of(new Tag("fer")));
-        scene.setRoles(List.of(new Role("admin")));
-        scene.setRoles(List.of(new Role("ferit"), new Role("fer"), new Role("admin")));
-
-        scene.setKeys(List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
-        scene.setPictureLink("https://freesvg.org/img/Lavori-in-corso.png");
-
         Query query = new Query();
         query.setURI(URI.create("https://iotat.tel.fer.hr:57786/api/v2/query?org=fer"));
         query.setMethod(HttpMethod.POST);
-
 
         HttpHeaders header = new HttpHeaders();
         header.set(HttpHeaders.AUTHORIZATION, "Token {{token1}}");
@@ -191,32 +173,19 @@ public class Scene {
         header.setContentType(MediaType.asMediaType(MimeType.valueOf("application/vnd.flux")));
         query.setHeaders(header);
         //query.setHeaders("headers");
+        
+        
+        Query query2 = new Query();
+        query2.setURI(URI.create("https://iotat.tel.fer.hr:57786/api/v2/query?org=fer"));
+        query2.setMethod(HttpMethod.POST);
 
-        View view = new View("sap01_SOILTC:min", query, """
-                from(bucket:"telegraf")       
-                |> range(start: {{startTimeISO}})      
-                |> filter(fn: (r) => r._measurement == "SOILTC" and r.id_wasp == "SAP01" and r._field == "value")
-                |> window(every: {{agregationRange}})
-                       |> min()
-                       |> duplicate(column: "_stop", as: "_time")
-                       |> drop(columns: ["_start", "_stop"])
-                """);
-        
-        //smanjio sam duljinu stringa iz payload param jer su u zakomentiranom iznad preko 255 chara
-        //View view = new View("sap01_SOILTC:min", query, "from(bucket:\"telegraf\")");
-        
-        View view6 = new View("sap01_SOILTC:mean", query, """
-                from(bucket:"telegraf")       
-                |> range(start: {{startTimeISO}})      
-                |> filter(fn: (r) => r._measurement == "SOILTC" and r.id_wasp == "SAP01" and r._field =="value")
-                |> window(every: {{agregationRange}})
-                       |> mean()
-                       |> duplicate(column: "_stop", as: "_time")
-                       |> drop(columns: ["_start", "_stop"])
-                """);
-        
+        HttpHeaders header2 = new HttpHeaders();
+        header2.set(HttpHeaders.AUTHORIZATION, "Token {{token1}}");
+        header2.setAccept(List.of(MediaType.asMediaType(MimeType.valueOf("application/csv"))));
+        header2.setContentType(MediaType.asMediaType(MimeType.valueOf("application/vnd.flux")));
+        query2.setHeaders(header);
 
-        View view5 = new View("sap01_TC:min", query, """
+        View view5 = new View("sap01_TC:min", query2, """
                 from(bucket:"telegraf")        
                 |> range(start: {{startTimeISO}})      
                 |> filter(fn: (r) => r._measurement == "TC" and r.id_wasp == "SAP01" and r._field =="value")
@@ -225,55 +194,24 @@ public class Scene {
                        |> duplicate(column: "_stop", as: "_time")
                        |> drop(columns: ["_start", "_stop"])
                 """);
-
-        View view2 = new View("HUM_sap02_max", query, """
-                from(bucket:"telegraf")
-                       |> range(start: {{startTimeISO}})
-                       |> filter(fn: (r) => r._measurement == "HUM" and r.id_wasp == "SAP02" and r._field =="value")
-                       |> window(every: {{agregationRange}})
-                       |> max()
-                       |> duplicate(column: "_stop", as: "_time")
-                       |> drop(columns: ["_start", "_stop"])
-                """);
-
-        View view3 = new View("LW_sap02_max", query, """
-                       from(bucket:"telegraf")
-                       |> range(start: {{startTimeISO}})
-                       |> filter(fn: (r) => r._measurement == "LW" and r.id_wasp == "SAP02" and r._field =="value")
-                       |> window(every: {{agregationRange}})
-                       |> max()
-                       |> duplicate(column: "_stop", as: "_time")
-                       |> drop(columns: ["_start", "_stop"])
-                """);
-
+        
         View view4 = new View("HUM_sap01_agregatedAVG", query, """
-                from(bucket:"telegraf")
-                        |> range(start: {{startTimeISO}})
-                        |> filter(fn: (r) => r._measurement == "HUM" and r.id_wasp == "SAP01" and r._field == "value")
-                        |> drop(columns: ["_start", "_stop", "_field", "host", "id"])
-                        |> window(every: {{agregationRange}})
-                        |> mean()
-                        |> duplicate(column: "_stop", as: "_time")
-                        |> drop(columns: ["_start", "_stop"])
-                """);
+        		from(bucket:"telegraf")
+        		|> range(start: {{startTimeISO}})
+        		|> filter(fn: (r) => r._measurement == "HUM" and r.id_wasp == "SAP01" and r._field == "value")
+        		|> drop(columns: ["_start", "_stop", "_field", "host", "id"])
+        		|> window(every: {{agregationRange}})
+        		|> mean()
+        		|> duplicate(column: "_stop", as: "_time")
+        		|> drop(columns: ["_start", "_stop"])
+        		""");
 
-        scene.setViews(List.of(view));
-        
-        
-        //dodao objekte Tag-ova, bili su stringovi
-        Scene scene1 = new Scene(1, "HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01")), List.of(view4)
+        Scene scene1 = new Scene(5, "HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01")), List.of(view4)
         , List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
         
-        Scene scene2 = new Scene(2, "sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(view6)
+        Scene scene2 = new Scene(2, "sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(view5)
         ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
-        
-        Scene scene3 = new Scene(3, "HUM:max_LW:max_sap02_FER", "dohvaca HUM:max i LW:max mjerenja za sap02 senzor",   new Layout("LIST"),"https://freesvg.org/img/taking-shelter-from-the-rain.png", List.of(new Tag("sap02")), List.of(view2, view3)
-        ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
-
-        Scene scene4 = new Scene(4, "HUM:max_LW:max_sap02_FERIT", "dohvaca HUM:max i LW:max mjerenja za sap02 senzor",   new Layout("LIST"),"https://freesvg.org/img/taking-shelter-from-the-rain.png", List.of(new Tag("sap02"), new Tag("ferit")), List.of(view2, view3)
-                ,List.of(new Role("ferit"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
-
-        //return List.of(scene);
-        return List.of(scene, scene1, scene2, scene3, scene4);
+       
+        return List.of(scene1, scene2);
     }
 }
