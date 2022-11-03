@@ -7,17 +7,18 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 
+const cols = [
+    { field: "shortSceneId", header: "ID kratke scene", sortable: false },
+    { field: "pictureLink", header: "Link slike", sortable: false },
+    { field: "sceneTitle", header: "Naslov scene", sortable: false },
+    { field: "sceneSubtitle", header: "Podnaslov scene", sortable: false },
+    { field: "sceneId", header: "ID scene", sortable: false },
+];
+
 const ShortSceneView = () => {
     //const dispatch = useDispatch();
     const navigate = useNavigate();
     const [shortScene, setShortScene] = useState<IShortScene[]>();
-    const cols = [
-        { field: "shortSceneId", header: "ID kratke scene", sortable: false },
-        { field: "pictureLink", header: "Link slike", sortable: false },
-        { field: "sceneTitle", header: "Naslov scene", sortable: false },
-        { field: "sceneSubtitle", header: "Podnaslov scene", sortable: false },
-        { field: "sceneId", header: "ID scene", sortable: false },
-    ];
 
     const fetchShortScenes = useCallback(async () => {
         try {
@@ -54,7 +55,6 @@ const ShortSceneView = () => {
                     }}
                 >
                     {cols.map(col => {
-                        console.log(col);
                         return (
                             <Column
                                 key={col.field}
