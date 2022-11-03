@@ -20,14 +20,14 @@ public class View {
     
     private String title;
     
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL)
     private Query query;
     
 
 	@Column(columnDefinition = "varchar(max)")
     private String payload;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Scene scene;
     
     public View() {

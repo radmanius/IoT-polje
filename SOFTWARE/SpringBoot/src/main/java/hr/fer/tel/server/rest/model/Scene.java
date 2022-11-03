@@ -160,20 +160,7 @@ public class Scene {
     }
     
     
-    
-
-    public static List<Scene> generateScenes(){
-        Query query = new Query();
-        query.setURI(URI.create("https://iotat.tel.fer.hr:57786/api/v2/query?org=fer"));
-        query.setMethod(HttpMethod.POST);
-
-        HttpHeaders header = new HttpHeaders();
-        header.set(HttpHeaders.AUTHORIZATION, "Token {{token1}}");
-        header.setAccept(List.of(MediaType.asMediaType(MimeType.valueOf("application/csv"))));
-        header.setContentType(MediaType.asMediaType(MimeType.valueOf("application/vnd.flux")));
-        query.setHeaders(header);
-        //query.setHeaders("headers");
-        
+    public static List<Scene> generateScenes(){       
         
         Query query2 = new Query();
         query2.setURI(URI.create("https://iotat.tel.fer.hr:57786/api/v2/query?org=fer"));
@@ -183,9 +170,9 @@ public class Scene {
         header2.set(HttpHeaders.AUTHORIZATION, "Token {{token1}}");
         header2.setAccept(List.of(MediaType.asMediaType(MimeType.valueOf("application/csv"))));
         header2.setContentType(MediaType.asMediaType(MimeType.valueOf("application/vnd.flux")));
-        query2.setHeaders(header);
+        query2.setHeaders(header2);
 
-        View view5 = new View("sap01_TC:min", query2, """
+        View view1 = new View("sap01_TC:min", createQuery(), """
                 from(bucket:"telegraf")        
                 |> range(start: {{startTimeISO}})      
                 |> filter(fn: (r) => r._measurement == "TC" and r.id_wasp == "SAP01" and r._field =="value")
@@ -195,7 +182,18 @@ public class Scene {
                        |> drop(columns: ["_start", "_stop"])
                 """);
         
-        View view4 = new View("HUM_sap01_agregatedAVG", query, """
+        View view2 = new View("HUM_sap01_agregatedAVG", createQuery(), """
+        		from(bucket:"telegraf")
+        		|> range(start: {{startTimeISO}})
+        		|> filter(fn: (r) => r._measurement == "HUM" and r.id_wasp == "SAP01" and r._field == "value")
+        		|> drop(columns: ["_start", "_stop", "_field", "host", "id"])
+        		|> window(every: {{agregationRange}})
+        		|> mean()
+        		|> duplicate(column: "_stop", as: "_time")
+        		|> drop(columns: ["_start", "_stop"])
+        		""");
+        
+        View view3 = new View("HUM_sap01_agregatedAVG", createQuery(), """
         		from(bucket:"telegraf")
         		|> range(start: {{startTimeISO}})
         		|> filter(fn: (r) => r._measurement == "HUM" and r.id_wasp == "SAP01" and r._field == "value")
@@ -206,12 +204,28 @@ public class Scene {
         		|> drop(columns: ["_start", "_stop"])
         		""");
 
-        Scene scene1 = new Scene(5, "HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01")), List.of(view4)
+        Scene scene1 = new Scene(0, "HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01")), List.of(view1, view2)
         , List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
         
-        Scene scene2 = new Scene(2, "sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(view5)
+        Scene scene2 = new Scene(0, "sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(view2)
+        ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
+      
+        Scene scene3 = new Scene(0, "sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(view3)
         ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
        
-        return List.of(scene1, scene2);
+        return List.of(scene1, scene2, scene3);
+    }
+    
+    public static Query createQuery() {
+    	Query query = new Query();
+        query.setURI(URI.create("https://iotat.tel.fer.hr:57786/api/v2/query?org=fer"));
+        query.setMethod(HttpMethod.POST);
+
+        HttpHeaders header = new HttpHeaders();
+        header.set(HttpHeaders.AUTHORIZATION, "Token {{token1}}");
+        header.setAccept(List.of(MediaType.asMediaType(MimeType.valueOf("application/csv"))));
+        header.setContentType(MediaType.asMediaType(MimeType.valueOf("application/vnd.flux")));
+        query.setHeaders(header);
+        return query;
     }
 }
