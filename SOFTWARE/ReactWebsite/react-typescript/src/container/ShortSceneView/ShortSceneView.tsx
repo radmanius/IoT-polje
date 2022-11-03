@@ -10,7 +10,7 @@ import { Button } from "primereact/button";
 const ShortSceneView = () => {
     //const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [shortScane, setShortScene] = useState<IShortScene[]>();
+    const [shortScene, setShortScene] = useState<IShortScene[]>();
     const cols = [
         { field: "shortSceneId", header: "ID kratke scene", sortable: false },
         { field: "pictureLink", header: "Link slike", sortable: false },
@@ -42,7 +42,7 @@ const ShortSceneView = () => {
                 <DataTable
                     resizableColumns
                     showGridlines
-                    value={shortScane}
+                    value={shortScene}
                     emptyMessage={"Trenutno nema rezultata"}
                     responsiveLayout="stack"
                     onRowClick={rowData => {
