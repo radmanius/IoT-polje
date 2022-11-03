@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { StringResources as Res, translate as t } from "utils/language/languageResource";
 import { Button } from "primereact/button";
-import "./LandingPage.css";
+import "./LandingPage.scss";
 
 const LandingPage = () => {
     const navigate = useNavigate();

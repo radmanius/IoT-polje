@@ -1,7 +1,7 @@
 //import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
-import "./SceneView.css";
+import "./SceneView.scss";
 import { IShortScene } from "models/shortScene";
 import { useCallback, useEffect, useState } from "react";
 import { initScene, IScene } from "models/scenes";
@@ -36,7 +36,12 @@ const SceneView = () => {
         <div className="scene-page">
             <div>
                 <h1>{scene.sceneTitle}</h1>
-                <span>{scene.sceneSubtitle}</span>
+                <h3>{scene.sceneSubtitle}</h3>
+                <img
+                    src="/iot.jpeg"
+                    className="iot-img"
+                    alt="iot slika"
+                />
             </div>
             <div>
                 <Button
