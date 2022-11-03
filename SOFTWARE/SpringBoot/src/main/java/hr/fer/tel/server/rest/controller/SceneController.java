@@ -23,7 +23,6 @@ public class SceneController {
 	}
 	
 	//returns list of all scenes - OK - OK
-	@RolesAllowed("iot-read")
 	@GetMapping("/scene")
 	public ResponseEntity<List<ShortScene>> getScenes() { // vraca sve scene
 
@@ -41,7 +40,6 @@ public class SceneController {
 	}
 	
 	//get one scene - OK - OK
-	@RolesAllowed("iot-read")
 	@GetMapping("/scene/{id}")
 	public ResponseEntity<Scene> getSceneById(@PathVariable("id") String id) {
 		Scene scene = sceneService.getById(id);

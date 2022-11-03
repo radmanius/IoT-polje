@@ -46,7 +46,9 @@ public class SceneService {
 		if (roles.length < 1)
 			throw new NoSuchElement("No roles at all");
 
-		return sceneRepository.getByRoles(roles).stream().map(SceneDTO::from).collect(Collectors.toList());
+		List<String> ouput = List.of(roles);
+
+		return sceneRepository.getByRoles(ouput).stream().map(SceneDTO::from).collect(Collectors.toList());
 	}
 
 	//get scene by id defined by roles - OK - OK
@@ -57,8 +59,10 @@ public class SceneService {
 		
 		if (roles.length < 1)
 			throw new NoSuchElement("No roles at all");
+		
+		List<String> ouput = List.of(roles);
 
-		Scene scene = sceneRepository.getByRoles(roles).stream().filter(sc -> Long.valueOf(sc.getId()).equals(id)).findAny()
+		Scene scene = sceneRepository.getByRoles(ouput).stream().filter(sc -> Long.valueOf(sc.getId()).equals(id)).findAny()
 				.orElseThrow(() -> new NoSuchElement("Access denied, no required roles for given scene id: " + id));
 	
 		return scene;
@@ -143,16 +147,18 @@ public class SceneService {
 	
 	//get keys
 	public Set<KeyDTO> getAllKeys() {
-		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
-				.toArray(String[]::new);
-		if (roles.length < 1)
-			throw new NoSuchElement("No roles at all");
-
-		Set<KeyDTO> keys = new LinkedHashSet<>();
-		for (var l1 : sceneRepository.getByRoles(roles)) {
-			keys.addAll(l1.getKeys().stream().map(KeyDTO::from).collect(Collectors.toList()));
-		}
-		return keys;
+//		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
+//				.toArray(String[]::new);
+//		if (roles.length < 1)
+//			throw new NoSuchElement("No roles at all");
+//
+//		Set<KeyDTO> keys = new LinkedHashSet<>();
+//		for (var l1 : sceneRepository.getByRoles(roles)) {
+//			keys.addAll(l1.getKeys().stream().map(KeyDTO::from).collect(Collectors.toList()));
+//		}
+//		return keys;
+		
+		return null;
 	}
 
 }

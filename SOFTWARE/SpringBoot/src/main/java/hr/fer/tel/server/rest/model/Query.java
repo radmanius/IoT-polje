@@ -13,42 +13,42 @@ public class Query {
     private long id;
 	
     @Column(columnDefinition = "varchar(255)")
-    private URI URI;
+    private String URI;
     
     @Column(columnDefinition = "varchar(255)")
-    private HttpMethod method;
+    private String method;
 
     @Column(columnDefinition = "varchar(max)")
     //private String headers;
-    private HttpHeaders headers;
+    private String headers;
 
     public Query() {
     }
 
-    public java.net.URI getURI() {
+    public String getURI() {
         return URI;
     }
 
-    public void setURI(java.net.URI URI) {
+    public void setURI(String URI) {
         this.URI = URI;
     }
 
-    public HttpMethod getMethod() {
+    public String getMethod() {
         return method;
     }
 
-    public void setMethod(HttpMethod method) {
+    public void setMethod(String method) {
         this.method = method;
     }
 
-    public HttpHeaders getHeaders() {
+    public String getHeaders() {
     //public String getHeaders(){
         return headers;
     }
 
     public void setHeaders(HttpHeaders headers) {
     //public void setHeaders(String headers) {
-        this.headers = headers;
+        this.headers = headers.toString();
     }
 
     public long getId() {
@@ -59,11 +59,11 @@ public class Query {
 		this.id = id;
 	}
 
-	public Query(java.net.URI URI, HttpMethod method, HttpHeaders headers) {
+	public Query(String URI, String method, HttpHeaders headers) {
 	//public Query(java.net.URI URI, HttpMethod method, String headers) {
         this.URI = URI;
         this.method = method;
-        this.headers = headers;
+        this.headers = headers.toString();
     }
 
     @Override
