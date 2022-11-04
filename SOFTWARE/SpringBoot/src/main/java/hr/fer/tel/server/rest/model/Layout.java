@@ -13,20 +13,9 @@ public class Layout {
     @Column
     private String name;
     
-    //@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    //private Scene scene;
-
     public Layout() {
 
     }
-
-//    public Scene getScene() {
-//		return scene;
-//	}
-//
-//	public void setScene(Scene scene) {
-//		this.scene = scene;
-//	}
 
 	public Layout(String name) {
         this.name = name;

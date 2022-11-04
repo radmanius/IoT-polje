@@ -3,6 +3,9 @@ package hr.fer.tel.server.rest.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 
@@ -34,6 +37,7 @@ public class Tag {
         return name;
     }
 
+    @JsonIgnore
 	public void setScene(Scene sc) {
 		this.scene=sc;
 	}

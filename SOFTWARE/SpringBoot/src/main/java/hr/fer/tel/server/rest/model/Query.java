@@ -19,7 +19,6 @@ public class Query {
     private String method;
 
     @Column(columnDefinition = "varchar(max)")
-    //private String headers;
     private String headers;
 
     public Query() {
@@ -42,12 +41,10 @@ public class Query {
     }
 
     public String getHeaders() {
-    //public String getHeaders(){
         return headers;
     }
 
     public void setHeaders(HttpHeaders headers) {
-    //public void setHeaders(String headers) {
         this.headers = headers.toString();
     }
 
@@ -60,7 +57,6 @@ public class Query {
 	}
 
 	public Query(String URI, String method, HttpHeaders headers) {
-	//public Query(java.net.URI URI, HttpMethod method, String headers) {
         this.URI = URI;
         this.method = method;
         this.headers = headers.toString();

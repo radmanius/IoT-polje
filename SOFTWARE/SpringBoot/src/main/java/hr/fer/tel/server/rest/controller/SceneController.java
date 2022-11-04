@@ -5,6 +5,7 @@ import hr.fer.tel.server.rest.model.ShortScene;
 import hr.fer.tel.server.rest.service.SceneService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,10 +41,16 @@ public class SceneController {
 	}
 	
 	//get one scene - OK - OK
+//	@GetMapping("/scene/{id}")
+//	public ResponseEntity<Scene> getSceneById(@PathVariable("id") String id) {
+//		Scene scene = sceneService.getById(id);
+//		return ResponseEntity.ok(scene);
+//	}
+	
 	@GetMapping("/scene/{id}")
 	public ResponseEntity<Scene> getSceneById(@PathVariable("id") String id) {
-		Scene scene = sceneService.getById(id);
-		return ResponseEntity.ok(scene);
+		Scene scene = sceneService.proba(id);
+		return ResponseEntity.status(HttpStatus.OK).body(scene);
 	}
 	
 	//update one scene - OK - OK

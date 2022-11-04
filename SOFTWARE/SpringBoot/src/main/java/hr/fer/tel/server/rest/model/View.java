@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "View")
 public class View {
@@ -63,8 +65,6 @@ public class View {
         this.payload = payload;
     }
 
-
-
     public long getId() {
 		return id;
 	}
@@ -73,10 +73,12 @@ public class View {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	public Scene getScene() {
 		return scene;
 	}
 	
+	@JsonIgnore
 	public void setScene(Scene scene) {
 		this.scene = scene;
 	}

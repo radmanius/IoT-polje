@@ -11,7 +11,6 @@ import hr.fer.tel.server.rest.utils.NoSuchElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -20,12 +19,8 @@ import java.util.stream.Collectors;
 @Service
 public class SceneService {
 
-	private final SceneRepository sceneRepository;
-
 	@Autowired
-	public SceneService(SceneRepository sceneRepository) {
-		this.sceneRepository = sceneRepository;
-	}
+	private SceneRepository sceneRepository;
 	
 	//Find and return scene by id without roles
 	public Scene fetch(String id) {
@@ -65,6 +60,11 @@ public class SceneService {
 		Scene scene = sceneRepository.getByRoles(ouput).stream().filter(sc -> Long.valueOf(sc.getId()).equals(id)).findAny()
 				.orElseThrow(() -> new NoSuchElement("Access denied, no required roles for given scene id: " + id));
 	
+		return scene;
+	}
+	
+	public Scene proba(String id) {
+		Scene scene = sceneRepository.findAll().get(0);
 		return scene;
 	}
 

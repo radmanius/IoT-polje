@@ -15,6 +15,8 @@ import java.net.URI;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.MimeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "scene")
 public class Scene {
@@ -123,7 +125,7 @@ public class Scene {
     public void setLayout(Layout layout) {
         this.layout = layout;
     }
-
+    
     public List<Tag> getTags() {
         return tags;
     }
@@ -164,7 +166,7 @@ public class Scene {
     
     public static List<Scene> generateScenes(){       
         
-        Scene scene1 = new Scene(0, "HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01")), List.of(createView(), createView())
+        Scene scene1 = new Scene(0, "HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01"), new Tag("sap02")), List.of(createView(), createView())
         , List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
         
         Scene scene2 = new Scene(0, "sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(createView())

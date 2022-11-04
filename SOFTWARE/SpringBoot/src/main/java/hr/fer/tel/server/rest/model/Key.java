@@ -2,6 +2,8 @@ package hr.fer.tel.server.rest.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Key")
 public class Key {
@@ -54,9 +56,13 @@ public class Key {
     public void setToken2(String token2) {
         this.token2 = token2;
     }
+    
+    @JsonIgnore
     public void setScene(Scene scene) {
 		this.scene = scene;
 	}
+    
+    @JsonIgnore
     public Scene getScene() {
 		return this.scene;
 	}
