@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { IShortScene, shortScenes } from "models/shortScene";
 import { useCallback, useEffect, useState } from "react";
-import "./ShortSceneView.scss";
+import "./shortSceneView.scss";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";

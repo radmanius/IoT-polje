@@ -1,7 +1,7 @@
 //import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
-import "./SpecificSceneView.scss";
+import "./specificSceneView.scss";
 import { IShortScene } from "models/shortScene";
 import { useCallback, useEffect, useState } from "react";
 import { initScene, IScene } from "models/scenes";
