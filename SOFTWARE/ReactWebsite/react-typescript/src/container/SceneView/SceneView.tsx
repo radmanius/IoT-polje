@@ -1,12 +1,12 @@
-//import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
-import "./sceneView.scss";
 import { useCallback, useEffect, useState } from "react";
 import { initScenes, IScene } from "models/scenes";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { PAGE_ROUTES } from "utils/paths";
+import { getAllScenes } from "utils/axios/scenes";
+import "./sceneView.scss";
 
 const cols = [
     { field: "sceneId", header: "ID kratke scene", sortable: false },
@@ -19,17 +19,13 @@ const cols = [
 const SceneView = () => {
     const [scenes, setScenes] = useState<IScene[]>(initScenes);
     const navigate = useNavigate();
-    //const dispatch = useDispatch();
 
     const fetchAllScenes = useCallback(async () => {
         try {
-            //const res = await getScenes();
-            //return all scenes
-            //setScene(res)
-            setScenes(initScenes);
+            const res = await getAllScenes();
+            setScenes(res);
         } catch (error) {
             //toast message
-            console.log("error");
         }
     }, []);
 

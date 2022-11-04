@@ -1,4 +1,3 @@
-//import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import "./specificSceneView.scss";
@@ -6,6 +5,7 @@ import { IShortScene } from "models/shortScene";
 import { useCallback, useEffect, useState } from "react";
 import { initScene, IScene } from "models/scenes";
 import { PAGE_ROUTES } from "utils/paths";
+import { getSceneById } from "utils/axios/scenes";
 
 interface ILocationState {
     shortScene: IShortScene;
@@ -17,16 +17,13 @@ const SpecificSceneView = () => {
     console.log(shortScene);
     const [scene, setScene] = useState<IScene>(initScene);
     const navigate = useNavigate();
-    //const dispatch = useDispatch();
 
     const fetchScene = useCallback(async () => {
         try {
-            //const res = await getScenes(shortScene.sceneId);
-            //setScene(res)
-            setScene(initScene);
+            const res = await getSceneById(shortScene.sceneId);
+            setScene(res);
         } catch (error) {
             //toast message
-            console.log("error");
             console.log(scene);
         }
     }, []);
