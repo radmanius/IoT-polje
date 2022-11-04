@@ -6,6 +6,7 @@ import "./shortSceneView.scss";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
+import { PAGE_ROUTES } from "utils/paths";
 
 const cols = [
     { field: "shortSceneId", header: "ID kratke scene", sortable: false },
@@ -47,7 +48,7 @@ const ShortSceneView = () => {
                     emptyMessage={"Trenutno nema rezultata"}
                     responsiveLayout="stack"
                     onRowClick={rowData => {
-                        navigate("/specific-scene-view", {
+                        navigate(PAGE_ROUTES.SpecificSceneView, {
                             state: {
                                 shortScene: shortScenes.find(x => x.shortSceneId === rowData.data.shortSceneId),
                             },
@@ -69,7 +70,7 @@ const ShortSceneView = () => {
             <div>
                 <div>
                     <Button
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate(PAGE_ROUTES.Global)}
                         label={"Natrag na početnu stranicu"}
                     />
                 </div>

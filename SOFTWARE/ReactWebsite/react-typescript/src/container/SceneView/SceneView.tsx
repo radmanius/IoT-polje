@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { initScenes, IScene } from "models/scenes";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { PAGE_ROUTES } from "utils/paths";
 
 const cols = [
     { field: "sceneId", header: "ID kratke scene", sortable: false },
@@ -49,7 +50,7 @@ const SceneView = () => {
                     emptyMessage={"Trenutno nema rezultata"}
                     responsiveLayout="stack"
                     onRowClick={rowData => {
-                        navigate("/specific-scene-view", {
+                        navigate(PAGE_ROUTES.SpecificSceneView, {
                             state: {
                                 shortScene: scenes.find(x => x.sceneId === rowData.data.sceneId),
                             },
@@ -71,7 +72,7 @@ const SceneView = () => {
             <div>
                 <div>
                     <Button
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate(PAGE_ROUTES.Global)}
                         label={"Natrag na početnu stranicu"}
                     />
                 </div>

@@ -5,6 +5,7 @@ import "./specificSceneView.scss";
 import { IShortScene } from "models/shortScene";
 import { useCallback, useEffect, useState } from "react";
 import { initScene, IScene } from "models/scenes";
+import { PAGE_ROUTES } from "utils/paths";
 
 interface ILocationState {
     shortScene: IShortScene;
@@ -47,7 +48,7 @@ const SpecificSceneView = () => {
             </div>
             <div>
                 <Button
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate(PAGE_ROUTES.ShortSceneView)}
                     label={"Natrag na prikaz kratkih scena"}
                 />
             </div>

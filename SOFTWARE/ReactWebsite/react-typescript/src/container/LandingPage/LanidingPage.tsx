@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { StringResources as Res, translate as t } from "utils/language/languageResource";
 import { Button } from "primereact/button";
 import "./landingPage.scss";
+import { PAGE_ROUTES } from "utils/paths";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ const LandingPage = () => {
             <div>
                 <h1>{t(Res.LandingPage)}</h1>
                 <Button
-                    onClick={() => navigate("/short-scene")}
+                    onClick={() => navigate(PAGE_ROUTES.ShortSceneView)}
                     label={"Prikaži kratke scene"}
                 />
             </div>
