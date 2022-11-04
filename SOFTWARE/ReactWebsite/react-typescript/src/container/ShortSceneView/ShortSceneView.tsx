@@ -47,9 +47,9 @@ const ShortSceneView = () => {
                     emptyMessage={"Trenutno nema rezultata"}
                     responsiveLayout="stack"
                     onRowClick={rowData => {
-                        navigate("/scene-view", {
+                        navigate("/specific-scene-view", {
                             state: {
-                                satelite: shortScenes.find(x => x.shortSceneId === rowData.data.shortSceneId),
+                                shortScene: shortScenes.find(x => x.shortSceneId === rowData.data.shortSceneId),
                             },
                         });
                     }}

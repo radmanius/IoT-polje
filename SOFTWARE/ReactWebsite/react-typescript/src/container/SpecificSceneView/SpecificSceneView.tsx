@@ -1,7 +1,7 @@
 //import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
-import "./SceneView.scss";
+import "./SpecificSceneView.scss";
 import { IShortScene } from "models/shortScene";
 import { useCallback, useEffect, useState } from "react";
 import { initScene, IScene } from "models/scenes";
@@ -10,7 +10,7 @@ interface ILocationState {
     shortScene: IShortScene;
 }
 
-const SceneView = () => {
+const SpecificSceneView = () => {
     const location = useLocation();
     const shortScene = (location.state as ILocationState)?.shortScene;
     console.log(shortScene);
@@ -26,6 +26,7 @@ const SceneView = () => {
         } catch (error) {
             //toast message
             console.log("error");
+            console.log(scene);
         }
     }, []);
 
@@ -36,8 +37,8 @@ const SceneView = () => {
     return (
         <div className="scene-page">
             <div>
-                <h1>{scene.sceneTitle}</h1>
-                <h3>{scene.sceneSubtitle}</h3>
+                <h1>{shortScene.sceneTitle}</h1>
+                <h3>{shortScene.sceneSubtitle}</h3>
                 <img
                     src="/iot.jpeg"
                     className="iot-img"
@@ -54,4 +55,4 @@ const SceneView = () => {
     );
 };
 
-export default SceneView;
+export default SpecificSceneView;

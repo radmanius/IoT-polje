@@ -1,6 +1,7 @@
 export const PAGE_ROUTES = {
     Global: "/",
     SceneView: "/scene-view",
+    SpecificSceneView: "/specific-scene-view",
     ShortSceneView: "/short-scene"
 };
 
