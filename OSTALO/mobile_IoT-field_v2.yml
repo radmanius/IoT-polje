@@ -64,7 +64,11 @@ paths:
             schema:
               $ref: '#/components/schemas/Scene'
         description: 'id is ignored'
-
+    delete:
+      summary: 'delete the scene'
+      responses:
+        '204':
+          description: 'delete the scene'
   /tags:
     get:
       summary: 'get array of tags for specific user'
@@ -79,15 +83,51 @@ paths:
                   type: 'string'
   /keys:
     get:
-      summary: 'returns map of keys and values for specific user'
+      summary: 'returns array of keys and values for specific user'
       responses:
         '200':
           description: 'returns object with keys and values'
           content:
             application/json:
               schema:
+                $ref: '#/components/schemas/Keys'
+    post:
+      summary: 'create new key with value'
+      description: 'user must have rights'
+      responses:
+        '200':
+          description: 'creates new key'
+          content:
+            application/json:
+              schema:
                 type: object
-              example: { "token1": "dgfhreth56", "token2": "546thtdsghdgyre" }
+              example: { "token1": "value of token1"}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Scene'
+        description: 'id is ignored'
+  /key/{token}:
+    put:
+      summary: 'update token'
+      description: 'user must have rights'
+      responses:
+        '200':
+          description: 'returns object with keys and values'
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "token value"
+    delete:
+      summary: 'delete token'
+      description: 'user must have rights and no scene is using it'
+      responses:
+        '204':
+          description: 'token deleted'
+        '400':
+          description: 'token is used by at least one scene and can not be deleted'
 components:
   schemas:
     SceneSummary:
@@ -109,11 +149,17 @@ components:
           example: [ "fer", "ferit" ]
     Scene:
       type: object
+      required:
+        - "title"
+        - "subtitle"
+        - "pictureLink"
+        - "layout"
+        - "tags"
+        - "views"
       properties:
         id:
           type: string
           example: "135"
-          required: false
           description: 'not needed when update or create scene'
         title:
           type: string
@@ -143,13 +189,11 @@ components:
           type: array
           items: 
             type: string
-          required: false
           description: 'used only when creating or updating scene'
         keys:
           type: array
           items: 
             type: string
-          required: false
           description: 'key names. Used only when creating or updating scene'
     View:
       oneOf:
@@ -170,11 +214,10 @@ components:
         measurementUnit:
           type: string
           example: "C"
+        selectForm:
+          $ref: '#/components/schemas/MeasurementSelectForm'
         query:
-          $ref: '#/components/schemas/Query'
-        payload:
-          type: string
-          example: template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}
+          $ref: '#/components/schemas/Request'
         responseExtracting:
           $ref: '#/components/schemas/DataExtractor'
     ActuationView:
@@ -188,12 +231,16 @@ components:
           enum: [
             "actuation"
           ]
-        query:
-          $ref: '#/components/schemas/Query'
-        payload:
-          type: string
-          example: template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}
         form:
+          $ref: '#/components/schemas/ActuationForm'
+    ActuationForm:
+      type: object
+      properties:
+        defaultValuesRequest:
+          $ref: '#/components/schemas/Request'
+        submitFormRequest:
+          $ref: '#/components/schemas/Request'
+        inputs:
           oneOf:
           - $ref: '#/components/schemas/BooleanInput'
           - $ref: '#/components/schemas/IntegerInput'
@@ -202,8 +249,26 @@ components:
           - $ref: '#/components/schemas/TimeInput'
           - $ref: '#/components/schemas/StringInput'
           - $ref: '#/components/schemas/SubmitButton'
-    Query:
+    MeasurementSelectForm:
       type: object
+      properties:
+        submitSelectionRequest:
+          $ref: '#/components/schemas/Request'
+        inputs:
+          oneOf:
+          - $ref: '#/components/schemas/BooleanInput'
+          - $ref: '#/components/schemas/IntegerInput'
+          - $ref: '#/components/schemas/DecimalInput'
+          - $ref: '#/components/schemas/DateInput'
+          - $ref: '#/components/schemas/TimeInput'
+          - $ref: '#/components/schemas/StringInput'
+          - $ref: '#/components/schemas/SubmitButton'
+    Request:
+      type: object
+      required:
+        - "URI"
+        - "method"
+        - "headers"
       properties:
         URI:
           type: string
@@ -217,6 +282,9 @@ components:
         headers:
           type: object
           example: { "Authorization": "{{accessToken}} {{token1}} ...", "Content-Type": "application/csv", ...  }
+        payload:
+          type: string
+          example: template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}
     DataExtractor:
       oneOf:
       - $ref: '#/components/schemas/DataExtractorCsv'
@@ -255,96 +323,144 @@ components:
           description: "Column name in CSV"
     BooleanInput:
       type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
       properties:
         inputType:
           type: string
           enum: [
             "boolean"
           ]
+        name:
+          type: string
         title:
           type: string
         description:
           type: string
+        defaultValue:
+          type: boolean
     IntegerInput:
       type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
       properties:
         inputType:
           type: string
           enum: [
             "integer"
           ]
+        name:
+          type: string
         title:
           type: string
         description:
           type: string
+        defaultValue:
+          type: integer
         min:
           type: integer
-          required: false
         max:
           type: integer
-          required: false
     DecimalInput:
       type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
       properties:
         inputType:
           type: string
           enum: [
             "decimal"
           ]
+        name:
+          type: string
         title:
           type: string
         description:
           type: string
+        defaultValue:
+          type: number
         min:
           type: number
-          required: false
         max:
           type: number
-          required: false
     DateInput:
       type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
       properties:
         inputType:
           type: string
           enum: [
             "date"
           ]
+        name:
+          type: string
         title:
           type: string
         description:
           type: string
+        defaultValue:
+          type: string
     TimeInput:
       type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
       properties:
         inputType:
           type: string
           enum: [
             "time"
           ]
+        name:
+          type: string
         title:
           type: string
         description:
           type: string
+        defaultValue:
+          type: string
     StringInput:
       type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
       properties:
         inputType:
           type: string
           enum: [
             "string"
           ]
+        name:
+          type: string
         title:
           type: string
         description:
           type: string
+        defaultValue:
+          type: string
         pattern:
           type: string
-          required: false
         "enum":
           type: array
           items: 
             type: string
-          required: false
     SubmitButton:
       type: object
       properties:
@@ -353,8 +469,28 @@ components:
           enum: [
             "submit"
           ]
+        name:
+          type: string
         title:
           type: string
+    Keys:
+      type: array
+      items:
+        $ref: '#/components/schemas/Key'
+    Key:
+      type: object
+      required:
+        - "name"
+        - "value"
+      properties:
+        name:
+          type: string
+          example: "token1"
+        value:
+          type: string
+          example: "value of token 1"
+        canDelete:
+          type: boolean
 
 
 # - dohvaćanje ključeva za nekog korisnika 
