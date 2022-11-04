@@ -16,7 +16,7 @@ class HomeScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return const Scaffold(
       body: Center(
-        child: Text('Hello world!'),
+        child: Text('Hello world you are logged in!'),
       ),
     );
   }

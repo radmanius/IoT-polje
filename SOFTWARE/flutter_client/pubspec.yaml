@@ -1,31 +1,41 @@
-name: infinum_architecture
-description: A new Flutter project with Infinum clean architecture.
+name: pdp2022
+description: Flutter project for pdp2022
 version: 1.0.0
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
 
 dependencies:
-  alice: ^0.2.5
-  cupertino_icons: ^1.0.5
-  dio: ^4.0.6
-  firebase_crashlytics: ^2.9.0
   flutter:
     sdk: flutter
+
+
+  # State management
   flutter_hooks: ^0.18.5+1
-  flutter_loggy: ^2.0.1
-  flutter_loggy_dio: ^2.0.0+3
   flutter_riverpod: ^2.0.2
   freezed_annotation: ^2.2.0
-  get_it: ^7.2.0
   hooks_riverpod: ^2.0.2
+  get_it: ^7.2.0
+
+  # Networking
+  alice: ^0.2.5
   json_annotation: ^4.7.0
+  dio: ^4.0.6
+
+  # Auth
+  flutter_appauth: ^4.2.1
+
+  # Logging
   loggy: ^2.0.1+1
+  flutter_loggy: ^2.0.1
+  flutter_loggy_dio: ^2.0.0+3
+
+  # Other
+  cupertino_icons: ^1.0.5
 
 dev_dependencies:
   build_runner: ^2.3.0
-  dart_code_metrics: ^4.21.1
-  flutter_gen_runner: ^5.0.2
+
   flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
