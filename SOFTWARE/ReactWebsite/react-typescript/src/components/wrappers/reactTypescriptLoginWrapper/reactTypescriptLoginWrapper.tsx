@@ -1,4 +1,4 @@
-import LoginPage from "container/loginPage/loginPage";
+import LoginPage from "container/LoginPage/LoginPage";
 
 const ReactTypescriptLoginWrapper = () => {
     return (

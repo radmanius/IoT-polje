@@ -1,5 +1,5 @@
 import { StringResources as Res, translate as t } from "utils/language/languageResource";
-import "./notFound.scss";
+import "./NotFound.scss";
 
 const NotFound = () => {
     return (

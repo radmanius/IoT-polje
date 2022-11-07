@@ -1,8 +1,8 @@
-import LandingPage from "container/landingPage/lanidingPage";
+import LandingPage from "container/LandingPage/LanidingPage";
 import ReactTypescriptExampleContainer from "container/reactTypescriptContainer/reactTypescriptExampleContainer/reactTypescriptExampleContainer";
-import SceneView from "container/sceneView/sceneView";
-import ShortSceneView from "container/shortSceneView/shortSceneView";
-import SpecificSceneView from "container/specificSceneView/specificSceneView";
+import SceneView from "container/SceneView/SceneView";
+import ShortSceneView from "container/ShortSceneView/ShortSceneView";
+import SpecificSceneView from "container/SpecificSceneView/SpecificSceneView";
 import { PAGE_ROUTES, PATHS } from "./paths";
 
 const PathsAndElementsLoggedIn = [

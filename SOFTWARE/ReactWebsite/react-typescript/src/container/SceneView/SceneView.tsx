@@ -6,7 +6,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { PAGE_ROUTES } from "utils/paths";
 import { getAllScenes } from "utils/axios/scenes";
-import "./sceneView.scss";
+import "./SceneView.scss";
 
 const cols = [
     { field: "sceneId", header: "ID kratke scene", sortable: false },

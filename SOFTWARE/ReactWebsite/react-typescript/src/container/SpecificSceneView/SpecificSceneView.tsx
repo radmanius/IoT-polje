@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
-import "./specificSceneView.scss";
+import "./SpecificSceneView.scss";
 import { IShortScene } from "models/shortScene";
 import { useCallback, useEffect, useState } from "react";
 import { initScene, IScene } from "models/scenes";
