@@ -1,12 +1,17 @@
 package hr.fer.tel.server.rest.model;
 
-import javax.persistence.*;
 
-import org.springframework.http.*;
+import org.hibernate.Session;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import com.fasterxml.jackson.annotation.JsonRawValue;
 
-import java.net.URI;
+import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Entity
 public class Body {
@@ -18,6 +23,9 @@ public class Body {
     @Column(name = "params", columnDefinition = "json")
     @JsonRawValue
     private String text;
+    
+	@Convert(converter = JpaConverterJson.class)
+    private Map<String, String> properties = new HashMap<>();
 
     public Body() {
     }
@@ -44,5 +52,18 @@ public class Body {
 		this.text = text;
 	}
 
+	public Map<String, String> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Map<String, String> properties) {
+		this.properties = properties;
+	}
+	
+    public Body addProperty(String key, String value) {
+        properties.put(key, value);
+        return this;
+    }
+  
    
 }

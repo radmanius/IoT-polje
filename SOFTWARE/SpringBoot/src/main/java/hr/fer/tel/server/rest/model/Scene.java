@@ -187,6 +187,11 @@ public class Scene {
     			+ "headers: [Authorization: \"Token {{token1}}\", Accept: application/csv\", Content-Type:\"application/vnd.flux\"]\","
     			+ "uri: https://iotat.tel.fer.hr:57786/api/v2/query?org=fer"
     			+ "}");
+    	
+    	body.addProperty("id", "9")
+        	.addProperty("method", "POST")
+        	.addProperty("headers", "[Authorization: \"Token {{token1}}\", Accept: application/csv\", Content-Type:\"application/vnd.flux\"]")
+        	.addProperty("uri", "https://iotat.tel.fer.hr:57786/api/v2/query?org=fer");
         return body;
     }
     
