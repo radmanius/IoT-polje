@@ -1,17 +1,16 @@
 import "./app.scss";
-import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/reactToastify.css";
 import "rsuite/dist/rsuite.min.css";
-import ReactTypescriptMainLoader from "container/reactTypescriptMainLoader/reactTypescriptMainLoader";
-import { ToastContainer } from "react-toastify";
+//import { ToastContainer } from "react-toastify";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { PAGE_ROUTES } from "utils/paths";
 import AppFooter from "container/appFooter/appFooter";
-import ReactTypescriptModalContainer from "container/reactTypescriptModalContainer/reactTypescriptModalContainer";
-import { displayLoaderSelector } from "redux/selectors/reactTypescriptSelectors";
+//import ReactTypescriptModalContainer from "container/reactTypescriptModalContainer/reactTypescriptModalContainer";
 import PathsAndElementsLoggedIn from "utils/pathsAndElementsLoggedIn";
 import PathsAndElementsNonLoggedIn from "utils/pathsAndElementsNonLoggedIn";
 import NotFound from "container/notFound/notFound";
+import AppHeader from "container/appHeader/appHeader";
 
 const ReactTypescriptWrapperLoggedInLazy = React.lazy(
     () => import("./components/wrappers/reactTypescriptWrapperLoggedIn")
@@ -23,13 +22,15 @@ const ReactTypescriptWrapperNonLoggedInLazy = React.lazy(
 const App = () => {
     return (
         <div className="app">
-            <ReactTypescriptMainLoader displayLoaderSelector={displayLoaderSelector} />
+            <AppHeader />
+            {/*
             <ReactTypescriptModalContainer />
             <ToastContainer
                 position="top-center"
                 autoClose={3000}
                 className={"react-typescript__toast"}
             />
+            */}
             <Routes>
                 <Route
                     path={PAGE_ROUTES.Global}
@@ -40,9 +41,10 @@ const App = () => {
                         />
                     }
                 >
-                    {PathsAndElementsLoggedIn.map(route => (
+                    {PathsAndElementsLoggedIn.map((route, index) => (
                         <Route
                             path={route.path}
+                            key={index}
                             element={
                                 <React.Suspense
                                     fallback={<LazyLoadingFallbackComponent />}
@@ -61,9 +63,10 @@ const App = () => {
                         />
                     }
                 >
-                    {PathsAndElementsNonLoggedIn.map(route => (
+                    {PathsAndElementsNonLoggedIn.map((route, index) => (
                         <Route
                             path={route.path}
+                            key={index}
                             element={
                                 <React.Suspense
                                     fallback={<LazyLoadingFallbackComponent />}

@@ -1,6 +1,6 @@
+import { ModalBaseProps, ShowModalPayload } from "redux/models/modalModels";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ModalTypeEnum } from "utils/enums";
-import { ModalBaseProps, ShowModalPayload } from "redux/models/modalModels";
 
 export interface ModalState {
     modalDescriptors: ShowModalPayload<ModalBaseProps>[];

@@ -1,9 +1,9 @@
-import ReactTypescriptExampleContainer from "container/reactTypescriptContainer/reactTypescriptExampleContainer/reactTypescriptExampleContainer";
+import LoginPage from "container/loginPage/loginPage";
 
 const ReactTypescriptLoginWrapper = () => {
     return (
         <>
-            <ReactTypescriptExampleContainer />
+            <LoginPage />
         </>
     );
 };
