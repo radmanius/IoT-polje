@@ -45,12 +45,10 @@ public class Role {
         this.name = name;
     }
     
-//    @JsonIgnore
     public void setScene(Scene scene) {
 		this.scene = scene;
 	}
     
-//    @JsonIgnore
     public Scene getScene() {
     	return this.scene;
     }

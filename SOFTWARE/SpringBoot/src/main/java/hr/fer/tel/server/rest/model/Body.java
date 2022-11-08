@@ -1,17 +1,10 @@
 package hr.fer.tel.server.rest.model;
 
-
-import org.hibernate.Session;
-import org.hibernate.annotations.NaturalId;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-
 import com.fasterxml.jackson.annotation.JsonRawValue;
 
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Entity
 public class Body {

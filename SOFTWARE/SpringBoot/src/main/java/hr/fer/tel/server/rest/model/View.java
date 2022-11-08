@@ -74,12 +74,10 @@ public class View {
 		this.id = id;
 	}
 
-//	@JsonIgnore
 	public Scene getScene() {
 		return scene;
 	}
 	
-//	@JsonIgnore
 	public void setScene(Scene scene) {
 		this.scene = scene;
 	}
