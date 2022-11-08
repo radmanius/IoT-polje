@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./appHeader.scss";
-import { getHeaderItems, ISimpleHeaderItems } from "./HeaderNavigationItems";
+import { getHeaderItems, ISimpleHeaderItems } from "./headerNavigationItems";
 
 const AppHeader = () => {
     const headerItems: ISimpleHeaderItems[] = getHeaderItems() ?? [];

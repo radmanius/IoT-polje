@@ -1,5 +1,5 @@
 import "./app.scss";
-import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/reactToastify.css";
 import "rsuite/dist/rsuite.min.css";
 //import { ToastContainer } from "react-toastify";
 import React from "react";
