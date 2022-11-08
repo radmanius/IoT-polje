@@ -26,9 +26,8 @@ class AuthRepositoryImpl implements AuthRepository {
     final result = await appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(
         'mobile-keycloak',
-        'https://fer.tel.iot.polje.iotpolje:/oauth2Callback',
-        issuer: 'https://iotat.tel.fer.hr:58443/auth',
-        scopes: ['openid', 'profile', 'email', 'offline_access', 'api'],
+        'fer.tel.iot.polje.iotpolje:/oauth2Callback',
+        discoveryUrl: 'https://iotat.tel.fer.hr:58443/auth/realms/spring/.well-known/openid-configuration',
       ),
     );
   }
