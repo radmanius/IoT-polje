@@ -1,34 +1,38 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:pdp2022/source_remote/auth/auth_token_persistence_manager.dart';
 
 import 'auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl(this._dio);
+  AuthRepositoryImpl(this._authTokenPersistenceManager);
 
-  final Dio _dio;
+  final AuthTokenPersistenceManager _authTokenPersistenceManager;
 
   @override
   Future<bool> isLoggedIn() async {
-    // TODO: implement isLoggedIn
-
-    // get token from safe storage
-
-    // check if it's valid
-
-    return false;
+    return _authTokenPersistenceManager.accessToken != null && _authTokenPersistenceManager.refreshToken != null;
   }
 
   @override
   Future<void> login() async {
     const appAuth = FlutterAppAuth();
 
-    final result = await appAuth.authorizeAndExchangeCode(
+    final authorizationTokenResponse = await appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(
         'mobile-keycloak',
         'fer.tel.iot.polje.iotpolje:/oauth2Callback',
         discoveryUrl: 'https://iotat.tel.fer.hr:58443/auth/realms/spring/.well-known/openid-configuration',
       ),
+    );
+
+    if (authorizationTokenResponse == null) {
+      return;
+    }
+
+    await _authTokenPersistenceManager.saveToken(
+      authorizationTokenResponse.accessToken!,
+      authorizationTokenResponse.refreshToken!,
+      authorizationTokenResponse.accessTokenExpirationDateTime!,
     );
   }
 }

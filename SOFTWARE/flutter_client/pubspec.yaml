@@ -24,6 +24,7 @@ dependencies:
 
   # Auth
   flutter_appauth: ^4.2.1
+  flutter_secure_storage: ^6.0.0
 
   # Logging
   loggy: ^2.0.1+1
