@@ -1,8 +1,9 @@
+
 import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import reactTypescriptReducer from "./reducers/reactTypescriptReducer";
 import { useDispatch } from "react-redux";
-import { loaderMiddleware } from "redux/storeActionMiddleware";
 import modalReducer from "redux/reducers/modalReducer";
+import reactTypescriptReducer from "redux/reducers/reactTypescriptReducer";
+import { loaderMiddleware } from "redux/store/storeActionMiddleware";
 
 export const store = configureStore({
     reducer: combineReducers({
