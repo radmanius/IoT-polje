@@ -1,21 +1,9 @@
 package hr.fer.tel.server.rest.model;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import javax.persistence.*;
-import javax.persistence.*;
-
-import org.springframework.http.*;
-import java.net.URI;
-
-
-import org.springframework.http.HttpMethod;
-import org.springframework.util.MimeType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -24,7 +12,6 @@ public class Scene {
 
     @Id
     @GeneratedValue
-    //private String id;
     private long id;
     
 	@Column
@@ -60,9 +47,7 @@ public class Scene {
     	
     }
 
-    public Scene(int i, String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views, List<Role> roles, List<Key> keys) {
-    //public Scene(String id, String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views, List<Role> roles, List<Key> keys) {
-    	this.id = i;
+    public Scene(String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views, List<Role> roles, List<Key> keys) {
     	this.title = title;
         this.subtitle = subtitle;
         this.layout = layout;
@@ -96,12 +81,10 @@ public class Scene {
     }
 
     public long getId() {
-    //public String getId() {
         return id;
     }
 
     public void setId(long id) {
-    //public void setId(String id) {
         this.id = id;
     }
 
@@ -166,16 +149,22 @@ public class Scene {
     	tag.setScene(this);
     }
     
-    
-    public static List<Scene> generateScenes(){       
+    @Override
+	public String toString() {
+		return "Scene [id=" + id + ", title=" + title + ", subtitle=" + subtitle + ", layout=" + layout
+				+ ", pictureLink=" + pictureLink + ", tags=" + tags + ", views=" + views + ", roles=" + roles
+				+ ", keys=" + keys + "]";
+	}
+
+	public static List<Scene> generateScenes(){       
         
-        Scene scene1 = new Scene(0, "HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01"), new Tag("sap02")), List.of(createView(), createView())
+        Scene scene1 = new Scene("HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01"), new Tag("sap02")), List.of(createView(), createView())
         , List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
         
-        Scene scene2 = new Scene(0, "sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(createView())
+        Scene scene2 = new Scene("sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(createView())
         ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
       
-        Scene scene3 = new Scene(0, "sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(createView())
+        Scene scene3 = new Scene("sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(createView())
         ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "")));
        
         return List.of(scene1, scene2, scene3);

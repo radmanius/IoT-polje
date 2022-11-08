@@ -24,8 +24,11 @@ public class Body {
     }
 
 	public Body(long id, String text) {
-		super();
 		this.id = id;
+		this.text = text;
+	}
+	
+	public Body(String text) {
 		this.text = text;
 	}
 

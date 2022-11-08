@@ -83,7 +83,10 @@ public class SceneService {
 	}
 	
 	public Scene ProbaAddScene(Scene scene) {
-		if (!sceneRepository.existsById(Long.valueOf(scene.getId()).toString())) {
+		System.err.println(scene);
+		System.err.println(scene.getId());
+		
+		if (!sceneRepository.existsById(scene.getId())) {
 			return sceneRepository.save(scene);
 		}
 
