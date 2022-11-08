@@ -23,12 +23,12 @@ public class SceneService {
 	private SceneRepository sceneRepository;
 	
 	//Find and return scene by id without roles
-	public Scene fetch(String id) {
+	public Scene fetch(Long id) {
 		return findById(id).orElseThrow(() -> new EntityMissingException(Scene.class, id));
 	}
 	
 	//Find and return scene by id
-	public Optional<Scene> findById(String id) {
+	public Optional<Scene> findById(Long id) {
 		return sceneRepository.findById(id);
 	}
 		
@@ -44,6 +44,10 @@ public class SceneService {
 		List<String> ouput = List.of(roles);
 
 		return sceneRepository.getByRoles(ouput).stream().map(SceneDTO::from).collect(Collectors.toList());
+	}
+	
+	public List<SceneDTO> ProbaGetAllScenes() {
+		return sceneRepository.findAll().stream().map(SceneDTO::from).collect(Collectors.toList());
 	}
 
 	//get scene by id defined by roles - OK - OK
@@ -63,9 +67,10 @@ public class SceneService {
 		return scene;
 	}
 	
-	public Scene proba(String id) {
-		Scene scene = sceneRepository.findAll().get(0);
-		return scene;
+	public Scene probaGetById(Long id) {
+		Optional<Scene> scene = sceneRepository.findById(id);
+		
+		return scene.orElse(null);
 	}
 
 	//add scene - OK - OK
@@ -76,9 +81,18 @@ public class SceneService {
 
 		throw new NoSuchElement("Scene " + scene.getId() + " already exists!");
 	}
+	
+	public Scene ProbaAddScene(Scene scene) {
+		if (!sceneRepository.existsById(Long.valueOf(scene.getId()).toString())) {
+			return sceneRepository.save(scene);
+		}
+
+		throw new NoSuchElement("Scene " + scene.getId() + " already exists!");
+	}
+
 
 	//edit scene - OK - OK
-	public Scene editScene(String id, Scene scene) {
+	public Scene editScene(Long id, Scene scene) {
 		
 		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
 				.toArray(String[]::new);
@@ -92,10 +106,19 @@ public class SceneService {
 		
 		throw new NoSuchElement("Scene " + id + " does not exists!");
 	}
+	
+	public Scene probaEditScene(Long id, Scene scene) {
+
+		if (sceneRepository.existsById(id)) {
+			return sceneRepository.save(scene);
+		}
+		
+		throw new NoSuchElement("Scene " + id + " does not exists!");
+	}
 
 	
 	//delete scene - OK - OK
-	public Scene deleteSceneById(String id) {
+	public Scene deleteSceneById(Long id) {
 		
 		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
 				.toArray(String[]::new);
@@ -109,6 +132,16 @@ public class SceneService {
 		
 		return scene;
 	}
+	
+	public Scene ProbaDeleteSceneById(Long id) {
+				
+		Scene scene = this.fetch(id);
+		
+		sceneRepository.delete(scene);
+		
+		return scene;
+	}
+	
 	
 	
 	

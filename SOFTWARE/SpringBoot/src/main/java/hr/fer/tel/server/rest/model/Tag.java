@@ -37,7 +37,7 @@ public class Tag {
         return name;
     }
 
-    @JsonIgnore
+//    @JsonIgnore
 	public void setScene(Scene sc) {
 		this.scene=sc;
 	}

@@ -23,21 +23,20 @@ public class View {
     private String title;
     
     @OneToOne(cascade = CascadeType.ALL)
-    private Query query;
+    private Body body;
     
-
 	@Column(columnDefinition = "varchar(max)")
     private String payload;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Scene scene;
     
     public View() {
     }
 
-    public View(String title, Query query, String payload) {
+    public View(String title, Body query, String payload) {
     	this.title = title;
-    	this.query = query;
+    	this.body = query;
     	this.payload = payload;
     }
     
@@ -49,12 +48,12 @@ public class View {
         this.title = title;
     }
 
-    public Query getQuery() {
-        return query;
+    public Body getBody() {
+        return body;
     }
 
-    public void setQuery(Query query) {
-        this.query = query;
+    public void setBody(Body body) {
+        this.body = body;
     }
 
     public String getPayload() {
@@ -73,21 +72,14 @@ public class View {
 		this.id = id;
 	}
 
-	@JsonIgnore
+//	@JsonIgnore
 	public Scene getScene() {
 		return scene;
 	}
 	
-	@JsonIgnore
+//	@JsonIgnore
 	public void setScene(Scene scene) {
 		this.scene = scene;
 	}
-	@Override
-    public String toString() {
-        return "View{" +
-                "title='" + title + '\'' +
-                ", query=" + query +
-                ", payload='" + payload + '\'' +
-                '}';
-    }
+
 }

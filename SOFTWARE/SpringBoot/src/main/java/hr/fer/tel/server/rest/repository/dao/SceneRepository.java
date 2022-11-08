@@ -3,16 +3,14 @@ package hr.fer.tel.server.rest.repository.dao;
 import hr.fer.tel.server.rest.model.Scene;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface SceneRepository extends JpaRepository<Scene, String> {
+public interface SceneRepository extends JpaRepository<Scene, Long> {
 
 	// ----------------Naprvit SQL Query
 
@@ -30,6 +28,8 @@ public interface SceneRepository extends JpaRepository<Scene, String> {
 
 	@Query(value = "SELECT * FROM SCENE", nativeQuery = true)
 	List<Scene> getByRoles(@Param("roles") List<String> roles);
+
+	boolean existsById(String string);
 
 //    @Query("SELECT g FROM SGROUP g WHERE :s MEMBER OF g.members")
 //    Optional<Group> findByMember(@Param("s") Student student);

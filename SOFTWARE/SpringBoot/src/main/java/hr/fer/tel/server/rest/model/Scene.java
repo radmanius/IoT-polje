@@ -32,7 +32,7 @@ public class Scene {
 	@Column
     private String subtitle;
 	
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne(cascade = CascadeType.ALL)
     private Layout layout;
 	
 	@Column
@@ -45,7 +45,6 @@ public class Scene {
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
 	//@OneToMany(mappedBy = "scene")
     private List<View> views = new ArrayList<>();
-    
     
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Role> roles = new ArrayList<>(); //roles required for specific scene
@@ -178,17 +177,17 @@ public class Scene {
         return List.of(scene1, scene2, scene3);
     }
     
-    public static Query createQuery() {
-    	Query query = new Query();
-        query.setURI("https://iotat.tel.fer.hr:57786/api/v2/query?org=fer");
-        query.setMethod("POST");
-
-        HttpHeaders header = new HttpHeaders();
-        header.set(HttpHeaders.AUTHORIZATION, "Token {{token1}}");
-        header.setAccept(List.of(MediaType.asMediaType(MimeType.valueOf("application/csv"))));
-        header.setContentType(MediaType.asMediaType(MimeType.valueOf("application/vnd.flux")));
-        query.setHeaders(header);
-        return query;
+    public static Body createBody() {
+    	Body body = new Body();
+    	
+    	
+    	body.setText("{"
+    			+ "id: 9,"
+    			+ "method: POST,"
+    			+ "headers: [Authorization: \"Token {{token1}}\", Accept: application/csv\", Content-Type:\"application/vnd.flux\"]\","
+    			+ "uri: https://iotat.tel.fer.hr:57786/api/v2/query?org=fer"
+    			+ "}");
+        return body;
     }
     
     public static View createView() {
@@ -196,7 +195,7 @@ public class Scene {
     	int number = rand.nextInt(3);
     	
     	if(number == 0) {
-    		View view1 = new View("sap01_TC:min", createQuery(), """
+    		View view1 = new View("sap01_TC:min", createBody(), """
                     from(bucket:"telegraf")        
                     |> range(start: {{startTimeISO}})      
                     |> filter(fn: (r) => r._measurement == "TC" and r.id_wasp == "SAP01" and r._field =="value")
@@ -207,7 +206,7 @@ public class Scene {
                     """);
     		return view1;
     	}else if(number == 1) {
-            View view2 = new View("HUM_sap01_agregatedAVG", createQuery(), """
+            View view2 = new View("HUM_sap01_agregatedAVG", createBody(), """
             		from(bucket:"telegraf")
             		|> range(start: {{startTimeISO}})
             		|> filter(fn: (r) => r._measurement == "HUM" and r.id_wasp == "SAP01" and r._field == "value")
@@ -219,7 +218,7 @@ public class Scene {
             		""");
             return view2;
     	}
-        View view3 = new View("HUM_sap01_agregatedAVG", createQuery(), """
+        View view3 = new View("HUM_sap01_agregatedAVG", createBody(), """
         		from(bucket:"telegraf")
         		|> range(start: {{startTimeISO}})
         		|> filter(fn: (r) => r._measurement == "HUM" and r.id_wasp == "SAP01" and r._field == "value")

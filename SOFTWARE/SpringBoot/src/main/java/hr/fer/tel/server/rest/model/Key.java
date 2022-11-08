@@ -57,12 +57,12 @@ public class Key {
         this.token2 = token2;
     }
     
-    @JsonIgnore
+//    @JsonIgnore
     public void setScene(Scene scene) {
 		this.scene = scene;
 	}
     
-    @JsonIgnore
+//    @JsonIgnore
     public Scene getScene() {
 		return this.scene;
 	}
