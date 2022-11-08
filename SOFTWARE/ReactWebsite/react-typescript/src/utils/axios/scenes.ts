@@ -3,8 +3,6 @@ import { IScene } from "models/scenes";
 
 export const getAllScenes = async () => {
     const response = await axios.get("/scene")
-    console.log("resp+++++++++++++++++++++++++")
-    console.log(response);
     return response.data as IScene[]; 
 } 
 
