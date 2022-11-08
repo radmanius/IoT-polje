@@ -5,9 +5,9 @@ import { devConsoleError, devConsoleLog } from "utils/helperFunctions";
 import { ReactTypescriptxiosError, ReactTypescriptAxiosResponse } from "utils/axios/apiModels";
 
 if (location.hostname == "localhost") {
-    var port = 7252; // Depends on backend port
+    var port = 8080; // Depends on backend port
 
-    axios.defaults.baseURL = "https://" + location.hostname + ":" + port;
+    axios.defaults.baseURL = "http://" + location.hostname + ":" + port;
 } else {
     axios.defaults.baseURL = "production url";
 }
