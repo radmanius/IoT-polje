@@ -10,11 +10,12 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: onTap,
-      color: Colors.green,
+      color: Colors.blue,
       child: Text(
         title,
         style: const TextStyle(
           fontSize: 18,
+          color: Colors.white,
         ),
       ),
     );

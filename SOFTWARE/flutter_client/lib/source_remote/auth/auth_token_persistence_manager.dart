@@ -1,8 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-const _accessTokenKey = 'access_token';
-const _refreshTokenKey = 'refresh_token';
-const _accessTokenExpirationDateTimeKey = 'access_token_expiration_date_time';
+import 'package:pdp2022/domain/secure_storage_keys.dart';
 
 class AuthTokenPersistenceManager {
   AuthTokenPersistenceManager(this._flutterSecureStorage);
@@ -19,10 +16,10 @@ class AuthTokenPersistenceManager {
   DateTime? _accessTokenExpirationDateTime;
 
   Future<void> saveToken(String accessToken, String refreshToken, DateTime accessTokenExpirationDateTime) async {
-    await _flutterSecureStorage.write(key: _accessTokenKey, value: accessToken);
-    await _flutterSecureStorage.write(key: _refreshTokenKey, value: refreshToken);
+    await _flutterSecureStorage.write(key: SecureStorageKeys.accessToken, value: accessToken);
+    await _flutterSecureStorage.write(key: SecureStorageKeys.refreshToken, value: refreshToken);
     await _flutterSecureStorage.write(
-      key: _accessTokenExpirationDateTimeKey,
+      key: SecureStorageKeys.accessTokenExpirationDateTime,
       value: accessTokenExpirationDateTime.millisecondsSinceEpoch.toString(),
     );
 
@@ -32,11 +29,11 @@ class AuthTokenPersistenceManager {
   }
 
   Future<void> loadTokenFromDisc() async {
-    _accessToken = await _flutterSecureStorage.read(key: _accessTokenKey);
-    _refreshToken = await _flutterSecureStorage.read(key: _refreshTokenKey);
+    _accessToken = await _flutterSecureStorage.read(key: SecureStorageKeys.accessToken);
+    _refreshToken = await _flutterSecureStorage.read(key: SecureStorageKeys.refreshToken);
 
     final accessTokenExpirationDateTimeFromStorage =
-        await _flutterSecureStorage.read(key: _accessTokenExpirationDateTimeKey);
+        await _flutterSecureStorage.read(key: SecureStorageKeys.accessTokenExpirationDateTime);
 
     if (accessTokenExpirationDateTimeFromStorage == null ||
         int.tryParse(accessTokenExpirationDateTimeFromStorage) == null) {

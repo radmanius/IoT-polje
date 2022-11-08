@@ -7,6 +7,7 @@ import 'package:pdp2022/source_remote/auth/auth_token_persistence_manager.dart';
 import 'package:pdp2022/ui/home/home_screen.dart';
 import 'package:pdp2022/ui/login/login_screen.dart';
 
+import '../../domain/di/inject_dependencies.dart' as domain;
 import '../../source_remote/di/inject_dependencies.dart' as source_remote;
 
 void main() async {
@@ -22,7 +23,7 @@ void main() async {
 
   final isLoggedIn = await GetIt.I.get<AuthRepository>().isLoggedIn();
 
-  if (isLoggedIn) {
+  if (false) {
     firstScreen = const HomeScreen();
   } else {
     firstScreen = const LoginScreen();
@@ -47,6 +48,6 @@ void _lockOrientation() {
 void _injectDependencies() {
   final getIt = GetIt.instance;
 
-  //TODO: add local_source when we need data persistence on disk
   source_remote.injectDependencies(getIt);
+  domain.injectDependencies(getIt);
 }
