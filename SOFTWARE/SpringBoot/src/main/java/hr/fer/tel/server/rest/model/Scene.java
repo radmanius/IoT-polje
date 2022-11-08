@@ -16,6 +16,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.util.MimeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "scene")
@@ -38,18 +39,21 @@ public class Scene {
 	@Column
     private String pictureLink;
 	
-	
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
     private List<Tag> tags = new ArrayList<>();
     
+    
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
-	//@OneToMany(mappedBy = "scene")
+    @JsonManagedReference
     private List<View> views = new ArrayList<>();
     
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Role> roles = new ArrayList<>(); //roles required for specific scene
     
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Key> keys = new ArrayList<>(); // keys required for specific scene
 
     public Scene(){

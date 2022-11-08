@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -17,6 +18,7 @@ public class Role {
     private String name;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Scene scene;
 
     public Role() {

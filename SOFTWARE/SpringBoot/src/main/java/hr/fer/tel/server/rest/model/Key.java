@@ -2,6 +2,7 @@ package hr.fer.tel.server.rest.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -16,6 +17,7 @@ public class Key {
     private String token2;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Scene scene;
     
     public Key() {

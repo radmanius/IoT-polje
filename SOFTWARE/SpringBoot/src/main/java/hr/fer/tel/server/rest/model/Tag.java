@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Tag {
     private String name;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Scene scene;
     
     public Tag() {
