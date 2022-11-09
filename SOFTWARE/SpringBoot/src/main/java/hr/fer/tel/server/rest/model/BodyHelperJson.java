@@ -3,12 +3,11 @@ package hr.fer.tel.server.rest.model;
 import java.io.IOException;
 
 import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JpaConverterJson implements AttributeConverter<Object, String> {
+public class BodyHelperJson implements AttributeConverter<Object, String> {
 
 	private final static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -27,7 +26,6 @@ public class JpaConverterJson implements AttributeConverter<Object, String> {
 		try {
 			return objectMapper.readValue(dbData, Object.class);
 		} catch (IOException ex) {
-			// logger.error("Unexpected IOEx decoding json from database: " + dbData);
 			return null;
 		}
 	}

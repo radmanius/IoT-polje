@@ -11,7 +11,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "View")
@@ -22,9 +21,9 @@ public class View {
 	private long id;
     
     private String title;
-    
+
     @OneToOne(cascade = CascadeType.ALL)
-    private Body body;
+    private BodyHelper body;
     
 	@Column(columnDefinition = "varchar(max)")
     private String payload;
@@ -33,10 +32,11 @@ public class View {
     @JsonBackReference
     private Scene scene;
     
+
     public View() {
     }
 
-    public View(String title, Body query, String payload) {
+    public View(String title, BodyHelper query, String payload) {
     	this.title = title;
     	this.body = query;
     	this.payload = payload;
@@ -50,11 +50,11 @@ public class View {
         this.title = title;
     }
 
-    public Body getBody() {
+    public BodyHelper getBody() {
         return body;
     }
 
-    public void setBody(Body body) {
+    public void setBody(BodyHelper body) {
         this.body = body;
     }
 

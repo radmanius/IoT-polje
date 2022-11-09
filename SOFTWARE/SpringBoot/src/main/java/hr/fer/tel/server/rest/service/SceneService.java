@@ -1,6 +1,5 @@
 package hr.fer.tel.server.rest.service;
 
-import hr.fer.tel.server.rest.dto.KeyDTO;
 import hr.fer.tel.server.rest.dto.SceneDTO;
 import hr.fer.tel.server.rest.model.*;
 import hr.fer.tel.server.rest.repository.dao.SceneRepository;
@@ -182,7 +181,7 @@ public class SceneService {
 	}
 	
 	//get keys
-	public Set<KeyDTO> getAllKeys() {
+//	public Set<KeyDTO> getAllKeys() {
 //		String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
 //				.toArray(String[]::new);
 //		if (roles.length < 1)
@@ -193,8 +192,8 @@ public class SceneService {
 //			keys.addAll(l1.getKeys().stream().map(KeyDTO::from).collect(Collectors.toList()));
 //		}
 //		return keys;
-		
-		return null;
-	}
+//		
+//		return null;
+//	}
 
 }

@@ -2,10 +2,7 @@ package hr.fer.tel.server.rest.model;
 
 import javax.persistence.*;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Role")
