@@ -1,7 +1,7 @@
 import 'package:flutter_appauth/flutter_appauth.dart';
-import 'package:pdp2022/source_remote/auth/auth_token_persistence_manager.dart';
 
 import 'auth_repository.dart';
+import 'auth_token_persistence_manager.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._authTokenPersistenceManager);

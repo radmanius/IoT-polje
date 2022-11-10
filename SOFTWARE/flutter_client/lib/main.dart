@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pdp2022/source_remote/auth/auth_repository.dart';
-import 'package:pdp2022/source_remote/auth/auth_token_persistence_manager.dart';
+import 'package:pdp2022/source_remote/repository/auth/auth_repository.dart';
+import 'package:pdp2022/source_remote/repository/auth/auth_token_persistence_manager.dart';
 import 'package:pdp2022/ui/home/home_screen.dart';
 import 'package:pdp2022/ui/login/login_screen.dart';
 
@@ -23,7 +23,7 @@ void main() async {
 
   final isLoggedIn = await GetIt.I.get<AuthRepository>().isLoggedIn();
 
-  if (false) {
+  if (isLoggedIn) {
     firstScreen = const HomeScreen();
   } else {
     firstScreen = const LoginScreen();

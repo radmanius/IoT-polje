@@ -20,7 +20,7 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<RequestState<void>>(loginRequestNotifier, (previous, next) {
       next.whenOrNull(
-        success: (_) => Navigator.of(context).push(HomeScreen.route()),
+        success: (_) => Navigator.of(context).pushReplacement(HomeScreen.route()),
       );
     });
 

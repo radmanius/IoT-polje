@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:pdp2022/source_remote/scene/scene_repository.dart';
+
+import 'scene_repository.dart';
 
 class SceneRepositoryImpl implements SceneRepository {
   SceneRepositoryImpl(this._dio);

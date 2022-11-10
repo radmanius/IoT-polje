@@ -11,7 +11,6 @@ Dio createDio() {
   final dio = Dio(options);
 
   dio.interceptors.addAll(<Interceptor>[
-    //TODO: add auth interceptor
     LoggyDioInterceptor(requestBody: true, responseBody: true, requestHeader: true),
   ]);
 
