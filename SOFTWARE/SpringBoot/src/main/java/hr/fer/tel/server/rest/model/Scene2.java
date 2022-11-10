@@ -5,17 +5,15 @@ import java.util.List;
 import java.util.Random;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
 
 @Entity
-@Table(name = "Scene")
-public class Scene {
+@Table(name = "Scene2")
+public class Scene2 {
 
     @Id
     @GeneratedValue
@@ -40,7 +38,7 @@ public class Scene {
     
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<View> views = new ArrayList<>();
+    private List<View2> views = new ArrayList<>();
     
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -50,11 +48,11 @@ public class Scene {
     @JsonManagedReference
     private List<Key> keys = new ArrayList<>(); // keys required for specific scene
 
-    public Scene(){
+    public Scene2(){
     	
     }
 
-    public Scene(String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views, List<Role> roles, List<Key> keys) {
+    public Scene2(String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View2> views, List<Role> roles, List<Key> keys) {
     	this.title = title;
         this.subtitle = subtitle;
         this.layout = layout;
@@ -64,18 +62,18 @@ public class Scene {
         this.roles = roles;
         this.keys = keys;
         
-        for (Tag tag : tags) {
-        	tag.setScene(this);
-		}
-        for (View view : views) {
-        	view.setScene(this);
-		}
-        for (Role role : roles) {
-        	role.setScene(this);
-		}
-        for (Key key : keys) {
-        	key.setScene(this);
-		}
+//        for (Tag tag : tags) {
+//        	tag.setScene(this);
+//		}
+//        for (View view : views) {
+//        	view.setScene(this);
+//		}
+//        for (Role role : roles) {
+//        	role.setScene(this);
+//		}
+//        for (Key key : keys) {
+//        	key.setScene(this);
+//		}
         
     }
 
@@ -127,11 +125,11 @@ public class Scene {
         this.tags = tags;
     }
 
-    public List<View> getViews() {
+    public List<View2> getViews() {
         return views;
     }
 
-    public void setViews(List<View> views) {
+    public void setViews(List<View2> views) {
         this.views = views;
     }
 
@@ -151,10 +149,10 @@ public class Scene {
         this.keys = keys;
     }
     
-    public void addTag(Tag tag) {
-    	this.tags.add(tag);
-    	tag.setScene(this);
-    }
+//    public void addTag(Tag tag) {
+//    	this.tags.add(tag);
+//    	tag.setScene(this);
+//    }
     
     @Override
 	public String toString() {
@@ -163,15 +161,15 @@ public class Scene {
 				+ ", keys=" + keys + "]";
 	}
 
-	public static List<Scene> generateScenes(){       
+	public static List<Scene2> generateScenes(){       
         
-        Scene scene1 = new Scene("HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01"), new Tag("sap02")), List.of(createView(), createView())
+        Scene2 scene1 = new Scene2("HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01"), new Tag("sap02")), List.of(createView(), createView())
         , List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "", true)));
         
-        Scene scene2 = new Scene("sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(createView())
+        Scene2 scene2 = new Scene2("sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(createView())
         ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "", false)));
       
-        Scene scene3 = new Scene("sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(createView())
+        Scene2 scene3 = new Scene2("sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(createView())
         ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "", true)));
        
         return List.of(scene1, scene2, scene3);
@@ -187,21 +185,66 @@ public class Scene {
         return body;
     }
     
-    public static View createView() {
+    public static View2 createView() {
     	Random rand = new Random();
     	int number = rand.nextInt(3);
     	
     	if(number == 0) {
-    		View view1 = new View("sap01_TC:min", createBody(), """
-                    from(bucket:"telegraf")        
-                    |> range(start: {{startTimeISO}})      
-                    |> filter(fn: (r) => r._measurement == "TC" and r.id_wasp == "SAP01" and r._field =="value")
-                    |> window(every: {{agregationRange}})
-                           |> min()
-                           |> duplicate(column: "_stop", as: "_time")
-                           |> drop(columns: ["_start", "_stop"])
-                    """);
-    		return view1;
+    		
+    		ObjectMapper objectMapper = new ObjectMapper();
+    		objectMapper.setSerializationInclusion(Include.NON_NULL);
+    		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    		
+    		String temp = "\"title\": \"view title\","
+    				+ "      \"viewType\": \"single\","
+    				+ "      \"measurementUnit\": \"C\","
+    				+ "      \"selectForm\": {"
+    				+ "        \"submitSelectionRequest\": {"
+    				+ "          \"URI\": \"http://localhost:80/some/path/{{var1}}\","
+    				+ "          \"method\": \"GET\","
+    				+ "          \"headers\": {"
+    				+ "            \"Authorization\": \"{{accessToken}} {{token1}} ...\","
+    				+ "            \"Content-Type\": \"application/csv\","
+    				+ "          },"
+    				+ "          \"payload\": \"template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}\""
+    				+ "        },"
+    				+ "        \"inputs\": {"
+    				+ "          \"inputType\": \"boolean\","
+    				+ "          \"name\": \"string\","
+    				+ "          \"title\": \"string\","
+    				+ "          \"description\": \"string\","
+    				+ "          \"defaultValue\": true"
+    				+ "        }"
+    				+ "      },"
+    				+ "      \"query\": {"
+    				+ "        \"URI\": \"http://localhost:80/some/path/{{var1}}\","
+    				+ "        \"method\": \"GET\","
+    				+ "        \"headers\": {"
+    				+ "          \"Authorization\": \"{{accessToken}} {{token1}}\","
+    				+ "          \"Content-Type\": \"application/csv\","
+    				+ "          \"...\": null"
+    				+ "        },"
+    				+ "        \"payload\": \"template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}\""
+    				+ "      },"
+    				+ "      \"responseExtracting\": {"
+    				+ "        \"dataFormat\": \"csv\","
+    				+ "        \"timeColumn\": \"_time\","
+    				+ "        \"valueColumn\": \"_value\""
+    				+ "      }"
+    				+ "    }";
+    		
+    		MesurmentView view1 = new MesurmentView();
+    		try {
+				view1 = objectMapper.readValue(temp, MesurmentView.class);
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    		return null;
     	}else if(number == 1) {
             View view2 = new View("HUM_sap01_agregatedAVG", createBody(), """
             		from(bucket:"telegraf")
@@ -213,7 +256,7 @@ public class Scene {
             		|> duplicate(column: "_stop", as: "_time")
             		|> drop(columns: ["_start", "_stop"])
             		""");
-            return view2;
+            return null;
     	}
         View view3 = new View("HUM_sap01_agregatedAVG", createBody(), """
         		from(bucket:"telegraf")
@@ -225,63 +268,9 @@ public class Scene {
         		|> duplicate(column: "_stop", as: "_time")
         		|> drop(columns: ["_start", "_stop"])
         		""");
-        return view3;
+        return null;
     }
     
-    
-    public static void test() {
-    	ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.setSerializationInclusion(Include.NON_NULL);
-		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		
-		String temp = "\"title\": \"view title\","
-				+ "      \"viewType\": \"single\","
-				+ "      \"measurementUnit\": \"C\","
-				+ "      \"selectForm\": {"
-				+ "        \"submitSelectionRequest\": {"
-				+ "          \"URI\": \"http://localhost:80/some/path/{{var1}}\","
-				+ "          \"method\": \"GET\","
-				+ "          \"headers\": {"
-				+ "            \"Authorization\": \"{{accessToken}} {{token1}} ...\","
-				+ "            \"Content-Type\": \"application/csv\","
-				+ "          },"
-				+ "          \"payload\": \"template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}\""
-				+ "        },"
-				+ "        \"inputs\": {"
-				+ "          \"inputType\": \"boolean\","
-				+ "          \"name\": \"string\","
-				+ "          \"title\": \"string\","
-				+ "          \"description\": \"string\","
-				+ "          \"defaultValue\": true"
-				+ "        }"
-				+ "      },"
-				+ "      \"query\": {"
-				+ "        \"URI\": \"http://localhost:80/some/path/{{var1}}\","
-				+ "        \"method\": \"GET\","
-				+ "        \"headers\": {"
-				+ "          \"Authorization\": \"{{accessToken}} {{token1}}\","
-				+ "          \"Content-Type\": \"application/csv\","
-				+ "          \"...\": null"
-				+ "        },"
-				+ "        \"payload\": \"template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}\""
-				+ "      },"
-				+ "      \"responseExtracting\": {"
-				+ "        \"dataFormat\": \"csv\","
-				+ "        \"timeColumn\": \"_time\","
-				+ "        \"valueColumn\": \"_value\""
-				+ "      }"
-				+ "    }";
-		
-		DocumentContext jsonContext = JsonPath.parse(temp);
-		MesurmentView view1 = new MesurmentView();
-		try {
-			view1 = objectMapper.readValue(temp, MesurmentView.class);
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
 }
+
+	

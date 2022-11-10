@@ -13,21 +13,21 @@ public class DataExtractor {
     @GeneratedValue
 	private long id;
     
-    private String dateFormat;
+    private String dataFormat;
     
     private String timeColumn;
     
     private String valueColumn;
 
-	public DataExtractor(String dateFormat, String timeColumn, String valueColumn) {
+	public DataExtractor(String dataFormat, String timeColumn, String valueColumn) {
 		super();
-		this.dateFormat = dateFormat;
+		this.dataFormat = dataFormat;
 		this.timeColumn = timeColumn;
 		this.valueColumn = valueColumn;
 	}
 
 	public DataExtractor() {
-		super();
+
 	}
 
 	public long getId() {
@@ -36,14 +36,6 @@ public class DataExtractor {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getDateFormat() {
-		return dateFormat;
-	}
-
-	public void setDateFormat(String dateFormat) {
-		this.dateFormat = dateFormat;
 	}
 
 	public String getTimeColumn() {
@@ -61,7 +53,13 @@ public class DataExtractor {
 	public void setValueColumn(String valueColumn) {
 		this.valueColumn = valueColumn;
 	}
-    
-    
 
+	public String getDataFormat() {
+		return dataFormat;
+	}
+
+	public void setDataFormat(String dataFormat) {
+		this.dataFormat = dataFormat;
+	}
+    
 }

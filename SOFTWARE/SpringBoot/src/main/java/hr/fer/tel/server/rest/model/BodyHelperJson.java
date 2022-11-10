@@ -16,6 +16,7 @@ public class BodyHelperJson implements AttributeConverter<Object, String> {
 		try {
 			return objectMapper.writeValueAsString(meta);
 		} catch (JsonProcessingException ex) {
+			System.err.println("EER");
 			return null;
 			// or throw an error
 		}
@@ -26,6 +27,7 @@ public class BodyHelperJson implements AttributeConverter<Object, String> {
 		try {
 			return objectMapper.readValue(dbData, Object.class);
 		} catch (IOException ex) {
+			System.err.println("EER");
 			return null;
 		}
 	}

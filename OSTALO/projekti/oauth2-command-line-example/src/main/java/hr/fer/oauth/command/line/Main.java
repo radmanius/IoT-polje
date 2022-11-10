@@ -26,10 +26,10 @@ public class Main {
         clientId);
 
 
-     callLocalRestServer(oauthClient);
+     //callLocalRestServer(oauthClient);
      
      
-    //callIoTLabRestServer(oauthClient); -zove server od ztela
+    callIoTLabRestServer(oauthClient); //-zove server od ztela
   }
 
   private static void callLocalRestServer(OAtuh2AuthorizationFlowPKCEClient oauthClient) throws Exception {

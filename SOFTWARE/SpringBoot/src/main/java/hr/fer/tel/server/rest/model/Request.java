@@ -1,11 +1,14 @@
 package hr.fer.tel.server.rest.model;
 
-import javax.persistence.CascadeType;
+import java.util.Map;
+
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "Request")
@@ -15,26 +18,29 @@ public class Request {
     @GeneratedValue
 	private long id;
     
-    private String URI;
-    
     private String method;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    private BodyHelper headers;
+    private String uri;
+    
+	@Convert(converter = BodyHelperJson.class)
+    private Map<String, String> headers;
     
     private String payload;
-
-	public Request(String uRI, String method, BodyHelper headers, String payload) {
+    
+	public Request(String method, String uri, Map<String, String> headers, String payload) {
 		super();
-		URI = uRI;
 		this.method = method;
+		this.uri = uri;
 		this.headers = headers;
 		this.payload = payload;
 	}
+	
+	
 
 	public Request() {
-
 	}
+
+
 
 	public long getId() {
 		return id;
@@ -42,14 +48,6 @@ public class Request {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getURI() {
-		return URI;
-	}
-
-	public void setURI(String uRI) {
-		URI = uRI;
 	}
 
 	public String getMethod() {
@@ -60,11 +58,11 @@ public class Request {
 		this.method = method;
 	}
 
-	public BodyHelper getHeaders() {
+	public Map<String, String> getHeaders() {
 		return headers;
 	}
 
-	public void setHeaders(BodyHelper headers) {
+	public void setHeaders(Map<String, String> headers) {
 		this.headers = headers;
 	}
 
@@ -75,6 +73,18 @@ public class Request {
 	public void setPayload(String payload) {
 		this.payload = payload;
 	}
+
+	@JsonProperty("URI")
+	public String getUri() {
+		return uri;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+	
 	
 
+
+	
 }

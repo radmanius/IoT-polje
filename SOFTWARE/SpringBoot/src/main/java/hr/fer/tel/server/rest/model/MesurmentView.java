@@ -5,20 +5,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name = "MesurmentView")
-public class MesurmentView {
+//public class MesurmentView{
+@PrimaryKeyJoinColumn(name = "mesurmentId")
+public class MesurmentView extends View2{
+
+
 	
-    @Id
-    @GeneratedValue
-	private long id;
-    
-	private String title;
-	
-	private String viewType;
+//    @Id
+//    @GeneratedValue
+//	private long id;
 	
 	private String measurementUnit;
 	
@@ -34,8 +35,8 @@ public class MesurmentView {
 	public MesurmentView(String title, String viewType, String measurementUnit, MeasurmentSelectForm selectForm,
 			Request query, DataExtractor responseExtracting) {
 		super();
-		this.title = title;
-		this.viewType = viewType;
+//		this.title = title;
+//		this.viewType = viewType;
 		this.measurementUnit = measurementUnit;
 		this.selectForm = selectForm;
 		this.query = query;
@@ -46,29 +47,29 @@ public class MesurmentView {
 		super();
 	}
 
-	public long getId() {
-		return id;
-	}
+//	public long getId() {
+//		return id;
+//	}
+//
+//	public void setId(long id) {
+//		this.id = id;
+//	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getViewType() {
-		return viewType;
-	}
-
-	public void setViewType(String viewType) {
-		this.viewType = viewType;
-	}
+//	public String getTitle() {
+//		return title;
+//	}
+//
+//	public void setTitle(String title) {
+//		this.title = title;
+//	}
+//
+//	public String getViewType() {
+//		return viewType;
+//	}
+//
+//	public void setViewType(String viewType) {
+//		this.viewType = viewType;
+//	}
 
 	public String getMeasurementUnit() {
 		return measurementUnit;

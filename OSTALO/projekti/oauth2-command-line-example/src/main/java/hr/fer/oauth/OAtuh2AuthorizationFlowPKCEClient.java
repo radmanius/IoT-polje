@@ -189,7 +189,10 @@ public class OAtuh2AuthorizationFlowPKCEClient {
 
     log.info("Access Token: {}", accessToken);
     log.info("Refresh Token: {}", refreshToken);
+    
     saveRefreshTokenToFile();
+    saveAcessTokenToFile();
+    
     log.debug("Decoded access token:");
     String[] jwtParts = accessToken.split("[.]");
     String header = new String(Base64.getDecoder().decode(jwtParts[0]), StandardCharsets.UTF_8);
@@ -203,6 +206,10 @@ public class OAtuh2AuthorizationFlowPKCEClient {
   private void saveRefreshTokenToFile() throws IOException {
     Files.writeString(Paths.get("refresh.txt"), refreshToken, StandardCharsets.UTF_8);
   }
+  
+  private void saveAcessTokenToFile() throws IOException {
+	    Files.writeString(Paths.get("access.txt"), accessToken, StandardCharsets.UTF_8);
+	  }
 
   private HttpPost prepareTokensRequest() {
     HttpPost getTokensRequest = new HttpPost(authorizationServerTokenUrl);

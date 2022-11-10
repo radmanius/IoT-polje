@@ -1,6 +1,9 @@
 package hr.fer.tel.server.rest.model;
 
+import java.util.Map;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,14 +20,14 @@ public class MeasurmentSelectForm {
 	private long id;
     
     @OneToOne(cascade = CascadeType.ALL)
-	private Request request;
+	private Request submitSelectionRequest;
 	
-    @OneToOne(cascade = CascadeType.ALL)
-	private BodyHelper inputs;
+	@Convert(converter = BodyHelperJson.class)
+    private Map<String, String> inputs;
 
-	public MeasurmentSelectForm(Request request, BodyHelper inputs) {
+	public MeasurmentSelectForm(Request submitSelectionRequest, Map<String, String> inputs) {
 		super();
-		this.request = request;
+		this.submitSelectionRequest = submitSelectionRequest;
 		this.inputs = inputs;
 	}
 
@@ -39,20 +42,21 @@ public class MeasurmentSelectForm {
 		this.id = id;
 	}
 
-	public Request getRequest() {
-		return request;
+	public Request getSubmitSelectionRequest() {
+		return submitSelectionRequest;
 	}
 
-	public void setRequest(Request request) {
-		this.request = request;
+	public void setSubmitSelectionRequest(Request submitSelectionRequest) {
+		this.submitSelectionRequest = submitSelectionRequest;
 	}
 
-	public BodyHelper getInputs() {
+	public Map<String, String> getInputs() {
 		return inputs;
 	}
 
-	public void setInputs(BodyHelper inputs) {
+	public void setInputs(Map<String, String> inputs) {
 		this.inputs = inputs;
 	}
+
 
 }
