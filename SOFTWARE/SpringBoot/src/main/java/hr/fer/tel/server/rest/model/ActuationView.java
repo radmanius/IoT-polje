@@ -31,7 +31,6 @@ public class ActuationView extends View2{
 	private ActuationForm form;
 
 	public ActuationView(String title, String viewType, ActuationForm form) {
-		super();
 //		this.title = title;
 //		this.viewType = viewType;
 		this.form = form;
@@ -42,6 +41,8 @@ public class ActuationView extends View2{
 	}
 	
 	public ActuationView(ActuationViewDTO dto) {
+		super(dto.getId(), dto.getTitle(), dto.getViewType());
+
 		this.form = new ActuationForm(dto.getForm());
 		
 		

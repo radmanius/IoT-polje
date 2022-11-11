@@ -53,9 +53,20 @@ public class View2 {
     	this.title = dto.getTitle();
     	this.viewType = dto.getViewType();
     }
+    
+//    public View2(View2DTO dto){
+//    	this.title = dto.getTitle();
+//    	this.viewType = dto.getViewType();
+//    }
 
 	public View2() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public View2(long id, String title, String viewType) {
+		this.id = id;
+		this.title = title;
+		this.viewType = viewType;
 	}
 
 	public long getId() {

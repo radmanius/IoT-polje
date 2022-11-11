@@ -11,6 +11,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
+
 
 @Entity
 //@DiscriminatorValue("mesurment")
@@ -50,6 +52,15 @@ public class MesurmentView extends View2{
 
 	public MesurmentView() {
 		super();
+	}
+	
+	public MesurmentView(MesurmentViewDTO dto) {
+		super(dto.getId(), dto.getTitle(), dto.getViewType());
+		
+		this.measurementUnit = dto.getMeasurementUnit();
+		this.selectForm = new MeasurmentSelectForm(dto.getSelectForm());
+		this.query = new Request(dto.getQuery());
+		this.responseExtracting = new DataExtractor(dto.getResponseExtracting());
 	}
 
 //	public long getId() {
