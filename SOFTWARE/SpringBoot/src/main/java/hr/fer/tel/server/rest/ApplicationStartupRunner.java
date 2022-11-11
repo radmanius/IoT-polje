@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import hr.fer.tel.server.rest.service.Scene2Service;
 import hr.fer.tel.server.rest.service.SceneService;
 
 @Component
@@ -14,6 +15,9 @@ public class ApplicationStartupRunner implements CommandLineRunner {
 	
 	@Autowired
 	SceneService sceneService;
+	
+	@Autowired 
+	Scene2Service scene2Service;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -21,6 +25,9 @@ public class ApplicationStartupRunner implements CommandLineRunner {
 		
 		try{
 			sceneService.generate();
+			
+			
+			
 		}catch(Exception e){
 			e.printStackTrace();
 			System.err.println("Scene generate FAILD");
