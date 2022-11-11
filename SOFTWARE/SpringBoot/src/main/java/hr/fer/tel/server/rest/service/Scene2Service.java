@@ -44,10 +44,10 @@ public class Scene2Service {
 
         List<String> ouput = List.of(roles);
 
-        Scene2 scene = sceneRepository.getByRoles(ouput).stream().filter(sc -> Long.valueOf(sc.getId()).equals(id)).findAny()
-                .orElseThrow(() -> new NoSuchElement("Access denied, no required roles for given scene id: " + id));
+//        Scene2 scene = sceneRepository.getByRoles(ouput).stream().filter(sc -> Long.valueOf(sc.getId()).equals(id)).findAny()
+//                .orElseThrow(() -> new NoSuchElement("Access denied, no required roles for given scene id: " + id));
 
-        return scene;
+        return null;
     }
 
     public Scene2 probaGetById(Long id) {
