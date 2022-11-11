@@ -6,6 +6,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import hr.fer.tel.server.rest.dto.TagDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,17 +18,21 @@ public class Tag {
     @GeneratedValue
     private long id;
     private String name;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private Scene2 scene;
-    
+
     public Tag() {
-    	
+
     }
 
     public Tag(String name) {
         this.name = name;
+    }
+
+    public Tag(TagDTO dto) {
+        this.name = dto.getName();
     }
 
     public long getId() {
@@ -36,6 +42,10 @@ public class Tag {
     public String getName() {
         return name;
     }
+
+//	public void setScene(Scene sc) {
+//		this.scene=sc;
+//	}
 
 	public void setScene(Scene2 sc) {
 		this.scene=sc;

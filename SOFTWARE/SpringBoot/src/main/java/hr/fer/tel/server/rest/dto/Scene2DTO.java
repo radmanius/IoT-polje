@@ -10,86 +10,109 @@ import hr.fer.tel.server.rest.model.View2;
 public class Scene2DTO {
 
     private long id;
+
     private String title;
+
     private String subtitle;
+
+    private LayoutDTO layout;
+
     private String pictureLink;
-    private Layout layout;
-    private List<Tag> tags;
-    private List<View2> views;
 
-    public Scene2DTO() {
+    private List<TagDTO> tags = new ArrayList<>();
 
-    }
+    private List<View2DTO> views = new ArrayList<>();
 
-    public Scene2DTO(long id, String title, String subtitle, String pictureLink, Layout layout, List<Tag> tags,
-                    List<View2> views) {
-        this.id = id;
-        this.title = title;
-        this.subtitle = subtitle;
-        this.pictureLink = pictureLink;
-        this.layout = layout;
-        this.tags = tags;
-        this.views = views;
-    }
+    private List<RoleDTO> roles = new ArrayList<>();
 
-    public String getPictureLink() {
-        return pictureLink;
-    }
+    private List<KeyDTO> keys = new ArrayList<>();
 
-    public void setPictureLink(String pictureLink) {
-        this.pictureLink = pictureLink;
-    }
+	public Scene2DTO(long id, String title, String subtitle, LayoutDTO layout, String pictureLink, List<TagDTO> tags,
+			List<View2DTO> views, List<RoleDTO> roles, List<KeyDTO> keys) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.subtitle = subtitle;
+		this.layout = layout;
+		this.pictureLink = pictureLink;
+		this.tags = tags;
+		this.views = views;
+		this.roles = roles;
+		this.keys = keys;
+	}
 
-    public long getId() {
-        return id;
-    }
+	public Scene2DTO() {
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public String getSubtitle() {
+		return subtitle;
+	}
 
-    public String getSubtitle() {
-        return subtitle;
-    }
+	public void setSubtitle(String subtitle) {
+		this.subtitle = subtitle;
+	}
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
+	public LayoutDTO getLayout() {
+		return layout;
+	}
 
-    public Layout getLayout() {
-        return layout;
-    }
+	public void setLayout(LayoutDTO layout) {
+		this.layout = layout;
+	}
 
-    public void setLayout(Layout layout) {
-        this.layout = layout;
-    }
+	public String getPictureLink() {
+		return pictureLink;
+	}
 
-    public List<Tag> getTags() {
-        return tags;
-    }
+	public void setPictureLink(String pictureLink) {
+		this.pictureLink = pictureLink;
+	}
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
+	public List<TagDTO> getTags() {
+		return tags;
+	}
 
-    public List<View2> getViews() {
-        return views;
-    }
+	public void setTags(List<TagDTO> tags) {
+		this.tags = tags;
+	}
 
-    public void setViews(List<View2> views) {
-        this.views = views;
-    }
+	public List<View2DTO> getViews() {
+		return views;
+	}
 
-    public static Scene2DTO from(Scene2 scene) {
-        return new Scene2DTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), scene.getPictureLink(),
-                scene.getLayout(), scene.getTags(), scene.getViews());
-    }
+	public void setViews(List<View2DTO> views) {
+		this.views = views;
+	}
+
+	public List<RoleDTO> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<RoleDTO> roles) {
+		this.roles = roles;
+	}
+
+	public List<KeyDTO> getKeys() {
+		return keys;
+	}
+
+	public void setKeys(List<KeyDTO> keys) {
+		this.keys = keys;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 }

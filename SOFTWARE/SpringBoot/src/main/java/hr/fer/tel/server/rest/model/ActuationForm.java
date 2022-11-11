@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import hr.fer.tel.server.rest.dto.ActuationFormDTO;
+
 @Entity
 @Table(name = "ActuationForm")
 public class ActuationForm {
@@ -34,6 +36,13 @@ public class ActuationForm {
 	}
 
 	public ActuationForm() {
+	}
+	
+	public ActuationForm(ActuationFormDTO dto) {
+		this.defaultValuesRequest = new Request(dto.getDefaultValuesRequest());
+		this.submitFormRequest = new Request(dto.getSubmitFormRequest());
+		this.inputs = dto.getInputs();
+		
 	}
 
 	public long getId() {

@@ -1,6 +1,7 @@
 package hr.fer.tel.server.rest.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,11 +9,17 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
+
 
 @Entity
-@Table(name = "MesurmentView")
-//public class MesurmentView{
-@PrimaryKeyJoinColumn(name = "mesurmentId")
+//@DiscriminatorValue("mesurment")
+//@Table(name = "MesurmentView")
+////public class MesurmentView{
+//@PrimaryKeyJoinColumn(name = "mesurmentId")
+//@JsonTypeName("mesurment")
 public class MesurmentView extends View2{
 
 
@@ -45,6 +52,15 @@ public class MesurmentView extends View2{
 
 	public MesurmentView() {
 		super();
+	}
+	
+	public MesurmentView(MesurmentViewDTO dto) {
+		super(dto.getId(), dto.getTitle(), dto.getViewType());
+		
+		this.measurementUnit = dto.getMeasurementUnit();
+		this.selectForm = new MeasurmentSelectForm(dto.getSelectForm());
+		this.query = new Request(dto.getQuery());
+		this.responseExtracting = new DataExtractor(dto.getResponseExtracting());
 	}
 
 //	public long getId() {

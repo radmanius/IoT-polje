@@ -20,38 +20,38 @@ public class Scene {
     @Id
     @GeneratedValue
     private long id;
-    
+
 	@Column
     private String title;
-	
+
 	@Column
     private String subtitle;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
     private Layout layout;
-	
+
 	@Column
     private String pictureLink;
-	
+
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
     private List<Tag> tags = new ArrayList<>();
-    
-    
+
+
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<View> views = new ArrayList<>();
-    
+
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Role> roles = new ArrayList<>(); //roles required for specific scene
-    
+
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Key> keys = new ArrayList<>(); // keys required for specific scene
 
     public Scene(){
-    	
+
     }
 
     public Scene(String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views, List<Role> roles, List<Key> keys) {
@@ -63,7 +63,7 @@ public class Scene {
         this.views = views;
         this.roles = roles;
         this.keys = keys;
-        
+
         /*for (Tag tag : tags) {
         	tag.setScene(this);
 		}
@@ -76,7 +76,7 @@ public class Scene {
         for (Key key : keys) {
         	key.setScene(this);
 		}*/
-        
+
     }
 
     public String getPictureLink() {
@@ -118,7 +118,7 @@ public class Scene {
     public void setLayout(Layout layout) {
         this.layout = layout;
     }
-    
+
     public List<Tag> getTags() {
         return tags;
     }
@@ -150,12 +150,12 @@ public class Scene {
     public void setKeys(List<Key> keys) {
         this.keys = keys;
     }
-    
+
 //    public void addTag(Tag tag) {
 //    	this.tags.add(tag);
 //    	tag.setScene(this);
 //    }
-    
+
     @Override
 	public String toString() {
 		return "Scene [id=" + id + ", title=" + title + ", subtitle=" + subtitle + ", layout=" + layout
@@ -163,38 +163,38 @@ public class Scene {
 				+ ", keys=" + keys + "]";
 	}
 
-	public static List<Scene> generateScenes(){       
-        
+	public static List<Scene> generateScenes(){
+
         Scene scene1 = new Scene("HUM_sap01AG", "dohvaca AVG vrijednost podataka HUM za sap01 senzor ", new Layout("LIST"), "https://freesvg.org/img/1588765770Luftfeuchte.png", List.of(new Tag("sap01"), new Tag("sap02")), List.of(createView(), createView())
         , List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "", true)));
-        
+
         Scene scene2 = new Scene("sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(createView())
         ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "", false)));
-      
+
         Scene scene3 = new Scene("sap01 SOILTC:mean", "dohvaca SOILTC:mean mjerenja za sap01 senzor",  new Layout("GRID"), "https://freesvg.org/img/Ramiras-Earth-small-icon.png", List.of(new Tag("sap01")), List.of(createView())
         ,List.of(new Role("fer"), new Role("admin")), List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "", true)));
-       
+
         return List.of(scene1, scene2, scene3);
     }
-    
+
     public static Map<String, String> createBody() {
     	Map<String, String> map = new LinkedHashMap<>();
-    	    	
+
     	map.put("id", "9");
     	map.put("method", "POST");
     	map.put("headers", "[Authorization: \"Token {{token1}}\", Accept: application/csv\", Content-Type:\"application/vnd.flux\"]");
     	map.put("uri", "https://iotat.tel.fer.hr:57786/api/v2/query?org=fer");
         return map;
     }
-    
+
     public static View createView() {
     	Random rand = new Random();
     	int number = rand.nextInt(3);
-    	
+
     	if(number == 0) {
     		View view1 = new View("sap01_TC:min", createBody(), """
-                    from(bucket:"telegraf")        
-                    |> range(start: {{startTimeISO}})      
+                    from(bucket:"telegraf")
+                    |> range(start: {{startTimeISO}})
                     |> filter(fn: (r) => r._measurement == "TC" and r.id_wasp == "SAP01" and r._field =="value")
                     |> window(every: {{agregationRange}})
                            |> min()

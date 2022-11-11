@@ -9,46 +9,60 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import hr.fer.tel.server.rest.dto.ActuationViewDTO;
+import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
+import hr.fer.tel.server.rest.dto.Scene2DTO;
+
 @Entity
 @Table(name = "Scene2")
 public class Scene2 {
 
-    @Id
-    @GeneratedValue
-    private long id;
-    
+	@Id
+	@GeneratedValue
+	private long id;
+
 	@Column
-    private String title;
-	
+	private String title;
+
 	@Column
-    private String subtitle;
-	
+	private String subtitle;
+
 	@OneToOne(cascade = CascadeType.ALL)
-    private Layout layout;
-	
+	private Layout layout;
+
 	@Column
-    private String pictureLink;
-	
+	private String pictureLink;
+
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
-    private List<Tag> tags = new ArrayList<>();
-    
-    
-	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<View2> views = new ArrayList<>();
-    
-	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Role> roles = new ArrayList<>(); //roles required for specific scene
-    
-	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Key> keys = new ArrayList<>(); // keys required for specific scene
+	private List<Tag> tags = new ArrayList<>();
 
-    public Scene2(){
-    	
-    }
+	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
+	private List<View2> views = new ArrayList<>();
+
+	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
+	private List<Role> roles = new ArrayList<>(); // roles required for specific scene
+
+	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
+	private List<Key> keys = new ArrayList<>(); // keys required for specific scene
+
+	public Scene2() {
+
+	}
+
+	public Scene2(String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View2> views,
+			List<Role> roles, List<Key> keys) {
+		this.title = title;
+		this.subtitle = subtitle;
+		this.layout = layout;
+		this.pictureLink = pictureLink;
+		this.tags = tags;
+		this.views = views;
+		this.roles = roles;
+		this.keys = keys;
 
     public Scene2(String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View2> views, List<Role> roles, List<Key> keys) {
     	this.title = title;
@@ -59,7 +73,7 @@ public class Scene2 {
         this.views = views;
         this.roles = roles;
         this.keys = keys;
-        
+
         for (Tag tag : tags) {
         	tag.setScene(this);
 		}
@@ -72,94 +86,150 @@ public class Scene2 {
         for (Key key : keys) {
         	key.setScene(this);
 		}
-        
+
     }
 
-    public String getPictureLink() {
-        return pictureLink;
-    }
+	}
 
-    public void setPictureLink(String pictureLink) {
-        this.pictureLink = pictureLink;
-    }
+	public Scene2(Scene2DTO dto) {
+		this.id = dto.getId();
+		this.keys = dto.getKeys().stream().map(key -> new Key(key)).toList();
 
-    public long getId() {
-        return id;
-    }
+		this.layout = new Layout(dto.getLayout());
 
-    public void setId(long id) {
-        this.id = id;
-    }
+		this.pictureLink = dto.getPictureLink();
 
-    public String getTitle() {
-        return title;
-    }
+		this.roles = dto.getRoles().stream().map(role -> new Role(role)).toList();
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+		this.subtitle = dto.getSubtitle();
 
-    public String getSubtitle() {
-        return subtitle;
-    }
+		this.tags = dto.getTags().stream().map(tag -> new Tag(tag)).toList();
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
+		this.title = dto.getTitle();
 
-    public Layout getLayout() {
-        return layout;
-    }
+//		this.views = dto.getViews().stream().map(view -> new View2(view)).toList();
 
-    public void setLayout(Layout layout) {
-        this.layout = layout;
-    }
-    
-    public List<Tag> getTags() {
-        return tags;
-    }
+		for (var temp : dto.getViews()) {
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
+			if (temp instanceof ActuationViewDTO) {
 
-    public List<View2> getViews() {
-        return views;
-    }
+				ActuationViewDTO a = (ActuationViewDTO) temp;
+				ActuationView view1 = new ActuationView(a);
+				this.views.add(view1);
 
-    public void setViews(List<View2> views) {
-        this.views = views;
-    }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
+			}
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
+			if (temp instanceof MesurmentViewDTO) {
 
-    public List<Key> getKeys() {
-        return keys;
-    }
+				MesurmentViewDTO a = (MesurmentViewDTO) temp;
+				MesurmentView view1 = new MesurmentView(a);
+				this.views.add(view1);
 
-    public void setKeys(List<Key> keys) {
-        this.keys = keys;
-    }
-    
+			}
+
+		}
+
+		for (Tag tag : tags) {
+			tag.setScene(this);
+		}
+		for (View2 view : views) {
+			view.setScene(this);
+		}
+		for (Role role : roles) {
+			role.setScene(this);
+		}
+		for (Key key : keys) {
+			key.setScene(this);
+		}
+
+	}
+
+	public String getPictureLink() {
+		return pictureLink;
+	}
+
+	public void setPictureLink(String pictureLink) {
+		this.pictureLink = pictureLink;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getSubtitle() {
+		return subtitle;
+	}
+
+	public void setSubtitle(String subtitle) {
+		this.subtitle = subtitle;
+	}
+
+	public Layout getLayout() {
+		return layout;
+	}
+
+	public void setLayout(Layout layout) {
+		this.layout = layout;
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public List<View2> getViews() {
+		return views;
+	}
+
+	public void setViews(List<View2> views) {
+		this.views = views;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public List<Key> getKeys() {
+		return keys;
+	}
+
+	public void setKeys(List<Key> keys) {
+		this.keys = keys;
+	}
+
 //    public void addTag(Tag tag) {
 //    	this.tags.add(tag);
 //    	tag.setScene(this);
 //    }
-    
-    @Override
+
+	@Override
 	public String toString() {
 		return "Scene [id=" + id + ", title=" + title + ", subtitle=" + subtitle + ", layout=" + layout
 				+ ", pictureLink=" + pictureLink + ", tags=" + tags + ", views=" + views + ", roles=" + roles
 				+ ", keys=" + keys + "]";
 	}
 
-	public static List<Scene2> generateScenes(){       
+	public static List<Scene2> generateScenes(){
         Scene2 scene1 = new Scene2("FER SAP01", "uz zid", new Layout("LIST"), "http://example.com/some.png", List.of(new Tag("sap01"), new Tag("sap02")),
                 List.of(createView(), createView()), List.of(new Role("fer"), new Role("admin")),
                 List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "", true)));
@@ -172,14 +242,14 @@ public class Scene2 {
                 List.of(createView(), createView()), List.of(new Role("ferit"), new Role("admin")),
                 List.of(new Key("bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", "", true)));
 
-       
+
         return List.of(scene1, scene2, scene3);
     }
-    
+
     public static View2 createView() {
     	Random rand = new Random();
     	int number = rand.nextInt(3);
-    	
+
     	if(number == 0) {
             View2 view1 = new MesurmentView("view title", "single", "C", createMeasurementForm(), createRequestQuery(), createDataExtractor());
             return view1;
@@ -222,7 +292,34 @@ public class Scene2 {
         ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(), createFormInputs());
         return actForm1;
     }
-    
+
 }
 
-	
+			return null;
+		} else if (number == 1) {
+			View view2 = new View("HUM_sap01_agregatedAVG", createBody(), """
+					from(bucket:"telegraf")
+					|> range(start: {{startTimeISO}})
+					|> filter(fn: (r) => r._measurement == "HUM" and r.id_wasp == "SAP01" and r._field == "value")
+					|> drop(columns: ["_start", "_stop", "_field", "host", "id"])
+					|> window(every: {{agregationRange}})
+					|> mean()
+					|> duplicate(column: "_stop", as: "_time")
+					|> drop(columns: ["_start", "_stop"])
+					""");
+			return null;
+		}
+		View view3 = new View("HUM_sap01_agregatedAVG", createBody(), """
+				from(bucket:"telegraf")
+				|> range(start: {{startTimeISO}})
+				|> filter(fn: (r) => r._measurement == "HUM" and r.id_wasp == "SAP01" and r._field == "value")
+				|> drop(columns: ["_start", "_stop", "_field", "host", "id"])
+				|> window(every: {{agregationRange}})
+				|> mean()
+				|> duplicate(column: "_stop", as: "_time")
+				|> drop(columns: ["_start", "_stop"])
+				""");
+		return null;
+	}
+
+}

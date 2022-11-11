@@ -1,11 +1,13 @@
 package hr.fer.tel.server.rest.controller;
 
+import hr.fer.tel.server.rest.dto.*;
 import hr.fer.tel.server.rest.model.ActuationView;
 import hr.fer.tel.server.rest.model.MeasurmentSelectForm;
 import hr.fer.tel.server.rest.model.MesurmentView;
 import hr.fer.tel.server.rest.model.Request;
 import hr.fer.tel.server.rest.model.Scene;
 import hr.fer.tel.server.rest.model.ShortScene;
+import hr.fer.tel.server.rest.model.View2;
 import hr.fer.tel.server.rest.service.SceneService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,19 +131,66 @@ public class SceneController {
 //		return ResponseEntity.status(HttpStatus.OK).body(saved);
 //	}
 	
+//	@PutMapping("/scene")
+//	public BodyBuilder sceneEdit(@RequestBody String model) throws JsonMappingException, JsonProcessingException {
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		objectMapper.setSerializationInclusion(Include.NON_NULL);
+//		
+//		MesurmentView view1 = new MesurmentView();
+//		
+//		Map<String, String> mapper = new HashMap<>();
+//		try {
+//			view1 = objectMapper.readValue(model, MesurmentView.class);
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		
+//		return ResponseEntity.status(HttpStatus.OK);
+//	}
+	
+//	@PutMapping("/scene")
+//	public BodyBuilder sceneEdit(@RequestBody String model) throws JsonMappingException, JsonProcessingException {
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		objectMapper.setSerializationInclusion(Include.NON_NULL);
+//		
+//		View2DTO neki = new View2DTO();
+//		MesurmentViewDTO view1 = new MesurmentViewDTO();
+//		ActuationViewDTO view2 = new ActuationViewDTO();
+//		
+//		List<View2DTO> views = List.of(view1, view2);
+//		
+//		Map<String, String> mapper = new HashMap<>();
+//		try {
+//			neki = objectMapper.readValue(model, neki.getClass());
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		if (neki instanceof MesurmentViewDTO) {
+//			view1 = (MesurmentViewDTO) neki;
+//		}
+//
+//		
+//		return ResponseEntity.status(HttpStatus.OK);
+//	}
+	
 	@PutMapping("/scene")
 	public BodyBuilder sceneEdit(@RequestBody String model) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
 		
-		MesurmentView view1 = new MesurmentView();
+		Scene2DTO scena = new Scene2DTO();
 		
-		Map<String, String> mapper = new HashMap<>();
+		
 		try {
-			view1 = objectMapper.readValue(model, MesurmentView.class);
+			scena = objectMapper.readValue(model, scena.getClass());
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		
 
 		
 		return ResponseEntity.status(HttpStatus.OK);

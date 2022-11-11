@@ -1,18 +1,8 @@
-package hr.fer.tel.server.rest.model;
+package hr.fer.tel.server.rest.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-import hr.fer.tel.server.rest.dto.DataExtractorDTO;
-
-@Entity
-@Table(name = "DataExtractor")
-public class DataExtractor {
+public class DataExtractorDTO {
 	
-    @Id
-    @GeneratedValue
 	private long id;
     
     private String dataFormat;
@@ -21,21 +11,14 @@ public class DataExtractor {
     
     private String valueColumn;
 
-	public DataExtractor(String dataFormat, String timeColumn, String valueColumn) {
+	public DataExtractorDTO(String dataFormat, String timeColumn, String valueColumn) {
 		super();
 		this.dataFormat = dataFormat;
 		this.timeColumn = timeColumn;
 		this.valueColumn = valueColumn;
 	}
 
-	public DataExtractor() {
-
-	}
-	
-	public DataExtractor(DataExtractorDTO dto) {
-		this.dataFormat = dto.getDataFormat();
-		this.timeColumn = dto.getTimeColumn();
-		this.valueColumn = dto.getValueColumn();
+	public DataExtractorDTO() {
 
 	}
 

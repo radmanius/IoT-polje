@@ -1,55 +1,33 @@
-package hr.fer.tel.server.rest.model;
+package hr.fer.tel.server.rest.dto;
 
 import java.util.Map;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import hr.fer.tel.server.rest.dto.RequestDTO;
-
-@Entity
-@Table(name = "Request")
-public class Request {
+public class RequestDTO {
 	
-    @Id
-    @GeneratedValue
 	private long id;
     
     private String method;
     
     private String uri;
     
-	@Convert(converter = BodyHelperJson.class)
     private Map<String, String> headers;
     
     private String payload;
-    
-	public Request(String method, String uri, Map<String, String> headers, String payload) {
+
+	public RequestDTO(long id, String method, String uri, Map<String, String> headers, String payload) {
 		super();
+		this.id = id;
 		this.method = method;
 		this.uri = uri;
 		this.headers = headers;
 		this.payload = payload;
 	}
-	
-	
 
-	public Request() {
+	public RequestDTO() {
+		
 	}
-	
-	public Request(RequestDTO dto) {
-		this.method = dto.getMethod();
-		this.uri = dto.getUri();
-		this.headers = dto.getHeaders();
-		this.payload = dto.getPayload();
-	}
-
-
 
 	public long getId() {
 		return id;
@@ -67,6 +45,15 @@ public class Request {
 		this.method = method;
 	}
 
+	@JsonProperty("URI")
+	public String getUri() {
+		return uri;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+
 	public Map<String, String> getHeaders() {
 		return headers;
 	}
@@ -82,18 +69,5 @@ public class Request {
 	public void setPayload(String payload) {
 		this.payload = payload;
 	}
-
-	@JsonProperty("URI")
-	public String getUri() {
-		return uri;
-	}
-
-	public void setUri(String uri) {
-		this.uri = uri;
-	}
-	
-	
-
-
 	
 }
