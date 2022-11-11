@@ -1,6 +1,5 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { ai } from "utils/appInsights";
 import { devConsoleError, devConsoleLog } from "utils/helperFunctions";
 import { ReactTypescriptxiosError, ReactTypescriptAxiosResponse } from "utils/axios/apiModels";
 
@@ -17,19 +16,12 @@ axios.interceptors.request.use(
     function (config) {
         // Do something before request is sent
         devConsoleLog(`REQUEST : ${config.url}\n\nJSON : ${JSON.stringify(config)}`);
-        ai.trackEvent({
-            name: `REQUEST : ${config.url}`,
-            properties: config,
-        });
 
         return config;
     },
     function (error) {
         // Do something with request error
         devConsoleLog(`API request error : ${JSON.stringify(error)}`);
-        ai.trackException({
-            properties: error,
-        });
 
         return Promise.reject(error);
     }
@@ -41,10 +33,6 @@ axios.interceptors.response.use(
         devConsoleLog(
             `RESPONSE : ${response.config.url} - Status : ${response.status} \n\nJSON : ${JSON.stringify(response)}`
         );
-        ai.trackEvent({
-            name: `RESPONSE : ${response.config.url} - Status : ${response.status}`,
-            properties: response,
-        });
         if (response.config.successMessage != undefined) {
             toast.success(response.config.successMessage);
         }
@@ -66,9 +54,6 @@ axios.interceptors.response.use(
             }
             devConsoleError(`API response error : ${JSON.stringify(error)}`);
         }
-        ai.trackException({
-            error: new Error(error.toString()),
-        });
 
         return Promise.reject({
             name: error.name,
