@@ -34,6 +34,9 @@ void main() async {
       home: ProviderScope(
         child: firstScreen,
       ),
+      theme: ThemeData(
+        primarySwatch: Colors.lightGreen,
+      ),
     ),
   );
 }

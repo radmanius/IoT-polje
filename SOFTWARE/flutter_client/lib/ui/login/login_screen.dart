@@ -29,7 +29,10 @@ class LoginScreen extends ConsumerWidget {
         child: Center(
           child: PrimaryButton(
             title: 'LOGIN',
-            onTap: ref.read(loginRequestNotifier.notifier).onLoginPressed,
+            onTap: () {
+              debugPrint('pressed');
+     ref.read(loginRequestNotifier.notifier).onLoginPressed();
+}
           ),
         ),
       ),
