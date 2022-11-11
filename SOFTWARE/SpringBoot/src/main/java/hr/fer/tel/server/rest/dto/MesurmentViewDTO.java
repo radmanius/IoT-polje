@@ -1,22 +1,22 @@
 package hr.fer.tel.server.rest.dto;
 
-import hr.fer.tel.server.rest.model.DataExtractor;
-import hr.fer.tel.server.rest.model.MeasurmentSelectForm;
-import hr.fer.tel.server.rest.model.Request;
-import hr.fer.tel.server.rest.model.View2;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
-public class MesurmentViewDTO extends View2{
+
+
+@JsonTypeName("mesurment")
+public class MesurmentViewDTO extends View2DTO{
 	
 	private String measurementUnit;
 	
-	private MeasurmentSelectForm selectForm;
+	private MeasurmentSelectFormDTO selectForm;
 	
-	private Request query;
+	private RequestDTO query;
 	
-	private DataExtractor responseExtracting;
+	private DataExtractorDTO responseExtracting;
 
-	public MesurmentViewDTO(String measurementUnit, MeasurmentSelectForm selectForm, Request query,
-			DataExtractor responseExtracting) {
+	public MesurmentViewDTO(String measurementUnit, MeasurmentSelectFormDTO selectForm, RequestDTO query,
+			DataExtractorDTO responseExtracting) {
 		super();
 		this.measurementUnit = measurementUnit;
 		this.selectForm = selectForm;
@@ -36,27 +36,27 @@ public class MesurmentViewDTO extends View2{
 		this.measurementUnit = measurementUnit;
 	}
 
-	public MeasurmentSelectForm getSelectForm() {
+	public MeasurmentSelectFormDTO getSelectForm() {
 		return selectForm;
 	}
 
-	public void setSelectForm(MeasurmentSelectForm selectForm) {
+	public void setSelectForm(MeasurmentSelectFormDTO selectForm) {
 		this.selectForm = selectForm;
 	}
 
-	public Request getQuery() {
+	public RequestDTO getQuery() {
 		return query;
 	}
 
-	public void setQuery(Request query) {
+	public void setQuery(RequestDTO query) {
 		this.query = query;
 	}
 
-	public DataExtractor getResponseExtracting() {
+	public DataExtractorDTO getResponseExtracting() {
 		return responseExtracting;
 	}
 
-	public void setResponseExtracting(DataExtractor responseExtracting) {
+	public void setResponseExtracting(DataExtractorDTO responseExtracting) {
 		this.responseExtracting = responseExtracting;
 	}
 	

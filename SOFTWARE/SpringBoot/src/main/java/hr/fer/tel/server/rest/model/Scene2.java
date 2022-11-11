@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import hr.fer.tel.server.rest.dto.Scene2DTO;
+
 @Entity
 @Table(name = "Scene2")
 public class Scene2 {
@@ -63,7 +65,10 @@ public class Scene2 {
         this.views = views;
         this.roles = roles;
         this.keys = keys;
+     
         
+
+    
 //        for (Tag tag : tags) {
 //        	tag.setScene(this);
 //		}
@@ -79,7 +84,40 @@ public class Scene2 {
         
     }
 
-    public String getPictureLink() {
+    public Scene2(Scene2DTO dto){
+    	this.id = dto.getId();
+    	this.keys = dto.getKeys().stream().map(key -> new Key(key)).toList();
+    	
+    	this.layout = new Layout(dto.getLayout());
+    	
+    	this.pictureLink = dto.getPictureLink();
+    	
+    	this.roles = dto.getRoles().stream().map(role -> new Role(role)).toList();
+    	
+    	this.subtitle = dto.getSubtitle();
+    	
+    	this.tags = dto.getTags().stream().map(tag -> new Tag(tag)).toList();
+    	
+    	this.title = dto.getTitle();
+    	
+    	this.views = dto.getViews().stream().map(view -> new View2(view)).toList();
+    	
+    	for (Tag tag : tags) {
+        	tag.setScene(this);
+		}
+        for (View2 view : views) {
+        	view.setScene(this);
+		}
+        for (Role role : roles) {
+        	role.setScene(this);
+		}
+        for (Key key : keys) {
+        	key.setScene(this);
+		}
+    	
+    }
+
+	public String getPictureLink() {
         return pictureLink;
     }
 

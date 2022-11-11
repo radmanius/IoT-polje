@@ -8,11 +8,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 
 @Entity
 @Table(name = "MesurmentView")
 //public class MesurmentView{
 @PrimaryKeyJoinColumn(name = "mesurmentId")
+@JsonTypeName("mesurment")
 public class MesurmentView extends View2{
 
 

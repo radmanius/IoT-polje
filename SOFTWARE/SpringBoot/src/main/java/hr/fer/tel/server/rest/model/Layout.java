@@ -2,6 +2,8 @@ package hr.fer.tel.server.rest.model;
 
 import javax.persistence.*;
 
+import hr.fer.tel.server.rest.dto.LayoutDTO;
+
 @Entity
 @Table(name = "Layout")
 public class Layout {
@@ -21,6 +23,10 @@ public class Layout {
         this.name = name;
     }
 
+	public Layout(LayoutDTO dto) {
+        this.name = dto.getName();
+    }
+	
     public long getId() {
         return id;
     }

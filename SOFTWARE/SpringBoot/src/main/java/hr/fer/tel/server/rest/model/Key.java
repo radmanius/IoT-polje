@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import hr.fer.tel.server.rest.dto.KeyDTO;
+
 @Entity
 @Table(name = "Key")
 public class Key {
@@ -20,7 +22,7 @@ public class Key {
 	
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    private Scene scene;
+    private Scene2 scene;
     
     public Key(String name, String value, boolean canDelete) {
 		super();
@@ -33,14 +35,28 @@ public class Key {
 	public Key() {
 		
 	}
+	
+	public Key(KeyDTO dto) {
+		this.name = dto.getName();
+		this.value = dto.getValue();
+		this.canDelete = dto.isCanDelete();
+	}
 
-	public void setScene(Scene scene) {
+	public void setScene(Scene2 scene) {
 		this.scene = scene;
 	}
     
-    public Scene getScene() {
+    public Scene2 getScene() {
 		return this.scene;
 	}
+    
+//	public void setScene(Scene scene) {
+//		this.scene = scene;
+//	}
+//    
+//    public Scene getScene() {
+//		return this.scene;
+//	}
 
 
 	public long getId() {

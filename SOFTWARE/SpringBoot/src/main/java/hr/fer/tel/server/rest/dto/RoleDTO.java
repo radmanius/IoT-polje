@@ -11,6 +11,11 @@ public class RoleDTO {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public RoleDTO(String name) {
+		super();
+		this.name = name;
+	}
 
 	public RoleDTO() {
 		super();

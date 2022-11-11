@@ -13,7 +13,24 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
+import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
+import hr.fer.tel.server.rest.dto.View2DTO;
+
+
+@JsonTypeInfo(
+	      use = JsonTypeInfo.Id.NAME, 
+	      include = As.PROPERTY, 
+	      property = "viewType")
+	    @JsonSubTypes({
+	        @JsonSubTypes.Type(value = ActuationView.class, name = "actuation"),
+	        @JsonSubTypes.Type(value = MesurmentView.class, name = "mesurment"),
+	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "single"),
+	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "series")
+	    })
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class View2 {
@@ -28,7 +45,17 @@ public class View2 {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    private Scene scene;
+    private Scene2 scene;
+    
+    public View2(View2DTO dto){
+    	this.id = dto.getId();
+    	this.title = dto.getTitle();
+    	this.viewType = dto.getViewType();
+    }
+
+	public View2() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public long getId() {
 		return id;
@@ -54,11 +81,15 @@ public class View2 {
 		this.viewType = viewType;
 	}
 	
-	public Scene getScene() {
+	public Scene2 getScene() {
 		return scene;
 	}
 	
-	public void setScene(Scene scene) {
+//	public void setScene(Scene scene) {
+//		this.scene = scene;
+//	}
+	
+	public void setScene(Scene2 scene) {
 		this.scene = scene;
 	}
 

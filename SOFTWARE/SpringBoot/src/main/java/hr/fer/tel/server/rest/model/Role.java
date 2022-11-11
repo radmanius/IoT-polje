@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import hr.fer.tel.server.rest.dto.RoleDTO;
+
 @Entity
 @Table(name = "Role")
 public class Role {
@@ -16,7 +18,7 @@ public class Role {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    private Scene scene;
+    private Scene2 scene;
 
     public Role() {
 
@@ -24,6 +26,10 @@ public class Role {
 
     public Role(String name) {
         this.name = name;
+    }
+    
+    public Role(RoleDTO dto) {
+        this.name = dto.getName();
     }
 
     public long getId() {
@@ -42,13 +48,21 @@ public class Role {
         this.name = name;
     }
     
-    public void setScene(Scene scene) {
+    public void setScene(Scene2 scene) {
 		this.scene = scene;
 	}
     
-    public Scene getScene() {
+    public Scene2 getScene() {
     	return this.scene;
     }
+    
+//    public void setScene(Scene scene) {
+//		this.scene = scene;
+//	}
+//    
+//    public Scene getScene() {
+//    	return this.scene;
+//    }
 
     @Override
     public String toString() {

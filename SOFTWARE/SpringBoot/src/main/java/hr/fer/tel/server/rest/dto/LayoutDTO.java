@@ -11,6 +11,11 @@ public class LayoutDTO {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public LayoutDTO(String name) {
+		super();
+		this.name = name;
+	}
 
 	public LayoutDTO() {
 		super();

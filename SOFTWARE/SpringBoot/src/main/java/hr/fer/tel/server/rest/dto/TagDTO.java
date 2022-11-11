@@ -11,6 +11,11 @@ public class TagDTO {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public TagDTO(String name) {
+		super();
+		this.name = name;
+	}
 
 	public TagDTO() {
 		super();

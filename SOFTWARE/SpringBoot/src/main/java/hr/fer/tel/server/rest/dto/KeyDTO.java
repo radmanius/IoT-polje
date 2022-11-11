@@ -17,6 +17,13 @@ public class KeyDTO {
 		this.value = value;
 		this.canDelete = canDelete;
 	}
+	public KeyDTO(String name) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.value = value;
+		this.canDelete = canDelete;
+	}
 
 	public KeyDTO() {
 		super();

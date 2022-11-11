@@ -66,19 +66,19 @@ public class Scene {
         this.roles = roles;
         this.keys = keys;
         
-        for (Tag tag : tags) {
-        	tag.setScene(this);
-		}
-        for (View view : views) {
-        	view.setScene(this);
-		}
-        for (Role role : roles) {
-        	role.setScene(this);
-		}
-        for (Key key : keys) {
-        	key.setScene(this);
-		}
-        
+//        for (Tag tag : tags) {
+//        	tag.setScene(this);
+//		}
+//        for (View view : views) {
+//        	view.setScene(this);
+//		}
+//        for (Role role : roles) {
+//        	role.setScene(this);
+//		}
+//        for (Key key : keys) {
+//        	key.setScene(this);
+//		}
+//        
     }
 
     public String getPictureLink() {
@@ -153,10 +153,10 @@ public class Scene {
         this.keys = keys;
     }
     
-    public void addTag(Tag tag) {
-    	this.tags.add(tag);
-    	tag.setScene(this);
-    }
+//    public void addTag(Tag tag) {
+//    	this.tags.add(tag);
+//    	//tag.setScene(this);
+//    }
     
     @Override
 	public String toString() {

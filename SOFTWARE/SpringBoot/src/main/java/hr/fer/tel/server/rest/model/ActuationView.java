@@ -8,10 +8,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 @Entity
 @Table(name = "ActuationView")
 //public class ActuationView{
 @PrimaryKeyJoinColumn(name = "actuationId")
+@JsonTypeName("actuation")
 public class ActuationView extends View2{
 
 	

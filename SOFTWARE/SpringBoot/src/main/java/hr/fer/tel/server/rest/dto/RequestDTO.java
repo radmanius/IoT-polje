@@ -2,6 +2,8 @@ package hr.fer.tel.server.rest.dto;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class RequestDTO {
 	
 	private long id;
@@ -43,6 +45,7 @@ public class RequestDTO {
 		this.method = method;
 	}
 
+	@JsonProperty("URI")
 	public String getUri() {
 		return uri;
 	}
