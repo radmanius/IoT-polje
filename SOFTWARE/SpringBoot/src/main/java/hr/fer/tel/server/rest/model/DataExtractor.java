@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import hr.fer.tel.server.rest.dto.DataExtractorDTO;
+
 @Entity
 @Table(name = "DataExtractor")
 public class DataExtractor {
@@ -27,6 +29,13 @@ public class DataExtractor {
 	}
 
 	public DataExtractor() {
+
+	}
+	
+	public DataExtractor(DataExtractorDTO dto) {
+		this.dataFormat = dto.getDataFormat();
+		this.timeColumn = dto.getTimeColumn();
+		this.valueColumn = dto.getValueColumn();
 
 	}
 

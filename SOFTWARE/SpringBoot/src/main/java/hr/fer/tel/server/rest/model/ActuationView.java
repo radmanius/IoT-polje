@@ -1,6 +1,7 @@
 package hr.fer.tel.server.rest.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,11 +11,14 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import hr.fer.tel.server.rest.dto.ActuationViewDTO;
+
 @Entity
-@Table(name = "ActuationView")
-//public class ActuationView{
-@PrimaryKeyJoinColumn(name = "actuationId")
-@JsonTypeName("actuation")
+//@DiscriminatorValue("actuation")
+//@Table(name = "ActuationView")
+////public class ActuationView{
+//@PrimaryKeyJoinColumn(name = "actuationId")
+//@JsonTypeName("actuation")
 public class ActuationView extends View2{
 
 	
@@ -34,6 +38,12 @@ public class ActuationView extends View2{
 	}
 
 	public ActuationView() {
+		
+	}
+	
+	public ActuationView(ActuationViewDTO dto) {
+		this.form = new ActuationForm(dto.getForm());
+		
 		
 	}
 

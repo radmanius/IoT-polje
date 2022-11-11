@@ -21,18 +21,19 @@ import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
 import hr.fer.tel.server.rest.dto.View2DTO;
 
 
-@JsonTypeInfo(
-	      use = JsonTypeInfo.Id.NAME, 
-	      include = As.PROPERTY, 
-	      property = "viewType")
-	    @JsonSubTypes({
-	        @JsonSubTypes.Type(value = ActuationView.class, name = "actuation"),
-	        @JsonSubTypes.Type(value = MesurmentView.class, name = "mesurment"),
-	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "single"),
-	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "series")
-	    })
+//@JsonTypeInfo(
+//	      use = JsonTypeInfo.Id.NAME, 
+//	      include = As.PROPERTY, 
+//	      property = "viewType")
+//	    @JsonSubTypes({
+//	        @JsonSubTypes.Type(value = ActuationView.class, name = "actuation"),
+//	        @JsonSubTypes.Type(value = MesurmentView.class, name = "mesurment"),
+//	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "single"),
+//	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "series")
+//	    })
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@DiscriminatorColumn(name = "type")
 public class View2 {
 	
     @Id

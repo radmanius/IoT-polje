@@ -1,6 +1,7 @@
 package hr.fer.tel.server.rest.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,10 +13,11 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @Entity
-@Table(name = "MesurmentView")
-//public class MesurmentView{
-@PrimaryKeyJoinColumn(name = "mesurmentId")
-@JsonTypeName("mesurment")
+//@DiscriminatorValue("mesurment")
+//@Table(name = "MesurmentView")
+////public class MesurmentView{
+//@PrimaryKeyJoinColumn(name = "mesurmentId")
+//@JsonTypeName("mesurment")
 public class MesurmentView extends View2{
 
 

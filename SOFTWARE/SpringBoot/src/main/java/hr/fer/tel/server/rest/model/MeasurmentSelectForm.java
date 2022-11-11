@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import hr.fer.tel.server.rest.dto.MeasurmentSelectFormDTO;
+import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
+
 
 @Entity
 @Table(name = "MeasurmentSelectForm")
@@ -32,6 +35,11 @@ public class MeasurmentSelectForm {
 	}
 
 	public MeasurmentSelectForm() {
+	}
+
+	public MeasurmentSelectForm(MeasurmentSelectFormDTO dto) {
+		this.submitSelectionRequest = new Request(dto.getSubmitSelectionRequest());
+		this.inputs = dto.getInputs();
 	}
 
 	public long getId() {

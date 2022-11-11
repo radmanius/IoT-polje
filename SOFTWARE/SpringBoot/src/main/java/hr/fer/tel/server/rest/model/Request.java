@@ -10,6 +10,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import hr.fer.tel.server.rest.dto.RequestDTO;
+
 @Entity
 @Table(name = "Request")
 public class Request {
@@ -38,6 +40,13 @@ public class Request {
 	
 
 	public Request() {
+	}
+	
+	public Request(RequestDTO dto) {
+		this.method = dto.getMethod();
+		this.uri = dto.getUri();
+		this.headers = dto.getHeaders();
+		this.payload = dto.getPayload();
 	}
 
 
