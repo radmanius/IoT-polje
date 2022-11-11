@@ -1,7 +1,9 @@
 package hr.fer.tel.server.rest.model;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -177,14 +179,14 @@ public class Scene {
         return List.of(scene1, scene2, scene3);
     }
     
-    public static BodyHelper createBody() {
-    	BodyHelper body = new BodyHelper();
+    public static Map<String, String> createBody() {
+    	Map<String, String> map = new LinkedHashMap<>();
     	    	
-    	body.addProperty("id", "9")
-        	.addProperty("method", "POST")
-        	.addProperty("headers", "[Authorization: \"Token {{token1}}\", Accept: application/csv\", Content-Type:\"application/vnd.flux\"]")
-        	.addProperty("uri", "https://iotat.tel.fer.hr:57786/api/v2/query?org=fer");
-        return body;
+    	map.put("id", "9");
+    	map.put("method", "POST");
+    	map.put("headers", "[Authorization: \"Token {{token1}}\", Accept: application/csv\", Content-Type:\"application/vnd.flux\"]");
+    	map.put("uri", "https://iotat.tel.fer.hr:57786/api/v2/query?org=fer");
+        return map;
     }
     
     public static View createView() {

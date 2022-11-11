@@ -1,6 +1,6 @@
 package hr.fer.tel.server.rest.controller;
 
-import hr.fer.tel.server.rest.model.BodyHelper;
+import hr.fer.tel.server.rest.model.ActuationView;
 import hr.fer.tel.server.rest.model.MeasurmentSelectForm;
 import hr.fer.tel.server.rest.model.MesurmentView;
 import hr.fer.tel.server.rest.model.Request;
@@ -72,11 +72,11 @@ public class SceneController {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
-		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-		Scene customer;
+		ActuationView view2 = new ActuationView();
 		 try {
-			customer = objectMapper.readValue(model, Scene.class);
+			 view2 = objectMapper.readValue(model, ActuationView.class);
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
@@ -134,33 +134,15 @@ public class SceneController {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
 		
-		
 		MesurmentView view1 = new MesurmentView();
-
+		
 		Map<String, String> mapper = new HashMap<>();
-		JsonNode jsonNodeRoot = null;
 		try {
-			jsonNodeRoot = objectMapper.readTree(model);
-			mapper = objectMapper.readValue(model, TreeMap.class);
 			view1 = objectMapper.readValue(model, MesurmentView.class);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		String a = jsonNodeRoot.get("title").textValue();
-		MesurmentView view = new MesurmentView();
-		
-		view.setTitle(jsonNodeRoot.get("title").textValue());
-		view.setViewType(jsonNodeRoot.get("viewType").textValue());
-		view.setMeasurementUnit(jsonNodeRoot.get("measurementUnit").textValue());
-		
-		String ab = jsonNodeRoot.get("selectForm").toString();
-		MeasurmentSelectForm form = new MeasurmentSelectForm();
-		form = objectMapper.readValue(ab, MeasurmentSelectForm.class);
-		Request query = new Request();
-		
 
-		
 		
 		return ResponseEntity.status(HttpStatus.OK);
 	}

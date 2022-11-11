@@ -1,7 +1,10 @@
 package hr.fer.tel.server.rest.model;
 
+import java.util.Map;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,8 +25,8 @@ public class View {
     
     private String title;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private BodyHelper body;
+	@Convert(converter = BodyHelperJson.class)
+    private Map<String, String> body;
     
 	@Column(columnDefinition = "varchar(max)")
     private String payload;
@@ -36,7 +39,7 @@ public class View {
     public View() {
     }
 
-    public View(String title, BodyHelper query, String payload) {
+    public View(String title, Map<String, String> query, String payload) {
     	this.title = title;
     	this.body = query;
     	this.payload = payload;
@@ -50,11 +53,11 @@ public class View {
         this.title = title;
     }
 
-    public BodyHelper getBody() {
+    public Map<String, String> getBody() {
         return body;
     }
 
-    public void setBody(BodyHelper body) {
+    public void setBody(Map<String, String> body) {
         this.body = body;
     }
 

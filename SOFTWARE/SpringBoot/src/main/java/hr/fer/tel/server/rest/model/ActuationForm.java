@@ -1,6 +1,9 @@
 package hr.fer.tel.server.rest.model;
 
+import java.util.Map;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,11 +23,11 @@ public class ActuationForm {
     
     @OneToOne(cascade = CascadeType.ALL)
     private Request submitFormRequest;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-	private BodyHelper inputs;
+        
+	@Convert(converter = BodyHelperJson.class)
+    private Map<String, String> inputs;
 
-	public ActuationForm(Request defaultValuesRequest, Request submitFormRequest, BodyHelper inputs) {
+	public ActuationForm(Request defaultValuesRequest, Request submitFormRequest, Map<String, String> inputs) {
 		this.defaultValuesRequest = defaultValuesRequest;
 		this.submitFormRequest = submitFormRequest;
 		this.inputs = inputs;
@@ -57,11 +60,11 @@ public class ActuationForm {
 		this.submitFormRequest = submitFormRequest;
 	}
 
-	public BodyHelper getInputs() {
+	public Map<String, String> getInputs() {
 		return inputs;
 	}
 
-	public void setInputs(BodyHelper inputs) {
+	public void setInputs(Map<String, String> inputs) {
 		this.inputs = inputs;
 	}
 	
