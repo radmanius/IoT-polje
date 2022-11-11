@@ -28,7 +28,7 @@ public class View2 {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    private Scene scene;
+    private Scene2 scene;
 
 	public long getId() {
 		return id;
@@ -54,11 +54,11 @@ public class View2 {
 		this.viewType = viewType;
 	}
 	
-	public Scene getScene() {
+	public Scene2 getScene() {
 		return scene;
 	}
 	
-	public void setScene(Scene scene) {
+	public void setScene(Scene2 scene) {
 		this.scene = scene;
 	}
 

@@ -31,25 +31,6 @@ public class Scene2Service {
         return sceneRepository.findById(id);
     }
 
-    //get all scenesDTO - OK - OK
-
-    //get scene by id defined by roles - OK - OK
-    public Scene2 getById(String id) {
-
-        String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
-                .toArray(String[]::new);
-
-        if (roles.length < 1)
-            throw new NoSuchElement("No roles at all");
-
-        List<String> ouput = List.of(roles);
-
-        Scene2 scene = sceneRepository.getByRoles(ouput).stream().filter(sc -> Long.valueOf(sc.getId()).equals(id)).findAny()
-                .orElseThrow(() -> new NoSuchElement("Access denied, no required roles for given scene id: " + id));
-
-        return scene;
-    }
-
     public Scene2 probaGetById(Long id) {
         Optional<Scene2> scene = sceneRepository.findById(id);
 

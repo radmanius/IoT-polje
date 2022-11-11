@@ -12,8 +12,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
 
 @Entity
 @Table(name = "Scene")
@@ -66,7 +64,7 @@ public class Scene {
         this.roles = roles;
         this.keys = keys;
         
-        for (Tag tag : tags) {
+        /*for (Tag tag : tags) {
         	tag.setScene(this);
 		}
         for (View view : views) {
@@ -77,7 +75,7 @@ public class Scene {
 		}
         for (Key key : keys) {
         	key.setScene(this);
-		}
+		}*/
         
     }
 
@@ -153,10 +151,10 @@ public class Scene {
         this.keys = keys;
     }
     
-    public void addTag(Tag tag) {
-    	this.tags.add(tag);
-    	tag.setScene(this);
-    }
+//    public void addTag(Tag tag) {
+//    	this.tags.add(tag);
+//    	tag.setScene(this);
+//    }
     
     @Override
 	public String toString() {
@@ -228,62 +226,5 @@ public class Scene {
         		|> drop(columns: ["_start", "_stop"])
         		""");
         return view3;
-    }
-    
-    
-    public static void test() {
-    	ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.setSerializationInclusion(Include.NON_NULL);
-		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		
-		String temp = "\"title\": \"view title\","
-				+ "      \"viewType\": \"single\","
-				+ "      \"measurementUnit\": \"C\","
-				+ "      \"selectForm\": {"
-				+ "        \"submitSelectionRequest\": {"
-				+ "          \"URI\": \"http://localhost:80/some/path/{{var1}}\","
-				+ "          \"method\": \"GET\","
-				+ "          \"headers\": {"
-				+ "            \"Authorization\": \"{{accessToken}} {{token1}} ...\","
-				+ "            \"Content-Type\": \"application/csv\","
-				+ "          },"
-				+ "          \"payload\": \"template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}\""
-				+ "        },"
-				+ "        \"inputs\": {"
-				+ "          \"inputType\": \"boolean\","
-				+ "          \"name\": \"string\","
-				+ "          \"title\": \"string\","
-				+ "          \"description\": \"string\","
-				+ "          \"defaultValue\": true"
-				+ "        }"
-				+ "      },"
-				+ "      \"query\": {"
-				+ "        \"URI\": \"http://localhost:80/some/path/{{var1}}\","
-				+ "        \"method\": \"GET\","
-				+ "        \"headers\": {"
-				+ "          \"Authorization\": \"{{accessToken}} {{token1}}\","
-				+ "          \"Content-Type\": \"application/csv\","
-				+ "          \"...\": null"
-				+ "        },"
-				+ "        \"payload\": \"template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}\""
-				+ "      },"
-				+ "      \"responseExtracting\": {"
-				+ "        \"dataFormat\": \"csv\","
-				+ "        \"timeColumn\": \"_time\","
-				+ "        \"valueColumn\": \"_value\""
-				+ "      }"
-				+ "    }";
-		
-		DocumentContext jsonContext = JsonPath.parse(temp);
-		MesurmentView view1 = new MesurmentView();
-		try {
-			view1 = objectMapper.readValue(temp, MesurmentView.class);
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
     }
 }
