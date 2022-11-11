@@ -1,5 +1,6 @@
 package hr.fer.tel.server.rest.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import hr.fer.tel.server.rest.model.Layout;

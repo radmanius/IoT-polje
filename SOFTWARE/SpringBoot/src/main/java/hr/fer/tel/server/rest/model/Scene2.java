@@ -64,16 +64,6 @@ public class Scene2 {
 		this.roles = roles;
 		this.keys = keys;
 
-    public Scene2(String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View2> views, List<Role> roles, List<Key> keys) {
-    	this.title = title;
-        this.subtitle = subtitle;
-        this.layout = layout;
-        this.pictureLink = pictureLink;
-        this.tags = tags;
-        this.views = views;
-        this.roles = roles;
-        this.keys = keys;
-
         for (Tag tag : tags) {
         	tag.setScene(this);
 		}
@@ -86,8 +76,6 @@ public class Scene2 {
         for (Key key : keys) {
         	key.setScene(this);
 		}
-
-    }
 
 	}
 
@@ -292,34 +280,5 @@ public class Scene2 {
         ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(), createFormInputs());
         return actForm1;
     }
-
-}
-
-			return null;
-		} else if (number == 1) {
-			View view2 = new View("HUM_sap01_agregatedAVG", createBody(), """
-					from(bucket:"telegraf")
-					|> range(start: {{startTimeISO}})
-					|> filter(fn: (r) => r._measurement == "HUM" and r.id_wasp == "SAP01" and r._field == "value")
-					|> drop(columns: ["_start", "_stop", "_field", "host", "id"])
-					|> window(every: {{agregationRange}})
-					|> mean()
-					|> duplicate(column: "_stop", as: "_time")
-					|> drop(columns: ["_start", "_stop"])
-					""");
-			return null;
-		}
-		View view3 = new View("HUM_sap01_agregatedAVG", createBody(), """
-				from(bucket:"telegraf")
-				|> range(start: {{startTimeISO}})
-				|> filter(fn: (r) => r._measurement == "HUM" and r.id_wasp == "SAP01" and r._field == "value")
-				|> drop(columns: ["_start", "_stop", "_field", "host", "id"])
-				|> window(every: {{agregationRange}})
-				|> mean()
-				|> duplicate(column: "_stop", as: "_time")
-				|> drop(columns: ["_start", "_stop"])
-				""");
-		return null;
-	}
 
 }

@@ -22,7 +22,7 @@ public class ApplicationStartupRunner implements CommandLineRunner {
 		logger.info("Starting CommandLineRunner Init DatabBase!!");
 
 		try{
-			//sceneService.generate();
+			sceneService.generate();
 
 
 
