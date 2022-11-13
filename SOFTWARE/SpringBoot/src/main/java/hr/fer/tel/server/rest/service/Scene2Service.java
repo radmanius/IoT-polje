@@ -60,14 +60,14 @@ public class Scene2Service {
 
 
     public Scene2 ProbaAddScene(Scene2 scene) {
-        System.err.println(scene);
-        System.err.println(scene.getId());
+//        System.err.println(scene);
+//        System.err.println(scene.getId());
 
-        if (!sceneRepository.existsById(scene.getId())) {
+//        if (!sceneRepository.existsById(scene.getId())) {
             return sceneRepository.save(scene);
-        }
+//        }
 
-        throw new NoSuchElement("Scene " + scene.getId() + " already exists!");
+//        throw new NoSuchElement("Scene " + scene.getId() + " already exists!");
     }
 
 

@@ -17,7 +17,7 @@ import hr.fer.tel.server.rest.dto.ActuationViewDTO;
 //@DiscriminatorValue("actuation")
 //@Table(name = "ActuationView")
 ////public class ActuationView{
-//@PrimaryKeyJoinColumn(name = "actuationId")
+@PrimaryKeyJoinColumn(name = "actuationId")
 //@JsonTypeName("actuation")
 public class ActuationView extends View2{
 
@@ -42,10 +42,9 @@ public class ActuationView extends View2{
 	
 	public ActuationView(ActuationViewDTO dto) {
 		super(dto.getId(), dto.getTitle(), dto.getViewType());
-
+		
 		this.form = new ActuationForm(dto.getForm());
-		
-		
+
 	}
 
 //	public long getId() {

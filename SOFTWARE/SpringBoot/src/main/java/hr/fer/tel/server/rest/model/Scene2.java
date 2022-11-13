@@ -105,16 +105,15 @@ public class Scene2 {
 				ActuationView view1 = new ActuationView(a);
 				this.views.add(view1);
 
-
 			}
 
-			if (temp instanceof MesurmentViewDTO) {
-
-				MesurmentViewDTO a = (MesurmentViewDTO) temp;
-				MesurmentView view1 = new MesurmentView(a);
-				this.views.add(view1);
-
-			}
+//			if (temp instanceof MesurmentViewDTO) {
+//
+//				MesurmentViewDTO a = (MesurmentViewDTO) temp;
+//				MesurmentView view1 = new MesurmentView(a);
+//				this.views.add(view1);
+//
+//			}
 
 		}
 
