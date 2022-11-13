@@ -31,13 +31,15 @@ void main() async {
 
   runApp(
     MaterialApp(
+      
       home: ProviderScope(
         child: firstScreen,
       ),
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
       ),
-    ),
+    ), 
   );
 }
 
