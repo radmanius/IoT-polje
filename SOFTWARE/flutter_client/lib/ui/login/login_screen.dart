@@ -25,11 +25,23 @@ class LoginScreen extends ConsumerWidget {
     });
 
     return Scaffold(
-      body: SafeArea(
+      
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/iot6.webp"),
+            
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
           child: PrimaryButton(
-            title: 'LOGIN',
-            onTap: ref.read(loginRequestNotifier.notifier).onLoginPressed,
+            title: 'OTVORI BROWSER',
+          
+            onTap: () {
+              
+     ref.read(loginRequestNotifier.notifier).onLoginPressed();
+}
           ),
         ),
       ),
