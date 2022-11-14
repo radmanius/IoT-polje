@@ -22,11 +22,8 @@ const SceneForm = () => {
     };
 
     return (
-        <div>
-            <Button
-                label="Natrag na popis scena"
-                onClick={() => navigate(PAGE_ROUTES.ShortSceneView)}
-            />
+        <div className="scene-form-container">
+            <h1>Dodaj novu scenu</h1>
             <Form
                 onSubmit={(data: IScene) => handleAddNewScene(data)}
                 initialValues={initScene}
@@ -84,6 +81,10 @@ const SceneForm = () => {
                                 label="Prihvati promjene"
                                 icon="pi pi-check"
                                 type="submit"
+                            />
+                            <Button
+                                label="Natrag na popis scena"
+                                onClick={() => navigate(PAGE_ROUTES.ShortSceneView)}
                             />
                         </div>
                     </form>
