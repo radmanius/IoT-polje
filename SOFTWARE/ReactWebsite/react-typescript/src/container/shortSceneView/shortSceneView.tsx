@@ -38,7 +38,7 @@ const ShortSceneView = () => {
     return (
         <div className="short-scene-page">
             <div>
-                <h1>Kratke scene</h1>
+                <h1>Popis scena</h1>
             </div>
             <div className="short-scene-table">
                 <DataTable
