@@ -6,6 +6,14 @@ export interface IScene {
     layoutId: number
 }
 
+export interface IbackendScene {
+    id: number;
+    pictureLink: string;
+    subtitle: string;
+    title: string;
+    //layoutId: number
+}
+
 export const initScene:IScene = {
     sceneId: 1,
     sceneTitle: "Scena 1",

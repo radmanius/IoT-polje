@@ -23,7 +23,13 @@ const SceneView = () => {
     const fetchAllScenes = useCallback(async () => {
         try {
             const res = await getAllScenes();
-            setScenes(res);
+            setScenes(res.map(scene => ({
+                sceneId: scene.id,
+                sceneTitle: scene.title,
+                sceneSubtitle: scene.subtitle,
+                pictureLink: scene.pictureLink,
+                layoutId: scene.id
+            })));
         } catch (error) {
             //toast message
         }

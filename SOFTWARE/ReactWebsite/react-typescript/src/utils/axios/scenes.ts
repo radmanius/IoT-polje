@@ -1,9 +1,9 @@
 import axios from "axios";
-import { IScene } from "models/scenes";
+import { IScene, IbackendScene } from "models/scenes";
 
 export const getAllScenes = async () => {
     const response = await axios.get("/scene")
-    return response.data as IScene[]; 
+    return response.data as IbackendScene[]; 
 } 
 
 export const createNewScene = async (scene: IScene) => {
