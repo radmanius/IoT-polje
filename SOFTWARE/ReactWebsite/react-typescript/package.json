@@ -13,7 +13,6 @@
     "author": "",
     "license": "ISC",
     "dependencies": {},
-    "devDependencies": {},
     "lint-staged": {
         "*.*": [
             "prettier --write"

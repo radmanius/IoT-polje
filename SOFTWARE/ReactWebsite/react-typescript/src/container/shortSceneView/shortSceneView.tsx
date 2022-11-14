@@ -39,6 +39,10 @@ const ShortSceneView = () => {
         <div className="short-scene-page">
             <div>
                 <h1>Popis scena</h1>
+                <Button
+                    label="Dodaj novu scenu"
+                    onClick={() => navigate(PAGE_ROUTES.AddNewScene)}
+                />
             </div>
             <div className="short-scene-table">
                 <DataTable

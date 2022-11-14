@@ -12,7 +12,7 @@ export const getHeaderItems = (): ISimpleHeaderItems[] => {
             link: PAGE_ROUTES.Global,
         },
         {
-            label: "KRATKE SCENE",
+            label: "SCENE",
             link: PAGE_ROUTES.ShortSceneView,
         },
     ];

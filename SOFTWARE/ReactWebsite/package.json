@@ -46,6 +46,7 @@
         "react-toastify": "8.1.0",
         "redux": "4.1.2",
         "redux-saga": "1.2.1",
+        "react-final-form": "^6.5.9",
         "regenerator-runtime": "0.13.9",
         "rsuite": "5.18.1",
         "ts-enum-util": "4.0.2",
