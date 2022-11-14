@@ -18,18 +18,6 @@
     }
 }
 
-@keyframes run {
-    0% {
-        right: -100%;
-        transform: translateX(0%);
-    }
-
-    100% {
-        right: 0%;
-        transform: translateX(-100%);
-    }
-}
-
 .image-holder{
     display: flex;
     overflow: hidden;
