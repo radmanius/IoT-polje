@@ -33,8 +33,6 @@ public class View2 {
 
     private String title;
 
-	private int proba = 6;
-
     private String viewType;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,7 +42,6 @@ public class View2 {
     public View2(View2DTO dto){
     	this.id = dto.getId();
     	this.title = dto.getTitle();
-		this.proba = 11;
     	this.viewType = dto.getViewType();
     }
 
@@ -53,14 +50,6 @@ public class View2 {
 //    	this.viewType = dto.getViewType();
 //    }
 
-	public int getProba() {
-		return 32;
-	}
-
-	public void setProba(int proba) {
-		this.proba = proba;
-	}
-
 	public View2() {
 		// TODO Auto-generated constructor stub
 	}
@@ -68,7 +57,6 @@ public class View2 {
 	public View2(long id, String title, String viewType) {
 		this.id = id;
 		this.title = title;
-		this.proba = 23;
 		this.viewType = viewType;
 	}
 
