@@ -37,7 +37,7 @@ public class View2 {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    private Scene2 scene;
+    private Scene scene;
 
     public View2(View2DTO dto){
     	this.id = dto.getId();
@@ -45,13 +45,8 @@ public class View2 {
     	this.viewType = dto.getViewType();
     }
 
-//    public View2(View2DTO dto){
-//    	this.title = dto.getTitle();
-//    	this.viewType = dto.getViewType();
-//    }
-
 	public View2() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public View2(long id, String title, String viewType) {
@@ -84,11 +79,11 @@ public class View2 {
 		this.viewType = viewType;
 	}
 
-	public Scene2 getScene() {
+	public Scene getScene() {
 		return scene;
 	}
 
-	public void setScene(Scene2 scene) {
+	public void setScene(Scene scene) {
 		this.scene = scene;
 	}
 }

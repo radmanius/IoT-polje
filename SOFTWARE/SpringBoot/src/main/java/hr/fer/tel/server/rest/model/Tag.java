@@ -21,7 +21,7 @@ public class Tag {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    private Scene2 scene;
+    private Scene scene;
 
     public Tag() {
 
@@ -47,7 +47,7 @@ public class Tag {
 //		this.scene=sc;
 //	}
 
-	public void setScene(Scene2 sc) {
+	public void setScene(Scene sc) {
 		this.scene=sc;
 	}
 

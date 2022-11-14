@@ -8,7 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import hr.fer.tel.server.rest.service.Scene2Service;
-import hr.fer.tel.server.rest.service.SceneService;
 
 @Component
 public class ApplicationStartupRunner implements CommandLineRunner {

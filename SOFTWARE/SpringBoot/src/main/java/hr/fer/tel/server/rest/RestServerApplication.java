@@ -5,9 +5,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
-//Ovo je obican init dummy vrijednostima za testiranje
-
 @SpringBootApplication
 public class RestServerApplication {
 	protected final Log logger = LogFactory.getLog(getClass());

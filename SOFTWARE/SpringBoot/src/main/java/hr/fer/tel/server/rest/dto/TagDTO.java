@@ -1,14 +1,15 @@
 package hr.fer.tel.server.rest.dto;
 
+import java.util.List;
+
+import hr.fer.tel.server.rest.model.Tag;
+
 public class TagDTO {
-	
-    private long id;
-    
+	    
     private String name;
 
 	public TagDTO(long id, String name) {
 		super();
-		this.id = id;
 		this.name = name;
 	}
 	
@@ -21,20 +22,20 @@ public class TagDTO {
 		super();
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public static List<TagDTO> of(List<Tag> tags) {
+		return tags.stream().map(tag -> TagDTO.of(tag)).toList();
+	}
+	
+	public static TagDTO of(Tag tag) {
+		return new TagDTO(tag.getName());
 	}
     
     

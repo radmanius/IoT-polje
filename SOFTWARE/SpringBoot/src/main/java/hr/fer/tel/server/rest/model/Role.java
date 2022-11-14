@@ -18,7 +18,7 @@ public class Role {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    private Scene2 scene;
+    private Scene scene;
 
     public Role() {
 
@@ -48,11 +48,11 @@ public class Role {
         this.name = name;
     }
     
-    public void setScene(Scene2 scene) {
+    public void setScene(Scene scene) {
 		this.scene = scene;
 	}
     
-    public Scene2 getScene() {
+    public Scene getScene() {
     	return this.scene;
     }
     

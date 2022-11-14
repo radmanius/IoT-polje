@@ -22,7 +22,7 @@ public class Key {
 	
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    private Scene2 scene;
+    private Scene scene;
     
     public Key(String name, String value, boolean canDelete) {
 		super();
@@ -42,11 +42,11 @@ public class Key {
 		this.canDelete = dto.isCanDelete();
 	}
 
-	public void setScene(Scene2 scene) {
+	public void setScene(Scene scene) {
 		this.scene = scene;
 	}
     
-    public Scene2 getScene() {
+    public Scene getScene() {
 		return this.scene;
 	}
     

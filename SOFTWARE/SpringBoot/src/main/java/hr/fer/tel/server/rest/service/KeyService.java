@@ -11,17 +11,17 @@ import java.util.Set;
 @Service
 public class KeyService {
 	
-	@Autowired
-    private final KeyRepository keyRepository;
-	
-	@Autowired
-    private final SceneService sceneService;
-
-    @Autowired
-    public KeyService(KeyRepository keyRepository, SceneService sceneService) {
-        this.keyRepository = keyRepository;
-        this.sceneService = sceneService;
-    }
+//	@Autowired
+//    private final KeyRepository keyRepository;
+//	
+//	@Autowired
+//    private final SceneService sceneService;
+//
+//    @Autowired
+//    public KeyService(KeyRepository keyRepository, SceneService sceneService) {
+//        this.keyRepository = keyRepository;
+//        this.sceneService = sceneService;
+//    }
 
     
     

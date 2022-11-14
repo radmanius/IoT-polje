@@ -11,21 +11,21 @@ import java.util.Set;
 @Service
 public class TagService {
 
-	@Autowired
-    private final SceneService sceneService;
-
-    @Autowired
-    public TagService(SceneService sceneService) {
-        this.sceneService = sceneService;
-    }
-
-    public Set<Tag> getAll() {
-
-        Set<Tag> set = new LinkedHashSet<>();
-        var scenes = sceneService.getAllScenes();
-        for(var scene : scenes)
-            set.addAll(scene.getTags());
-
-        return set;
-    }
+//	@Autowired
+//    private final SceneService sceneService;
+//
+//    @Autowired
+//    public TagService(SceneService sceneService) {
+//        this.sceneService = sceneService;
+//    }
+//
+//    public Set<Tag> getAll() {
+//
+//        Set<Tag> set = new LinkedHashSet<>();
+//        var scenes = sceneService.getAllScenes();
+//        for(var scene : scenes)
+//            set.addAll(scene.getTags());
+//
+//        return set;
+//    }
 }

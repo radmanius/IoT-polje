@@ -13,19 +13,19 @@ import java.util.Set;
 @RestController
 public class TagController {
 	
-	@Autowired
-    private final TagService tagService;
-
-    @Autowired
-    public TagController(TagService tagService) {
-        this.tagService = tagService;
-    }
-
-    @RolesAllowed( "iot-read")
-    @GetMapping("/tags")
-    public ResponseEntity<Set<Tag>> getTags(){
-        return ResponseEntity.ok(tagService.getAll());
-
-    }
+//	@Autowired
+//    private final TagService tagService;
+//
+//    @Autowired
+//    public TagController(TagService tagService) {
+//        this.tagService = tagService;
+//    }
+//
+//    @RolesAllowed( "iot-read")
+//    @GetMapping("/tags")
+//    public ResponseEntity<Set<Tag>> getTags(){
+//        return ResponseEntity.ok(tagService.getAll());
+//
+//    }
 
 }
