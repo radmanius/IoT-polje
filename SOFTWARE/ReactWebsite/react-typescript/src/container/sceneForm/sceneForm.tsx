@@ -23,73 +23,78 @@ const SceneForm = () => {
 
     return (
         <div className="scene-form-container">
-            <h1>Dodaj novu scenu</h1>
-            <Form
-                onSubmit={(data: IScene) => handleAddNewScene(data)}
-                initialValues={initScene}
-                render={({ handleSubmit }) => (
-                    <form
-                        id="new-scene"
-                        onSubmit={handleSubmit}
-                        className="form-container"
-                        autoComplete="off"
-                    >
-                        <Field
-                            name="sceneTitle"
-                            render={({ input }) => (
-                                <div>
-                                    <span>Naslov scene</span>
-                                    <span>
-                                        <InputText
-                                            id="sceneTitle"
-                                            {...input}
-                                        />
-                                    </span>
+            <div>
+                <h1>Dodaj novu scenu</h1>
+                <div className="form-fields-container">
+                    <Form
+                        onSubmit={(data: IScene) => handleAddNewScene(data)}
+                        initialValues={initScene}
+                        render={({ handleSubmit }) => (
+                            <form
+                                id="new-scene"
+                                onSubmit={handleSubmit}
+                                className="form-container"
+                                autoComplete="off"
+                            >
+                                <Field
+                                    name="sceneTitle"
+                                    render={({ input }) => (
+                                        <div>
+                                            <span>Naslov scene: </span>
+                                            <span>
+                                                <InputText
+                                                    id="sceneTitle"
+                                                    {...input}
+                                                />
+                                            </span>
+                                        </div>
+                                    )}
+                                />
+                                <Field
+                                    name="sceneSubtitle"
+                                    render={({ input }) => (
+                                        <div>
+                                            <span>Podnaslov scene: </span>
+                                            <span>
+                                                <InputText
+                                                    id="sceneSubtitle"
+                                                    {...input}
+                                                />
+                                            </span>
+                                        </div>
+                                    )}
+                                />
+                                <Field
+                                    name="pictureLink"
+                                    render={({ input }) => (
+                                        <div>
+                                            <span>Link slike scene: </span>
+                                            <span>
+                                                <InputText
+                                                    id="pictureLink"
+                                                    {...input}
+                                                />
+                                            </span>
+                                        </div>
+                                    )}
+                                />
+
+                                <div className="scene-form-buttons">
+                                    <Button
+                                        label="Dodaj"
+                                        icon="pi pi-check"
+                                        type="submit"
+                                    />
+                                    <Button
+                                        label="Odustani"
+                                        onClick={() => navigate(PAGE_ROUTES.ShortSceneView)}
+                                    />
                                 </div>
-                            )}
-                        />
-                        <Field
-                            name="sceneSubtitle"
-                            render={({ input }) => (
-                                <div>
-                                    <span>Podnaslov scene</span>
-                                    <span>
-                                        <InputText
-                                            id="sceneSubtitle"
-                                            {...input}
-                                        />
-                                    </span>
-                                </div>
-                            )}
-                        />
-                        <Field
-                            name="pictureLink"
-                            render={({ input }) => (
-                                <div>
-                                    <span>Link slike scene</span>
-                                    <span>
-                                        <InputText
-                                            id="pictureLink"
-                                            {...input}
-                                        />
-                                    </span>
-                                </div>
-                            )}
-                        />
-                        <div>
-                            <Button
-                                label="Prihvati promjene"
-                                icon="pi pi-check"
-                                type="submit"
-                            />
-                            <Button
-                                label="Natrag na popis scena"
-                                onClick={() => navigate(PAGE_ROUTES.ShortSceneView)}
-                            />
-                        </div>
-                    </form>
-                )}
-            />
+                            </form>
+                        )}
+                    />
+                </div>
+            </div>
         </div>
     );
 };
