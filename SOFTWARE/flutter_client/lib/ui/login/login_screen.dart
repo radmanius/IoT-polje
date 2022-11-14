@@ -39,7 +39,7 @@ class LoginScreen extends ConsumerWidget {
             title: 'OTVORI BROWSER',
           
             onTap: () {
-              debugPrint('pressed');
+              
      ref.read(loginRequestNotifier.notifier).onLoginPressed();
 }
           ),
