@@ -238,11 +238,11 @@ public class Scene2 {
     	int number = rand.nextInt(3);
 
     	if(number == 0) {
-            View2 view1 = new MesurmentView("view title", "single", "C", createMeasurementForm(), createRequestQuery(), createDataExtractor());
+            View2 view1 = new MesurmentView("view title1", "single", "C", createMeasurementForm(), createRequestQuery(), createDataExtractor());
             return view1;
         }
         else {
-            View2 view2 = new ActuationView("view title", "actuation", createActuationForm());
+            View2 view2 = new ActuationView("view title2", "actuation", createActuationForm());
             return view2;
         }
     }

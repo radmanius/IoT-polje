@@ -42,8 +42,8 @@ public class MesurmentView extends View2{
 	public MesurmentView(String title, String viewType, String measurementUnit, MeasurmentSelectForm selectForm,
 			Request query, DataExtractor responseExtracting) {
 		super();
-//		this.title = title;
-//		this.viewType = viewType;
+		setTitle(title);
+		setViewType(viewType);
 		this.measurementUnit = measurementUnit;
 		this.selectForm = selectForm;
 		this.query = query;

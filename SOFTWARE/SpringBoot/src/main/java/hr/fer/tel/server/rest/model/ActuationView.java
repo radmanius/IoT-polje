@@ -31,8 +31,8 @@ public class ActuationView extends View2{
 	private ActuationForm form;
 
 	public ActuationView(String title, String viewType, ActuationForm form) {
-//		this.title = title;
-//		this.viewType = viewType;
+		setTitle(title);
+		setViewType(viewType);
 		this.form = form;
 	}
 
@@ -46,30 +46,6 @@ public class ActuationView extends View2{
 		this.form = new ActuationForm(dto.getForm());
 
 	}
-
-//	public long getId() {
-//		return id;
-//	}
-//
-//	public void setId(long id) {
-//		this.id = id;
-//	}
-
-//	public String getTitle() {
-//		return title;
-//	}
-//
-//	public void setTitle(String title) {
-//		this.title = title;
-//	}
-//
-//	public String getViewType() {
-//		return viewType;
-//	}
-//
-//	public void setViewType(String viewType) {
-//		this.viewType = viewType;
-//	}
 
 	public ActuationForm getForm() {
 		return form;
