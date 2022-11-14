@@ -31,7 +31,6 @@ void main() async {
 
   runApp(
     MaterialApp(
-      
       home: ProviderScope(
         child: firstScreen,
       ),
@@ -39,7 +38,7 @@ void main() async {
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
       ),
-    ), 
+    ),
   );
 }
 

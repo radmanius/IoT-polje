@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,74 +11,57 @@ class HomeScreen extends StatefulWidget {
     );
   }
 
-    @override
+  @override
   State<HomeScreen> createState() => _HomeScreenState();
-  
-  Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: implement build
-    throw UnimplementedError();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Search Scenes",
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  // delegate to customize the search bar
+                  delegate: CustomSearchDelegate(),
+                );
+              },
+              icon: const Icon(Icons.search),
+            )
+          ],
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Center(
+              child: Text(
+                "Dobrodošli na IOT polje!",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Center(
+              child: Image.asset('assets/images/iot2.png'),
+            ),
+          ],
+        ));
   }
 }
 
-  class _HomeScreenState extends State<HomeScreen> {
-    @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-   appBar: AppBar(
-        title: const Text(
-          "Search Scenes",
-        ),
-       
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(
-                context: context,
-                // delegate to customize the search bar
-                delegate: CustomSearchDelegate()
-              );
-            },
-            icon: const Icon(Icons.search),
-          )
-        ],
-      ),
-     
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-              
-                const Center(
-                  child: Text(
-                    "Dobrodošli na IOT polje!",
-                    style: TextStyle(fontSize: 30,
-                    fontWeight: FontWeight.bold,),
-
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Center(
-                child:Image.asset('assets/images/iot2.png'),
-              ),
-                
-              ],
-            ));
-  }
-  }
-
-  class CustomSearchDelegate extends SearchDelegate {
+class CustomSearchDelegate extends SearchDelegate {
   // Demo list to show querying
-  List<String> searchTerms = [
-    "Scene 1",
-    "Scene 2",
-    "Scene 3",
-    "Scene 4",
-    "Scene 5",
-    "Scene 6",
-    "Scene 7",
-    "Scene 8"
-  ];
-     
+  List<String> searchTerms = ["Scene 1", "Scene 2", "Scene 3", "Scene 4", "Scene 5", "Scene 6", "Scene 7", "Scene 8"];
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -91,7 +73,7 @@ class HomeScreen extends StatefulWidget {
       ),
     ];
   }
- 
+
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
@@ -101,7 +83,7 @@ class HomeScreen extends StatefulWidget {
       icon: const Icon(Icons.arrow_back),
     );
   }
- 
+
   @override
   Widget buildResults(BuildContext context) {
     List<String> matchQuery = [];
@@ -120,7 +102,7 @@ class HomeScreen extends StatefulWidget {
       },
     );
   }
- 
+
   @override
   Widget buildSuggestions(BuildContext context) {
     List<String> matchQuery = [];
@@ -140,4 +122,3 @@ class HomeScreen extends StatefulWidget {
     );
   }
 }
-

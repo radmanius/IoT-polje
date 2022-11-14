@@ -9,9 +9,8 @@ class SceneRepositoryImpl implements SceneRepository {
 
   @override
   Future<List> getScenes() async {
-    final response = await _dio.get('/scenes???');
+    final response = await _dio.get('/scene');
 
-    // TODO: implement getScenes
-    throw UnimplementedError();
+    return [];
   }
 }
