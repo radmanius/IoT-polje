@@ -15,9 +15,5 @@ export const getHeaderItems = (): ISimpleHeaderItems[] => {
             label: "KRATKE SCENE",
             link: PAGE_ROUTES.ShortSceneView,
         },
-        {
-            label: "SCENE",
-            link: PAGE_ROUTES.SceneView,
-        },
     ];
 };
