@@ -12,9 +12,7 @@
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "dependencies": {
-        "react-final-form": "^6.5.9"
-    },
+    "dependencies": {},
     "lint-staged": {
         "*.*": [
             "prettier --write"
