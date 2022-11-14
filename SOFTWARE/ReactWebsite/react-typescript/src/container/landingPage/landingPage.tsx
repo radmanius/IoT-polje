@@ -1,10 +1,6 @@
-//import { useNavigate } from "react-router-dom";
-//import { Button } from "primereact/button";
 import "./landingPage.scss";
-//import { PAGE_ROUTES } from "utils/paths";
 
 const LandingPage = () => {
-    //const navigate = useNavigate();
     const bgImgTask={
         backgroundImage: "url(/text-background.png)",
     };
@@ -39,14 +35,6 @@ const LandingPage = () => {
                         />
                 </div>
             </div>
-                
-
-                
-                {//<Button}
-                    //onClick={() => navigate(PAGE_ROUTES.ShortSceneView)}
-                    //label={"Prikaži kratke scene"}
-                    ///>
-                }
         </div>
     );
 };
