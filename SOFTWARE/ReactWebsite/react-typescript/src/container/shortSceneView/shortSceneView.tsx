@@ -40,12 +40,22 @@ const ShortSceneView = () => {
 
     return (
         <div className="short-scene-page">
-            <div>
-                <h1>Popis scena</h1>
-                <Button
-                    label="Dodaj novu scenu"
-                    onClick={() => navigate(PAGE_ROUTES.AddNewScene)}
-                />
+            <div className="short-scene-header">
+                <div>
+                    <Button
+                        onClick={() => navigate(PAGE_ROUTES.Global)}
+                        label={"Natrag na početnu stranicu"}
+                    />
+                </div>
+                <div>
+                    <h1>Popis scena</h1>
+                </div>
+                <div>
+                    <Button
+                        label="Dodaj novu scenu"
+                        onClick={() => navigate(PAGE_ROUTES.AddNewScene)}
+                    />
+                </div>
             </div>
             <div className="short-scene-table">
                 <DataTable
@@ -73,14 +83,6 @@ const ShortSceneView = () => {
                         );
                     })}
                 </DataTable>
-            </div>
-            <div>
-                <div>
-                    <Button
-                        onClick={() => navigate(PAGE_ROUTES.Global)}
-                        label={"Natrag na početnu stranicu"}
-                    />
-                </div>
             </div>
         </div>
     );

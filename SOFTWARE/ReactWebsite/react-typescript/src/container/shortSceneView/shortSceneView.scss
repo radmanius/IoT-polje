@@ -13,3 +13,9 @@
     display: flex;
     justify-content: center;
 }
+
+.short-scene-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 20px;
+}
