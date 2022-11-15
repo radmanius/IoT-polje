@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hr.fer.tel.server.rest.dto.*;
 import hr.fer.tel.server.rest.model.Scene;
-import hr.fer.tel.server.rest.service.Scene2Service;
+import hr.fer.tel.server.rest.service.SceneService;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -30,7 +30,7 @@ import hr.fer.tel.server.rest.service.Scene2Service;
 public class SceneController {
 	
 	@Autowired
-	private Scene2Service service;
+	private SceneService service;
 	
 	@PutMapping("/scene")
 	public ResponseEntity<Scene> sceneEdit(@RequestBody String model) throws JsonMappingException, JsonProcessingException {

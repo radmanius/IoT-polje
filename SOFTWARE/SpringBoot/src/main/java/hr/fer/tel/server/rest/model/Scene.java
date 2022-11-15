@@ -39,7 +39,7 @@ public class Scene {
 
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
-	private List<View2> views = new ArrayList<>();
+	private List<View> views = new ArrayList<>();
 
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
@@ -53,7 +53,7 @@ public class Scene {
 
 	}
 
-	public Scene(String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View2> views,
+	public Scene(String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views,
 			List<Role> roles, List<Key> keys) {
 		this.title = title;
 		this.subtitle = subtitle;
@@ -67,7 +67,7 @@ public class Scene {
         for (Tag tag : tags) {
         	tag.setScene(this);
 		}
-        for (View2 view : views) {
+        for (View view : views) {
         	view.setScene(this);
 		}
         for (Role role : roles) {
@@ -107,20 +107,20 @@ public class Scene {
 
 			}
 
-//			if (temp instanceof MesurmentViewDTO) {
-//
-//				MesurmentViewDTO a = (MesurmentViewDTO) temp;
-//				MesurmentView view1 = new MesurmentView(a);
-//				this.views.add(view1);
-//
-//			}
+			if (temp instanceof MesurmentViewDTO) {
+
+				MesurmentViewDTO a = (MesurmentViewDTO) temp;
+				MesurmentView view1 = new MesurmentView(a);
+				this.views.add(view1);
+
+			}
 
 		}
 
 		for (Tag tag : tags) {
 			tag.setScene(this);
 		}
-		for (View2 view : views) {
+		for (View view : views) {
 			view.setScene(this);
 		}
 		for (Role role : roles) {
@@ -180,11 +180,11 @@ public class Scene {
 		this.tags = tags;
 	}
 
-	public List<View2> getViews() {
+	public List<View> getViews() {
 		return views;
 	}
 
-	public void setViews(List<View2> views) {
+	public void setViews(List<View> views) {
 		this.views = views;
 	}
 
@@ -233,16 +233,16 @@ public class Scene {
         return List.of(scene1, scene2, scene3);
     }
 
-    public static View2 createView() {
+    public static View createView() {
     	Random rand = new Random();
     	int number = rand.nextInt(3);
 
     	if(number == 0) {
-            View2 view1 = new MesurmentView("view title1", "single", "C", createMeasurementForm(), createRequestQuery(), createDataExtractor());
+            View view1 = new MesurmentView("view title1", "single", "C", createMeasurementForm(), createRequestQuery(), createDataExtractor());
             return view1;
         }
         else {
-            View2 view2 = new ActuationView("view title2", "actuation", createActuationForm());
+            View view2 = new ActuationView("view title2", "actuation", createActuationForm());
             return view2;
         }
     }

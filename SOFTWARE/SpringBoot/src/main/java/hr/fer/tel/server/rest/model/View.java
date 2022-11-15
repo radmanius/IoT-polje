@@ -25,7 +25,7 @@ import hr.fer.tel.server.rest.dto.View2DTO;
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 //@DiscriminatorColumn(name = "type")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class View2 {
+public class View {
 
     @Id
     @GeneratedValue
@@ -39,17 +39,17 @@ public class View2 {
     @JsonBackReference
     private Scene scene;
 
-    public View2(View2DTO dto){
+    public View(View2DTO dto){
     	this.id = dto.getId();
     	this.title = dto.getTitle();
     	this.viewType = dto.getViewType();
     }
 
-	public View2() {
+	public View() {
 
 	}
 
-	public View2(long id, String title, String viewType) {
+	public View(long id, String title, String viewType) {
 		this.id = id;
 		this.title = title;
 		this.viewType = viewType;

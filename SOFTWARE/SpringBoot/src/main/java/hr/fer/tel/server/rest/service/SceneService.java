@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class Scene2Service {
+public class SceneService {
 
     @Autowired
     private Scene2Repository sceneRepository;

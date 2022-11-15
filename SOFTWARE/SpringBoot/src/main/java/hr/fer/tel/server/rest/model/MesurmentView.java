@@ -20,7 +20,7 @@ import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
 ////public class MesurmentView{
 //@PrimaryKeyJoinColumn(name = "mesurmentId")
 //@JsonTypeName("mesurment")
-public class MesurmentView extends View2{
+public class MesurmentView extends View{
 
 
 	

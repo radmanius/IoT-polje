@@ -6,7 +6,7 @@ import java.util.List;
 import hr.fer.tel.server.rest.model.Layout;
 import hr.fer.tel.server.rest.model.Scene;
 import hr.fer.tel.server.rest.model.Tag;
-import hr.fer.tel.server.rest.model.View2;
+import hr.fer.tel.server.rest.model.View;
 
 public class SceneDTO {
 

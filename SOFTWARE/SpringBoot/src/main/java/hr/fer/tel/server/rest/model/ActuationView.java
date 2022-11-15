@@ -19,7 +19,7 @@ import hr.fer.tel.server.rest.dto.ActuationViewDTO;
 ////public class ActuationView{
 @PrimaryKeyJoinColumn(name = "actuationId")
 //@JsonTypeName("actuation")
-public class ActuationView extends View2{
+public class ActuationView extends View{
 
 	
 //    @Id
