@@ -7,6 +7,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { PAGE_ROUTES } from "utils/paths";
+import { getAllScenes } from "utils/axios/scenes";
 
 const cols = [
     { field: "shortSceneId", header: "ID kratke scene", sortable: false },
@@ -23,6 +24,8 @@ const ShortSceneView = () => {
 
     const fetchShortScenes = useCallback(async () => {
         try {
+            const res = await getAllScenes();
+            console.log(res);
             //const res = await getShortScenes();
             setShortScene(shortScenes);
         } catch (error) {
