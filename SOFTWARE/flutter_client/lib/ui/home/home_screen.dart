@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   static Route route() {
@@ -12,49 +12,45 @@ class HomeScreen extends StatefulWidget {
   }
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Search Scenes",
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                showSearch(
-                  context: context,
-                  // delegate to customize the search bar
-                  delegate: CustomSearchDelegate(),
-                );
-              },
-              icon: const Icon(Icons.search),
-            )
-          ],
+      appBar: AppBar(
+        title: const Text(
+          "Scenes",
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Center(
-              child: Text(
-                "Dobrodošli na IOT polje!",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                // delegate to customize the search bar
+                delegate: CustomSearchDelegate(),
+              );
+            },
+            icon: const Icon(Icons.search),
+          )
+        ],
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Center(
+            child: Text(
+              "Dobrodošli na IOT polje!",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
             ),
-            Center(
-              child: Image.asset('assets/images/iot2.png'),
-            ),
-          ],
-        ));
+          ),
+          Center(
+            child: Image.asset('assets/images/iot2.png'),
+          ),
+        ],
+      ),
+    );
   }
 }
 

@@ -43,4 +43,10 @@ class AuthTokenPersistenceManager {
           DateTime.fromMillisecondsSinceEpoch(int.tryParse(accessTokenExpirationDateTimeFromStorage)!);
     }
   }
+
+  Future<void> clearToken() async {
+    _flutterSecureStorage.delete(key: SecureStorageKeys.accessToken);
+    _flutterSecureStorage.delete(key: SecureStorageKeys.refreshToken);
+    _flutterSecureStorage.delete(key: SecureStorageKeys.accessTokenExpirationDateTime);
+  }
 }
