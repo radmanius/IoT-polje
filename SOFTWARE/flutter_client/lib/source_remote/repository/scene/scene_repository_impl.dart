@@ -1,9 +1,8 @@
-import 'dart:ui';
-
 import 'package:dio/dio.dart';
 import 'package:pdp2022/source_remote/dio/api_endpoints.dart';
 import 'package:pdp2022/source_remote/repository/scene/model/short_scene.dart';
 
+import 'model/scene.dart';
 import 'scene_repository.dart';
 
 class SceneRepositoryImpl implements SceneRepository {
@@ -19,9 +18,9 @@ class SceneRepositoryImpl implements SceneRepository {
   }
 
   @override
-  Future<Scene> getSceneDetails(String id) async {
+  Future<Scene> getSceneDetails(int id) async {
     final response = await _dio.get(ApiEndpoints.scene(id));
 
-    throw UnimplementedError();
+    return Scene.fromJson(response.data);
   }
 }

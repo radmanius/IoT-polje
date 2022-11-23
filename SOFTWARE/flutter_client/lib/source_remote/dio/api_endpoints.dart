@@ -7,5 +7,5 @@ class ApiEndpoints {
 
   static String get scenes => '/scene';
 
-  static String scene(String id) => '/scene/$id';
+  static String scene(int id) => '/scene/$id';
 }

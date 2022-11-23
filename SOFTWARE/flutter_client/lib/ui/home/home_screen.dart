@@ -36,7 +36,7 @@ class HomeScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              decoration: InputDecoration(labelText: 'Pretraga'),
+              decoration: const InputDecoration(labelText: 'Pretraga'),
               onChanged: (query) => ref.read(shortSceneListProvider.notifier).onSearch(query),
             ),
             const Expanded(

@@ -1,17 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tag.dart';
+part of 'key.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Tag _$TagFromJson(Map<String, dynamic> json) => Tag(
-      json['id'] as int?,
+Key _$KeyFromJson(Map<String, dynamic> json) => Key(
+      json['id'] as int,
       json['name'] as String,
+      json['value'] as String,
+      json['canDelete'] as bool,
     );
 
-Map<String, dynamic> _$TagToJson(Tag instance) => <String, dynamic>{
+Map<String, dynamic> _$KeyToJson(Key instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'value': instance.value,
+      'canDelete': instance.canDelete,
     };

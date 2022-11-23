@@ -1,17 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tag.dart';
+part of 'layout.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Tag _$TagFromJson(Map<String, dynamic> json) => Tag(
-      json['id'] as int?,
+Layout _$LayoutFromJson(Map<String, dynamic> json) => Layout(
+      json['id'] as int,
       json['name'] as String,
     );
 
-Map<String, dynamic> _$TagToJson(Tag instance) => <String, dynamic>{
+Map<String, dynamic> _$LayoutToJson(Layout instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
     };
