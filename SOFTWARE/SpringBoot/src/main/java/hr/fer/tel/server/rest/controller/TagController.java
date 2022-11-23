@@ -1,17 +1,20 @@
 package hr.fer.tel.server.rest.controller;
 
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.security.RolesAllowed;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.fer.tel.server.rest.model.Tag;
 import hr.fer.tel.server.rest.service.TagService;
 
 @RestController
+@RequestMapping("/rest2")
 public class TagController {
 
   private final TagService tagService;
@@ -23,8 +26,11 @@ public class TagController {
   @RolesAllowed("iot-read")
   @GetMapping("/tags")
   public ResponseEntity<Set<Tag>> getTags() {
-    return ResponseEntity.ok(tagService.getAll());
+    Set<Tag> result = new TreeSet<>((o1, o2) -> o1.getName().compareTo(o2.getName()));
+    tagService.getAll().stream()
+      .forEach(t -> result.add(t));
 
+    return ResponseEntity.ok(result);
   }
 
 }

@@ -287,7 +287,7 @@ public class Scene {
           List.of(new Tag("ferit")),
           List.of(ferit1airTemperature(), ferit1atmosphericPressure(), ferit1BatteryVolatage(), ferit1Irradiation(), ferit1RelativeHumidity()),
           List.of(new Role("ferit")),
-          List.of(new Key("influxFerit", "bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", true)));
+          List.of(new Key("influxFerit", "kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==", true)));
 
       Scene sceneFerit2 = new Scene(
           "FERIT - 2",
@@ -299,7 +299,7 @@ public class Scene {
               ferit2lightIntensityS(), ferit2lightIntensityT(), ferit2lightIntensityU(), ferit2lightIntensityV(), ferit2lightIntensityW(),
               ferit2temperature(), ferit2WhiteIllumination()),
           List.of(new Role("ferit")),
-          List.of(new Key("influxFerit", "bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", true)));
+          List.of(new Key("influxFerit", "kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==", true)));
 
       return List.of(sceneFerPaprika, sceneFerRajcica, sceneFerTlo, sceneFerZrak, sceneFerTempTlo, sceneFerit1, sceneFerit2);
     }

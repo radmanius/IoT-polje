@@ -26,7 +26,7 @@ import hr.fer.tel.server.rest.service.SceneService;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/")
+@RequestMapping("/rest2")
 public class SceneController {
 	
 	@Autowired
