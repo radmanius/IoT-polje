@@ -2,6 +2,7 @@ package hr.fer.tel.server.rest.model;
 
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,20 +16,21 @@ import hr.fer.tel.server.rest.dto.RequestDTO;
 @Entity
 @Table(name = "Request")
 public class Request {
-	
+
     @Id
     @GeneratedValue
 	private long id;
-    
+
     private String method;
-    
+
     private String uri;
-    
+
 	@Convert(converter = BodyHelperJson.class)
     private Map<String, String> headers;
-    
+
+	@Column(length = 51200)
     private String payload;
-    
+
 	public Request(String method, String uri, Map<String, String> headers, String payload) {
 		super();
 		this.method = method;
@@ -36,12 +38,12 @@ public class Request {
 		this.headers = headers;
 		this.payload = payload;
 	}
-	
-	
+
+
 
 	public Request() {
 	}
-	
+
 	public Request(RequestDTO dto) {
 		this.method = dto.getMethod();
 		this.uri = dto.getUri();
@@ -91,9 +93,9 @@ public class Request {
 	public void setUri(String uri) {
 		this.uri = uri;
 	}
-	
-	
 
 
-	
+
+
+
 }

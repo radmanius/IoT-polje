@@ -1,6 +1,11 @@
 package hr.fer.tel.server.rest.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -13,29 +18,29 @@ public class Key {
     @Id
     @GeneratedValue
     private long id;
-    
+
     private String name;
-    
+
     private String value;
-    
+
     private boolean canDelete;
-	
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private Scene scene;
-    
+
     public Key(String name, String value, boolean canDelete) {
 		super();
 		this.name = name;
 		this.value = value;
 		this.canDelete = canDelete;
 	}
-    
+
 
 	public Key() {
-		
+
 	}
-	
+
 	public Key(KeyDTO dto) {
 		this.name = dto.getName();
 		this.value = dto.getValue();
@@ -45,15 +50,15 @@ public class Key {
 	public void setScene(Scene scene) {
 		this.scene = scene;
 	}
-    
+
     public Scene getScene() {
 		return this.scene;
 	}
-    
+
 //	public void setScene(Scene scene) {
 //		this.scene = scene;
 //	}
-//    
+//
 //    public Scene getScene() {
 //		return this.scene;
 //	}
@@ -97,7 +102,11 @@ public class Key {
 	public void setCanDelete(boolean canDelete) {
 		this.canDelete = canDelete;
 	}
-    
-    
+
+	public ShortKeyDTO toDTO() {
+	  return new ShortKeyDTO(name, value);
+	}
+
+
 
 }
