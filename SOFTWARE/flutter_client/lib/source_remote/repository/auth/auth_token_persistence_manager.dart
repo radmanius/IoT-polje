@@ -48,5 +48,8 @@ class AuthTokenPersistenceManager {
     _flutterSecureStorage.delete(key: SecureStorageKeys.accessToken);
     _flutterSecureStorage.delete(key: SecureStorageKeys.refreshToken);
     _flutterSecureStorage.delete(key: SecureStorageKeys.accessTokenExpirationDateTime);
+    _accessToken = null;
+    _refreshToken = null;
+    _accessTokenExpirationDateTime = null;
   }
 }

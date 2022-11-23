@@ -8,7 +8,7 @@ class SceneRepositoryImpl implements SceneRepository {
   final Dio _dio;
 
   @override
-  Future<List> getScenes() async {
+  Future<List<String>> getScenes() async {
     final response = await _dio.get('/scene');
 
     return [];
