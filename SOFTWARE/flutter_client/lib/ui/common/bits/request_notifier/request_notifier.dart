@@ -15,7 +15,7 @@ abstract class RequestNotifier<Value> extends StateNotifier<RequestState<Value>>
   }) async {
     try {
       state = state.maybeMap(
-        success: (result) => RequestState.loading(resultMaybe: result.value),
+        success: (result) => RequestState<Value>.loading(),
         orElse: () => RequestState<Value>.loading(),
       );
 

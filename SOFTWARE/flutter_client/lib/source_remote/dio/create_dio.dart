@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_loggy_dio/flutter_loggy_dio.dart';
-import 'package:pdp2022/source_remote/dio/api_endpoints.dart';
 
 Dio createDio() {
   final options = BaseOptions(
-    baseUrl: ApiEndpoints.restServerBaseUrl,
+    //TODO: zamijeni ip sa ApiEndpoints.restServerBaseUrl kada server bude online
+    baseUrl: 'http://192.168.0.22:8080', //ApiEndpoints.restServerBaseUrl,
     responseType: ResponseType.json,
   );
 
