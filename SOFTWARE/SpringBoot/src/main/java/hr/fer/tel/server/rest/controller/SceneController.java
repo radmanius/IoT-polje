@@ -33,7 +33,7 @@ public class SceneController {
 	private SceneService service;
 	
 	@PutMapping("/scene")
-	public ResponseEntity<Scene> sceneEdit(@RequestBody String model) throws JsonMappingException, JsonProcessingException {
+	public ResponseEntity<SceneDTO> sceneEdit(@RequestBody String model) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
 		
@@ -50,7 +50,7 @@ public class SceneController {
 		service.ProbaAddScene(scena2);
 
 		
-		return ResponseEntity.status(HttpStatus.OK).body(scena2);
+		return ResponseEntity.status(HttpStatus.OK).body(scena);
 	}
 	
 	@GetMapping("/scene")

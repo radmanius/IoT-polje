@@ -3,10 +3,7 @@ package hr.fer.tel.server.rest.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import hr.fer.tel.server.rest.model.Layout;
-import hr.fer.tel.server.rest.model.Scene;
-import hr.fer.tel.server.rest.model.Tag;
-import hr.fer.tel.server.rest.model.View;
+import hr.fer.tel.server.rest.model.*;
 
 public class SceneDTO {
 
@@ -24,12 +21,12 @@ public class SceneDTO {
 
     private List<View2DTO> views = new ArrayList<>();
 
-    private List<RoleDTO> roles = new ArrayList<>();
+    private List<String> roles = new ArrayList<>();
 
-    private List<KeyDTO> keys = new ArrayList<>();
+    private List<String> keys = new ArrayList<>();
 
 	public SceneDTO(long id, String title, String subtitle, LayoutDTO layout, String pictureLink, List<TagDTO> tags,
-			List<View2DTO> views, List<RoleDTO> roles, List<KeyDTO> keys) {
+			List<View2DTO> views, List<String> roles, List<String> keys) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -93,19 +90,19 @@ public class SceneDTO {
 		this.views = views;
 	}
 
-	public List<RoleDTO> getRoles() {
+	public List<String> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<RoleDTO> roles) {
+	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
 
-	public List<KeyDTO> getKeys() {
+	public List<String> getKeys() {
 		return keys;
 	}
 
-	public void setKeys(List<KeyDTO> keys) {
+	public void setKeys(List<String> keys) {
 		this.keys = keys;
 	}
 

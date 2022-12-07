@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import hr.fer.tel.server.rest.dto.ActuationViewDTO;
+import hr.fer.tel.server.rest.dto.KeyDTO;
 import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
 import hr.fer.tel.server.rest.dto.SceneDTO;
 
@@ -89,7 +90,7 @@ public class Scene {
 
 	public Scene(SceneDTO dto) {
 		this.id = dto.getId();
-		this.keys = dto.getKeys().stream().map(key -> new Key(key)).toList();
+		this.keys = dto.getKeys().stream().map(key -> new Key(new KeyDTO(key))).toList();
 
 		this.layout = new Layout(dto.getLayout());
 
