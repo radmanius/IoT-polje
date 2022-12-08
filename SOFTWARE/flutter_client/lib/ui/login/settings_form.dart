@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pdp2022/source_remote/dio/api_endpoints.dart';
+import 'package:pdp2022/ui/login/provider/secure_storage.dart';
 
+final SecureStorage secureStorage = SecureStorage();
 
 final serverController = TextEditingController();
 final keycloakController = TextEditingController();
@@ -34,8 +35,9 @@ class SettingsForm extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: ElevatedButton(
-                      onPressed: () {
-                        ApiEndpoints.restServerBaseUrl = keycloakController.text;
+                      onPressed: () async {
+                      secureStorage.writeSecureData('restServerBaseUrl', keycloakController.text);
+                      secureStorage.writeSecureData('databaseBaseUrl', serverController.text);
 
                       },
                       child: const Text('Submit'),

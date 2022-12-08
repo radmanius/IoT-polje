@@ -4,7 +4,7 @@ import 'package:pdp2022/ui/common/bits/request_notifier/request_state.dart';
 import 'package:pdp2022/ui/common/primary_button.dart';
 import 'package:pdp2022/ui/home/home_screen.dart';
 import 'package:pdp2022/ui/login/provider/login_request_notifier.dart';
-import 'package:pdp2022/ui/login/settings_screen.dart';
+import 'package:pdp2022/ui/login/settings_form.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -35,13 +35,29 @@ class LoginScreen extends ConsumerWidget {
           ),
         ),
         child: Center(
-          child: PrimaryButton(
-              title: 'LOGIN',
+          child:Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                PrimaryButton(
+            title: 'LOGIN',
               onTap: () {
                 ref.read(loginRequestNotifier.notifier).onLoginPressed();
               }),
+    PrimaryButton(
+    title: 'Keycloak Settings',
+    onTap: () {
+    debugPrint('pressed');
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const SettingsForm()),
+    );
+    }
+    )
+          ]
+
         ),
       ),
-    );
+    ));
   }
 }
