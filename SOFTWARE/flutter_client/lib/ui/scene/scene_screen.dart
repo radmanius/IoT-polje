@@ -45,7 +45,6 @@ class SceneScreen extends HookConsumerWidget {
                      // color: Colors.blueGrey,
                       height:MediaQuery.of(context).size.height*0.8,
                       width: MediaQuery.of(context).size.width,
-      
                     
                    child: Text(scene.title,textAlign: TextAlign.center,
 
