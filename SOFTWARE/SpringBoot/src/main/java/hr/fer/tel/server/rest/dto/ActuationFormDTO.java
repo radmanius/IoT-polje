@@ -1,6 +1,6 @@
 package hr.fer.tel.server.rest.dto;
 
-import java.util.Map;
+import hr.fer.tel.server.rest.model.Inputs;
 
 public class ActuationFormDTO {
 	
@@ -10,10 +10,10 @@ public class ActuationFormDTO {
     
     private RequestDTO submitFormRequest;
         
-    private Map<String, String> inputs;
+    private Inputs inputs;
 
 	public ActuationFormDTO(long id, RequestDTO defaultValuesRequest, RequestDTO submitFormRequest,
-			Map<String, String> inputs) {
+			Inputs inputs) {
 		super();
 		this.id = id;
 		this.defaultValuesRequest = defaultValuesRequest;
@@ -49,11 +49,11 @@ public class ActuationFormDTO {
 		this.submitFormRequest = submitFormRequest;
 	}
 
-	public Map<String, String> getInputs() {
+	public Inputs getInputs() {
 		return inputs;
 	}
 
-	public void setInputs(Map<String, String> inputs) {
+	public void setInputs(Inputs inputs) {
 		this.inputs = inputs;
 	}
     

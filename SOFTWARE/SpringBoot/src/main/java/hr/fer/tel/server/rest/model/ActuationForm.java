@@ -26,10 +26,13 @@ public class ActuationForm {
     @OneToOne(cascade = CascadeType.ALL)
     private Request submitFormRequest;
         
-	@Convert(converter = BodyHelperJson.class)
-    private Map<String, String> inputs;
-
-	public ActuationForm(Request defaultValuesRequest, Request submitFormRequest, Map<String, String> inputs) {
+//	@Convert(converter = BodyHelperJson.class)
+//    private Map<String, String> inputs;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    private Inputs inputs;
+	
+	public ActuationForm(Request defaultValuesRequest, Request submitFormRequest, Inputs inputs) {
 		this.defaultValuesRequest = defaultValuesRequest;
 		this.submitFormRequest = submitFormRequest;
 		this.inputs = inputs;
@@ -69,11 +72,11 @@ public class ActuationForm {
 		this.submitFormRequest = submitFormRequest;
 	}
 
-	public Map<String, String> getInputs() {
+	public Inputs getInputs() {
 		return inputs;
 	}
 
-	public void setInputs(Map<String, String> inputs) {
+	public void setInputs(Inputs inputs) {
 		this.inputs = inputs;
 	}
 	

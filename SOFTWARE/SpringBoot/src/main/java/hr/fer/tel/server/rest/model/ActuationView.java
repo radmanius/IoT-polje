@@ -31,8 +31,7 @@ public class ActuationView extends View{
 	private ActuationForm form;
 
 	public ActuationView(String title, String viewType, ActuationForm form) {
-		setTitle(title);
-		setViewType(viewType);
+		super(0, title, viewType);
 		this.form = form;
 	}
 
