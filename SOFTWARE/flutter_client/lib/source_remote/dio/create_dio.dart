@@ -4,7 +4,7 @@ import 'package:flutter_loggy_dio/flutter_loggy_dio.dart';
 Dio createDio() {
   final options = BaseOptions(
     //TODO: zamijeni ip sa ApiEndpoints.restServerBaseUrl kada server bude online
-    baseUrl: 'http://192.168.0.22:8080', //ApiEndpoints.restServerBaseUrl,
+    baseUrl: 'https://iotat.tel.fer.hr:58443/rest2', //ApiEndpoints.restServerBaseUrl,
     responseType: ResponseType.json,
   );
 
