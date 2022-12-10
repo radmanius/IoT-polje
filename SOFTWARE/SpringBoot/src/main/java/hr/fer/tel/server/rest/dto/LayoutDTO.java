@@ -1,5 +1,8 @@
 package hr.fer.tel.server.rest.dto;
 
+import hr.fer.tel.server.rest.model.Layout;
+import hr.fer.tel.server.rest.model.Tag;
+
 public class LayoutDTO {
 	
     private long id;
@@ -35,6 +38,10 @@ public class LayoutDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public static LayoutDTO of(Layout layout) {
+		return new LayoutDTO(layout.getName());
 	}
     
 

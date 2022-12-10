@@ -25,6 +25,10 @@ public class Inputs {
 		this.title = title;
 	}
 
+	public Inputs(){
+
+	}
+
 	public long getId() {
 		return id;
 	}

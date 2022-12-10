@@ -19,6 +19,9 @@ public class BooleanInput extends Inputs {
 		this.defaultValue = defaultValue;
 	}
 
+	public BooleanInput() {
+	}
+
 	public String getDescription() {
 		return description;
 	}

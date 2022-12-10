@@ -113,4 +113,8 @@ public class SceneDTO {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+//	public static SceneDTO of(Scene scene) {
+////		return new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), LayoutDTO.of( scene.getLayout() ), )
+//	}
 }

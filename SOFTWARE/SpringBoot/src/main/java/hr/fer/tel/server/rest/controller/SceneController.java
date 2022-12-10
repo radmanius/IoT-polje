@@ -66,11 +66,21 @@ public class SceneController {
 		return ResponseEntity.status(HttpStatus.OK).body(shortScenes);
 	}
 	
+//	@GetMapping("/scene/{id}")
+//	public ResponseEntity<Scene> getScene(@PathVariable("id") Long id){
+//
+//		Scene scene = service.probaGetById(id);
+//
+//		return ResponseEntity.status(HttpStatus.OK).body(scene);
+//	}
+
 	@GetMapping("/scene/{id}")
-	public ResponseEntity<Scene> getScene(@PathVariable("id") Long id){
+	public ResponseEntity<ShortSceneDTO> getScene(@PathVariable("id") Long id){
 
 		Scene scene = service.probaGetById(id);
-		
+		SceneDTO sceneDTO = SceneDTO.
+
+
 		return ResponseEntity.status(HttpStatus.OK).body(scene);
 	}
 	
