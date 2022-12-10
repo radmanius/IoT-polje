@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pdp2022/ui/scene/provider/scene_provider.dart';
@@ -25,12 +26,18 @@ class SceneScreen extends HookConsumerWidget {
         child: ref.watch(sceneProvider(sceneId)).maybeWhen(
               orElse: () => const CircularProgressIndicator(),
               failure: (e) => Text(e.toString()),
-              success: (scene) => Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(sceneId.toString()),
-                ],
+              success: (scene) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl: scene.pictureLink,
+                      placeholder: (context, url) => const CircularProgressIndicator(),
+                    ),
+                    Text(scene.subtitle),
+                  ],
+                ),
               ),
             ),
       ),

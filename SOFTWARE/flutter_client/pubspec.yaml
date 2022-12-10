@@ -21,6 +21,7 @@ dependencies:
   alice: ^0.2.5
   json_annotation: ^4.7.0
   dio: ^4.0.6
+  cached_network_image: ^3.2.3
 
   # Auth
   flutter_appauth: ^4.2.1
@@ -45,5 +46,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets: 
+  assets:
   - assets/images/
