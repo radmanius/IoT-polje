@@ -45,37 +45,33 @@ const SceneEditForm = () => {
             for (let i = 0; i < data.roles.length; i++) {
                 data.roles[i] = data.roles[i].name;
             }
-            data.tags.map(tag => tag = tag.name);
+
             data.layout = data.layout.name;
             data.views.map(view => {
                 delete view.id;
-                if (view.selectForm.inputs.string) {
-                    view.selectForm.inputs = JSON.parse(view.selectForm.inputs.string);
+                
+                if (view.selectForm) {
+                    if (view.selectForm.submitSelectionRequest) {
+                        delete view.selectForm.submitSelectionRequest.id;
+                    }
+                    else {
+                        view.selectForm.submitSelectionRequest = {};
+                    }
                 }
-                delete view.selectForm.id
-                if (view.selectForm.submitSelectionRequest) {
-                    delete view.selectForm.submitSelectionRequest.id;
+                else if (view.form) {
+                    if (view.form.submitFormRequest) {
+                        delete view.form.submitFormRequest.id;
+                    }
+                    else {
+                        view.form.submitFormRequest = {};
+                    }
                 }
-                else {
-                    view.selectForm.submitSelectionRequest = JSON.parse(`{
-                    "URI": "http://localhost:80/some/path/{{var1}}",
-                    "method": "GET",
-                    "headers": {
-                        "Authorization": "{{accessToken}} {{token1}} ...",
-                        "Content-Type": "application/csv",
-                        "...": null
-                    },
-                    "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
-                }`);
-                }
-                delete view.selectForm.submitSelectionRequest?.id;
-                delete view.selectForm.inputs.enum;
-                view.selectForm.inputs.defaultValue = "true";
-                delete view.query.id;
-                delete view.responseExtracting.id
             });
+            
             data.roles.map(role => delete role.id);
             data.keys.map(key => delete key.id);
+
+            
             console.log("here");
             console.log(data)
             const response = await editScene(data);
