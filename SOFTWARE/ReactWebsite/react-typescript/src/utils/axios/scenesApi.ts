@@ -15,8 +15,9 @@ export const getSceneById = async (id: number) => {
     return response.data as IScene; 
 }
 
-export const editScene = async (scene: IScene) => {
-    await axios.put("/scene", scene);
+export const editScene = async (scene: any) => {
+    const response = await axios.put("/scene", scene);
+    return response.data as IScene;
 };
 
 export const deleteScene = async (id: number) => {

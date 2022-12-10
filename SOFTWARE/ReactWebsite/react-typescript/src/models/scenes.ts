@@ -10,34 +10,34 @@ export interface IShortTag{
 }
 
 export interface IScene{
-    id: number;
+    id?: number;
     title: string;
     subtitle: string;
     pictureLink: string;
-    layout: ISceneLayout;
-    tags: ITag[];
-    views: unknown;
-    roles: IRole[];
-    keys: IKey[];
+    layout: any;
+    tags: any[];
+    views: any[];
+    roles: any[];
+    keys: any[];
 }
 
 export interface ISceneLayout{
-    id: number;
+    id?: number;
     name: string;
 }
 
 export interface ITag{
-    id: number;
+    id?: number;
     name: string;
 }
 
 export interface IRole{
-    id: number;
+    id?: number;
     name: string;
 }
 
 export interface IKey{
-    id: number;
+    id?: number;
     name: string;
     value: unknown;
     canDelete: boolean;

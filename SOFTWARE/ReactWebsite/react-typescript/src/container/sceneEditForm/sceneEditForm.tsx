@@ -34,11 +34,55 @@ const SceneEditForm = () => {
         }
     };
 
-    const handleAddNewScene = async (data: IScene) => {
+    const handleEditScene = async (data: IScene) => {
         try {
-            await editScene(data);
+            delete data.id;
+            for (let i = 0; i < data.tags.length; i++) {
+                data.tags[i] = data.tags[i].name;
+            }
+            for (let i = 0; i < data.keys.length; i++) {
+                data.keys[i] = data.keys[i].name;
+            }
+            for (let i = 0; i < data.roles.length; i++) {
+                data.roles[i] = data.roles[i].name;
+            }
+            data.tags.map(tag => tag = tag.name);
+            data.layout = data.layout.name;
+            data.views.map(view => {
+                delete view.id;
+                view.selectForm.inputs = JSON.parse(view.selectForm.inputs.string);
+                delete view.selectForm.id
+                if (view.selectForm.submitSelectionRequest) {
+                    delete view.selectForm.submitSelectionRequest.id;
+                }
+                else {
+                    view.selectForm.submitSelectionRequest = JSON.parse(`{
+                    "URI": "http://localhost:80/some/path/{{var1}}",
+                    "method": "GET",
+                    "headers": {
+                        "Authorization": "{{accessToken}} {{token1}} ...",
+                        "Content-Type": "application/csv",
+                        "...": null
+                    },
+                    "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+                }`);
+                }
+                delete view.selectForm.submitSelectionRequest?.id;
+                delete view.selectForm.inputs.enum;
+                view.selectForm.inputs.defaultValue = "true";
+                delete view.query.id;
+                delete view.responseExtracting.id
+            });
+            data.roles.map(role => delete role.id);
+            data.keys.map(key => delete key.id);
+            console.log("here");
+            console.log(data)
+            const response = await editScene(data);
+            console.log("response");
+            console.log(response);
         } catch (error) {
-            console.log("greška pri dodavanju nove scene");
+            console.log(error);
+            //console.log("greška pri dodavanju nove scene");
             //here toast message
         } finally {
             await navigateToPreviousPage();
@@ -67,10 +111,9 @@ const SceneEditForm = () => {
     };
 
 
-    const handleClick = (e: any) => {
+    const handleClick = async (e: any) => {
         e.preventDefault();
-        console.log(scene);
-        handleAddNewScene(scene);
+        await handleEditScene(scene);
     };
 
     return (
