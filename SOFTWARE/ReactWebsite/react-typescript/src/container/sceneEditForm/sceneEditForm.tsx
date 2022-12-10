@@ -75,89 +75,92 @@ const SceneEditForm = () => {
 
     return (
         <div className="scene-form-container">
-            <div>
-                <h1>Uredi scenu {scene.id}</h1>
-                <div className="form-fields-container">
-                    <Form
-                        initialValues={scene}
-                        onSubmit={handleClick}
-                        render={() => (
-                            <form
-                                id="new-scene"
-                                className="form-container"
-                                autoComplete="off"
-                            >
-                                <Field
-                                    name="title"
-                                    render={({ input }) => (
-                                        <div>
-                                            <span>Naslov scene: </span>
-                                            <span>
-                                                <InputText
-                                                    id="title"
-                                                    {...input}
-                                                    onChange={e => handleChange(e)}
-                                                    onKeyPress={(e) => { e.key === 'Enter' && handleClick(e); }}
-                                                    value={scene.title}
-                                                />
-                                            </span>
-                                        </div>
-                                    )}
-                                />
-                                <Field
-                                    name="subtitle"
-                                    render={({ input }) => (
-                                        <div>
-                                            <span>Podnaslov scene: </span>
-                                            <span>
-                                                <InputText
-                                                    id="subtitle"
-                                                    {...input}
-                                                    onChange={e => handleChange(e)}
-                                                    onKeyPress={(e) => { e.key === 'Enter' && handleClick(e); }}
-                                                    value={scene.subtitle}
-                                                />
-                                            </span>
-                                        </div>
-                                    )}
-                                />
-                                <Field
-                                    name="pictureLink"
-                                    render={({ input }) => (
-                                        <div>
-                                            <span>Link slike scene: </span>
-                                            <span>
-                                                <InputText
-                                                    id="pictureLink"
-                                                    {...input}
-                                                    onChange={e => handleChange(e)}
-                                                    onKeyPress={(e) => { e.key === 'Enter' && handleClick(e); }}
-                                                    value={scene.pictureLink}
-                                                />
-                                            </span>
-                                        </div>
-                                    )}
-                                />
+            {scene &&
+                <div>
+                    <h1>Uredi scenu {scene.id}</h1>
+                    <div className="form-fields-container">
+                        <Form
+                            initialValues={scene}
+                            onSubmit={handleClick}
+                            render={() => (
+                                <form
+                                    id="new-scene"
+                                    className="form-container"
+                                    autoComplete="off"
+                                >
+                                    <Field
+                                        name="title"
+                                        render={({ input }) => (
+                                            <div>
+                                                <span>Naslov scene: </span>
+                                                <span>
+                                                    <InputText
+                                                        id="title"
+                                                        {...input}
+                                                        onChange={e => handleChange(e)}
+                                                        onKeyPress={(e) => { e.key === 'Enter' && handleClick(e); }}
+                                                        value={scene.title}
+                                                    />
+                                                </span>
+                                            </div>
+                                        )}
+                                    />
+                                    <Field
+                                        name="subtitle"
+                                        render={({ input }) => (
+                                            <div>
+                                                <span>Podnaslov scene: </span>
+                                                <span>
+                                                    <InputText
+                                                        id="subtitle"
+                                                        {...input}
+                                                        onChange={e => handleChange(e)}
+                                                        onKeyPress={(e) => { e.key === 'Enter' && handleClick(e); }}
+                                                        value={scene.subtitle}
+                                                    />
+                                                </span>
+                                            </div>
+                                        )}
+                                    />
+                                    <Field
+                                        name="pictureLink"
+                                        render={({ input }) => (
+                                            <div>
+                                                <span>Link slike scene: </span>
+                                                <span>
+                                                    <InputText
+                                                        id="pictureLink"
+                                                        {...input}
+                                                        onChange={e => handleChange(e)}
+                                                        onKeyPress={(e) => { e.key === 'Enter' && handleClick(e); }}
+                                                        value={scene.pictureLink}
+                                                    />
+                                                </span>
+                                            </div>
+                                        )}
+                                    />
 
-                                <div className="scene-form-buttons">
-                                    <Button
-                                        label="Dodaj"
-                                        icon="pi pi-check"
-                                        type="button"
-                                        onClick={(e) => handleClick(e)}
-                                    />
-                                    <Button
-                                        label="Odustani"
-                                        type="button"
-                                        onClick={() => navigateToPreviousPage()}
-                                    />
-                                </div>
-                            </form>
-                        )}
-                    />
+                                    <div className="scene-form-buttons">
+                                        <Button
+                                            label="Dodaj"
+                                            icon="pi pi-check"
+                                            type="button"
+                                            onClick={(e) => handleClick(e)}
+                                        />
+                                        <Button
+                                            label="Odustani"
+                                            type="button"
+                                            onClick={() => navigateToPreviousPage()}
+                                        />
+                                    </div>
+                                </form>
+                            )}
+                        />
+                    </div>
                 </div>
-            </div>
+            }
         </div>
+        
     );
 };
 
