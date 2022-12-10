@@ -9,10 +9,35 @@ class ShortSceneCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(shortScene.title),
-      subtitle: Text(shortScene.subtitle),
-      onTap: () => Navigator.of(context).push(SceneScreen.route(shortScene.id)),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: InkWell(
+        onTap: () => Navigator.of(context).push(SceneScreen.route(shortScene.id)),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor.withOpacity(0.2),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            border: Border.all(color: Theme.of(context).primaryColor),
+          ),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(shortScene.title),
+                  Text('Tag: ' + shortScene.tags.map((e) => e.name).join(', ')),
+                ],
+              ),
+              const Spacer(),
+              const Icon(
+                Icons.arrow_forward,
+                size: 31,
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

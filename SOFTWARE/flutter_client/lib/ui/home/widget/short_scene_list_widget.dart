@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pdp2022/ui/home/provider/short_scene_list_provider.dart';
+import 'package:pdp2022/ui/home/provider/home_screen_presenter.dart';
 import 'package:pdp2022/ui/home/widget/short_scene_card.dart';
 
 class ShortSceneListWidget extends ConsumerWidget {
@@ -12,9 +12,11 @@ class ShortSceneListWidget extends ConsumerWidget {
           initial: () => const CircularProgressIndicator(),
           loading: () => const CircularProgressIndicator(),
           failure: (error) => Text(error.toString()),
-          success: (viewState) => ListView.builder(
-            itemCount: viewState.shortScenes.length,
-            itemBuilder: (context, index) => ShortSceneCard(viewState.shortScenes[index]),
+          success: (viewState) => Column(
+            children: List.generate(
+              viewState.shortScenes.length,
+              (index) => ShortSceneCard(viewState.shortScenes[index]),
+            ),
           ),
         );
   }
