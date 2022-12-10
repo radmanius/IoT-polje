@@ -4,7 +4,6 @@ import 'package:pdp2022/ui/common/bits/request_notifier/request_state.dart';
 import 'package:pdp2022/ui/common/primary_button.dart';
 import 'package:pdp2022/ui/home/home_screen.dart';
 import 'package:pdp2022/ui/login/provider/login_request_notifier.dart';
-import 'package:pdp2022/ui/login/settings_screen.dart';
 import 'package:pdp2022/ui/login/settings_form.dart';
 
 class LoginScreen extends ConsumerWidget {
@@ -22,37 +21,36 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<RequestState<void>>(loginRequestNotifier, (previous, next) {
       next.whenOrNull(
-        success: (_) =>
-            Navigator.of(context).pushReplacement(HomeScreen.route()),
+        success: (_) => Navigator.of(context).pushReplacement(HomeScreen.route()),
       );
     });
 
     return Scaffold(
       body: SafeArea(
-        child:Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[PrimaryButton(
-                  title: 'LOGIN',
-                  onTap: () {
-                    debugPrint('pressed');
-                    ref.read(loginRequestNotifier.notifier).onLoginPressed();
-                  }
-              ),
-                PrimaryButton(
-                    title: 'Keycloak Settings',
-                    onTap: () {
-                      debugPrint('pressed');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SettingsForm()),
-                      );
-                    }
-                )
-              ]),
-        )
-      ),
-    ));
+          child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            PrimaryButton(
+                title: 'LOGIN',
+                onTap: () {
+                  debugPrint('pressed');
+                  ref.read(loginRequestNotifier.notifier).onLoginPressed();
+                }),
+            PrimaryButton(
+              title: 'Keycloak Settings',
+              onTap: () {
+                debugPrint('pressed');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingsForm()),
+                );
+              },
+            )
+          ],
+        ),
+      )),
+    );
   }
 }

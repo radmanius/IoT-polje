@@ -22,6 +22,7 @@ class AuthRepositoryImpl implements AuthRepository {
         'mobile-keycloak',
         'fer.tel.iot.polje.iotpolje:/oauth2Callback',
         discoveryUrl: 'https://iotat.tel.fer.hr:58443/auth/realms/spring/.well-known/openid-configuration',
+        preferEphemeralSession: true,
       ),
     );
 
