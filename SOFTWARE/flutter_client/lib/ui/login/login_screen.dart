@@ -4,6 +4,7 @@ import 'package:pdp2022/ui/common/bits/request_notifier/request_state.dart';
 import 'package:pdp2022/ui/common/primary_button.dart';
 import 'package:pdp2022/ui/home/home_screen.dart';
 import 'package:pdp2022/ui/login/provider/login_request_notifier.dart';
+import 'package:pdp2022/ui/login/settings_screen.dart';
 import 'package:pdp2022/ui/login/settings_form.dart';
 
 class LoginScreen extends ConsumerWidget {
@@ -27,36 +28,30 @@ class LoginScreen extends ConsumerWidget {
     });
 
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/iot6.webp"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Center(
-          child:Column(
+      body: SafeArea(
+        child:Center(
+          child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
+              children: <Widget>[PrimaryButton(
+                  title: 'LOGIN',
+                  onTap: () {
+                    debugPrint('pressed');
+                    ref.read(loginRequestNotifier.notifier).onLoginPressed();
+                  }
+              ),
                 PrimaryButton(
-            title: 'LOGIN',
-              onTap: () {
-                ref.read(loginRequestNotifier.notifier).onLoginPressed();
-              }),
-    PrimaryButton(
-    title: 'Keycloak Settings',
-    onTap: () {
-    debugPrint('pressed');
-    Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const SettingsForm()),
-    );
-    }
-    )
-          ]
-
-        ),
+                    title: 'Keycloak Settings',
+                    onTap: () {
+                      debugPrint('pressed');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SettingsForm()),
+                      );
+                    }
+                )
+              ]),
+        )
       ),
     ));
   }
