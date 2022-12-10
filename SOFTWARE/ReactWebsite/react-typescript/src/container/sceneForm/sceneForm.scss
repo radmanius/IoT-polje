@@ -1,0 +1,18 @@
+.scene-form-container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    width: 400px;
+    margin: auto;
+}
+
+.form-fields-container {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.scene-form-buttons > button {
+    margin: 5px
+}

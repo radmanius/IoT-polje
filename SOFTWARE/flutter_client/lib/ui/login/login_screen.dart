@@ -5,6 +5,7 @@ import 'package:pdp2022/ui/common/primary_button.dart';
 import 'package:pdp2022/ui/home/home_screen.dart';
 import 'package:pdp2022/ui/login/provider/login_request_notifier.dart';
 import 'package:pdp2022/ui/login/settings_screen.dart';
+import 'package:pdp2022/ui/login/settings_form.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,7 +22,8 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<RequestState<void>>(loginRequestNotifier, (previous, next) {
       next.whenOrNull(
-        success: (_) => Navigator.of(context).pushReplacement(HomeScreen.route()),
+        success: (_) =>
+            Navigator.of(context).pushReplacement(HomeScreen.route()),
       );
     });
 
@@ -50,8 +52,7 @@ class LoginScreen extends ConsumerWidget {
                 )
               ]),
         )
-
       ),
-    );
+    ));
   }
 }

@@ -7,6 +7,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { PAGE_ROUTES } from "utils/paths";
+import { getAllScenes } from "utils/axios/scenes";
 
 const cols = [
     { field: "shortSceneId", header: "ID kratke scene", sortable: false },
@@ -23,6 +24,8 @@ const ShortSceneView = () => {
 
     const fetchShortScenes = useCallback(async () => {
         try {
+            const res = await getAllScenes();
+            console.log(res);
             //const res = await getShortScenes();
             setShortScene(shortScenes);
         } catch (error) {
@@ -37,8 +40,22 @@ const ShortSceneView = () => {
 
     return (
         <div className="short-scene-page">
-            <div>
-                <h1>Kratke scene</h1>
+            <div className="short-scene-header">
+                <div>
+                    <Button
+                        onClick={() => navigate(PAGE_ROUTES.Global)}
+                        label={"Natrag na početnu stranicu"}
+                    />
+                </div>
+                <div>
+                    <h1>Popis scena</h1>
+                </div>
+                <div>
+                    <Button
+                        label="Dodaj novu scenu"
+                        onClick={() => navigate(PAGE_ROUTES.AddNewScene)}
+                    />
+                </div>
             </div>
             <div className="short-scene-table">
                 <DataTable
@@ -66,14 +83,6 @@ const ShortSceneView = () => {
                         );
                     })}
                 </DataTable>
-            </div>
-            <div>
-                <div>
-                    <Button
-                        onClick={() => navigate(PAGE_ROUTES.Global)}
-                        label={"Natrag na početnu stranicu"}
-                    />
-                </div>
             </div>
         </div>
     );

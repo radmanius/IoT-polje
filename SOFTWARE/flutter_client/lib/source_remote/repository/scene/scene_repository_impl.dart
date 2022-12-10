@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:pdp2022/source_remote/dio/api_endpoints.dart';
+import 'package:pdp2022/source_remote/repository/scene/model/short_scene.dart';
 
+import 'model/scene.dart';
 import 'scene_repository.dart';
 
 class SceneRepositoryImpl implements SceneRepository {
@@ -8,10 +11,16 @@ class SceneRepositoryImpl implements SceneRepository {
   final Dio _dio;
 
   @override
-  Future<List> getScenes() async {
-    final response = await _dio.get('/scenes???');
+  Future<List<ShortScene>> getScenes() async {
+    final response = await _dio.get(ApiEndpoints.scenes);
 
-    // TODO: implement getScenes
-    throw UnimplementedError();
+    return (response.data as List<dynamic>).map((e) => ShortScene.fromJson(e)).toList();
+  }
+
+  @override
+  Future<Scene> getSceneDetails(int id) async {
+    final response = await _dio.get(ApiEndpoints.scene(id));
+
+    return Scene.fromJson(response.data);
   }
 }

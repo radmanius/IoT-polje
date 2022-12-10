@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,9 +7,11 @@ import 'package:pdp2022/source_remote/repository/auth/auth_repository.dart';
 import 'package:pdp2022/source_remote/repository/auth/auth_token_persistence_manager.dart';
 import 'package:pdp2022/ui/home/home_screen.dart';
 import 'package:pdp2022/ui/login/login_screen.dart';
+import 'package:pdp2022/source_remote/dio/create_dio.dart';
 
 import '../../domain/di/inject_dependencies.dart' as domain;
 import '../../source_remote/di/inject_dependencies.dart' as source_remote;
+import 'ui/login/settings_form.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +26,8 @@ void main() async {
 
   final isLoggedIn = await GetIt.I.get<AuthRepository>().isLoggedIn();
 
+
+
   if (isLoggedIn) {
     firstScreen = const HomeScreen();
   } else {
@@ -30,16 +35,19 @@ void main() async {
   }
 
   runApp(
-    MaterialApp(
-      home: ProviderScope(
-        child: firstScreen,
-      ),
-      theme: ThemeData(
-        primarySwatch: Colors.lightGreen,
+    ProviderScope(
+      child: MaterialApp(
+        home: firstScreen,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.lightGreen,
+        ),
       ),
     ),
   );
+
 }
+
 
 void _lockOrientation() {
   SystemChrome.setPreferredOrientations(<DeviceOrientation>[
@@ -53,4 +61,12 @@ void _injectDependencies() {
 
   source_remote.injectDependencies(getIt);
   domain.injectDependencies(getIt);
+}
+Future<void> checkUrl(Dio dio) async {
+  String? restBaseUrl = await secureStorage.readSecureData('restServerBaseUrl');
+  if(restBaseUrl !=  null){
+    if(restBaseUrl != ''){
+      dio.options.baseUrl = restBaseUrl;
+    }
+  }
 }
