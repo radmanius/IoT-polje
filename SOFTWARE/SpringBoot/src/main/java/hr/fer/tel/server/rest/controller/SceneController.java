@@ -3,6 +3,7 @@ package hr.fer.tel.server.rest.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import hr.fer.tel.server.rest.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hr.fer.tel.server.rest.dto.*;
-import hr.fer.tel.server.rest.model.Scene;
 import hr.fer.tel.server.rest.service.SceneService;
 
 @CrossOrigin(origins = "http://localhost:8080")
@@ -75,13 +75,32 @@ public class SceneController {
 //	}
 
 	@GetMapping("/scene/{id}")
-	public ResponseEntity<ShortSceneDTO> getScene(@PathVariable("id") Long id){
-
+	public ResponseEntity<SceneDTO> getScene(@PathVariable("id") Long id){
 		Scene scene = service.probaGetById(id);
-		SceneDTO sceneDTO = SceneDTO.
+		List<TagDTO> tags = new ArrayList<>();
+		for (Tag tag : scene.getTags()) {
+			tags.add(new TagDTO(tag.getId(), tag.getName()));
+		}
 
+		List<View2DTO> views = new ArrayList<>();
+		for (View view : scene.getViews()) {
+			views.add(new View2DTO(view.getId(), view.getTitle(), view.getViewType()));
+		}
 
-		return ResponseEntity.status(HttpStatus.OK).body(scene);
+		List<String> roles = new ArrayList<>();
+		for (Role role : scene.getRoles()) {
+			roles.add(role.getName());
+		}
+
+		List<String> keys = new ArrayList<>();
+		for (Key key : scene.getKeys()) {
+			keys.add(key.getName());
+		}
+
+		SceneDTO sceneDTO = new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), new LayoutDTO(scene.getLayout().getId(), scene.getLayout().getName()),
+				scene.getPictureLink(), tags, views, roles, keys);
+
+		return ResponseEntity.status(HttpStatus.OK).body(sceneDTO);
 	}
 	
 
