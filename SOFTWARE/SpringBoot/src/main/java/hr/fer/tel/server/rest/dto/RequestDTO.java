@@ -4,6 +4,8 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import hr.fer.tel.server.rest.model.Request;
+
 public class RequestDTO {
 	
 	private long id;
@@ -68,6 +70,10 @@ public class RequestDTO {
 
 	public void setPayload(String payload) {
 		this.payload = payload;
+	}
+	
+	public static RequestDTO of(Request request) {
+		return null;
 	}
 	
 }

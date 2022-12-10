@@ -1,5 +1,6 @@
 package hr.fer.tel.server.rest.dto;
 
+import hr.fer.tel.server.rest.model.DataExtractor;
 
 public class DataExtractorDTO {
 	
@@ -52,6 +53,10 @@ public class DataExtractorDTO {
 
 	public void setDataFormat(String dataFormat) {
 		this.dataFormat = dataFormat;
+	}
+	
+	public static DataExtractorDTO of(DataExtractor extractor) {
+		return null;
 	}
     
 }

@@ -82,9 +82,26 @@ public class SceneController {
 			tags.add(new TagDTO(tag.getId(), tag.getName()));
 		}
 
-		List<View2DTO> views = new ArrayList<>();
-		for (View view : scene.getViews()) {
-			views.add(new View2DTO(view.getId(), view.getTitle(), view.getViewType()));
+		List<ViewDTO> views = new ArrayList<>();
+		for (View temp : scene.getViews()) {
+			
+			if (temp instanceof ActuationView) {
+
+				ActuationView a = (ActuationView) temp;
+				ActuationViewDTO view1 = ActuationViewDTO.of(a);
+				views.add(view1);
+
+			}
+
+			if (temp instanceof MesurmentView) {
+
+				MesurmentView a = (MesurmentView) temp;
+				MesurmentViewDTO view1 = MesurmentViewDTO.of(a);
+				views.add(view1);
+
+			}
+			
+//			views.add(new View2DTO(view.getId(), view.getTitle(), view.getViewType()));
 		}
 
 		List<String> roles = new ArrayList<>();

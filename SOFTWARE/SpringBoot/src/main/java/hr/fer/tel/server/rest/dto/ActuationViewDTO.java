@@ -2,8 +2,10 @@ package hr.fer.tel.server.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import hr.fer.tel.server.rest.model.ActuationView;
+
 @JsonTypeName("actuation")
-public class ActuationViewDTO extends View2DTO{
+public class ActuationViewDTO extends ViewDTO{
 
 	private ActuationFormDTO form;
 	
@@ -22,6 +24,10 @@ public class ActuationViewDTO extends View2DTO{
 
 	public void setForm(ActuationFormDTO form) {
 		this.form = form;
+	}
+	
+	public static ActuationViewDTO of(ActuationView view) {
+		return new ActuationViewDTO(ActuationFormDTO.of(view.getForm()));
 	}
 	
 	

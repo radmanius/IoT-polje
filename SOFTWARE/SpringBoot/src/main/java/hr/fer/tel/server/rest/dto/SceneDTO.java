@@ -19,14 +19,14 @@ public class SceneDTO {
 
     private List<TagDTO> tags = new ArrayList<>();
 
-    private List<View2DTO> views = new ArrayList<>();
+    private List<ViewDTO> views = new ArrayList<>();
 
     private List<String> roles = new ArrayList<>();
 
     private List<String> keys = new ArrayList<>();
 
 	public SceneDTO(long id, String title, String subtitle, LayoutDTO layout, String pictureLink, List<TagDTO> tags,
-			List<View2DTO> views, List<String> roles, List<String> keys) {
+			List<ViewDTO> views, List<String> roles, List<String> keys) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -82,11 +82,11 @@ public class SceneDTO {
 		this.tags = tags;
 	}
 
-	public List<View2DTO> getViews() {
+	public List<ViewDTO> getViews() {
 		return views;
 	}
 
-	public void setViews(List<View2DTO> views) {
+	public void setViews(List<ViewDTO> views) {
 		this.views = views;
 	}
 

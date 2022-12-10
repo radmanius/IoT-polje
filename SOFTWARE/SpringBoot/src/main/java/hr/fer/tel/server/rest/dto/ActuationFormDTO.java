@@ -1,5 +1,6 @@
 package hr.fer.tel.server.rest.dto;
 
+import hr.fer.tel.server.rest.model.ActuationForm;
 import hr.fer.tel.server.rest.model.Inputs;
 
 public class ActuationFormDTO {
@@ -55,6 +56,13 @@ public class ActuationFormDTO {
 
 	public void setInputs(Inputs inputs) {
 		this.inputs = inputs;
+	}
+	
+	public static ActuationFormDTO of(ActuationForm form) {
+		return new ActuationFormDTO(form.getId(), 
+				RequestDTO.of(form.getDefaultValuesRequest()), 
+				RequestDTO.of(form.getDefaultValuesRequest()),
+				null);
 	}
     
 }

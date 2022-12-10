@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
-import hr.fer.tel.server.rest.dto.View2DTO;
+import hr.fer.tel.server.rest.dto.ViewDTO;
 
 
 @Entity
@@ -39,7 +39,7 @@ public class View {
     @JsonBackReference
     private Scene scene;
 
-    public View(View2DTO dto){
+    public View(ViewDTO dto){
     	this.id = dto.getId();
     	this.title = dto.getTitle();
     	this.viewType = dto.getViewType();

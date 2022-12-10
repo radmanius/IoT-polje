@@ -19,7 +19,7 @@ import hr.fer.tel.server.rest.model.MesurmentView;
 	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "series")
 
 	    })
-public class View2DTO {
+public class ViewDTO {
 	
 	private long id;
     
@@ -27,7 +27,7 @@ public class View2DTO {
     
     private String viewType;
     
-	public View2DTO(long id, String title, String viewType) {
+	public ViewDTO(long id, String title, String viewType) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -35,7 +35,7 @@ public class View2DTO {
 	}
 	
 	
-	public View2DTO() {
+	public ViewDTO() {
 		super();
 	}
 

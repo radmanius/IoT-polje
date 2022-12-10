@@ -2,6 +2,9 @@ package hr.fer.tel.server.rest.dto;
 
 import java.util.Map;
 
+import hr.fer.tel.server.rest.model.MeasurmentSelectForm;
+import hr.fer.tel.server.rest.model.MesurmentView;
+
 public class MeasurmentSelectFormDTO {
 	
 	private long id;
@@ -41,6 +44,10 @@ public class MeasurmentSelectFormDTO {
 
 	public void setInputs(Map<String, String> inputs) {
 		this.inputs = inputs;
+	}
+	
+	public static MeasurmentSelectFormDTO of(MeasurmentSelectForm form) {
+		return null;
 	}
 
 

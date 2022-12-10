@@ -2,10 +2,12 @@ package hr.fer.tel.server.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import hr.fer.tel.server.rest.model.MesurmentView;
+
 
 
 @JsonTypeName("mesurment")
-public class MesurmentViewDTO extends View2DTO{
+public class MesurmentViewDTO extends ViewDTO{
 	
 	private String measurementUnit;
 	
@@ -58,6 +60,10 @@ public class MesurmentViewDTO extends View2DTO{
 
 	public void setResponseExtracting(DataExtractorDTO responseExtracting) {
 		this.responseExtracting = responseExtracting;
+	}
+
+	public static MesurmentViewDTO of(MesurmentView view) {
+		return null;
 	}
 	
 }
