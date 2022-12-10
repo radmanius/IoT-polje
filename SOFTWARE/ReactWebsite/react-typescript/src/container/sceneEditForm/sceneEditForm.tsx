@@ -36,7 +36,6 @@ const SceneEditForm = () => {
 
     const handleEditScene = async (data: IScene) => {
         try {
-            delete data.id;
             for (let i = 0; i < data.tags.length; i++) {
                 data.tags[i] = data.tags[i].name;
             }
@@ -50,7 +49,9 @@ const SceneEditForm = () => {
             data.layout = data.layout.name;
             data.views.map(view => {
                 delete view.id;
-                view.selectForm.inputs = JSON.parse(view.selectForm.inputs.string);
+                if (view.selectForm.inputs.string) {
+                    view.selectForm.inputs = JSON.parse(view.selectForm.inputs.string);
+                }
                 delete view.selectForm.id
                 if (view.selectForm.submitSelectionRequest) {
                     delete view.selectForm.submitSelectionRequest.id;
