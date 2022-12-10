@@ -8,7 +8,7 @@ if (location.hostname == "localhost") {
 
     axios.defaults.baseURL = "http://" + location.hostname + ":" + port;
 } else {
-    axios.defaults.baseURL = "production url";
+    axios.defaults.baseURL = "https://iotat.tel.fer.hr:58443/rest2";
 }
 
 // Add a request interceptor
