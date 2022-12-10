@@ -16,6 +16,9 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final tags = ref.watch(homeScreenPresenter).whenOrNull(success: (viewState) => viewState.tags);
+    final selectedTags = ref.watch(homeScreenPresenter).whenOrNull(success: (viewState) => viewState.selectedTags);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -31,18 +34,42 @@ class HomeScreen extends ConsumerWidget {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              decoration: const InputDecoration(labelText: 'Pretraga'),
-              onChanged: (query) => ref.read(shortSceneListProvider.notifier).onSearch(query),
-            ),
-            const Expanded(
-              child: ShortSceneListWidget(),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 20),
+              TextField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Pretraga',
+                ),
+                onChanged: (query) => ref.read(homeScreenPresenter.notifier).onSearch(query),
+              ),
+              const Text('Filtriraj po tagovima:'),
+              if (tags != null && selectedTags != null)
+                Wrap(
+                  children: tags
+                      .map(
+                        (e) => FilterChip(
+                          label: Text(e),
+                          selected: selectedTags.contains(e),
+                          showCheckmark: false,
+                          onSelected: (selected) => ref.read(homeScreenPresenter.notifier).onTagPressed(e, selected),
+                          elevation: 5,
+                          selectedColor: Theme.of(context).primaryColor,
+                          disabledColor: Colors.grey,
+                        ),
+                      )
+                      .toList(),
+                ),
+              const Expanded(
+                child: ShortSceneListWidget(),
+              ),
+            ],
+          ),
         ),
       ),
     );

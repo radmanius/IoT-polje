@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:pdp2022/source_remote/repository/scene/model/key.dart';
 import 'package:pdp2022/source_remote/repository/scene/model/role.dart';
 import 'package:pdp2022/source_remote/repository/scene/model/tag.dart';
-import 'package:pdp2022/source_remote/repository/scene/model/view.dart';
+import 'package:pdp2022/source_remote/repository/scene/model/view/view.dart';
 
 import 'layout.dart';
 

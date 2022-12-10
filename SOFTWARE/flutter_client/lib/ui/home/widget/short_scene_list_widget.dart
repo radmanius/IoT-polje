@@ -8,13 +8,13 @@ class ShortSceneListWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(shortSceneListProvider).when(
+    return ref.watch(homeScreenPresenter).when(
           initial: () => const CircularProgressIndicator(),
           loading: () => const CircularProgressIndicator(),
           failure: (error) => Text(error.toString()),
-          success: (scenes) => ListView.builder(
-            itemCount: scenes.length,
-            itemBuilder: (context, index) => ShortSceneCard(scenes[index]),
+          success: (viewState) => ListView.builder(
+            itemCount: viewState.shortScenes.length,
+            itemBuilder: (context, index) => ShortSceneCard(viewState.shortScenes[index]),
           ),
         );
   }
