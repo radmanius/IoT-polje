@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { IScene , IShortScene} from "models/scenes";
 import { PAGE_ROUTES } from "utils/paths";
 import { getSceneById } from "utils/axios/scenesApi";
+import Popup from "./deletePopup"
 
 interface ILocationState {
     shortScene: IScene;
@@ -16,6 +17,8 @@ const SpecificSceneView = () => {
     console.log(shortScene);
     const [scene, setScene] = useState<IScene>();
     const navigate = useNavigate();
+
+    const [popup, setPopup] = useState(false);
 
     const fetchScene = useCallback(async () => {
         try {
@@ -30,6 +33,17 @@ const SpecificSceneView = () => {
 
     function handleClickEdit() {
         navigate(PAGE_ROUTES.EditScene, { state: { scene } });
+    }
+
+    async function handleClickDelete() {
+        setPopup(true);
+        // try {
+        //     await deleteScene(shortScene.id);
+        //     navigate(PAGE_ROUTES.ShortSceneView);
+        // }
+        // catch {
+        //     console.log("Error");
+        // }
     }
 
     useEffect(() => {
@@ -47,6 +61,14 @@ const SpecificSceneView = () => {
                             label={"Uredi scenu"}
                         />
                     </div>  
+                    <div className="align-right-button">
+                        <Button
+                            className="delete-button"
+                            onClick={handleClickDelete}
+                            label={"Obriši scenu"}
+                        />
+                    </div>
+                    <Popup trigger={popup} setTrigger={setPopup} id={shortScene.id} />
                         <h1>{scene.title}</h1>
                     <h3>{scene.subtitle}</h3>
                     <img
