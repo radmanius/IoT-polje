@@ -1,12 +1,12 @@
 import axios from "axios";
-import { IScene } from "models/scenes";
+import { IScene, IShortScene } from "models/scenes";
 
 export const getAllScenes = async () => {
     const response = await axios.get("/scene")
-    return response.data as IScene[]; 
+    return response.data as IShortScene[]; 
 } 
 
-export const createNewScene = async (scene: IScene) => {
+export const createNewScene = async (scene: IShortScene) => {
     await axios.post("/scene", scene);
 };
 
@@ -15,8 +15,9 @@ export const getSceneById = async (id: number) => {
     return response.data as IScene; 
 }
 
-export const editScene = async (id: number) => {
-    await axios.patch(`/scene/${id}`);
+export const editScene = async (scene: any) => {
+    const response = await axios.put("/scene", scene);
+    return response.data as IScene;
 };
 
 export const deleteScene = async (id: number) => {

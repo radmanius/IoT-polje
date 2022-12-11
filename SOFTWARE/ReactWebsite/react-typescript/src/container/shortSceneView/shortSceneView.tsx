@@ -1,20 +1,18 @@
 //import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { IShortScene, shortScenes } from "models/shortScene";
+import { IShortScene } from "models/scenes";
 import { useCallback, useEffect, useState } from "react";
 import "./shortSceneView.scss";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { PAGE_ROUTES } from "utils/paths";
-import { getAllScenes } from "utils/axios/scenes";
+import { getAllScenes } from "utils/axios/scenesApi";
 
 const cols = [
-    { field: "shortSceneId", header: "ID kratke scene", sortable: false },
-    { field: "pictureLink", header: "Link slike", sortable: false },
-    { field: "sceneTitle", header: "Naslov scene", sortable: false },
-    { field: "sceneSubtitle", header: "Podnaslov scene", sortable: false },
-    { field: "sceneId", header: "ID scene", sortable: false },
+    { field: "id", header: "ID kratke scene", sortable: false },
+    { field: "title", header: "Naslov scene", sortable: false },
+    { field: "subtitle", header: "Podnaslov scene", sortable: false },
 ];
 
 const ShortSceneView = () => {
@@ -27,7 +25,7 @@ const ShortSceneView = () => {
             const res = await getAllScenes();
             console.log(res);
             //const res = await getShortScenes();
-            setShortScene(shortScenes);
+            setShortScene(res);
         } catch (error) {
             //toast message
             console.log("error");
@@ -67,7 +65,7 @@ const ShortSceneView = () => {
                     onRowClick={rowData => {
                         navigate(PAGE_ROUTES.SpecificSceneView, {
                             state: {
-                                shortScene: shortScenes.find(x => x.shortSceneId === rowData.data.shortSceneId),
+                                shortScene: shortScene?.find(x => x.id === rowData.data.id),
                             },
                         });
                     }}

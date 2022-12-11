@@ -1,4 +1,52 @@
-export interface IScene {
+export interface IShortScene{
+    id: number;
+    title: string;
+    subtitle: string;
+    tags?: IShortTag[];
+}
+
+export interface IShortTag{
+    name: string;
+}
+
+export interface IScene{
+    id?: number;
+    title: string;
+    subtitle: string;
+    pictureLink: string;
+    layout: any;
+    tags: any[];
+    views: any[];
+    roles: any[];
+    keys: any[];
+}
+
+export interface ISceneLayout{
+    id?: number;
+    name: string;
+}
+
+export interface ITag{
+    id?: number;
+    name: string;
+}
+
+export interface IRole{
+    id?: number;
+    name: string;
+}
+
+export interface IKey{
+    id?: number;
+    name: string;
+    value: unknown;
+    canDelete: boolean;
+}
+
+
+
+
+export interface ISceneOld {
     sceneId?: number;
     pictureLink: string;
     sceneSubtitle: string;
@@ -6,13 +54,13 @@ export interface IScene {
     layoutId?: number
 }
 
-export const initScene:IScene = {
+export const initScene:ISceneOld = {
     sceneTitle: "",
     pictureLink: "",
     sceneSubtitle: "",
 }
 
-export const initScenes:IScene[] = [
+export const initScenes:ISceneOld[] = [
     { 
         sceneId: 1,
         sceneTitle: "Scena 1",

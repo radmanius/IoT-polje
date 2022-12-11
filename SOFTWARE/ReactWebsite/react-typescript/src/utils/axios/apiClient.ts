@@ -6,9 +6,9 @@ import { ReactTypescriptxiosError, ReactTypescriptAxiosResponse } from "utils/ax
 if (location.hostname == "localhost") {
     var port = 8080; // Depends on backend port
 
-    axios.defaults.baseURL = "http://" + location.hostname + ":" + port;
+    axios.defaults.baseURL = "http://" + location.hostname + ":" + port + "/rest2";
 } else {
-    axios.defaults.baseURL = "production url";
+    axios.defaults.baseURL = "https://iotat.tel.fer.hr:58443/rest2";
 }
 
 // Add a request interceptor
