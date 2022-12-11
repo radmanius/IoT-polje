@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { Field, Form } from "react-final-form";
 import { InputText } from "primereact/inputtext";
-import { initScene, IScene } from "models/scenes";
+import { IShortScene } from "models/scenes";
 import "./sceneForm.scss";
 import { Button } from "primereact/button";
-import { createNewScene } from "utils/axios/scenes";
+import { createNewScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
 
 const SceneForm = () => {
     const navigate = useNavigate();
 
-    const handleAddNewScene = async (data: IScene) => {
+    const handleAddNewScene = async (data: IShortScene) => {
         try {
             await createNewScene(data);
         } catch (error) {
@@ -27,8 +27,7 @@ const SceneForm = () => {
                 <h1>Dodaj novu scenu</h1>
                 <div className="form-fields-container">
                     <Form
-                        onSubmit={(data: IScene) => handleAddNewScene(data)}
-                        initialValues={initScene}
+                        onSubmit={(data: IShortScene) => handleAddNewScene(data)}
                         render={({ handleSubmit }) => (
                             <form
                                 id="new-scene"

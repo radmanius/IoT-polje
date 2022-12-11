@@ -6,6 +6,25 @@
 }
 
 .iot-img {
-    width: 40vw;
+    width: 30vw;
     height: auto;
+    margin-bottom: 20px
+}
+
+.align-right-button{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.edit-button{
+    margin-top: 2%;
+    margin-right: 15%;
+    width: 8vw;
+}
+
+.delete-button {
+    margin-top: 1%;
+    margin-right: 15%;
+    background-color: red;
+    width: 8vw;
 }
