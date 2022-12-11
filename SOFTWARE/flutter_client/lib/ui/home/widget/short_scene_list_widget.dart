@@ -12,11 +12,10 @@ class ShortSceneListWidget extends ConsumerWidget {
           initial: () => const CircularProgressIndicator(),
           loading: () => const CircularProgressIndicator(),
           failure: (error) => Text(error.toString()),
-          success: (viewState) => Column(
-            children: List.generate(
-              viewState.shortScenes.length,
-              (index) => ShortSceneCard(viewState.shortScenes[index]),
-            ),
+          success: (viewState) => ListView.separated(
+            itemCount: viewState.shortScenes.length,
+            itemBuilder: (context, index) => ShortSceneCard(viewState.shortScenes[index]),
+            separatorBuilder: (BuildContext context, int index) => const Divider(),
           ),
         );
   }
