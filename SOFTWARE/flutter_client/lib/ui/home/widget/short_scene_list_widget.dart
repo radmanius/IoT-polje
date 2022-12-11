@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pdp2022/ui/home/provider/short_scene_list_provider.dart';
+import 'package:pdp2022/ui/home/provider/home_screen_presenter.dart';
 import 'package:pdp2022/ui/home/widget/short_scene_card.dart';
 
 class ShortSceneListWidget extends ConsumerWidget {

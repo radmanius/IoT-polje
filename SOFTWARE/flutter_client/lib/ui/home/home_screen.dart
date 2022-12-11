@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pdp2022/ui/home/provider/short_scene_list_provider.dart';
+import 'package:pdp2022/ui/home/provider/home_screen_presenter.dart';
 import 'package:pdp2022/ui/home/widget/short_scene_list_widget.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -22,52 +22,61 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Scenes",
+          'iOT vrt',
+          style: TextStyle(color: Colors.white),
         ),
         actions: [
           IconButton(
             onPressed: () {
               //TODO: go to account screen
             },
-            icon: const Icon(Icons.account_circle_outlined),
+            icon: const Icon(
+              Icons.account_circle_outlined,
+              color: Colors.white,
+            ),
           )
         ],
       ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: ListView(
             children: [
               const SizedBox(height: 20),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
                   labelText: 'Pretraga',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
                 ),
                 onChanged: (query) => ref.read(homeScreenPresenter.notifier).onSearch(query),
               ),
+              const SizedBox(height: 20),
               const Text('Filtriraj po tagovima:'),
               if (tags != null && selectedTags != null)
                 Wrap(
                   children: tags
                       .map(
-                        (e) => FilterChip(
-                          label: Text(e),
-                          selected: selectedTags.contains(e),
-                          showCheckmark: false,
-                          onSelected: (selected) => ref.read(homeScreenPresenter.notifier).onTagPressed(e, selected),
-                          elevation: 5,
-                          selectedColor: Theme.of(context).primaryColor,
-                          disabledColor: Colors.grey,
+                        (e) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 3),
+                          child: FilterChip(
+                            label: Text(e),
+                            selected: selectedTags.contains(e),
+                            showCheckmark: false,
+                            onSelected: (selected) => ref.read(homeScreenPresenter.notifier).onTagPressed(e, selected),
+                            elevation: 5,
+                            selectedColor: Theme.of(context).primaryColor,
+                            disabledColor: Colors.grey,
+                          ),
                         ),
                       )
                       .toList(),
                 ),
-              const Expanded(
-                child: ShortSceneListWidget(),
-              ),
+              const SizedBox(height: 20),
+              const Text('Scene:'),
+              const ShortSceneListWidget(),
+              const SizedBox(height: 10),
             ],
           ),
         ),
