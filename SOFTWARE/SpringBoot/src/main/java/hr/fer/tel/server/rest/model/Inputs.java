@@ -11,12 +11,12 @@ import javax.persistence.InheritanceType;
 public class Inputs {
 
 	@Id
-    @GeneratedValue
+	@GeneratedValue
 	private long id;
 	private InputType inputType;
 	private String name;
 	private String title;
-	
+
 	public Inputs(long id, InputType inputType, String name, String title) {
 		super();
 		this.id = id;
@@ -25,7 +25,7 @@ public class Inputs {
 		this.title = title;
 	}
 
-	public Inputs(){
+	public Inputs() {
 
 	}
 
@@ -60,6 +60,5 @@ public class Inputs {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
-	
+
 }

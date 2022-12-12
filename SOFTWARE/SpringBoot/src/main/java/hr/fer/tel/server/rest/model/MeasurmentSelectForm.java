@@ -27,12 +27,21 @@ public class MeasurmentSelectForm {
 	
 	@Convert(converter = BodyHelperJson.class)
     private Map<String, String> inputs;
+	
+//	@OneToOne(cascade = CascadeType.ALL)
+//    private Inputs inputs;
 
 	public MeasurmentSelectForm(Request submitSelectionRequest, Map<String, String> inputs) {
 		super();
 		this.submitSelectionRequest = submitSelectionRequest;
 		this.inputs = inputs;
 	}
+	
+//	public MeasurmentSelectForm(Request submitSelectionRequest, Inputs inputs) {
+//		super();
+//		this.submitSelectionRequest = submitSelectionRequest;
+//		this.inputs = inputs;
+//	}
 
 	public MeasurmentSelectForm() {
 	}
@@ -58,6 +67,14 @@ public class MeasurmentSelectForm {
 		this.submitSelectionRequest = submitSelectionRequest;
 	}
 
+//	public Inputs getInputs() {
+//		return inputs;
+//	}
+//
+//	public void setInputs(Inputs inputs) {
+//		this.inputs = inputs;
+//	}
+
 	public Map<String, String> getInputs() {
 		return inputs;
 	}
@@ -66,5 +83,6 @@ public class MeasurmentSelectForm {
 		this.inputs = inputs;
 	}
 
+	
 
 }

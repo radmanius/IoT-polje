@@ -13,12 +13,15 @@ public class StringInput extends Inputs {
 	private String defaultValue;
 	private String pattern;
 
-	public StringInput(String name, String title, String description, String defaultValue,
-			String pattern) {
+	public StringInput(String name, String title, String description, String defaultValue, String pattern) {
 		super(0, InputType.STRING, name, title);
 		this.description = description;
 		this.defaultValue = defaultValue;
 		this.pattern = pattern;
+	}
+
+	public StringInput() {
+
 	}
 
 	public String getDescription() {
@@ -44,6 +47,5 @@ public class StringInput extends Inputs {
 	public void setPattern(String pattern) {
 		this.pattern = pattern;
 	}
-	
-	
+
 }

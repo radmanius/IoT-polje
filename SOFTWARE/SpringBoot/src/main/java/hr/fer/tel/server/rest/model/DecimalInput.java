@@ -14,13 +14,16 @@ public class DecimalInput extends Inputs {
 	private Double min;
 	private Double max;
 
-	public DecimalInput(String name, String title, String description,
-			Double defaultValue, Double min, Double max) {
+	public DecimalInput(String name, String title, String description, Double defaultValue, Double min, Double max) {
 		super(0, InputType.DECIMAL, name, title);
 		this.description = description;
 		this.defaultValue = defaultValue;
 		this.min = min;
 		this.max = max;
+	}
+
+	public DecimalInput() {
+
 	}
 
 	public String getDescription() {

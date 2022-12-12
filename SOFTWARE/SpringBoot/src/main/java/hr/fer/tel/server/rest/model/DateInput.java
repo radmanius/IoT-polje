@@ -18,6 +18,10 @@ public class DateInput extends Inputs {
 		this.defaultValue = defaultValue;
 	}
 
+	public DateInput() {
+
+	}
+
 	public String getDescription() {
 		return description;
 	}

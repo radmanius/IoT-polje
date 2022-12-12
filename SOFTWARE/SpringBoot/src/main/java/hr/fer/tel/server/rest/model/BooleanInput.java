@@ -12,8 +12,7 @@ public class BooleanInput extends Inputs {
 	private String description;
 	private boolean defaultValue;
 
-	public BooleanInput(String name, String title, String description,
-			boolean defaultValue) {
+	public BooleanInput(String name, String title, String description, boolean defaultValue) {
 		super(0, InputType.BOOLEAN, name, title);
 		this.description = description;
 		this.defaultValue = defaultValue;

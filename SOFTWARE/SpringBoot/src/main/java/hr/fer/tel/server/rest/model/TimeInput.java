@@ -18,6 +18,10 @@ public class TimeInput extends Inputs {
 		this.defaultValue = defaultValue;
 	}
 
+	public TimeInput() {
+
+	}
+
 	public String getDescription() {
 		return description;
 	}

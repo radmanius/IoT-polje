@@ -14,13 +14,16 @@ public class IntegerInput extends Inputs {
 	private Integer min;
 	private Integer max;
 
-	public IntegerInput(String name, String title, String description,
-			Integer defaultValue, Integer min, Integer max) {
+	public IntegerInput(String name, String title, String description, Integer defaultValue, Integer min, Integer max) {
 		super(0, InputType.INTEGER, name, title);
 		this.description = description;
 		this.defaultValue = defaultValue;
 		this.min = min;
 		this.max = max;
+	}
+
+	public IntegerInput() {
+
 	}
 
 	public String getDescription() {
@@ -55,5 +58,4 @@ public class IntegerInput extends Inputs {
 		this.max = max;
 	}
 
-	
 }
