@@ -3,7 +3,7 @@
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    width: 400px;
+    width: 500px;
     margin: auto;
 }
 
@@ -14,5 +14,14 @@
 }
 
 .scene-form-buttons > button {
-    margin: 5px
+    margin: 10px;
+}
+
+.scene-label {
+    margin: 7px;
+    font-size: 20px;
+}
+
+.scene-field-form {
+    width: 30vw;
 }

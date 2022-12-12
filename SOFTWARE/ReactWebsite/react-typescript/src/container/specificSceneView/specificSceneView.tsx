@@ -2,10 +2,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import "./specificSceneView.scss";
 import { useCallback, useEffect, useState } from "react";
-import { IScene , IShortScene} from "models/scenes";
+import { IScene, IShortScene } from "models/scenes";
 import { PAGE_ROUTES } from "utils/paths";
 import { getSceneById } from "utils/axios/scenesApi";
-import Popup from "./deletePopup"
+import Popup from "./deletePopup";
 
 interface ILocationState {
     shortScene: IScene;
@@ -14,7 +14,6 @@ interface ILocationState {
 const SpecificSceneView = () => {
     const location = useLocation();
     const shortScene = (location.state as ILocationState)?.shortScene as IShortScene;
-    console.log(shortScene);
     const [scene, setScene] = useState<IScene>();
     const navigate = useNavigate();
 
@@ -24,10 +23,9 @@ const SpecificSceneView = () => {
         try {
             const res = await getSceneById(shortScene.id);
             setScene(res);
-            console.log(res);
         } catch (error) {
             //toast message
-            console.log(scene);
+            console.log("error");
         }
     }, []);
 
@@ -60,7 +58,7 @@ const SpecificSceneView = () => {
                             onClick={handleClickEdit}
                             label={"Uredi scenu"}
                         />
-                    </div>  
+                    </div>
                     <div className="align-right-button">
                         <Button
                             className="delete-button"
@@ -68,8 +66,12 @@ const SpecificSceneView = () => {
                             label={"Obriši scenu"}
                         />
                     </div>
-                    <Popup trigger={popup} setTrigger={setPopup} id={shortScene.id} />
-                        <h1>{scene.title}</h1>
+                    <Popup
+                        trigger={popup}
+                        setTrigger={setPopup}
+                        id={shortScene.id}
+                    />
+                    <h1>{scene.title}</h1>
                     <h3>{scene.subtitle}</h3>
                     <img
                         src={scene.pictureLink}

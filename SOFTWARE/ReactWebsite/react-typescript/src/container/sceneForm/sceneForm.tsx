@@ -1,23 +1,26 @@
 import { useNavigate } from "react-router-dom";
 import { Field, Form } from "react-final-form";
 import { InputText } from "primereact/inputtext";
-import { IShortScene } from "models/scenes";
+import { initScenes } from "models/scenes";
 import "./sceneForm.scss";
 import { Button } from "primereact/button";
-import { createNewScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
+import { editScene } from "utils/axios/scenesApi";
+import { MultiSelect } from "primereact/multiselect";
+import { tagsTypeOptions } from "models/tags";
+import { roleTypeOptions } from "models/role";
+import { keysTypeOptions } from "models/keys";
 
 const SceneForm = () => {
     const navigate = useNavigate();
 
-    const handleAddNewScene = async (data: IShortScene) => {
+    const handleAddNewScene = async (data: any) => {
         try {
-            await createNewScene(data);
+            await editScene(data);
         } catch (error) {
-            console.log("greška pri dodavanju nove scene");
-            //here toast message
+            console.log("error while adding new scene");
         } finally {
-            navigate(PAGE_ROUTES.AddNewScene);
+            navigate(PAGE_ROUTES.ShortSceneView);
         }
     };
 
@@ -27,7 +30,8 @@ const SceneForm = () => {
                 <h1>Dodaj novu scenu</h1>
                 <div className="form-fields-container">
                     <Form
-                        onSubmit={(data: IShortScene) => handleAddNewScene(data)}
+                        onSubmit={data => handleAddNewScene(data)}
+                        initialValues={initScenes}
                         render={({ handleSubmit }) => (
                             <form
                                 id="new-scene"
@@ -36,13 +40,17 @@ const SceneForm = () => {
                                 autoComplete="off"
                             >
                                 <Field
-                                    name="sceneTitle"
+                                    name="title"
+                                    className="scene-field-form"
                                     render={({ input }) => (
                                         <div>
-                                            <span>Naslov scene: </span>
+                                            <span>
+                                                <p className="scene-label">Naslov scene:</p>
+                                            </span>
                                             <span>
                                                 <InputText
-                                                    id="sceneTitle"
+                                                    id="title"
+                                                    className="scene-field-form"
                                                     {...input}
                                                 />
                                             </span>
@@ -50,13 +58,16 @@ const SceneForm = () => {
                                     )}
                                 />
                                 <Field
-                                    name="sceneSubtitle"
+                                    name="subtitle"
                                     render={({ input }) => (
                                         <div>
-                                            <span>Podnaslov scene: </span>
+                                            <span>
+                                                <p className="scene-label">Podnaslov scene:</p>
+                                            </span>
                                             <span>
                                                 <InputText
-                                                    id="sceneSubtitle"
+                                                    id="subtitle"
+                                                    className="scene-field-form"
                                                     {...input}
                                                 />
                                             </span>
@@ -67,11 +78,88 @@ const SceneForm = () => {
                                     name="pictureLink"
                                     render={({ input }) => (
                                         <div>
-                                            <span>Link slike scene: </span>
+                                            <span>
+                                                <p className="scene-label">Link slike scene:</p>
+                                            </span>
                                             <span>
                                                 <InputText
                                                     id="pictureLink"
+                                                    className="scene-field-form"
                                                     {...input}
+                                                />
+                                            </span>
+                                        </div>
+                                    )}
+                                />
+                                <Field
+                                    name="layout"
+                                    render={({ input }) => (
+                                        <div>
+                                            <span>
+                                                <p className="scene-label">Layout:</p>
+                                            </span>
+                                            <span>
+                                                <InputText
+                                                    id="layout"
+                                                    className="scene-field-form"
+                                                    {...input}
+                                                />
+                                            </span>
+                                        </div>
+                                    )}
+                                />
+                                <Field
+                                    name="tags"
+                                    render={({ input }) => (
+                                        <div>
+                                            <span>
+                                                <p className="scene-label">Tagovi:</p>
+                                            </span>
+                                            <span>
+                                                <MultiSelect
+                                                    id="tags"
+                                                    className="scene-field-form"
+                                                    {...input}
+                                                    options={tagsTypeOptions}
+                                                    filter
+                                                />
+                                            </span>
+                                        </div>
+                                    )}
+                                />
+                                <Field
+                                    name="roles"
+                                    render={({ input }) => (
+                                        <div>
+                                            <span>
+                                                <p className="scene-label">Rolovi:</p>
+                                            </span>
+                                            <span>
+                                                <MultiSelect
+                                                    id="roles"
+                                                    className="scene-field-form"
+                                                    {...input}
+                                                    options={roleTypeOptions}
+                                                    filter
+                                                />
+                                            </span>
+                                        </div>
+                                    )}
+                                />
+                                <Field
+                                    name="keys"
+                                    render={({ input }) => (
+                                        <div>
+                                            <span>
+                                                <p className="scene-label">Keys:</p>
+                                            </span>
+                                            <span>
+                                                <MultiSelect
+                                                    id="keys"
+                                                    className="scene-field-form"
+                                                    {...input}
+                                                    options={keysTypeOptions}
+                                                    filter
                                                 />
                                             </span>
                                         </div>

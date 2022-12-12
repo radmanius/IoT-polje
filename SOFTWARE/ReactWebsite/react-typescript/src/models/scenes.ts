@@ -43,9 +43,6 @@ export interface IKey{
     canDelete: boolean;
 }
 
-
-
-
 export interface ISceneOld {
     sceneId?: number;
     pictureLink: string;
@@ -54,39 +51,109 @@ export interface ISceneOld {
     layoutId?: number
 }
 
-export const initScene:ISceneOld = {
-    sceneTitle: "",
+export const initScenes = {
+    id: -1,
+    title: "",
+    subtitle: "",
     pictureLink: "",
-    sceneSubtitle: "",
-}
+    layout: "",
+    tags: [],
+    views: [],
+    roles: [],
+    keys: []
+};
 
-export const initScenes:ISceneOld[] = [
-    { 
-        sceneId: 1,
-        sceneTitle: "Scena 1",
-        sceneSubtitle: "podnaslov scene 1",
-        pictureLink: "https://Scena_1_link_slike",
-        layoutId: 23
-    },
-    { 
-        sceneId: 2,
-        sceneTitle: "Scena 2",
-        sceneSubtitle: "podnaslov scene 1",
-        pictureLink: "https://Scena_1_link_slike",
-        layoutId: 22
-    },
-    { 
-        sceneId: 3,
-        sceneTitle: "Scena 3",
-        sceneSubtitle: "podnaslov scene 1",
-        pictureLink: "https://Scena_1_link_slike",
-        layoutId: 12
-    },
-    { 
-        sceneId: 4,
-        sceneTitle: "Scena 4",
-        sceneSubtitle: "podnaslov scene 1",
-        pictureLink: "https://Scena_1_link_slike",
-        layoutId: 112
-    },
-]
+/*
+{
+    "id": -1,
+    title: "FER fer",
+    "subtitle": "zid wall 00",
+    "pictureLink": "http://example.com/some.png",
+    "layout": "list",
+    "tags": [
+        "fer",
+        "ferit"
+    ],
+    "views": [
+        {
+            "title": "view title",
+            "viewType": "single",
+            "measurementUnit": "C",
+            "selectForm": {
+                "id": 123,
+                "submitSelectionRequest": {
+                    "URI": "http://localhost:80/some/path/{{var1}}",
+                    "method": "GET",
+                    "headers": {
+                        "Authorization": "{{accessToken}} {{token1}} ...",
+                        "Content-Type": "application/csv",
+                        "...": null
+                    },
+                    "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+                },
+                "inputs": {
+                    "inputType": "boolean",
+                    "name": "string",
+                    "title": "string",
+                    "description": "string",
+                    "defaultValue": true
+                }
+            },
+            "query": {
+                "URI": "http://localhost:80/some/path/{{var1}}",
+                "method": "GET",
+                "headers": {
+                    "Authorization": "{{accessToken}} {{token1}} ...",
+                    "Content-Type": "application/csv",
+                    "...": null
+                },
+                "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+            },
+            "responseExtracting": {
+                "dataFormat": "csv",
+                "timeColumn": "_time",
+                "valueColumn": "_value"
+            }
+        },
+        {
+            "title": "view title",
+            "viewType": "actuation",
+            "form": {
+                "defaultValuesRequest": {
+                    "URI": "http://localhost:80/some/path/{{var1}}",
+                    "method": "GET",
+                    "headers": {
+                        "Authorization": "{{accessToken}} {{token1}} ...",
+                        "Content-Type": "application/csv",
+                        "...": null
+                    },
+                    "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+                },
+                "submitFormRequest": {
+                    "URI": "http://localhost:80/some/path/{{var1}}",
+                    "method": "GET",
+                    "headers": {
+                        "Authorization": "{{accessToken}} {{token1}} ...",
+                        "Content-Type": "application/csv",
+                        "...": null
+                    },
+                    "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+                },
+                "inputs": {
+                    "inputType": "boolean",
+                    "name": "string",
+                    "title": "string",
+                    "description": "string",
+                    "defaultValue": true
+                }
+            }
+        }
+    ],
+    "roles": [
+        "string"
+    ],
+    "keys": [
+        "string"
+    ]
+}
+*/ 
