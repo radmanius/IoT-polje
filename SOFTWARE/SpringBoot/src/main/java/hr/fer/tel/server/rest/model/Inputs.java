@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import hr.fer.tel.server.rest.dto.InputsDTO;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Inputs {
@@ -27,6 +29,11 @@ public class Inputs {
 
 	public Inputs() {
 
+	}
+
+	public Inputs(InputsDTO inputs) {
+
+		this(0, inputs.getInputType(), inputs.getName(), inputs.getTitle());
 	}
 
 	public long getId() {

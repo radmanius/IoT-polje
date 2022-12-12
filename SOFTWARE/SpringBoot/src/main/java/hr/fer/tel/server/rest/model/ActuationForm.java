@@ -44,7 +44,7 @@ public class ActuationForm {
 	public ActuationForm(ActuationFormDTO dto) {
 		this.defaultValuesRequest = new Request(dto.getDefaultValuesRequest());
 		this.submitFormRequest = new Request(dto.getSubmitFormRequest());
-		this.inputs = dto.getInputs();
+		this.inputs = new Inputs(dto.getInputs());
 		
 	}
 

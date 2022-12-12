@@ -11,10 +11,10 @@ public class ActuationFormDTO {
     
     private RequestDTO submitFormRequest;
         
-    private Inputs inputs;
+    private InputsDTO inputs;
 
 	public ActuationFormDTO(long id, RequestDTO defaultValuesRequest, RequestDTO submitFormRequest,
-			Inputs inputs) {
+			InputsDTO inputs) {
 		super();
 		this.id = id;
 		this.defaultValuesRequest = defaultValuesRequest;
@@ -50,11 +50,11 @@ public class ActuationFormDTO {
 		this.submitFormRequest = submitFormRequest;
 	}
 
-	public Inputs getInputs() {
+	public InputsDTO getInputs() {
 		return inputs;
 	}
 
-	public void setInputs(Inputs inputs) {
+	public void setInputs(InputsDTO inputs) {
 		this.inputs = inputs;
 	}
 	
@@ -62,7 +62,7 @@ public class ActuationFormDTO {
 		return new ActuationFormDTO(form.getId(), 
 				RequestDTO.of(form.getDefaultValuesRequest()), 
 				RequestDTO.of(form.getDefaultValuesRequest()),
-				null);
+				InputsDTO.of(form.getInputs()));
 	}
     
 }
