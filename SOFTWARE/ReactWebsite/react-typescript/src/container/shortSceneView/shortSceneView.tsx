@@ -9,12 +9,6 @@ import { Button } from "primereact/button";
 import { PAGE_ROUTES } from "utils/paths";
 import { getAllScenes } from "utils/axios/scenesApi";
 
-const cols = [
-    { field: "id", header: "ID kratke scene", sortable: false },
-    { field: "title", header: "Naslov scene", sortable: false },
-    { field: "subtitle", header: "Podnaslov scene", sortable: false },
-];
-
 const ShortSceneView = () => {
     //const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -23,8 +17,6 @@ const ShortSceneView = () => {
     const fetchShortScenes = useCallback(async () => {
         try {
             const res = await getAllScenes();
-            console.log(res);
-            //const res = await getShortScenes();
             setShortScene(res);
         } catch (error) {
             //toast message
@@ -70,16 +62,24 @@ const ShortSceneView = () => {
                         });
                     }}
                 >
-                    {cols.map(col => {
-                        return (
-                            <Column
-                                key={col.field}
-                                field={col.field}
-                                header={col.header}
-                                sortable={col.sortable}
-                            />
-                        );
-                    })}
+                    <Column
+                        key={"id"}
+                        field={"id"}
+                        header={"ID scene"}
+                        sortable={false}
+                    />
+                    <Column
+                        key={"title"}
+                        field={"title"}
+                        header={"Naslov scene"}
+                        sortable={true}
+                    />
+                    <Column
+                        key={"subtitle"}
+                        field={"subtitle"}
+                        header={"Podnaslov scene"}
+                        sortable={true}
+                    />
                 </DataTable>
             </div>
         </div>
