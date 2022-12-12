@@ -1,5 +1,9 @@
 package hr.fer.tel.server.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+
 import hr.fer.tel.server.rest.model.ActuationView;
 import hr.fer.tel.server.rest.model.BooleanInput;
 import hr.fer.tel.server.rest.model.DateInput;
@@ -11,6 +15,19 @@ import hr.fer.tel.server.rest.model.StringInput;
 import hr.fer.tel.server.rest.model.SubmitButton;
 import hr.fer.tel.server.rest.model.TimeInput;
 
+
+@JsonTypeInfo(
+	      use = JsonTypeInfo.Id.NAME, 
+	      include = As.PROPERTY, 
+	      visible = true,
+	      property = "inputType")
+	    @JsonSubTypes({
+	        @JsonSubTypes.Type(value = BooleanInputDTO.class, name = "BOOLEAN"),
+	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "mesurment"),
+	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "single"),
+	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "series")
+
+	    })
 public class InputsDTO {
 	private InputType inputType;
 	private String name;

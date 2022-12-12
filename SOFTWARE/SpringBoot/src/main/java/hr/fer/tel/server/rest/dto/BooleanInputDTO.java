@@ -1,8 +1,11 @@
 package hr.fer.tel.server.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import hr.fer.tel.server.rest.model.BooleanInput;
 import hr.fer.tel.server.rest.model.InputType;
 
+@JsonTypeName("boolean")
 public class BooleanInputDTO extends InputsDTO{
 
 	private String description;

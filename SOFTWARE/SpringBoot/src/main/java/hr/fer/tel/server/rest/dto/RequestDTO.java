@@ -7,9 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import hr.fer.tel.server.rest.model.Request;
 
 public class RequestDTO {
-	
-	private long id;
-    
+	    
     private String method;
     
     private String uri;
@@ -18,9 +16,8 @@ public class RequestDTO {
     
     private String payload;
 
-	public RequestDTO(long id, String method, String uri, Map<String, String> headers, String payload) {
+	public RequestDTO(String method, String uri, Map<String, String> headers, String payload) {
 		super();
-		this.id = id;
 		this.method = method;
 		this.uri = uri;
 		this.headers = headers;
@@ -29,14 +26,6 @@ public class RequestDTO {
 
 	public RequestDTO() {
 		
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getMethod() {
@@ -73,10 +62,9 @@ public class RequestDTO {
 	}
 	
 	public static RequestDTO of(Request request) {
-		long id = request.getId();
 		String metoda = request.getMethod();
 
-		return new RequestDTO(id, metoda, request.getUri(), request.getHeaders(), request.getPayload());
+		return new RequestDTO(metoda, request.getUri(), request.getHeaders(), request.getPayload());
 	}
 	
 }

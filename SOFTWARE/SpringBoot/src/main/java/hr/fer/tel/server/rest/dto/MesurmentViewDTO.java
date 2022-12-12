@@ -88,8 +88,13 @@ public class MesurmentViewDTO extends ViewDTO{
 		else {
 			extractor = DataExtractorDTO.of(view.getResponseExtracting());
 		}
+		
+		MesurmentViewDTO tmp = new MesurmentViewDTO(view.getMeasurementUnit(), form, req, extractor);
 
-		return new MesurmentViewDTO(view.getMeasurementUnit(), form, req, extractor);
+		tmp.setTitle(view.getTitle());
+		tmp.setViewType(view.getViewType());
+		
+		return tmp;
 	}
 	
 }

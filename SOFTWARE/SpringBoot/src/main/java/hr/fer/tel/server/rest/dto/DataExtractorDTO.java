@@ -3,9 +3,7 @@ package hr.fer.tel.server.rest.dto;
 import hr.fer.tel.server.rest.model.DataExtractor;
 
 public class DataExtractorDTO {
-	
-	private long id;
-    
+	    
     private String dataFormat;
     
     private String timeColumn;
@@ -23,13 +21,6 @@ public class DataExtractorDTO {
 
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getTimeColumn() {
 		return timeColumn;

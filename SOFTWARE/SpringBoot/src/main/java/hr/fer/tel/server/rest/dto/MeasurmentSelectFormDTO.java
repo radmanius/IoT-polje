@@ -8,9 +8,7 @@ import hr.fer.tel.server.rest.model.MesurmentView;
 import hr.fer.tel.server.rest.model.Request;
 
 public class MeasurmentSelectFormDTO {
-	
-	private long id;
-    
+	    
 	private RequestDTO submitSelectionRequest;
 	
     private InputsDTO inputs;
@@ -22,14 +20,6 @@ public class MeasurmentSelectFormDTO {
 	}
 
 	public MeasurmentSelectFormDTO() {
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public RequestDTO getSubmitSelectionRequest() {
