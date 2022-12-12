@@ -40,7 +40,7 @@ public class ActuationView extends View{
 	}
 	
 	public ActuationView(ActuationViewDTO dto) {
-		super(dto.getId(), dto.getTitle(), dto.getViewType());
+		super(0, dto.getTitle(), dto.getViewType());
 		
 		this.form = new ActuationForm(dto.getForm());
 

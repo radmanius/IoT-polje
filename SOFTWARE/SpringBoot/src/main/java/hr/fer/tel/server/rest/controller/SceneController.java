@@ -77,47 +77,8 @@ public class SceneController {
 	@GetMapping("/scene/{id}")
 	public ResponseEntity<SceneDTO> getScene(@PathVariable("id") Long id){
 		Scene scene = service.probaGetById(id);
-		List<TagDTO> tags = new ArrayList<>();
-		for (Tag tag : scene.getTags()) {
-			tags.add(new TagDTO(tag.getId(), tag.getName()));
-		}
 
-		List<ViewDTO> views = new ArrayList<>();
-		for (View temp : scene.getViews()) {
-			
-			if (temp instanceof ActuationView) {
-
-				ActuationView a = (ActuationView) temp;
-				ActuationViewDTO view1 = ActuationViewDTO.of(a);
-				views.add(view1);
-
-			}
-
-			if (temp instanceof MesurmentView) {
-
-				MesurmentView a = (MesurmentView) temp;
-				MesurmentViewDTO view1 = MesurmentViewDTO.of(a);
-				views.add(view1);
-
-			}
-			
-//			views.add(new ViewDTO(temp.getId(), temp.getTitle(), temp.getViewType()));
-		}
-
-		List<String> roles = new ArrayList<>();
-		for (Role role : scene.getRoles()) {
-			roles.add(role.getName());
-		}
-
-		List<String> keys = new ArrayList<>();
-		for (Key key : scene.getKeys()) {
-			keys.add(key.getName());
-		}
-
-		List<String> tagsss = scene.getTags().stream().map((tag) -> tag.getName()).toList();
-
-		SceneDTO sceneDTO = new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), new LayoutDTO(scene.getLayout().getId(), scene.getLayout().getName()),
-				scene.getPictureLink(), tagsss, views, roles, keys);
+		SceneDTO sceneDTO = SceneDTO.of(scene);
 
 		return ResponseEntity.status(HttpStatus.OK).body(sceneDTO);
 	}

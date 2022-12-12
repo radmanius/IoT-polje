@@ -55,7 +55,7 @@ public class MesurmentView extends View{
 	}
 	
 	public MesurmentView(MesurmentViewDTO dto) {
-		super(dto.getId(), dto.getTitle(), dto.getViewType());
+		super(0, dto.getTitle(), dto.getViewType());
 		
 		this.measurementUnit = dto.getMeasurementUnit();
 		this.selectForm = new MeasurmentSelectForm(dto.getSelectForm());

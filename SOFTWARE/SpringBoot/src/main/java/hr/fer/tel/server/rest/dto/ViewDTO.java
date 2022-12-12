@@ -24,16 +24,13 @@ import java.util.List;
 
 	    })
 public class ViewDTO {
-	
-	private long id;
-    
+
     private String title;
     
     private String viewType;
     
-	public ViewDTO(long id, String title, String viewType) {
+	public ViewDTO(String title, String viewType) {
 		super();
-		this.id = id;
 		this.title = title;
 		this.viewType = viewType;
 	}
@@ -41,14 +38,6 @@ public class ViewDTO {
 	
 	public ViewDTO() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getTitle() {
@@ -72,7 +61,7 @@ public class ViewDTO {
 	}
 
 	public static ViewDTO of(View view) {
-		return new ViewDTO(view.getId(), view.getTitle(), view.getViewType());
+		return new ViewDTO(view.getTitle(), view.getViewType());
 	}
     
 }

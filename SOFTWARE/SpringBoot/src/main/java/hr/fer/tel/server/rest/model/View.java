@@ -40,7 +40,6 @@ public class View {
     private Scene scene;
 
     public View(ViewDTO dto){
-    	this.id = dto.getId();
     	this.title = dto.getTitle();
     	this.viewType = dto.getViewType();
     }

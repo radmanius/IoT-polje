@@ -27,7 +27,12 @@ public class ActuationViewDTO extends ViewDTO{
 	}
 	
 	public static ActuationViewDTO of(ActuationView view) {
-		return new ActuationViewDTO(ActuationFormDTO.of(view.getForm()));
+
+		ActuationViewDTO tmp = new ActuationViewDTO(ActuationFormDTO.of(view.getForm()));
+
+		tmp.setTitle(view.getTitle());
+		tmp.setViewType(view.getViewType());
+		return tmp;
 	}
 	
 	

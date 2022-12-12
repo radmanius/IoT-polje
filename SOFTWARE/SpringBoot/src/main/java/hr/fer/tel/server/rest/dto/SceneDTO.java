@@ -7,26 +7,26 @@ import hr.fer.tel.server.rest.model.*;
 
 public class SceneDTO {
 
-    private long id;
+	private long id;
 
-    private String title;
+	private String title;
 
-    private String subtitle;
+	private String subtitle;
 
-    private LayoutDTO layout;
+	private String layout;
 
-    private String pictureLink;
+	private String pictureLink;
 
-    private List<String> tags = new ArrayList<>();
+	private List<String> tags = new ArrayList<>();
 
-    private List<ViewDTO> views = new ArrayList<>();
+	private List<ViewDTO> views = new ArrayList<>();
 
-    private List<String> roles = new ArrayList<>();
+	private List<String> roles = new ArrayList<>();
 
-    private List<String> keys = new ArrayList<>();
+	private List<String> keys = new ArrayList<>();
 
-	public SceneDTO(long id, String title, String subtitle, LayoutDTO layout, String pictureLink, List<String> tags,
-			List<ViewDTO> views, List<String> roles, List<String> keys) {
+	public SceneDTO(long id, String title, String subtitle, String layout, String pictureLink, List<String> tags,
+					List<ViewDTO> views, List<String> roles, List<String> keys) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -58,11 +58,11 @@ public class SceneDTO {
 		this.subtitle = subtitle;
 	}
 
-	public LayoutDTO getLayout() {
+	public String getLayout() {
 		return layout;
 	}
 
-	public void setLayout(LayoutDTO layout) {
+	public void setLayout(String layout) {
 		this.layout = layout;
 	}
 
@@ -118,7 +118,36 @@ public class SceneDTO {
 
 		List<String> tags = scene.getTags().stream().map((tag) -> tag.getName()).toList();
 
-		return new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), LayoutDTO.of(scene.getLayout()), scene.getPictureLink(),
-				tags, ViewDTO.of(scene.getViews()), RoleDTO.of(scene.getRoles()), KeyDTO.of(scene.getKeys()));
+		List<ViewDTO> views = new ArrayList<>();
+
+		for (View temp : scene.getViews()) {
+
+			if (temp instanceof ActuationView) {
+
+				ActuationView a = (ActuationView) temp;
+				ActuationViewDTO view1 = ActuationViewDTO.of(a);
+				views.add(view1);
+
+			}
+
+			if (temp instanceof MesurmentView) {
+
+				MesurmentView a = (MesurmentView) temp;
+				MesurmentViewDTO view1 = MesurmentViewDTO.of(a);
+				views.add(view1);
+
+			}
+
+		}
+
+		List<String> roles = new ArrayList<>();
+		for (Role role : scene.getRoles()) {
+			roles.add(role.getName());
+		}
+
+			return new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), scene.getLayout().getName(), scene.getPictureLink(),
+					tags, views, roles, KeyDTO.of(scene.getKeys()));
+		}
+
+
 	}
-}
