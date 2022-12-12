@@ -20,7 +20,7 @@ const ShortSceneView = () => {
             setShortScene(res);
         } catch (error) {
             //toast message
-            console.log("error");
+            console.log("error while fetching scenes");
         }
     }, []);
 

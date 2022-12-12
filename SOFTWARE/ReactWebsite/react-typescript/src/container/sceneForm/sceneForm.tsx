@@ -16,11 +16,9 @@ const SceneForm = () => {
 
     const handleAddNewScene = async (data: any) => {
         try {
-            console.log(data);
-            console.log(initScenes);
             await editScene(data);
         } catch (error) {
-            console.log("greška pri dodavanju nove scene");
+            console.log("error while adding new scene");
         } finally {
             navigate(PAGE_ROUTES.ShortSceneView);
         }

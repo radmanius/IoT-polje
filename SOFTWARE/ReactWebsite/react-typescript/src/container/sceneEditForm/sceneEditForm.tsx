@@ -66,16 +66,9 @@ const SceneEditForm = () => {
 
             data.roles.map(role => delete role.id);
             data.keys.map(key => delete key.id);
-
-            console.log("here");
-            console.log(data);
-            const response = await editScene(data);
-            console.log("response");
-            console.log(response);
+            await editScene(data);
         } catch (error) {
             console.log(error);
-            //console.log("greška pri dodavanju nove scene");
-            //here toast message
         } finally {
             await navigateToPreviousPage();
         }
