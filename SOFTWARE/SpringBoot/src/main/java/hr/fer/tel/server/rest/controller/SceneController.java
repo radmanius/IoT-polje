@@ -101,7 +101,7 @@ public class SceneController {
 
 			}
 			
-//			views.add(new View2DTO(view.getId(), view.getTitle(), view.getViewType()));
+//			views.add(new ViewDTO(temp.getId(), temp.getTitle(), temp.getViewType()));
 		}
 
 		List<String> roles = new ArrayList<>();

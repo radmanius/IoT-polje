@@ -19,9 +19,9 @@ public class ShortSceneDTO {
 	
 	String subtitle;
 	
-	List<TagDTO> tags;
+	List<String> tags;
 	
-	public ShortSceneDTO(long id, String title, String subtitle, List<TagDTO> tags) {
+	public ShortSceneDTO(long id, String title, String subtitle, List<String> tags) {
 		this.id = id;
 		this.title = title;
 		this.subtitle = subtitle;
@@ -41,12 +41,13 @@ public class ShortSceneDTO {
 		return subtitle;
 	}
 
-	public List<TagDTO> getTags() {
+	public List<String> getTags() {
 		return tags;
 	}
 
 	public static ShortSceneDTO of(Scene scene) {
-		return new ShortSceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), TagDTO.of(scene.getTags()));
+		List<String> tags = scene.getTags().stream().map((tag) -> tag.getName()).toList();
+		return new ShortSceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), tags);
 	}
 
 }
