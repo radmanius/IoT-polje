@@ -380,18 +380,8 @@ public class Scene {
 	private static View createFeritView(String viewTitle, String measurementUnit, String measurementType,
 			String sensorId) {
 		return new MesurmentView(viewTitle, "series", measurementUnit, new MeasurmentSelectForm(null, // submitSelectionRequest
-				// TODO ovo nije dobro
-				Map.of("string", """
-						{
-						  "inputType": "string",
-						  "name": "period",
-						  "title": "Period",
-						  "description": "period u kojem se prikazuje graf",
-						  "enum": [
-						    "24h", "7d", "30d"
-						  ]
-						}
-						""")),
+				new StringInput("string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")				
+				),
 				new Request("POST", // method
 						"https://iotat.tel.fer.hr:57786/api/v2/query?org=ferit", // uri
 						Map.of( // Map<String, String> headers,
@@ -499,18 +489,8 @@ public class Scene {
 	private static View createFerView(String viewTitle, String measurementUnit, String measurementType,
 			String sensorId) {
 		return new MesurmentView(viewTitle, "series", measurementUnit, new MeasurmentSelectForm(null, // submitSelectionRequest
-				// TODO ovo nije dobro
-				Map.of("string", """
-						{
-						  "inputType": "string",
-						  "name": "period",
-						  "title": "Period",
-						  "description": "period u kojem se prikazuje graf",
-						  "enum": [
-						    "24h", "7d", "30d"
-						  ]
-						}
-						""")),
+				new StringInput("string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")				
+				),
 				new Request("POST", // method
 						"https://iotat.tel.fer.hr:57786/api/v2/query?org=fer", // uri
 						Map.of( // Map<String, String> headers,
@@ -550,7 +530,8 @@ public class Scene {
 	}
 
 	public static MeasurmentSelectForm createMeasurementForm() {
-		MeasurmentSelectForm selectForm1 = new MeasurmentSelectForm(createRequestQuery(), createFormInputs());
+		MeasurmentSelectForm selectForm1 = new MeasurmentSelectForm(createRequestQuery(), 
+				new StringInput("string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\""));
 		return selectForm1;
 	}
 

@@ -2,6 +2,7 @@ package hr.fer.tel.server.rest.dto;
 
 import java.util.Map;
 
+import hr.fer.tel.server.rest.model.Inputs;
 import hr.fer.tel.server.rest.model.MeasurmentSelectForm;
 import hr.fer.tel.server.rest.model.MesurmentView;
 import hr.fer.tel.server.rest.model.Request;
@@ -12,9 +13,9 @@ public class MeasurmentSelectFormDTO {
     
 	private RequestDTO submitSelectionRequest;
 	
-    private Map<String, String> inputs;
+    private InputsDTO inputs;
 
-	public MeasurmentSelectFormDTO(RequestDTO submitSelectionRequest, Map<String, String> inputs) {
+	public MeasurmentSelectFormDTO(RequestDTO submitSelectionRequest, InputsDTO inputs) {
 		super();
 		this.submitSelectionRequest = submitSelectionRequest;
 		this.inputs = inputs;
@@ -39,11 +40,11 @@ public class MeasurmentSelectFormDTO {
 		this.submitSelectionRequest = submitSelectionRequest;
 	}
 
-	public Map<String, String> getInputs() {
+	public InputsDTO getInputs() {
 		return inputs;
 	}
 
-	public void setInputs(Map<String, String> inputs) {
+	public void setInputs(InputsDTO inputs) {
 		this.inputs = inputs;
 	}
 	
@@ -57,7 +58,7 @@ public class MeasurmentSelectFormDTO {
 			req = RequestDTO.of(form.getSubmitSelectionRequest());
 		}
 
-		return new MeasurmentSelectFormDTO(req, form.getInputs());
+		return new MeasurmentSelectFormDTO(req, InputsDTO.of(form.getInputs()));
 	}
 
 
