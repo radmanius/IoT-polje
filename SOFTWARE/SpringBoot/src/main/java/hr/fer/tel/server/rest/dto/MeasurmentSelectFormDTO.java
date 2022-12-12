@@ -4,6 +4,7 @@ import java.util.Map;
 
 import hr.fer.tel.server.rest.model.MeasurmentSelectForm;
 import hr.fer.tel.server.rest.model.MesurmentView;
+import hr.fer.tel.server.rest.model.Request;
 
 public class MeasurmentSelectFormDTO {
 	
@@ -47,7 +48,16 @@ public class MeasurmentSelectFormDTO {
 	}
 	
 	public static MeasurmentSelectFormDTO of(MeasurmentSelectForm form) {
-		return null;
+		RequestDTO req;
+
+		if (form.getSubmitSelectionRequest() == null) {
+			req = null;
+		}
+		else {
+			req = RequestDTO.of(form.getSubmitSelectionRequest());
+		}
+
+		return new MeasurmentSelectFormDTO(req, form.getInputs());
 	}
 
 

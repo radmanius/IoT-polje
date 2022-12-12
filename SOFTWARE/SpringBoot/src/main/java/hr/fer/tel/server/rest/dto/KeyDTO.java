@@ -1,5 +1,10 @@
 package hr.fer.tel.server.rest.dto;
 
+import hr.fer.tel.server.rest.model.Key;
+import hr.fer.tel.server.rest.model.Role;
+
+import java.util.List;
+
 public class KeyDTO {
 	
     private long id;
@@ -59,6 +64,14 @@ public class KeyDTO {
 
 	public void setCanDelete(boolean canDelete) {
 		this.canDelete = canDelete;
+	}
+
+	public static List<String> of(List<Key> keys) {
+		return keys.stream().map(key -> KeyDTO.of(key)).toList();
+	}
+
+	public static String of(Key key) {
+		return key.getName();
 	}
     
 }

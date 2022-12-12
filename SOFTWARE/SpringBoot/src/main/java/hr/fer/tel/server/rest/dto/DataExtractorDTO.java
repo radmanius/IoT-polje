@@ -56,7 +56,7 @@ public class DataExtractorDTO {
 	}
 	
 	public static DataExtractorDTO of(DataExtractor extractor) {
-		return null;
+		return new DataExtractorDTO(extractor.getDataFormat(), extractor.getTimeColumn(), extractor.getValueColumn());
 	}
     
 }

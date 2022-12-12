@@ -59,10 +59,24 @@ public class ActuationFormDTO {
 	}
 	
 	public static ActuationFormDTO of(ActuationForm form) {
-		return new ActuationFormDTO(form.getId(), 
-				RequestDTO.of(form.getDefaultValuesRequest()), 
-				RequestDTO.of(form.getDefaultValuesRequest()),
-				InputsDTO.of(form.getInputs()));
+
+		RequestDTO req1;
+		if (form.getDefaultValuesRequest() == null) {
+			req1 = null;
+		}
+		else {
+			req1 = RequestDTO.of(form.getDefaultValuesRequest());
+		}
+
+		RequestDTO req2;
+		if (form.getSubmitFormRequest() == null) {
+			req2 = null;
+		}
+		else {
+			req2 = RequestDTO.of(form.getDefaultValuesRequest());
+		}
+
+		return new ActuationFormDTO(form.getId(), req1, req2, InputsDTO.of(form.getInputs()));
 	}
     
 }

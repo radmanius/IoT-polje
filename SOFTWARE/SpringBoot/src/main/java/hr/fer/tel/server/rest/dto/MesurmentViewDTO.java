@@ -2,6 +2,7 @@ package hr.fer.tel.server.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import hr.fer.tel.server.rest.model.MeasurmentSelectForm;
 import hr.fer.tel.server.rest.model.MesurmentView;
 
 
@@ -63,7 +64,32 @@ public class MesurmentViewDTO extends ViewDTO{
 	}
 
 	public static MesurmentViewDTO of(MesurmentView view) {
-		return null;
+		RequestDTO req;
+
+		if (view.getQuery() == null) {
+			req = null;
+		}
+		else {
+			req = RequestDTO.of(view.getQuery());
+		}
+
+		MeasurmentSelectFormDTO form;
+		if(view.getSelectForm() == null) {
+			form = null;
+		}
+		else {
+			form = MeasurmentSelectFormDTO.of(view.getSelectForm());
+		}
+
+		DataExtractorDTO extractor;
+		if(view.getResponseExtracting() == null) {
+			extractor = null;
+		}
+		else {
+			extractor = DataExtractorDTO.of(view.getResponseExtracting());
+		}
+
+		return new MesurmentViewDTO(view.getMeasurementUnit(), form, req, extractor);
 	}
 	
 }

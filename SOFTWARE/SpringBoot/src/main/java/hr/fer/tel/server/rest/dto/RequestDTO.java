@@ -73,7 +73,10 @@ public class RequestDTO {
 	}
 	
 	public static RequestDTO of(Request request) {
-		return null;
+		long id = request.getId();
+		String metoda = request.getMethod();
+
+		return new RequestDTO(id, metoda, request.getUri(), request.getHeaders(), request.getPayload());
 	}
 	
 }

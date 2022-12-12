@@ -6,6 +6,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 import hr.fer.tel.server.rest.model.ActuationView;
 import hr.fer.tel.server.rest.model.MesurmentView;
+import hr.fer.tel.server.rest.model.Tag;
+import hr.fer.tel.server.rest.model.View;
+
+import java.util.List;
 
 @JsonTypeInfo(
 	      use = JsonTypeInfo.Id.NAME, 
@@ -61,7 +65,15 @@ public class ViewDTO {
 
 	public void setViewType(String viewType) {
 		this.viewType = viewType;
-	} 
+	}
+
+	public static List<ViewDTO> of(List<View> views) {
+		return views.stream().map(view -> ViewDTO.of(view)).toList();
+	}
+
+	public static ViewDTO of(View view) {
+		return new ViewDTO(view.getId(), view.getTitle(), view.getViewType());
+	}
     
 }
     

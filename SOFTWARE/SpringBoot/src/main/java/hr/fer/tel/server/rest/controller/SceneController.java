@@ -114,8 +114,10 @@ public class SceneController {
 			keys.add(key.getName());
 		}
 
+		List<String> tagsss = scene.getTags().stream().map((tag) -> tag.getName()).toList();
+
 		SceneDTO sceneDTO = new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), new LayoutDTO(scene.getLayout().getId(), scene.getLayout().getName()),
-				scene.getPictureLink(), tags, views, roles, keys);
+				scene.getPictureLink(), tagsss, views, roles, keys);
 
 		return ResponseEntity.status(HttpStatus.OK).body(sceneDTO);
 	}

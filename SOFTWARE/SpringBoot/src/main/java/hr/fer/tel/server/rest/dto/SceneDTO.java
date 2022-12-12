@@ -17,7 +17,7 @@ public class SceneDTO {
 
     private String pictureLink;
 
-    private List<TagDTO> tags = new ArrayList<>();
+    private List<String> tags = new ArrayList<>();
 
     private List<ViewDTO> views = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class SceneDTO {
 
     private List<String> keys = new ArrayList<>();
 
-	public SceneDTO(long id, String title, String subtitle, LayoutDTO layout, String pictureLink, List<TagDTO> tags,
+	public SceneDTO(long id, String title, String subtitle, LayoutDTO layout, String pictureLink, List<String> tags,
 			List<ViewDTO> views, List<String> roles, List<String> keys) {
 		super();
 		this.id = id;
@@ -74,11 +74,11 @@ public class SceneDTO {
 		this.pictureLink = pictureLink;
 	}
 
-	public List<TagDTO> getTags() {
+	public List<String> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<TagDTO> tags) {
+	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
 
@@ -114,7 +114,11 @@ public class SceneDTO {
 		this.id = id;
 	}
 
-//	public static SceneDTO of(Scene scene) {
-////		return new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), LayoutDTO.of( scene.getLayout() ), )
-//	}
+	public static SceneDTO of(Scene scene) {
+
+		List<String> tags = scene.getTags().stream().map((tag) -> tag.getName()).toList();
+
+		return new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), LayoutDTO.of(scene.getLayout()), scene.getPictureLink(),
+				tags, ViewDTO.of(scene.getViews()), RoleDTO.of(scene.getRoles()), KeyDTO.of(scene.getKeys()));
+	}
 }

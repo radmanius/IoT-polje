@@ -1,5 +1,10 @@
 package hr.fer.tel.server.rest.dto;
 
+import hr.fer.tel.server.rest.model.Role;
+import hr.fer.tel.server.rest.model.Tag;
+
+import java.util.List;
+
 public class RoleDTO {
 	
     private long id;
@@ -36,7 +41,13 @@ public class RoleDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-    
-    
+
+	public static List<String> of(List<Role> roles) {
+		return roles.stream().map(role -> RoleDTO.of(role)).toList();
+	}
+
+	public static String of(Role role) {
+		return role.getName();
+	}
 
 }
