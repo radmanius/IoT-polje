@@ -59,21 +59,17 @@ const SpecificSceneView = () => {
                                 label={"Natrag na prikaz kratkih scena"}
                             />
                         </div>
-                        <div>
-                            <div className="align-right-button">
-                                <Button
-                                    className="edit-button"
-                                    onClick={handleClickEdit}
-                                    label={"Uredi scenu"}
-                                />
-                            </div>
-                            <div className="align-right-button">
-                                <Button
-                                    className="delete-button"
-                                    onClick={handleClickDelete}
-                                    label={"Obriši scenu"}
-                                />
-                            </div>
+                        <div className="edit-and-delete-scene-btn">
+                            <Button
+                                className="edit-button"
+                                onClick={handleClickEdit}
+                                label={"Uredi scenu"}
+                            />
+                            <Button
+                                className="delete-button"
+                                onClick={handleClickDelete}
+                                label={"Obriši scenu"}
+                            />
                         </div>
                     </div>
                     <Popup
