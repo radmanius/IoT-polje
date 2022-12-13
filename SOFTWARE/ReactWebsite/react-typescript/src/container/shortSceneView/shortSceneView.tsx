@@ -28,6 +28,44 @@ const ShortSceneView = () => {
         fetchShortScenes();
     }, [fetchShortScenes]);
 
+    const handleDeleteScene = async (vehicle: IShortScene) => {
+        try {
+            console.log("Faza brisanja scene");
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleEditScene = async (scene: IShortScene) => {
+        navigate(PAGE_ROUTES.EditScene, { state: { scene } });
+    };
+
+    const actionColumnEdit = (rowData: IShortScene) => {
+        return (
+            <Button
+                icon="fa fa-pen-to-square"
+                className="p-button-outlined"
+                tooltip={"Uredi"}
+                onClick={() => {
+                    handleEditScene(rowData);
+                }}
+            />
+        );
+    };
+
+    const actionColumnDelete = (rowData: IShortScene) => {
+        return (
+            <Button
+                icon="fa fa-trash"
+                className="p-button-danger p-button-outlined"
+                tooltip={"Obriši"}
+                onClick={() => {
+                    handleDeleteScene(rowData);
+                }}
+            />
+        );
+    };
+
     return (
         <div className="short-scene-page">
             <div className="short-scene-header">
@@ -79,6 +117,18 @@ const ShortSceneView = () => {
                         field={"subtitle"}
                         header={"Podnaslov scene"}
                         sortable={true}
+                    />
+                    <Column
+                        key={"Edit"}
+                        field={"id"}
+                        header={"Uredi"}
+                        body={actionColumnEdit}
+                    />
+                    <Column
+                        key={"delete"}
+                        field={"id"}
+                        header={"Obriši"}
+                        body={actionColumnDelete}
                     />
                 </DataTable>
             </div>

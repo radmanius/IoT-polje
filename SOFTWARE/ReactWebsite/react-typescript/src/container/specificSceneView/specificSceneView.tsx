@@ -52,19 +52,29 @@ const SpecificSceneView = () => {
         <div className="scene-page">
             {scene && (
                 <div>
-                    <div className="align-right-button">
-                        <Button
-                            className="edit-button"
-                            onClick={handleClickEdit}
-                            label={"Uredi scenu"}
-                        />
-                    </div>
-                    <div className="align-right-button">
-                        <Button
-                            className="delete-button"
-                            onClick={handleClickDelete}
-                            label={"Obriši scenu"}
-                        />
+                    <div className="specific-scene-buttons-top">
+                        <div className="align-left-button">
+                            <Button
+                                onClick={() => navigate(PAGE_ROUTES.ShortSceneView)}
+                                label={"Natrag na prikaz kratkih scena"}
+                            />
+                        </div>
+                        <div>
+                            <div className="align-right-button">
+                                <Button
+                                    className="edit-button"
+                                    onClick={handleClickEdit}
+                                    label={"Uredi scenu"}
+                                />
+                            </div>
+                            <div className="align-right-button">
+                                <Button
+                                    className="delete-button"
+                                    onClick={handleClickDelete}
+                                    label={"Obriši scenu"}
+                                />
+                            </div>
+                        </div>
                     </div>
                     <Popup
                         trigger={popup}
@@ -80,12 +90,6 @@ const SpecificSceneView = () => {
                     />
                 </div>
             )}
-            <div>
-                <Button
-                    onClick={() => navigate(PAGE_ROUTES.ShortSceneView)}
-                    label={"Natrag na prikaz kratkih scena"}
-                />
-            </div>
         </div>
     );
 };

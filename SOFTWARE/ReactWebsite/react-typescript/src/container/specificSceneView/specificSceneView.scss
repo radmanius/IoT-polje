@@ -11,20 +11,31 @@
     margin-bottom: 20px
 }
 
-.align-right-button{
+.specific-scene-buttons-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.align-left-button {
+    display: flex;
+    justify-content: flex-start;
+    margin: 30px;
+}
+
+.align-right-button {
     display: flex;
     justify-content: flex-end;
 }
 
-.edit-button{
+.edit-button {
     margin-top: 2%;
     margin-right: 15%;
-    width: 8vw;
+    width: 10vw;
 }
 
 .delete-button {
     margin-top: 1%;
     margin-right: 15%;
     background-color: red;
-    width: 8vw;
+    width: 10vw;
 }
