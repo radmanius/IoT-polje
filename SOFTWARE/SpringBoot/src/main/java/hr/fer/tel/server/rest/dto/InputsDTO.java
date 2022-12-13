@@ -23,10 +23,12 @@ import hr.fer.tel.server.rest.model.TimeInput;
 	      property = "inputType")
 	    @JsonSubTypes({
 	        @JsonSubTypes.Type(value = BooleanInputDTO.class, name = "BOOLEAN"),
-	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "mesurment"),
-	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "single"),
-	        @JsonSubTypes.Type(value = MesurmentViewDTO.class, name = "series")
-
+	        @JsonSubTypes.Type(value = DateInputDTO.class, name = "DATE"),
+	        @JsonSubTypes.Type(value = DecimalInputDTO.class, name = "DECIMAL"),
+	        @JsonSubTypes.Type(value = IntegerInputDTO.class, name = "INTEGER"),
+	        @JsonSubTypes.Type(value = StringInputDTO.class, name = "STRING"),
+	        @JsonSubTypes.Type(value = SubmitButtonDTO.class, name = "SUBMIT"),
+	        @JsonSubTypes.Type(value = TimeInputDTO.class, name = "TIME")
 	    })
 public class InputsDTO {
 	private InputType inputType;

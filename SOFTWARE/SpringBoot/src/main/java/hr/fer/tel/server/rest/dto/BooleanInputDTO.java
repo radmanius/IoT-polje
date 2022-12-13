@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import hr.fer.tel.server.rest.model.BooleanInput;
 import hr.fer.tel.server.rest.model.InputType;
 
-@JsonTypeName("boolean")
+@JsonTypeName("BOOLEAN")
 public class BooleanInputDTO extends InputsDTO{
 
 	private String description;

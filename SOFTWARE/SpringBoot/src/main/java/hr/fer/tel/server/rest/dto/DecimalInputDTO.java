@@ -1,8 +1,12 @@
 package hr.fer.tel.server.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import hr.fer.tel.server.rest.model.DecimalInput;
 import hr.fer.tel.server.rest.model.InputType;
 
+
+@JsonTypeName("DECIMAL")
 public class DecimalInputDTO extends InputsDTO {
 
 	private String description;

@@ -1,8 +1,11 @@
 package hr.fer.tel.server.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import hr.fer.tel.server.rest.model.InputType;
 import hr.fer.tel.server.rest.model.StringInput;
 
+@JsonTypeName("STRING")
 public class StringInputDTO extends InputsDTO {
 
 	private String description;

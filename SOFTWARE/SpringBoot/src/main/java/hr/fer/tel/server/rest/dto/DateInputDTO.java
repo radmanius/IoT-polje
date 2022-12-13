@@ -1,9 +1,12 @@
 package hr.fer.tel.server.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import hr.fer.tel.server.rest.model.BooleanInput;
 import hr.fer.tel.server.rest.model.DateInput;
 import hr.fer.tel.server.rest.model.InputType;
 
+@JsonTypeName("DATE")
 public class DateInputDTO extends InputsDTO {
 
 	private String description;

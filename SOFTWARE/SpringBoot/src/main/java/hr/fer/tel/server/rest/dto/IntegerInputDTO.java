@@ -1,8 +1,12 @@
 package hr.fer.tel.server.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import hr.fer.tel.server.rest.model.InputType;
 import hr.fer.tel.server.rest.model.IntegerInput;
 
+
+@JsonTypeName("INTEGER")
 public class IntegerInputDTO extends InputsDTO {
 	
 	private String description;

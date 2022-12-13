@@ -15,6 +15,7 @@ public class Inputs {
 	@Id
 	@GeneratedValue
 	private long id;
+	
 	private InputType inputType;
 	private String name;
 	private String title;
