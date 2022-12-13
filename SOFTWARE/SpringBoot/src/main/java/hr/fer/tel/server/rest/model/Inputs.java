@@ -33,8 +33,10 @@ public class Inputs {
 	}
 
 	public Inputs(InputsDTO inputs) {
-
-		this(0, inputs.getInputType(), inputs.getName(), inputs.getTitle());
+//		this.inputType = inputs.getInputType();
+		this.name = inputs.getName();
+		this.title = inputs.getTitle();
+		//this(0, inputs.getInputType(), inputs.getName(), inputs.getTitle());
 	}
 
 	public long getId() {

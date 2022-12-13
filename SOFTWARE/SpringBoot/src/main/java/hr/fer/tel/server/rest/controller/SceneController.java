@@ -36,6 +36,7 @@ public class SceneController {
 	public ResponseEntity<SceneDTO> sceneEdit(@RequestBody String model) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
+
 		
 		SceneDTO scena = new SceneDTO();
 		

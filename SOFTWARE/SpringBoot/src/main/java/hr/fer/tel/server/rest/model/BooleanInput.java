@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import hr.fer.tel.server.rest.dto.BooleanInputDTO;
+
 @Entity
 @Table(name = "BooleanInput")
 public class BooleanInput extends Inputs {
@@ -17,7 +19,13 @@ public class BooleanInput extends Inputs {
 		this.description = description;
 		this.defaultValue = defaultValue;
 	}
-
+	
+	public BooleanInput(BooleanInputDTO input) {
+		super(0, InputType.BOOLEAN, input.getName(), input.getTitle());
+		this.description = input.getDescription();
+		this.defaultValue = input.isDefaultValue();
+	}
+	
 	public BooleanInput() {
 	}
 

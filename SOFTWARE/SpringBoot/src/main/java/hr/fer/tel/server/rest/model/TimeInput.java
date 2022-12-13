@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import hr.fer.tel.server.rest.dto.BooleanInputDTO;
+import hr.fer.tel.server.rest.dto.TimeInputDTO;
+
 @Entity
 @Table(name = "TimeInput")
 public class TimeInput extends Inputs {
@@ -16,6 +19,12 @@ public class TimeInput extends Inputs {
 		super(0, InputType.TIME, name, title);
 		this.description = description;
 		this.defaultValue = defaultValue;
+	}
+	
+	public TimeInput(TimeInputDTO input) {
+		super(0, InputType.BOOLEAN, input.getName(), input.getTitle());
+		this.description = input.getDescription();
+		this.defaultValue = input.getDefaultValue();
 	}
 
 	public TimeInput() {

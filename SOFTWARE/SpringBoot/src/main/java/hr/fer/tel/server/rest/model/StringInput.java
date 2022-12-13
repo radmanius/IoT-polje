@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import hr.fer.tel.server.rest.dto.BooleanInputDTO;
+import hr.fer.tel.server.rest.dto.StringInputDTO;
+
 @Entity
 @Table(name = "StringInput")
 public class StringInput extends Inputs {
@@ -18,6 +21,13 @@ public class StringInput extends Inputs {
 		this.description = description;
 		this.defaultValue = defaultValue;
 		this.pattern = pattern;
+	}
+	
+	public StringInput(StringInputDTO input) {
+		super(0, InputType.BOOLEAN, input.getName(), input.getTitle());
+		this.description = input.getDescription();
+		this.defaultValue = input.getDefaultValue();
+		this.pattern = input.getPattern();
 	}
 
 	public StringInput() {

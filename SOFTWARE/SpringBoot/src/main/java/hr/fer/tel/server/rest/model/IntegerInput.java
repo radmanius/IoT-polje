@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import hr.fer.tel.server.rest.dto.BooleanInputDTO;
+import hr.fer.tel.server.rest.dto.IntegerInputDTO;
+
 @Entity
 @Table(name = "IntegerInput")
 public class IntegerInput extends Inputs {
@@ -20,6 +23,14 @@ public class IntegerInput extends Inputs {
 		this.defaultValue = defaultValue;
 		this.min = min;
 		this.max = max;
+	}
+	
+	public IntegerInput(IntegerInputDTO input) {
+		super(0, InputType.BOOLEAN, input.getName(), input.getTitle());
+		this.description = input.getDescription();
+		this.defaultValue = input.getDefaultValue();
+		this.min = input.getMin();
+		this.max = input.getMax();
 	}
 
 	public IntegerInput() {

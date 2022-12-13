@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import hr.fer.tel.server.rest.dto.BooleanInputDTO;
+import hr.fer.tel.server.rest.dto.DateInputDTO;
+
 @Entity
 @Table(name = "DateInput")
 public class DateInput extends Inputs {
@@ -18,6 +21,12 @@ public class DateInput extends Inputs {
 		this.defaultValue = defaultValue;
 	}
 
+	public DateInput(DateInputDTO input) {
+		super(0, InputType.BOOLEAN, input.getName(), input.getTitle());
+		this.description = input.getDescription();
+		this.defaultValue = input.getDefaultValue();
+	}
+	
 	public DateInput() {
 
 	}

@@ -37,7 +37,7 @@ public class InputsDTO {
 
 	public InputsDTO(InputType inputType, String name, String title) {
 		super();
-		this.inputType = inputType;
+//		this.inputType = inputType;
 		this.name = name;
 		this.title = title;
 	}
