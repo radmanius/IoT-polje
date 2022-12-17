@@ -98,6 +98,15 @@ const SceneEditForm = () => {
         await handleEditScene(scene);
     };
 
+    const handleOdustani = async (e: any) => {
+        if (location.state.from) {
+            navigate(location.state.from);
+        }
+        else {
+            await navigateToPreviousPage();
+        }
+    };
+
     return (
         <div className="scene-form-container-edit">
             {scene && (
@@ -181,7 +190,7 @@ const SceneEditForm = () => {
                                         <Button
                                             label="Odustani"
                                             type="button"
-                                            onClick={() => navigateToPreviousPage()}
+                                            onClick={e => handleOdustani(e)}
                                         />
                                     </div>
                                 </form>

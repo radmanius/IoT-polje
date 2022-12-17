@@ -7,12 +7,15 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { PAGE_ROUTES } from "utils/paths";
-import { getAllScenes } from "utils/axios/scenesApi";
+import { getAllScenes, getSceneById } from "utils/axios/scenesApi";
+import Popup from "container/specificSceneView/deletePopup";
 
 const ShortSceneView = () => {
     //const dispatch = useDispatch();
     const navigate = useNavigate();
     const [shortScene, setShortScene] = useState<IShortScene[]>();
+    const [popup, setPopup] = useState<Boolean>(false);
+    const [popupId, setPopupId] = useState<Number>();
 
     const fetchShortScenes = useCallback(async () => {
         try {
@@ -28,16 +31,24 @@ const ShortSceneView = () => {
         fetchShortScenes();
     }, [fetchShortScenes]);
 
-    const handleDeleteScene = async (vehicle: IShortScene) => {
-        try {
-            console.log("Faza brisanja scene");
-        } catch (error) {
-            console.log(error);
-        }
+    const handleDeleteScene = async (scene: IShortScene) => {
+        setPopupId(scene.id);
+        setPopup(true);
     };
 
     const handleEditScene = async (scene: IShortScene) => {
-        navigate(PAGE_ROUTES.EditScene, { state: { scene } });
+        try {
+            const res = await getSceneById(scene.id);
+            navigate(PAGE_ROUTES.EditScene, {
+                state: {
+                    scene: res,
+                    from: PAGE_ROUTES.ShortSceneView
+                }
+            });
+        }
+        catch {
+            console.log("Error");
+        }
     };
 
     const actionColumnEdit = (rowData: IShortScene) => {
@@ -85,6 +96,11 @@ const ShortSceneView = () => {
                     />
                 </div>
             </div>
+            <Popup
+                trigger={popup}
+                setTrigger={setPopup}
+                id={popupId}
+            />
             <div className="short-scene-table">
                 <DataTable
                     resizableColumns
