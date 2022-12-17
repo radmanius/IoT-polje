@@ -6,6 +6,8 @@ environment:
   sdk: ">=2.16.0 <3.0.0"
 
 dependencies:
+
+  charts_painter: 3.0.0
   flutter:
     sdk: flutter
 
