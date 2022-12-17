@@ -17,7 +17,7 @@ const SpecificSceneView = () => {
     const [scene, setScene] = useState<IScene>();
     const navigate = useNavigate();
 
-    const [popup, setPopup] = useState(false);
+    const [popup, setPopup] = useState<Boolean>(false);
 
     const fetchScene = useCallback(async () => {
         try {
