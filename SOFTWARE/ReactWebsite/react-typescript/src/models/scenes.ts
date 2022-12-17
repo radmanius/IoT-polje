@@ -1,3 +1,7 @@
+//import { IView } from "./viewsInterfaces/views";
+
+
+
 export interface IShortScene{
     id: number;
     title: string;
@@ -21,35 +25,20 @@ export interface IScene{
     keys: any[];
 }
 
-export interface ISceneLayout{
-    id?: number;
-    name: string;
-}
+// export interface IScene{
+//     id: number;
+//     title: string;
+//     subtitle: string;
+//     pictureLink: string;
+//     layout: "list"|"grid";
+//     tags: string[];
+//     views: IView[];
+//     roles: string[];
+//     keys: string[];
+// }
 
-export interface ITag{
-    id?: number;
-    name: string;
-}
 
-export interface IRole{
-    id?: number;
-    name: string;
-}
 
-export interface IKey{
-    id?: number;
-    name: string;
-    value: unknown;
-    canDelete: boolean;
-}
-
-export interface ISceneOld {
-    sceneId?: number;
-    pictureLink: string;
-    sceneSubtitle: string;
-    sceneTitle: string;
-    layoutId?: number
-}
 
 export const initScenes = {
     id: -1,
