@@ -6,13 +6,23 @@ import "./sceneForm.scss";
 import { Button } from "primereact/button";
 import { PAGE_ROUTES } from "utils/paths";
 import { editScene } from "utils/axios/scenesApi";
-import { MultiSelect } from "primereact/multiselect";
+import { Multiselect } from "multiselect-react-dropdown";
 import { tagsTypeOptions } from "models/tags";
 import { roleTypeOptions } from "models/role";
 import { keysTypeOptions } from "models/keys";
+import { useRef } from "react";
 
 const SceneForm = () => {
     const navigate = useNavigate();
+
+    const multiselectRefTags = useRef<any>();
+    const multiselectRefRoles = useRef<any>();
+    const multiselectRefKeys = useRef<any>();
+
+    //multiselectRefTags.current.getSelectedItems() DOHVACA SVE TAGOVE KOJE JE KORISNIK ODABRAO
+    //multiselectRefRoles.current.getSelectedItems() DOHVACA SVE ROLOVE KOJE JE KORISNIK ODABRAO
+    //multiselectRefKeys.current.getSelectedItems() DOHVACA SVE KLJUCEVE KOJE JE KORISNIK ODABRAO
+
 
     const handleAddNewScene = async (data: any) => {
         try {
@@ -115,15 +125,16 @@ const SceneForm = () => {
                                             <span>
                                                 <p className="scene-label">Tagovi:</p>
                                             </span>
-                                            <span>
-                                                <MultiSelect
+                                            <div className="multiSelectWrapper">
+                                                <Multiselect
                                                     id="tags"
                                                     className="scene-field-form"
-                                                    {...input}
+                                                    showArrow
                                                     options={tagsTypeOptions}
-                                                    filter
+                                                    displayValue="value"
+                                                    ref={multiselectRefTags}
                                                 />
-                                            </span>
+                                            </div>
                                         </div>
                                     )}
                                 />
@@ -134,15 +145,16 @@ const SceneForm = () => {
                                             <span>
                                                 <p className="scene-label">Rolovi:</p>
                                             </span>
-                                            <span>
-                                                <MultiSelect
+                                            <div className="multiSelectWrapper">
+                                                <Multiselect
                                                     id="roles"
                                                     className="scene-field-form"
-                                                    {...input}
+                                                    showArrow
                                                     options={roleTypeOptions}
-                                                    filter
+                                                    displayValue="value"
+                                                    ref={multiselectRefRoles}
                                                 />
-                                            </span>
+                                            </div>
                                         </div>
                                     )}
                                 />
@@ -153,15 +165,16 @@ const SceneForm = () => {
                                             <span>
                                                 <p className="scene-label">Keys:</p>
                                             </span>
-                                            <span>
-                                                <MultiSelect
+                                            <div className="multiSelectWrapper">
+                                                <Multiselect
                                                     id="keys"
                                                     className="scene-field-form"
-                                                    {...input}
+                                                    showArrow
                                                     options={keysTypeOptions}
-                                                    filter
+                                                    displayValue="value"
+                                                    ref={multiselectRefKeys}
                                                 />
-                                            </span>
+                                            </div>
                                         </div>
                                     )}
                                 />
@@ -175,6 +188,7 @@ const SceneForm = () => {
                                     <Button
                                         label="Odustani"
                                         onClick={() => navigate(PAGE_ROUTES.ShortSceneView)}
+                                        //onClick={ () => console.log(multiselectRef.current.getSelectedItems())}
                                     />
                                 </div>
                             </form>

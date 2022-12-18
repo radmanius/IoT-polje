@@ -62,7 +62,7 @@ const ShortSceneView = () => {
             <Button
                 icon="fa fa-pen-to-square"
                 className="p-button-outlined"
-                tooltip={"Uredi"}
+                //tooltip={"Uredi"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
                 onClick={() => {
                     handleEditScene(rowData);
                 }}
@@ -88,7 +88,7 @@ const ShortSceneView = () => {
             <Button
                 icon="fa fa-trash"
                 className="p-button-danger p-button-outlined"
-                tooltip={"Obriši"}
+                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
                 onClick={() => {
                     handleDeleteScene(rowData);
                 }}
