@@ -1,7 +1,7 @@
 package hr.fer.tel.server.rest.service;
 
 import hr.fer.tel.server.rest.model.*;
-import hr.fer.tel.server.rest.repository.dao.Scene2Repository;
+import hr.fer.tel.server.rest.repository.dao.SceneRepository;
 import hr.fer.tel.server.rest.utils.KeycloakSecurityConfig;
 import hr.fer.tel.server.rest.utils.NoSuchElement;
 
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class SceneService {
 
     @Autowired
-    private Scene2Repository sceneRepository;
+    private SceneRepository sceneRepository;
 
     //Find and return scene by id without roles
     public Scene fetch(Long id) {
@@ -28,6 +28,10 @@ public class SceneService {
     //Find and return scene by id
     public Optional<Scene> findById(Long id) {
         return sceneRepository.findById(id);
+    }
+    
+    public boolean checkIfExists(Long id) {
+    	return findById(id).isPresent();
     }
 
     //get all scenesDTO - OK - OK

@@ -2,7 +2,6 @@ package hr.fer.tel.server.rest.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -15,12 +14,9 @@ import hr.fer.tel.server.rest.dto.KeyDTO;
 @Table(name = "Key")
 public class Key {
 
-    @Id
-    @GeneratedValue
-    private long id;
-
     private String name;
 
+    @Id
     private String value;
 
     private boolean canDelete;
@@ -62,16 +58,6 @@ public class Key {
 //    public Scene getScene() {
 //		return this.scene;
 //	}
-
-
-	public long getId() {
-		return id;
-	}
-
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 
 	public String getName() {

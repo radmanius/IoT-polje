@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface Scene2Repository extends JpaRepository<Scene, Long> {
+public interface SceneRepository extends JpaRepository<Scene, Long> {
 
 
 }

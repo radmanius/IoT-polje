@@ -1,5 +1,6 @@
 package hr.fer.tel.server.rest.service;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,19 +13,43 @@ import hr.fer.tel.server.rest.repository.dao.KeyRepository;
 @Service
 public class KeyService {
 
-  private final KeyRepository keyRepository;
-
-  private final SceneService sceneService;
-
   @Autowired
-  public KeyService(KeyRepository keyRepository, SceneService sceneService) {
-    this.keyRepository = keyRepository;
-    this.sceneService = sceneService;
-  }
+  private KeyRepository keyRepository;
 
+  @SuppressWarnings("unused")
+  @Autowired
+  private  SceneService sceneService;
+
+  
+  public Optional<Key> findById(String value) {
+      return keyRepository.findById(value);
+  }
+  
+  public boolean checkIfExists(String value) {
+  	return findById(value).isPresent();
+  }
+  
   public Set<Key> getAll() {
     return keyRepository.findAll().stream()
       .collect(Collectors.toSet());
   }
+
+public Key ProbaDeleteKeyById(String value) {
+	
+	Key key = this.findById(value).get();
+	
+	keyRepository.delete(key);
+	
+	return key;
+}
+
+public Key ProbaAdd(Key key) {
+		
+	keyRepository.save(key);
+	
+	return key;
+}
+  
+  
 
 }
