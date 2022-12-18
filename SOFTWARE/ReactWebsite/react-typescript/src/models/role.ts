@@ -5,6 +5,6 @@ export interface IRole {
 }
 
 export const roleTypeOptions: any[] = [
-    { label: "Fer", value: "fer" },
-    { label: "Ferit", value: "ferit" },
+    { label: "Fer", name: "fer" },
+    { label: "Ferit", name: "ferit" },
 ];

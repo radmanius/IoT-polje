@@ -6,8 +6,12 @@ import "./sceneEditForm.scss";
 import { Button } from "primereact/button";
 import { editScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getAllScenes } from "utils/axios/scenesApi";
+import Multiselect from "multiselect-react-dropdown";
+import { tagsTypeOptions } from "models/tags";
+import { roleTypeOptions } from "models/role";
+import { keysTypeOptions } from "models/keys";
 
 interface ILocationState {
     scene: IScene;
@@ -17,6 +21,11 @@ const SceneEditForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [scene, setScene] = useState<IScene>((location.state as ILocationState)?.scene as IScene);
+
+    
+    const multiselectRefTags = useRef<any>();
+    const multiselectRefRoles = useRef<any>();
+    const multiselectRefKeys = useRef<any>();
 
     const navigateToPreviousPage = async () => {
         try {
@@ -35,15 +44,10 @@ const SceneEditForm = () => {
 
     const handleEditScene = async (data: IScene) => {
         try {
-            for (let i = 0; i < data.tags.length; i++) {
-                data.tags[i] = data.tags[i].name;
-            }
-            for (let i = 0; i < data.keys.length; i++) {
-                data.keys[i] = data.keys[i].name;
-            }
-            for (let i = 0; i < data.roles.length; i++) {
-                data.roles[i] = data.roles[i].name;
-            }
+
+            data.tags = multiselectRefTags.current.getSelectedItems().map((item: any) => item.name);
+            data.roles = multiselectRefRoles.current.getSelectedItems().map((item: any) => item.name);
+            data.keys = multiselectRefKeys.current.getSelectedItems().map((item: any) => item.name);
 
             data.layout = data.layout.name;
             data.views.map(view => {
@@ -63,9 +67,6 @@ const SceneEditForm = () => {
                     }
                 }
             });
-
-            data.roles.map(role => delete role.id);
-            data.keys.map(key => delete key.id);
             await editScene(data);
         } catch (error) {
             console.log(error);
@@ -75,6 +76,7 @@ const SceneEditForm = () => {
     };
 
     const handleChange = (e: any) => {
+
         if (e.target.id === "title") {
             setScene({
                 ...scene,
@@ -89,6 +91,11 @@ const SceneEditForm = () => {
             setScene({
                 ...scene,
                 pictureLink: e.target.value,
+            });
+        } else if (e.target.id === "layout") {
+            setScene({
+                ...scene,
+                layout: {...scene.layout, name: e.target.value},
             });
         }
     };
@@ -108,7 +115,7 @@ const SceneEditForm = () => {
     };
 
     return (
-        <div className="scene-form-container-edit">
+        <div className="scene-form-container">
             {scene && (
                 <div>
                     <h1>Uredi scenu {scene.id}</h1>
@@ -126,10 +133,13 @@ const SceneEditForm = () => {
                                         name="title"
                                         render={({ input }) => (
                                             <div>
-                                                <span>Naslov scene: </span>
+                                                <span>
+                                                    <p className="scene-label">Naslov scene:</p>
+                                                </span>
                                                 <span>
                                                     <InputText
                                                         id="title"
+                                                        className="scene-field-form"
                                                         {...input}
                                                         onChange={e => handleChange(e)}
                                                         onKeyPress={e => {
@@ -145,10 +155,13 @@ const SceneEditForm = () => {
                                         name="subtitle"
                                         render={({ input }) => (
                                             <div>
-                                                <span>Podnaslov scene: </span>
+                                                <span>
+                                                    <p className="scene-label">Podnaslov scene:</p>
+                                                </span>
                                                 <span>
                                                     <InputText
                                                         id="subtitle"
+                                                        className="scene-field-form"
                                                         {...input}
                                                         onChange={e => handleChange(e)}
                                                         onKeyPress={e => {
@@ -164,10 +177,13 @@ const SceneEditForm = () => {
                                         name="pictureLink"
                                         render={({ input }) => (
                                             <div>
-                                                <span>Link slike scene: </span>
+                                                <span>
+                                                    <p className="scene-label">Link slike scene: </p>
+                                                </span>
                                                 <span>
                                                     <InputText
                                                         id="pictureLink"
+                                                        className="scene-field-form"
                                                         {...input}
                                                         onChange={e => handleChange(e)}
                                                         onKeyPress={e => {
@@ -179,7 +195,91 @@ const SceneEditForm = () => {
                                             </div>
                                         )}
                                     />
-
+                                    <Field
+                                        name="layout"
+                                        render={({ input }) => (
+                                            <div>
+                                                <span>
+                                                    <p className="scene-label">Layout:</p>
+                                                </span>
+                                                <span>
+                                                    <InputText
+                                                        id="layout"
+                                                        className="scene-field-form"
+                                                        {...input}
+                                                        value={scene.layout.name}
+                                                        onChange={e => handleChange(e)}
+                                                        onKeyPress={e => {
+                                                            e.key === "Enter" && handleClick(e);
+                                                        }}
+                                                    />
+                                                </span>
+                                            </div>
+                                        )}
+                                />
+                                    <Field
+                                        name="tags"
+                                        render={({ input }) => (
+                                            <div>
+                                                <span>
+                                                    <p className="scene-label">Tagovi:</p>
+                                                </span>
+                                                <div className="multiSelectWrapper">
+                                                    <Multiselect
+                                                        id="tags"
+                                                        className="scene-field-form"
+                                                        showArrow
+                                                        options={tagsTypeOptions}
+                                                        displayValue="name"
+                                                        selectedValues={scene.tags}
+                                                        ref={multiselectRefTags}
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                    />
+                                    <Field
+                                        name="roles"
+                                        render={({ input }) => (
+                                            <div>
+                                                <span>
+                                                    <p className="scene-label">Rolovi:</p>
+                                                </span>
+                                                <div className="multiSelectWrapper">
+                                                    <Multiselect
+                                                        id="roles"
+                                                        className="scene-field-form"
+                                                        showArrow
+                                                        options={roleTypeOptions}
+                                                        displayValue="name"
+                                                        selectedValues={scene.roles}
+                                                        ref={multiselectRefRoles}
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                    />
+                                    <Field
+                                        name="keys"
+                                        render={({ input }) => (
+                                            <div>
+                                                <span>
+                                                    <p className="scene-label">Keys:</p>
+                                                </span>
+                                                <div className="multiSelectWrapper">
+                                                    <Multiselect
+                                                        id="keys"
+                                                        className="scene-field-form"
+                                                        showArrow
+                                                        options={keysTypeOptions}
+                                                        displayValue="name"
+                                                        selectedValues={scene.keys}
+                                                        ref={multiselectRefKeys}
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                    />
                                     <div className="scene-form-buttons">
                                         <Button
                                             label="Dodaj"

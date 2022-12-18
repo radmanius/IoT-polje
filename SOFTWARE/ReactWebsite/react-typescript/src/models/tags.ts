@@ -1,4 +1,6 @@
 export const tagsTypeOptions: any[] = [
-    { label: "Fer", value: "fer" },
-    { label: "Ferit", value: "ferit" },
+    { label: "Fer", name: "fer" },
+    { label: "Ferit", name: "ferit" },
+    { label: "Paprika", name: "paprika" },
+    { label: "Svi senzori", name: "svi senzori" },
 ];
