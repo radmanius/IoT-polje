@@ -16,6 +16,7 @@ const ShortSceneView = () => {
     const [shortScene, setShortScene] = useState<IShortScene[]>();
     const [popup, setPopup] = useState<Boolean>(false);
     const [popupId, setPopupId] = useState<Number>();
+    const [searchInput, setSearchInput] = useState("");
 
     const fetchShortScenes = useCallback(async () => {
         try {
@@ -51,6 +52,11 @@ const ShortSceneView = () => {
         }
     };
 
+    const handleChange = (e:any) => {
+        e.preventDefault();
+        setSearchInput(e.target.value);
+    };
+    
     const actionColumnEdit = (rowData: IShortScene) => {
         return (
             <Button
@@ -63,6 +69,19 @@ const ShortSceneView = () => {
             />
         );
     };
+
+    const sceneFilter = (scene: IShortScene) => {
+        if (scene.title.toLowerCase().includes(searchInput.toLowerCase())) {
+            return true;
+        }
+        if (scene.subtitle.toLowerCase().includes(searchInput.toLowerCase())) {
+            return true;
+        }
+        if (scene.id.toString().includes(searchInput)) {
+            return true;
+        }
+        return false;
+    }
 
     const actionColumnDelete = (rowData: IShortScene) => {
         return (
@@ -101,11 +120,14 @@ const ShortSceneView = () => {
                 setTrigger={setPopup}
                 id={popupId}
             />
+            <div className="short-scene-search-wrap">
+                <input className="short-scene-searchBar" type="search" placeholder="Pretraži..." onChange={handleChange} value={searchInput} />
+            </div>
             <div className="short-scene-table">
                 <DataTable
                     resizableColumns
                     showGridlines
-                    value={shortScene}
+                    value={shortScene?.filter(scene =>  sceneFilter(scene) )}
                     emptyMessage={"Trenutno nema rezultata"}
                     responsiveLayout="stack"
                     onRowClick={rowData => {
