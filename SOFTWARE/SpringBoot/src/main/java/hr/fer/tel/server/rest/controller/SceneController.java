@@ -108,7 +108,7 @@ public class SceneController {
 	@GetMapping("/scene2")
 	public ResponseEntity<List<ShortSceneDTO>> getScenes2(){
 		
-		List<Scene> list = service.getAllScenes();
+		List<Scene> list = service.getAllScenesAuthorize();
 		
 		List<ShortSceneDTO> shortScenes = new ArrayList<>();
 		

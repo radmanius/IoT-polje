@@ -131,7 +131,6 @@ public class SceneService {
     	return sceneRepository.findAll();
     }
 
-    //edit scene - OK - OK
   public List<Scene> getAllScenesAuthorize() {
 
 	  HashSet<String> rolesKeyCloak = new HashSet<>(KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1]).toList());
