@@ -19,12 +19,11 @@ const SceneForm = () => {
     const multiselectRefRoles = useRef<any>();
     const multiselectRefKeys = useRef<any>();
 
-    //multiselectRefTags.current.getSelectedItems() DOHVACA SVE TAGOVE KOJE JE KORISNIK ODABRAO
-    //multiselectRefRoles.current.getSelectedItems() DOHVACA SVE ROLOVE KOJE JE KORISNIK ODABRAO
-    //multiselectRefKeys.current.getSelectedItems() DOHVACA SVE KLJUCEVE KOJE JE KORISNIK ODABRAO
-
 
     const handleAddNewScene = async (data: any) => {
+        data.tags = multiselectRefTags.current.getSelectedItems().map((item: any) => item.name);
+        data.roles = multiselectRefRoles.current.getSelectedItems().map((item: any) => item.name);
+        data.keys = multiselectRefKeys.current.getSelectedItems().map((item: any) => item.name);
         try {
             await editScene(data);
         } catch (error) {
@@ -51,7 +50,6 @@ const SceneForm = () => {
                             >
                                 <Field
                                     name="title"
-                                    className="scene-field-form"
                                     render={({ input }) => (
                                         <div>
                                             <span>
@@ -131,7 +129,7 @@ const SceneForm = () => {
                                                     className="scene-field-form"
                                                     showArrow
                                                     options={tagsTypeOptions}
-                                                    displayValue="value"
+                                                    displayValue="name"
                                                     ref={multiselectRefTags}
                                                 />
                                             </div>
@@ -151,7 +149,7 @@ const SceneForm = () => {
                                                     className="scene-field-form"
                                                     showArrow
                                                     options={roleTypeOptions}
-                                                    displayValue="value"
+                                                    displayValue="name"
                                                     ref={multiselectRefRoles}
                                                 />
                                             </div>
@@ -171,7 +169,7 @@ const SceneForm = () => {
                                                     className="scene-field-form"
                                                     showArrow
                                                     options={keysTypeOptions}
-                                                    displayValue="value"
+                                                    displayValue="name"
                                                     ref={multiselectRefKeys}
                                                 />
                                             </div>

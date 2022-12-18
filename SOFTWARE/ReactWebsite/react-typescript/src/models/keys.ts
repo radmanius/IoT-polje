@@ -1,3 +1,4 @@
 export const keysTypeOptions: any[] = [
-    { label: "String", value: "string" },
+    { label: "String", name: "string" },
+    { label: "influxFer", name: "influxFer" },
 ];

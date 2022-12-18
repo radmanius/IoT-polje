@@ -1,18 +1,63 @@
-.scene-form-container-edit {
+.scene-form-container {
     display: flex;
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    width: 400px;
+    width: 500px;
     margin: auto;
+    padding: 10px;
 }
 
 .form-fields-container {
+    margin-top: 20px;
     border: 1px solid black;
     padding: 10px;
     border-radius: 15px;
 }
 
-.scene-form-buttons>button {
-    margin: 5px
+.scene-form-buttons{
+    margin-top: 10px;
+}
+.scene-form-buttons > button {
+    margin: 10px;
+}
+
+.scene-label {
+    margin: 7px;
+    font-size: 20px;
+}
+
+.scene-field-form {
+    width: 100%;
+    margin-top: 10px;
+}
+.multiselectContainer{
+    margin-top: 20px;
+}
+
+.scene-field-form .optionContainer{
+    border: 2px solid black;
+}
+.scene-field-form .optionContainer .highlight {
+    background: #fff;
+    color: #575757;
+}
+
+.scene-field-form .option:hover {
+    background: green;
+    color: #fff;
+}
+
+.scene-field-form .searchBox{
+    height: 30px;
+}
+
+.scene-field-form .chip{
+    // To change css chips(Selected options)
+    background: green;
+    font-size: large;
+}
+
+.multiSelectWrapper{
+    width: 100%;
 }
