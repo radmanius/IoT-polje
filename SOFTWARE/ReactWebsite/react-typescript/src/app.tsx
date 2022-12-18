@@ -5,7 +5,7 @@ import "rsuite/dist/rsuite.min.css";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { PAGE_ROUTES } from "utils/paths";
-import AppFooter from "container/appFooter/appFooter";
+//import AppFooter from "container/appFooter/appFooter";
 //import ReactTypescriptModalContainer from "container/reactTypescriptModalContainer/reactTypescriptModalContainer";
 import PathsAndElementsLoggedIn from "utils/pathsAndElementsLoggedIn";
 import PathsAndElementsNonLoggedIn from "utils/pathsAndElementsNonLoggedIn";
@@ -81,7 +81,7 @@ const App = () => {
                     element={<NotFound />}
                 />
             </Routes>
-            <AppFooter />
+            {/* <AppFooter /> */}
         </div>
     );
 };
