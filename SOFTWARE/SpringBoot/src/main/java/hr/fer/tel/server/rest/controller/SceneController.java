@@ -3,6 +3,8 @@ package hr.fer.tel.server.rest.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import hr.fer.tel.server.rest.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -102,6 +104,21 @@ public class SceneController {
 		return ResponseEntity.status(HttpStatus.OK).body(shortScenes);
 	}
 	
+	@RolesAllowed("iot-read")
+	@GetMapping("/scene2")
+	public ResponseEntity<List<ShortSceneDTO>> getScenes2(){
+		
+		List<Scene> list = service.getAllScenes();
+		
+		List<ShortSceneDTO> shortScenes = new ArrayList<>();
+		
+		for(Scene scene: list) {
+			shortScenes.add(ShortSceneDTO.of(scene));
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(shortScenes);
+	}
+	
 	@GetMapping("/scene/{id}")
 	public ResponseEntity<SceneDTO> getScene(@PathVariable("id") Long id){
 		
@@ -113,7 +130,7 @@ public class SceneController {
 	}
 	
 	@DeleteMapping("/scene/{id}")
-	public BodyBuilder deleteScene(@PathVariable("id") Long id){
+	public ResponseEntity<String> deleteScene(@PathVariable("id") Long id){
 		
 		if(service.checkIfExists(id) == false) {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
@@ -126,7 +143,7 @@ public class SceneController {
 			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return ResponseEntity.status(HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK).body("deleted scene with id: " + id);
 
 	}
 	

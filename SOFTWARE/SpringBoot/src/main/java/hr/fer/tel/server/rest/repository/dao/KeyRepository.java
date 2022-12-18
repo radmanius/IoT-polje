@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import hr.fer.tel.server.rest.model.Key;
 
 @Repository
-public interface KeyRepository extends JpaRepository<Key, String> {
+public interface KeyRepository extends JpaRepository<Key, Long> {
 }

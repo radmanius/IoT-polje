@@ -9,6 +9,8 @@ import hr.fer.tel.server.rest.utils.NoSuchElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -129,7 +131,36 @@ public class SceneService {
     	return sceneRepository.findAll();
     }
 
+    //edit scene - OK - OK
+  public List<Scene> getAllScenesAuthorize() {
 
+	  HashSet<String> rolesKeyCloak = new HashSet<>(KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1]).toList());
+      
+      if (rolesKeyCloak.size() < 1)
+         return new ArrayList<>();
+
+      List<Scene> list = new ArrayList<>();
+      
+      for(Scene scene : sceneRepository.findAll()) {
+    	  List<String> sceneRoles = scene.getRoles().stream().map((role) -> role.getName()).toList();
+    	  
+    	  if(containsElement(sceneRoles, rolesKeyCloak) == true) {
+    		  list.add(scene);
+    	  }
+      }
+      
+      return list;
+  }
+  
+  
+  private boolean containsElement(List<String> sceneRoles, HashSet<String> rolesKeyCloak) {
+	  for(String role: sceneRoles) {
+		  if(rolesKeyCloak.contains(role)) {
+			  return true;
+		  }
+	  }
+	  return false;
+  }
 
 
 

@@ -227,6 +227,10 @@ public class Scene {
 
 	public static List<Scene> generateScenes() {
 		// http://52.16.186.190/downloads/documentation/data_frame_guide.pdf
+		Key key = new Key("influxFer",
+				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
+				true);
+		
 		Scene sceneFerPaprika = new Scene("FER paprika", "sva mjerenja", new Layout("LIST"),
 				"https://www.biobio.hr/upload/catalog/product/20433/10513.jpg",
 				List.of(new Tag("fer"), new Tag("paprika"), new Tag("svi senzori")),
@@ -234,9 +238,7 @@ public class Scene {
 						sap01SoiltcView(), sap01SoilcView(), sap01TcView(), 
 						createActView()),
 				List.of(new Role("fer")),
-				List.of(new Key("influxFer",
-						"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
-						true)));
+				List.of(key));
 
 		Scene sceneFerRajcica = new Scene("FER rajčica", "sva mjerenja", new Layout("LIST"),
 				"https://cdn.agroklub.com/upload/images/plant-specie/thumb/rajcica32-300x300.jpg",

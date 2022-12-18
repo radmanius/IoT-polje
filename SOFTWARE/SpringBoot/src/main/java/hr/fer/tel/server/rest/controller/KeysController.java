@@ -30,7 +30,7 @@ public class KeysController {
   private KeyService keyService;
 
 
-  @RolesAllowed("iot-read")
+//  @RolesAllowed("iot-read")
   @GetMapping("/keys")
   public ResponseEntity<Collection<ShortKeyDTO>> getKeys() {
     Set<ShortKeyDTO> result = keyService.getAll().stream()
@@ -41,20 +41,20 @@ public class KeysController {
   }
   
 	@DeleteMapping("/key/{token}")
-	public BodyBuilder deleteKey(@PathVariable("token") String token){
+	public ResponseEntity<String> deleteKey(@PathVariable("token") String token){
 		
 		if(keyService.checkIfExists(token) == false) {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
 		}
 		
-		Key key = keyService.ProbaDeleteKeyById(token);
+		boolean isDeleted = keyService.ProbaDeleteKeyById(token);
 		
 		//Check if deleted
-		if(key == null) {
+		if(isDeleted == false) {
 			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return ResponseEntity.status(HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK).body(token);
 
 	}
 	
@@ -65,13 +65,14 @@ public class KeysController {
 		if(keyService.checkIfExists(oldToken) == false) {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
 		}
-				
-		Key key = keyService.ProbaDeleteKeyById(oldToken);
-		key.setValue(newToken);
 		
-		keyService.ProbaAdd(key);
+		boolean isEdited = keyService.editKey(oldToken, newToken);
+		
+		if(isEdited == false) {
+			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-		return ResponseEntity.status(HttpStatus.OK).body(key.getValue());
+		return ResponseEntity.status(HttpStatus.OK).body(newToken);
 	}
 	
 	@PostMapping("/keys")
