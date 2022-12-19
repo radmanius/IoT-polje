@@ -1,0 +1,66 @@
+.key-form-container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    width: 500px;
+    margin: auto;
+    padding: 10px;
+}
+
+.form-fields-container {
+    margin-top: 20px;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.key-form-buttons {
+    margin-top: 10px;
+}
+
+.key-form-buttons>button {
+    margin: 10px;
+}
+
+.key-label {
+    margin: 7px;
+    font-size: 20px;
+}
+
+.key-field-form {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.multiselectContainer {
+    margin-top: 20px;
+}
+
+.key-field-form .optionContainer {
+    border: 2px solid black;
+}
+
+.key-field-form .optionContainer .highlight {
+    background: #fff;
+    color: #575757;
+}
+
+.key-field-form .option:hover {
+    background: green;
+    color: #fff;
+}
+
+.key-field-form .searchBox {
+    height: 30px;
+}
+
+.key-field-form .chip {
+    // To change css chips(Selected options)
+    background: green;
+    font-size: large;
+}
+
+.multiSelectWrapper {
+    width: 100%;
+}

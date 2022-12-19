@@ -15,5 +15,9 @@ export const getHeaderItems = (): ISimpleHeaderItems[] => {
             label: "SCENE",
             link: PAGE_ROUTES.ShortSceneView,
         },
+        {
+            label: "KLJUČEVI",
+            link: PAGE_ROUTES.KeysView,
+        },
     ];
 };

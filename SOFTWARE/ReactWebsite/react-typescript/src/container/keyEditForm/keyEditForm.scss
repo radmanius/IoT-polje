@@ -1,0 +1,35 @@
+.key-form-container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    width: 500px;
+    margin: auto;
+    padding: 10px;
+}
+
+.form-fields-container {
+    margin-top: 20px;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.key-form-buttons {
+    margin-top: 10px;
+}
+
+.key-form-buttons>button {
+    margin: 10px;
+}
+
+.key-label {
+    margin: 7px;
+    font-size: 20px;
+}
+
+.key-field-form {
+    width: 100%;
+    margin-top: 10px;
+}
+

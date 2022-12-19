@@ -3,7 +3,10 @@ export const PAGE_ROUTES = {
     SpecificSceneView: "/specific-scene-view",
     ShortSceneView: "/short-scene",
     AddNewScene: "/scene-add",
-    EditScene: "/scene-edit"
+    EditScene: "/scene-edit",
+    KeysView: "/keys",
+    AddNewKey: "/key-add",
+    EditKey: "/key-edit",
 };
 
 export const PATHS = {
