@@ -150,6 +150,17 @@ public class SceneService {
       
       return list;
   }
+
+  public List<Scene> getAllScenesAuthorize2() {
+      HashSet<String> rolesKeyCloak = new HashSet<>(KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1]).toList());
+
+      if (rolesKeyCloak.size() < 1)
+          return new ArrayList<>();
+
+      List<Scene> list = sceneRepository.dobijSceneSOvimRolama(rolesKeyCloak).stream().toList();
+
+      return list;
+  }
   
   
   private boolean containsElement(List<String> sceneRoles, HashSet<String> rolesKeyCloak) {
