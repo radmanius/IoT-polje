@@ -9,9 +9,12 @@ import { PAGE_ROUTES } from "utils/paths";
 import { useRef, useState } from "react";
 import { getAllScenes } from "utils/axios/scenesApi";
 import Multiselect from "multiselect-react-dropdown";
-import { tagsTypeOptions } from "models/tags";
+//import { tagsTypeOptions } from "models/tags";
 import { roleTypeOptions } from "models/role";
-import { keysTypeOptions } from "models/keys";
+//import { keysTypeOptions } from "models/keys";
+import { getAllTags } from "utils/axios/tagsApi";
+import { getAllKeys } from "utils/axios/keysApi";
+import { useEffect } from "react";
 
 interface ILocationState {
     scene: IScene;
@@ -22,10 +25,30 @@ const SceneEditForm = () => {
     const location = useLocation();
     const [scene, setScene] = useState<IScene>((location.state as ILocationState)?.scene as IScene);
 
+    const [tags, setTags] = useState<any>([]);
+    const [keys, setKeys] = useState<any>([]);
     
     const multiselectRefTags = useRef<any>();
     const multiselectRefRoles = useRef<any>();
     const multiselectRefKeys = useRef<any>();
+
+    const getTags = async () => {
+        try {
+            const response = await getAllTags();
+            setTags(response);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getKeys = async () => {
+        try {
+            const response = await getAllKeys();
+            setKeys(response);
+        }catch (error) {
+            console.log(error);
+        }
+    };
 
     const navigateToPreviousPage = async () => {
         try {
@@ -113,6 +136,11 @@ const SceneEditForm = () => {
             await navigateToPreviousPage();
         }
     };
+
+    useEffect(() => {
+        getTags();
+        getKeys();
+    }, []);
 
     return (
         <div className="scene-form-container">
@@ -229,7 +257,7 @@ const SceneEditForm = () => {
                                                         id="tags"
                                                         className="scene-field-form"
                                                         showArrow
-                                                        options={tagsTypeOptions}
+                                                        options={tags}
                                                         displayValue="name"
                                                         selectedValues={scene.tags}
                                                         ref={multiselectRefTags}
@@ -271,7 +299,7 @@ const SceneEditForm = () => {
                                                         id="keys"
                                                         className="scene-field-form"
                                                         showArrow
-                                                        options={keysTypeOptions}
+                                                        options={keys}
                                                         displayValue="name"
                                                         selectedValues={scene.keys}
                                                         ref={multiselectRefKeys}
