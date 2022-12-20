@@ -85,6 +85,7 @@ const KeyEditForm = () => {
                                                             e.key === "Enter" && handleClick(e);
                                                         }}
                                                         value={key.name}
+                                                        disabled
                                                     />
                                                 </span>
                                             </div>
