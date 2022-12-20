@@ -1,0 +1,480 @@
+openapi: "3.0.3"
+info:
+  title: Mobile IoT-field
+  version: "2.0"
+servers:
+  - url: https://localhost:8080/
+paths:
+  /scene:
+    get:
+      summary: "get all scenes by access right"
+      responses:
+        "200":
+          description: "returns list of all scenes"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SceneSummary"
+    post:
+      summary: "create new scene"
+      responses:
+        "200":
+          description: "creates new scene"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Scene"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Scene"
+        description: "id is ignored"
+  /scene/{id}:
+    parameters:
+      - in: path
+        description: user id
+        name: id
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: "get one scene"
+      responses:
+        "200":
+          description: "returns one scene with details"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Scene"
+    put:
+      summary: "update one scene"
+      responses:
+        "200":
+          description: "creates new scene"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Scene"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Scene"
+        description: "id is ignored"
+    delete:
+      summary: "delete the scene"
+      responses:
+        "204":
+          description: "delete the scene"
+  /tags:
+    get:
+      summary: "get array of tags for specific user"
+      responses:
+        "200":
+          description: "returns list of filtered scenes by access right"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: "string"
+  /keys:
+    get:
+      summary: "returns array of keys and values for specific user"
+      responses:
+        "200":
+          description: "returns object with keys and values"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Keys"
+    post:
+      summary: "create new key with value"
+      description: "user must have rights"
+      responses:
+        "200":
+          description: "creates new key"
+          content:
+            application/json:
+              schema:
+                type: object
+              example: { "token1": "value of token1" }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Scene"
+        description: "id is ignored"
+  /key/{token}:
+    put:
+      summary: "update token"
+      description: "user must have rights"
+      responses:
+        "200":
+          description: "returns object with keys and values"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "token value"
+    delete:
+      summary: "delete token"
+      description: "user must have rights and no scene is using it"
+      responses:
+        "204":
+          description: "token deleted"
+        "400":
+          description: "token is used by at least one scene and can not be deleted"
+components:
+  schemas:
+    SceneSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 135
+        title:
+          type: string
+          example: FER SAP01
+        subtitle:
+          type: string
+          example: uz zid
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["fer", "ferit"]
+    Scene:
+      type: object
+      required:
+        - "title"
+        - "subtitle"
+        - "pictureLink"
+        - "layout"
+        - "tags"
+        - "views"
+      properties:
+        id:
+          type: string
+          example: "135"
+          description: "not needed when update or create scene"
+        title:
+          type: string
+          example: FER SAP01
+        subtitle:
+          type: string
+          example: uz zid
+        pictureLink:
+          type: string
+          example: "http://example.com/some.png"
+        layout:
+          type: string
+          enum: ["list", "grid"]
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["fer", "ferit"]
+        "views":
+          type: array
+          items:
+            $ref: "#/components/schemas/View"
+        roles:
+          type: array
+          items:
+            type: string
+          description: "used only when creating or updating scene"
+        keys:
+          type: array
+          items:
+            type: string
+          description: "key names. Used only when creating or updating scene"
+    View:
+      oneOf:
+        - $ref: "#/components/schemas/MeasurementsView"
+        - $ref: "#/components/schemas/ActuationView"
+    MeasurementsView:
+      type: object
+      properties:
+        title:
+          type: string
+          example: view title
+        viewType:
+          type: string
+          enum: ["single", "series"]
+        measurementUnit:
+          type: string
+          example: "C"
+        selectForm:
+          $ref: "#/components/schemas/MeasurementSelectForm"
+        query:
+          $ref: "#/components/schemas/Request"
+        responseExtracting:
+          $ref: "#/components/schemas/DataExtractor"
+    ActuationView:
+      type: object
+      properties:
+        title:
+          type: string
+          example: view title
+        viewType:
+          type: string
+          enum: ["actuation"]
+        form:
+          $ref: "#/components/schemas/ActuationForm"
+    ActuationForm:
+      type: object
+      properties:
+        defaultValuesRequest:
+          $ref: "#/components/schemas/Request"
+        submitFormRequest:
+          $ref: "#/components/schemas/Request"
+        inputs:
+          oneOf:
+            - $ref: "#/components/schemas/BooleanInput"
+            - $ref: "#/components/schemas/IntegerInput"
+            - $ref: "#/components/schemas/DecimalInput"
+            - $ref: "#/components/schemas/DateInput"
+            - $ref: "#/components/schemas/TimeInput"
+            - $ref: "#/components/schemas/StringInput"
+            - $ref: "#/components/schemas/SubmitButton"
+    MeasurementSelectForm:
+      type: object
+      properties:
+        submitSelectionRequest:
+          $ref: "#/components/schemas/Request"
+        inputs:
+          oneOf:
+            - $ref: "#/components/schemas/BooleanInput"
+            - $ref: "#/components/schemas/IntegerInput"
+            - $ref: "#/components/schemas/DecimalInput"
+            - $ref: "#/components/schemas/DateInput"
+            - $ref: "#/components/schemas/TimeInput"
+            - $ref: "#/components/schemas/StringInput"
+            - $ref: "#/components/schemas/SubmitButton"
+    Request:
+      type: object
+      required:
+        - "URI"
+        - "method"
+        - "headers"
+      properties:
+        URI:
+          type: string
+          example: http://localhost:80/some/path/{{var1}}
+        method:
+          type: string
+          enum: ["GET", "POST"]
+        headers:
+          type: object
+          example:
+            {
+              "Authorization": "{{accessToken}} {{token1}} ...",
+              "Content-Type": "application/csv",
+              ...,
+            }
+        payload:
+          type: string
+          example: template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}
+    DataExtractor:
+      oneOf:
+        - $ref: "#/components/schemas/DataExtractorCsv"
+        - $ref: "#/components/schemas/DataExtractorJson"
+    DataExtractorJson:
+      type: object
+      properties:
+        dataFormat:
+          type: string
+          enum: ["json"]
+        timeJsonPath:
+          type: string
+          example: "$.data[*][0]"
+          description: "JSON Path that results in array"
+        valueJsonPath:
+          type: string
+          example: "$.data[*][1]"
+          description: "JSON Path that results in array"
+    DataExtractorCsv:
+      type: object
+      properties:
+        dataFormat:
+          type: string
+          enum: ["csv"]
+        timeColumn:
+          type: string
+          example: "_time"
+          description: "Column name in CSV"
+        valueColumn:
+          type: string
+          example: "_value"
+          description: "Column name in CSV"
+    BooleanInput:
+      type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
+      properties:
+        inputType:
+          type: string
+          enum: ["boolean"]
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        defaultValue:
+          type: boolean
+    IntegerInput:
+      type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
+      properties:
+        inputType:
+          type: string
+          enum: ["integer"]
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        defaultValue:
+          type: integer
+        min:
+          type: integer
+        max:
+          type: integer
+    DecimalInput:
+      type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
+      properties:
+        inputType:
+          type: string
+          enum: ["decimal"]
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        defaultValue:
+          type: number
+        min:
+          type: number
+        max:
+          type: number
+    DateInput:
+      type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
+      properties:
+        inputType:
+          type: string
+          enum: ["date"]
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        defaultValue:
+          type: string
+    TimeInput:
+      type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
+      properties:
+        inputType:
+          type: string
+          enum: ["time"]
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        defaultValue:
+          type: string
+    StringInput:
+      type: object
+      required:
+        - "inputType"
+        - "name"
+        - "title"
+        - "description"
+      properties:
+        inputType:
+          type: string
+          enum: ["string"]
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        defaultValue:
+          type: string
+        pattern:
+          type: string
+        "enum":
+          type: array
+          items:
+            type: string
+    SubmitButton:
+      type: object
+      properties:
+        inputType:
+          type: string
+          enum: ["submit"]
+        name:
+          type: string
+        title:
+          type: string
+    Keys:
+      type: array
+      items:
+        $ref: "#/components/schemas/Key"
+    Key:
+      type: object
+      required:
+        - "name"
+        - "value"
+      properties:
+        name:
+          type: string
+          example: "token1"
+        value:
+          type: string
+          example: "value of token 1"
+        canDelete:
+          type: boolean
+# - dohvaćanje ključeva za nekog korisnika
+#   - oni se spremaju u aplikaciju
+#   - ako nemamo pravo pristupiti nekom viewu (query) onda probamo ponovno dohvatiti nove ključeve
+#   - ako s novim ključevima ne možemo pristupiti onda nemamo pravo pristupa tome
+# - vremenske jedinice:
+# 	- 24h - sva mjerenja
+# 	- 7d - prosjeci 1-4h
+# 	- 30d - dnevni min, max, prosjek po danu
+# - slike uz scene će biti URI
+# 	- parametar s rezolucijom width ili height
+# 		- server renderira i pošalje takvu sliku natrag
