@@ -57,6 +57,7 @@ public class SceneController {
 		}
 		
 		Scene scene= new Scene(sceneDTO);
+		scene.setId(id);
 		
 		service.ProbaAddScene(scene);
 
