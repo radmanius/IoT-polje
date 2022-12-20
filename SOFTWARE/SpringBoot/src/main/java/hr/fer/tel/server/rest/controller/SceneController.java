@@ -34,18 +34,16 @@ public class SceneController {
 	
 	@Autowired
 	private SceneService service;
-	
-	ObjectMapper objectMapper = new ObjectMapper();
-	
+		
 	
 	@PutMapping("/scene/{id}")
 	public ResponseEntity<SceneDTO> sceneEdit(@RequestBody String model, @PathVariable("id") Long id) throws JsonMappingException, JsonProcessingException {
 		
 		//Check if scene exists
 		if(service.checkIfExists(id) == false) {
-			ResponseEntity.status(HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
-		
+		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
 
 		SceneDTO sceneDTO = new SceneDTO();
@@ -53,7 +51,7 @@ public class SceneController {
 		try {
 			sceneDTO = objectMapper.readValue(model, sceneDTO.getClass());
 		}catch (Exception igornable) {
-			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		Scene scene= new Scene(sceneDTO);
@@ -67,7 +65,7 @@ public class SceneController {
 	@PostMapping("/scene")
 	public ResponseEntity<SceneDTO> addEdit(@RequestBody String model) throws JsonMappingException, JsonProcessingException {
 		
-		
+		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
 
 		SceneDTO sceneDTO = new SceneDTO();
@@ -75,12 +73,12 @@ public class SceneController {
 		try {
 			sceneDTO = objectMapper.readValue(model, sceneDTO.getClass());
 		}catch (Exception igornable) {
-			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		
+			
 		//Check if scene exists
 		if(service.checkIfExists(sceneDTO.getId()) == true) {
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Elemet already exists");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		
 		Scene scene= new Scene(sceneDTO);
@@ -133,14 +131,14 @@ public class SceneController {
 	public ResponseEntity<String> deleteScene(@PathVariable("id") Long id){
 		
 		if(service.checkIfExists(id) == false) {
-			ResponseEntity.status(HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		
 		Scene scene = service.ProbaDeleteSceneById(id);
 		
 		//Check if deleted
 		if(scene == null) {
-			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body("deleted scene with id: " + id);

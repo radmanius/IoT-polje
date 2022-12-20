@@ -42,14 +42,14 @@ public class KeysController {
 	public ResponseEntity<String> deleteKey(@PathVariable("token") String token){
 		
 		if(keyService.checkIfExists(token) == false) {
-			ResponseEntity.status(HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		
 		boolean isDeleted = keyService.ProbaDeleteKeyById(token);
 		
 		//Check if deleted
 		if(isDeleted == false) {
-			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(token);
@@ -61,13 +61,13 @@ public class KeysController {
 		
 		//Check if scene exists
 		if(keyService.checkIfExists(oldToken) == false) {
-			ResponseEntity.status(HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		
 		boolean isEdited = keyService.editKey(oldToken, newToken);
 		
 		if(isEdited == false) {
-			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 
 		return ResponseEntity.status(HttpStatus.OK).body(newToken);
@@ -78,7 +78,7 @@ public class KeysController {
 		
 		//Check if scene exists
 		if(keyService.checkIfExists(key.getValue()) == true) {
-			ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("key already exists");
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("key already exists");
 		}
 				
 		keyService.ProbaAdd(key);
