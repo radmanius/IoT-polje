@@ -1,15 +1,7 @@
 package hr.fer.tel.server.rest.dto;
-import java.util.ArrayList;
 import java.util.List;
 
-import hr.fer.tel.server.rest.model.Layout;
 import hr.fer.tel.server.rest.model.Scene;
-import hr.fer.tel.server.rest.model.Tag;
-import hr.fer.tel.server.rest.model.View;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 public class ShortSceneDTO {
 	

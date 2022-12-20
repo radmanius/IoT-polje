@@ -1,9 +1,6 @@
 package hr.fer.tel.server.rest.model;
 
-import java.util.Map;
-
 import javax.persistence.CascadeType;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

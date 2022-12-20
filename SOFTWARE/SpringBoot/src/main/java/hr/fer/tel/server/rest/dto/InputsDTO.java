@@ -2,9 +2,7 @@ package hr.fer.tel.server.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
-import hr.fer.tel.server.rest.model.ActuationView;
 import hr.fer.tel.server.rest.model.BooleanInput;
 import hr.fer.tel.server.rest.model.DateInput;
 import hr.fer.tel.server.rest.model.DecimalInput;
@@ -18,7 +16,7 @@ import hr.fer.tel.server.rest.model.TimeInput;
 
 @JsonTypeInfo(
 	      use = JsonTypeInfo.Id.NAME, 
-	      include = As.PROPERTY, 
+	      include = JsonTypeInfo.As.EXISTING_PROPERTY, 
 	      visible = true,
 	      property = "inputType")
 	    @JsonSubTypes({

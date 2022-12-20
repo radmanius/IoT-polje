@@ -1,11 +1,8 @@
 package hr.fer.tel.server.rest.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
-import hr.fer.tel.server.rest.dto.BooleanInputDTO;
 import hr.fer.tel.server.rest.dto.DecimalInputDTO;
 
 @Entity

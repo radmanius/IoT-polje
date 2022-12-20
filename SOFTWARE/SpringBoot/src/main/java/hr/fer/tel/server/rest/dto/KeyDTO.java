@@ -1,8 +1,6 @@
 package hr.fer.tel.server.rest.dto;
 
 import hr.fer.tel.server.rest.model.Key;
-import hr.fer.tel.server.rest.model.Role;
-
 import java.util.List;
 
 public class KeyDTO {
@@ -22,12 +20,11 @@ public class KeyDTO {
 		this.value = value;
 		this.canDelete = canDelete;
 	}
+	
 	public KeyDTO(String name) {
 		super();
-		this.id = id;
 		this.name = name;
-		this.value = value;
-		this.canDelete = canDelete;
+
 	}
 
 	public KeyDTO() {

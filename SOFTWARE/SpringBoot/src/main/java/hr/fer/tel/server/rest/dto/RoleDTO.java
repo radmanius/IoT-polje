@@ -1,8 +1,6 @@
 package hr.fer.tel.server.rest.dto;
 
 import hr.fer.tel.server.rest.model.Role;
-import hr.fer.tel.server.rest.model.Tag;
-
 import java.util.List;
 
 public class RoleDTO {

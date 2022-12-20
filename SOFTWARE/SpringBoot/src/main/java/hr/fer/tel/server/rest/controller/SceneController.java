@@ -9,7 +9,6 @@ import hr.fer.tel.server.rest.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -108,7 +107,7 @@ public class SceneController {
 	@GetMapping("/scene2")
 	public ResponseEntity<List<ShortSceneDTO>> getScenes2(){
 		
-		List<Scene> list = service.getAllScenesAuthorize();
+		List<Scene> list = service.getAllScenesAuthorize2();
 		
 		List<ShortSceneDTO> shortScenes = new ArrayList<>();
 		

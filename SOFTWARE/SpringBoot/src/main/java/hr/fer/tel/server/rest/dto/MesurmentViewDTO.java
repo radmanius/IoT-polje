@@ -2,10 +2,7 @@ package hr.fer.tel.server.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import hr.fer.tel.server.rest.model.MeasurmentSelectForm;
 import hr.fer.tel.server.rest.model.MesurmentView;
-
-
 
 @JsonTypeName("mesurment")
 public class MesurmentViewDTO extends ViewDTO{

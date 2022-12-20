@@ -1,11 +1,7 @@
 package hr.fer.tel.server.rest.dto;
 
-import java.util.Map;
-
-import hr.fer.tel.server.rest.model.Inputs;
 import hr.fer.tel.server.rest.model.MeasurmentSelectForm;
-import hr.fer.tel.server.rest.model.MesurmentView;
-import hr.fer.tel.server.rest.model.Request;
+
 
 public class MeasurmentSelectFormDTO {
 	    

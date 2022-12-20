@@ -1,9 +1,7 @@
 package hr.fer.tel.server.rest.model;
 
-import java.util.Map;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +13,6 @@ import hr.fer.tel.server.rest.dto.DateInputDTO;
 import hr.fer.tel.server.rest.dto.DecimalInputDTO;
 import hr.fer.tel.server.rest.dto.IntegerInputDTO;
 import hr.fer.tel.server.rest.dto.MeasurmentSelectFormDTO;
-import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
 import hr.fer.tel.server.rest.dto.StringInputDTO;
 import hr.fer.tel.server.rest.dto.SubmitButtonDTO;
 import hr.fer.tel.server.rest.dto.TimeInputDTO;

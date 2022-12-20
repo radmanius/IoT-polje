@@ -1,7 +1,6 @@
 package hr.fer.tel.server.rest.dto;
 
 import hr.fer.tel.server.rest.model.Layout;
-import hr.fer.tel.server.rest.model.Tag;
 
 public class LayoutDTO {
 	

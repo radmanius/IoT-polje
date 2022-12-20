@@ -1,15 +1,10 @@
 package hr.fer.tel.server.rest.model;
 
 import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import javax.persistence.OneToOne;
+
 
 import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
 

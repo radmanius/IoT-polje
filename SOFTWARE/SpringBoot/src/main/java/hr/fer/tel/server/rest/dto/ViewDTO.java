@@ -2,18 +2,13 @@ package hr.fer.tel.server.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
-
-import hr.fer.tel.server.rest.model.ActuationView;
-import hr.fer.tel.server.rest.model.MesurmentView;
-import hr.fer.tel.server.rest.model.Tag;
 import hr.fer.tel.server.rest.model.View;
 
 import java.util.List;
 
 @JsonTypeInfo(
 	      use = JsonTypeInfo.Id.NAME, 
-	      include = As.PROPERTY, 
+	      include = JsonTypeInfo.As.EXISTING_PROPERTY, 
 	      visible = true,
 	      property = "viewType")
 	    @JsonSubTypes({
