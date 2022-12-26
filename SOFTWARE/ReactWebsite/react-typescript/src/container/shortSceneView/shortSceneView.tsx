@@ -119,7 +119,6 @@ const ShortSceneView = () => {
                 trigger={popup}
                 setTrigger={setPopup}
                 id={popupId}
-                fetchScenes={fetchShortScenes}
             />
             <div className="short-scene-search-wrap">
                 <input className="short-scene-searchBar" type="search" placeholder="Pretraži..." onChange={handleChange} value={searchInput} />

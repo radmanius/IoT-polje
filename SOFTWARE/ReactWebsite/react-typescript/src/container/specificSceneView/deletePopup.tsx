@@ -17,13 +17,7 @@ export default function Popup(props : any) {
         setError("");
         try {
             await deleteScene(props.id);
-            closePopup();
-            if (props.fetchScenes) {
-                props.fetchScenes();
-            }
-            else {
-                navigate(PAGE_ROUTES.ShortSceneView);
-            }
+            navigate(PAGE_ROUTES.ShortSceneView);
         }
         catch {
             setError("Greška pri brisanju scene.")
