@@ -32,7 +32,7 @@ public class KeysController {
   @GetMapping("/keys")
   public ResponseEntity<Collection<ShortKeyDTO>> getKeys() {
     Set<ShortKeyDTO> result = keyService.getAll().stream()
-      .map(k -> k.toDTO())
+      .map(k -> k.toShortKeyDTO())
       .collect(Collectors.toSet());
 
     return ResponseEntity.ok(result);

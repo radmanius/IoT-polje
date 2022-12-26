@@ -2,8 +2,12 @@ package hr.fer.tel.server.rest.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.security.RolesAllowed;
+import javax.lang.model.element.Element;
 
 import hr.fer.tel.server.rest.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hr.fer.tel.server.rest.dto.*;
+import hr.fer.tel.server.rest.service.KeyService;
 import hr.fer.tel.server.rest.service.SceneService;
 
 @CrossOrigin(origins = "http://localhost:8080")
@@ -35,6 +40,9 @@ public class SceneController {
 	@Autowired
 	private SceneService service;
 	
+	  @Autowired
+	  private KeyService keyService;
+	
 	ObjectMapper objectMapper = new ObjectMapper();
 	
 	
@@ -43,7 +51,7 @@ public class SceneController {
 		
 		//Check if scene exists
 		if(service.checkIfExists(id) == false) {
-			ResponseEntity.status(HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
@@ -53,10 +61,29 @@ public class SceneController {
 		try {
 			sceneDTO = objectMapper.readValue(model, sceneDTO.getClass());
 		}catch (Exception igornable) {
-			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		Scene scene= new Scene(sceneDTO);
+		scene.setKeys(null);
+		
+		Map<String, KeyDTO> result = keyService.getAll().stream()
+			      .map(k -> k.tokeyDTO())
+			      .collect(Collectors.toMap( (KeyDTO variable) ->  variable.getName(), (KeyDTO variable) -> variable));
+		
+		
+		///////////////////////////////////
+		
+		for(String keyDto: sceneDTO.getKeys()) {
+			KeyDTO key = result.get(keyDto);
+			if(key == null) {
+				//key does not exists
+				continue;
+			}
+			
+			
+			
+		}
 		
 		service.ProbaAddScene(scene);
 
@@ -74,12 +101,12 @@ public class SceneController {
 		try {
 			sceneDTO = objectMapper.readValue(model, sceneDTO.getClass());
 		}catch (Exception igornable) {
-			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		//Check if scene exists
 		if(service.checkIfExists(sceneDTO.getId()) == true) {
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Elemet already exists");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		
 		Scene scene= new Scene(sceneDTO);
@@ -139,7 +166,7 @@ public class SceneController {
 		
 		//Check if deleted
 		if(scene == null) {
-			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body("deleted scene with id: " + id);

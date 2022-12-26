@@ -96,8 +96,12 @@ public class Key {
 		this.canDelete = canDelete;
 	}
 
-	public ShortKeyDTO toDTO() {
+	public ShortKeyDTO toShortKeyDTO() {
 	  return new ShortKeyDTO(name, value);
+	}
+	
+	public KeyDTO tokeyDTO() {
+		return new KeyDTO(name, value, canDelete);
 	}
 
 
