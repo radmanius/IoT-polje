@@ -27,7 +27,6 @@ const SceneEditForm = () => {
 
     const [tags, setTags] = useState<any>([]);
     const [keys, setKeys] = useState<any>([]);
-    const [roles, setRoles] = useState<any>([]);
     
     const multiselectRefTags = useRef<any>();
     const multiselectRefRoles = useRef<any>();
@@ -36,7 +35,7 @@ const SceneEditForm = () => {
     const getTags = async () => {
         try {
             const response = await getAllTags();
-            setTags(response.map((tag: any) => tag.name));
+            setTags(response);
         } catch (error) {
             console.log(error);
         }
@@ -45,15 +44,11 @@ const SceneEditForm = () => {
     const getKeys = async () => {
         try {
             const response = await getAllKeys();
-            setKeys(response.map((key: any) => key.name));
+            setKeys(response);
         }catch (error) {
             console.log(error);
         }
     };
-
-    const getRoles = () => {
-        setRoles(roleTypeOptions.map((role: any) => role.name));
-    }
 
     const navigateToPreviousPage = async () => {
         try {
@@ -73,11 +68,14 @@ const SceneEditForm = () => {
     const handleEditScene = async (data: IScene) => {
         try {
 
-            data.tags = multiselectRefTags.current.getSelectedItems();
-            data.roles = multiselectRefRoles.current.getSelectedItems();
-            data.keys = multiselectRefKeys.current.getSelectedItems();
+            data.tags = multiselectRefTags.current.getSelectedItems().map((item: any) => item.name);
+            data.roles = multiselectRefRoles.current.getSelectedItems().map((item: any) => item.name);
+            data.keys = multiselectRefKeys.current.getSelectedItems().map((item: any) => item.name);
 
+            data.layout = data.layout.name;
             data.views.map(view => {
+                delete view.id;
+
                 if (view.selectForm) {
                     if (view.selectForm.submitSelectionRequest) {
                         delete view.selectForm.submitSelectionRequest.id;
@@ -120,7 +118,7 @@ const SceneEditForm = () => {
         } else if (e.target.id === "layout") {
             setScene({
                 ...scene,
-                layout: e.target.value,
+                layout: {...scene.layout, name: e.target.value},
             });
         }
     };
@@ -142,7 +140,6 @@ const SceneEditForm = () => {
     useEffect(() => {
         getTags();
         getKeys();
-        getRoles();
     }, []);
 
     return (
@@ -238,7 +235,7 @@ const SceneEditForm = () => {
                                                         id="layout"
                                                         className="scene-field-form"
                                                         {...input}
-                                                        value={scene.layout}
+                                                        value={scene.layout.name}
                                                         onChange={e => handleChange(e)}
                                                         onKeyPress={e => {
                                                             e.key === "Enter" && handleClick(e);
@@ -261,7 +258,7 @@ const SceneEditForm = () => {
                                                         className="scene-field-form"
                                                         showArrow
                                                         options={tags}
-                                                        isObject={false}
+                                                        displayValue="name"
                                                         selectedValues={scene.tags}
                                                         ref={multiselectRefTags}
                                                     />
@@ -281,8 +278,8 @@ const SceneEditForm = () => {
                                                         id="roles"
                                                         className="scene-field-form"
                                                         showArrow
-                                                        options={roles}
-                                                        isObject={false}
+                                                        options={roleTypeOptions}
+                                                        displayValue="name"
                                                         selectedValues={scene.roles}
                                                         ref={multiselectRefRoles}
                                                     />
@@ -303,7 +300,7 @@ const SceneEditForm = () => {
                                                         className="scene-field-form"
                                                         showArrow
                                                         options={keys}
-                                                        isObject={false}
+                                                        displayValue="name"
                                                         selectedValues={scene.keys}
                                                         ref={multiselectRefKeys}
                                                     />

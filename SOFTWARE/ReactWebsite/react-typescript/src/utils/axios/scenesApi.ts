@@ -6,7 +6,7 @@ export const getAllScenes = async () => {
     return response.data as IShortScene[]; 
 } 
 
-export const createNewScene = async (scene: any) => {
+export const createNewScene = async (scene: IShortScene) => {
     await axios.post("/scene", scene);
 };
 
@@ -16,7 +16,7 @@ export const getSceneById = async (id: number) => {
 }
 
 export const editScene = async (scene: any) => {
-    const response = await axios.put("/scene/" + scene.id, scene);
+    const response = await axios.put("/scene", scene);
     return response.data as IScene;
 };
 
