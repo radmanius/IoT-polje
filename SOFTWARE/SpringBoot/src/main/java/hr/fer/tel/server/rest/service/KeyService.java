@@ -40,6 +40,10 @@ public class KeyService {
 	public Set<Key> getAll() {
 		return keyRepository.findAll().stream().collect(Collectors.toSet());
 	}
+	
+	public List<String> getAllKeyNames(){
+		return keyRepository.findAll().stream().map(key -> key.getName()).toList();
+	}
 
 	public boolean ProbaDeleteKeyById(String token) {
 

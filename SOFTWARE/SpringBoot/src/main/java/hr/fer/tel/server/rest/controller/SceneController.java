@@ -25,125 +25,150 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hr.fer.tel.server.rest.dto.*;
+import hr.fer.tel.server.rest.service.KeyService;
 import hr.fer.tel.server.rest.service.SceneService;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/rest2")
 public class SceneController {
-	
+
 	@Autowired
 	private SceneService service;
-		
-	
+
+	@Autowired
+	private KeyService keyService;
+
 	@PutMapping("/scene/{id}")
-	public ResponseEntity<SceneDTO> sceneEdit(@RequestBody String model, @PathVariable("id") Long id) throws JsonMappingException, JsonProcessingException {
-		
-		//Check if scene exists
-		if(service.checkIfExists(id) == false) {
+	public ResponseEntity<?> sceneEdit(@RequestBody String model, @PathVariable("id") Long id)
+			throws JsonMappingException, JsonProcessingException {
+
+		// Check if scene exists
+		if (service.checkIfExists(id) == false) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
 
 		SceneDTO sceneDTO = new SceneDTO();
-		
+
 		try {
 			sceneDTO = objectMapper.readValue(model, sceneDTO.getClass());
-		}catch (Exception igornable) {
+		} catch (Exception igornable) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		
-		Scene scene= new Scene(sceneDTO);
-		scene.setId(id);
-		
-		service.ProbaAddScene(scene);
 
-		return ResponseEntity.status(HttpStatus.OK).body(sceneDTO);
+		Scene scene = new Scene(sceneDTO);
+		scene.setId(id);
+
+		List<String> keyNames = keyService.getAllKeyNames();
+
+		if (keyNames.containsAll(scene.getKeyNames())) {
+			service.ProbaAddScene(scene);
+
+			return ResponseEntity.status(HttpStatus.OK).body(sceneDTO);
+
+		} else {
+
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("given key does not exist in database");
+
+		}
+
 	}
-	
+
 	@PostMapping("/scene")
-	public ResponseEntity<SceneDTO> addEdit(@RequestBody String model) throws JsonMappingException, JsonProcessingException {
-		
+	public ResponseEntity<?> addEdit(@RequestBody String model)
+			throws JsonMappingException, JsonProcessingException {
+
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
 
 		SceneDTO sceneDTO = new SceneDTO();
-		
+
 		try {
 			sceneDTO = objectMapper.readValue(model, sceneDTO.getClass());
-		}catch (Exception igornable) {
+		} catch (Exception igornable) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-			
-		//Check if scene exists
-		if(service.checkIfExists(sceneDTO.getId()) == true) {
+
+		// Check if scene exists
+		if (service.checkIfExists(sceneDTO.getId()) == true) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		
-		Scene scene= new Scene(sceneDTO);
-		
-		service.ProbaAddScene(scene);
 
-		return ResponseEntity.status(HttpStatus.OK).body(sceneDTO);
+		Scene scene = new Scene(sceneDTO);
+
+		List<String> keyNames = keyService.getAllKeyNames();
+
+		if (keyNames.containsAll(scene.getKeyNames())) {
+			service.ProbaAddScene(scene);
+
+			return ResponseEntity.status(HttpStatus.OK).body(sceneDTO);
+
+		} else {
+
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("given key does not exist in database");
+
+		}
+
+
 	}
-	
+
 	@GetMapping("/scene")
-	public ResponseEntity<List<ShortSceneDTO>> getScenes(){
-		
+	public ResponseEntity<List<ShortSceneDTO>> getScenes() {
+
 		List<Scene> list = service.getAllScenes();
-		
+
 		List<ShortSceneDTO> shortScenes = new ArrayList<>();
-		
-		for(Scene scene: list) {
+
+		for (Scene scene : list) {
 			shortScenes.add(ShortSceneDTO.of(scene));
 		}
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(shortScenes);
 	}
-	
+
 	@RolesAllowed("iot-read")
 	@GetMapping("/scene2")
-	public ResponseEntity<List<ShortSceneDTO>> getScenes2(){
-		
+	public ResponseEntity<List<ShortSceneDTO>> getScenes2() {
+
 		List<Scene> list = service.getAllScenesAuthorize2();
-		
+
 		List<ShortSceneDTO> shortScenes = new ArrayList<>();
-		
-		for(Scene scene: list) {
+
+		for (Scene scene : list) {
 			shortScenes.add(ShortSceneDTO.of(scene));
 		}
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(shortScenes);
 	}
-	
+
 	@GetMapping("/scene/{id}")
-	public ResponseEntity<SceneDTO> getScene(@PathVariable("id") Long id){
-		
+	public ResponseEntity<SceneDTO> getScene(@PathVariable("id") Long id) {
+
 		Scene scene = service.probaGetById(id);
 
 		SceneDTO sceneDTO = SceneDTO.of(scene);
 
 		return ResponseEntity.status(HttpStatus.OK).body(sceneDTO);
 	}
-	
+
 	@DeleteMapping("/scene/{id}")
-	public ResponseEntity<String> deleteScene(@PathVariable("id") Long id){
-		
-		if(service.checkIfExists(id) == false) {
+	public ResponseEntity<String> deleteScene(@PathVariable("id") Long id) {
+
+		if (service.checkIfExists(id) == false) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
-		
+
 		Scene scene = service.ProbaDeleteSceneById(id);
-		
-		//Check if deleted
-		if(scene == null) {
+
+		// Check if deleted
+		if (scene == null) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body("deleted scene with id: " + id);
 
 	}
-	
 
 }
