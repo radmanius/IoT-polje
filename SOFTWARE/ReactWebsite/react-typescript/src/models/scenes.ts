@@ -18,7 +18,7 @@ export interface IScene{
     title: string;
     subtitle: string;
     pictureLink: string;
-    layout: any;
+    layout: string;
     tags: any[];
     views: any[];
     roles: any[];
