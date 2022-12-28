@@ -6,6 +6,8 @@ import { IScene, IShortScene } from "models/scenes";
 import { PAGE_ROUTES } from "utils/paths";
 import { getSceneById } from "utils/axios/scenesApi";
 import Popup from "./deletePopup";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 
 interface ILocationState {
     shortScene: IScene;
@@ -24,7 +26,6 @@ const SpecificSceneView = () => {
             const res = await getSceneById(shortScene.id);
             setScene(res);
         } catch (error) {
-            //toast message
             console.log("error");
         }
     }, []);
@@ -47,6 +48,30 @@ const SpecificSceneView = () => {
     useEffect(() => {
         fetchScene();
     }, [fetchScene]);
+
+    const actionColumnEdit = (rowData: IShortScene) => {
+        return (
+            <Button
+                icon="fa fa-pen-to-square"
+                className="p-button-outlined"
+                //tooltip={"Uredi"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                onClick={() => {}}
+            />
+        );
+    };
+
+    const actionColumnDelete = (rowData: IShortScene) => {
+        return (
+            <Button
+                icon="fa fa-trash"
+                className="p-button-danger p-button-outlined"
+                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                onClick={() => {}}
+            />
+        );
+    };
+
+    console.log(scene);
 
     return (
         <div className="scene-page">
@@ -86,6 +111,52 @@ const SpecificSceneView = () => {
                     />
                 </div>
             )}
+            <div className="specific-scene-buttons-bottom"></div>
+            <div className="scene-view-table">
+                <div>
+                    <h2>POPIS VIEW-a za pripadnu scenu</h2>
+                    <DataTable
+                        resizableColumns
+                        showGridlines
+                        value={scene?.views}
+                        emptyMessage={"Trenutno nema rezultata"}
+                        responsiveLayout="stack"
+                        onRowClick={rowData => {
+                            /*
+                        navigate(PAGE_ROUTES.SpecificSceneView, {
+                            state: {
+                                shortScene: shortScene?.find(x => x.id === rowData.data.id),
+                            },
+                        });*/
+                        }}
+                    >
+                        <Column
+                            key={"title"}
+                            field={"title"}
+                            header={"Naslov"}
+                            sortable={true}
+                        />
+                        <Column
+                            key={"viewType"}
+                            field={"viewType"}
+                            header={"Tip"}
+                            sortable={true}
+                        />
+                        <Column
+                            key={"Edit"}
+                            field={"id"}
+                            header={"Uredi"}
+                            body={actionColumnEdit}
+                        />
+                        <Column
+                            key={"delete"}
+                            field={"id"}
+                            header={"Obriši"}
+                            body={actionColumnDelete}
+                        />
+                    </DataTable>
+                </div>
+            </div>
         </div>
     );
 };
