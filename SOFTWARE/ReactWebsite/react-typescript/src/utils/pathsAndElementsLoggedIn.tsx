@@ -8,6 +8,8 @@ import { PAGE_ROUTES, PATHS } from "./paths";
 import KeysView from "container/keysView/keysView";
 import KeyForm from "container/keyForm/keyForm";
 import KeyEditForm from "container/keyEditForm/keyEditForm";
+import ActuationViewForm from "container/actuationViewForm/actuationViewForm";
+import MeasurementViewForm from "container/measurementViewForm/measurementViewForm";
 
 const PathsAndElementsLoggedIn = [
     { path: PAGE_ROUTES.Global, element: <LandingPage /> },
@@ -19,6 +21,8 @@ const PathsAndElementsLoggedIn = [
     { path: PAGE_ROUTES.KeysView, element: <KeysView /> },
     { path: PAGE_ROUTES.AddNewKey, element: <KeyForm /> },
     { path: PAGE_ROUTES.EditKey, element: <KeyEditForm /> },
+    { path: PAGE_ROUTES.AddActuationView, element: <ActuationViewForm /> },
+    { path: PAGE_ROUTES.AddMeasurementView, element: <MeasurementViewForm /> },
 ];
 
 export default PathsAndElementsLoggedIn;

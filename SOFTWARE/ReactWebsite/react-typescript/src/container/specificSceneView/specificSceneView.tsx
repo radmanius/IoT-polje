@@ -114,11 +114,17 @@ const SpecificSceneView = () => {
             <div>
                 <Button
                     label="Add actuation view"
-                    onClick={() => navigate(PAGE_ROUTES.AddActuationView)}
+                    onClick={() =>
+                        navigate(PAGE_ROUTES.AddActuationView, {
+                            state: {
+                                shortScene: scene,
+                            },
+                        })
+                    }
                 />{" "}
                 <Button
                     label="Add measurement view"
-                    onClick={() => navigate(PAGE_ROUTES.AddMeasurementView)}
+                    onClick={() => navigate(PAGE_ROUTES.AddNewScene)}
                 />
             </div>
             <div className="scene-view-table">
