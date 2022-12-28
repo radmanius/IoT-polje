@@ -34,24 +34,22 @@ public class SceneService {
     	return findById(id).isPresent();
     }
 
-    //get all scenesDTO - OK - OK
 
-    //get scene by id defined by roles - OK - OK
-//    public Scene2 getById(String id) {
-//
-//        String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
-//                .toArray(String[]::new);
-//
-//        if (roles.length < 1)
-//            throw new NoSuchElement("No roles at all");
-//
-//        List<String> ouput = List.of(roles);
-//
-////        Scene2 scene = sceneRepository.getByRoles(ouput).stream().filter(sc -> Long.valueOf(sc.getId()).equals(id)).findAny()
-////                .orElseThrow(() -> new NoSuchElement("Access denied, no required roles for given scene id: " + id));
-//
-//        return null;
-//    }
+    public Scene getByIdAuthorize(Long id) {
+
+  	  HashSet<String> rolesKeyCloak = new HashSet<>(KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1]).toList());
+
+
+  	  if (rolesKeyCloak.size() < 1)
+  		  return null;
+
+        Scene output = sceneRepository.dobijSceneSOvimRolamaiID(rolesKeyCloak, id);
+
+//        Scene2 scene = sceneRepository.getByRoles(ouput).stream().filter(sc -> Long.valueOf(sc.getId()).equals(id)).findAny()
+//                .orElseThrow(() -> new NoSuchElement("Access denied, no required roles for given scene id: " + id));
+
+        return output;
+    }
 
     public Scene probaGetById(Long id) {
         Optional<Scene> scene = sceneRepository.findById(id);
@@ -59,36 +57,46 @@ public class SceneService {
         return scene.orElse(null);
     }
 
-    //add scene - OK - OK
+    
+    public Scene AddSceneAuthorize(Scene scene) {
+    	
+    	  HashSet<String> rolesKeyCloak = new HashSet<>(KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1]).toList());
 
+      	  if (rolesKeyCloak.size() < 1) {
+      		throw new NoSuchElement("Non authorized");     		  
+      	  }
+      	  
+	       if (!sceneRepository.existsById(scene.getId())) {
+	           return sceneRepository.save(scene);
+	       }
 
-    public Scene ProbaAddScene(Scene scene) {
-//        System.err.println(scene);
-//        System.err.println(scene.getId());
-
-//        if (!sceneRepository.existsById(scene.getId())) {
-            return sceneRepository.save(scene);
-//        }
-
-//        throw new NoSuchElement("Scene " + scene.getId() + " already exists!");
+	        throw new NoSuchElement("Scene " + scene.getId() + " does alreday exists!");
     }
 
 
-    //edit scene - OK - OK
-//    public Scene2 editScene(Long id, Scene2 scene) {
-//
-//        String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
-//                .toArray(String[]::new);
-//
-//        if (roles.length < 1)
-//            throw new NoSuchElement("No roles at all");
-//
-//        if (sceneRepository.existsById(id)) {
-//            return sceneRepository.save(scene);
-//        }
-//
-//        throw new NoSuchElement("Scene " + id + " does not exists!");
-//    }
+
+    public Scene ProbaAddScene(Scene scene) {
+        if (!sceneRepository.existsById(scene.getId())) {
+            return sceneRepository.save(scene);
+        }
+
+        throw new NoSuchElement("Scene " + scene.getId() + " does alreday exists!");
+    }
+
+
+    public Scene editSceneAuthorize(Long id, Scene scene) {
+
+        HashSet<String> rolesKeyCloak = new HashSet<>(KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1]).toList());
+
+        if (rolesKeyCloak.size() < 1)
+      		throw new NoSuchElement("Non authorized");     		  
+
+        if (sceneRepository.existsById(id)) {
+            return sceneRepository.save(scene);
+        }
+
+        throw new NoSuchElement("Scene " + id + " does not exists!");
+    }
 
     public Scene probaEditScene(Long id, Scene scene) {
 
@@ -99,22 +107,19 @@ public class SceneService {
         throw new NoSuchElement("Scene " + id + " does not exists!");
     }
 
+    public Scene deleteSceneByIdAuthorize(Long id) {
 
-    //delete scene - OK - OK
-//    public Scene2 deleteSceneById(Long id) {
-//
-//        String[] roles = KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1])
-//                .toArray(String[]::new);
-//
-//        if (roles.length < 1)
-//            throw new NoSuchElement("No roles at all");
-//
-//        Scene2 scene = this.fetch(id);
-//
-//        sceneRepository.delete(scene);
-//
-//        return scene;
-//    }
+        HashSet<String> rolesKeyCloak = new HashSet<>(KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1]).toList());
+
+        if (rolesKeyCloak.size() < 1)
+      		throw new NoSuchElement("Non authorized");     		  
+
+        Scene scene = this.fetch(id);
+
+        sceneRepository.delete(scene);
+
+        return scene;
+    }
 
     public Scene ProbaDeleteSceneById(Long id) {
 
@@ -148,6 +153,16 @@ public class SceneService {
       
       return list;
   }
+  
+  private boolean containsElement(List<String> sceneRoles, HashSet<String> rolesKeyCloak) {
+	  for(String role: sceneRoles) {
+		  if(rolesKeyCloak.contains(role)) {
+			  return true;
+		  }
+	  }
+	  return false;
+  }
+
 
   public List<Scene> getAllScenesAuthorize2() {
       HashSet<String> rolesKeyCloak = new HashSet<>(KeycloakSecurityConfig.getRoles().stream().map(role -> role.toString().split("_")[1]).toList());
@@ -161,20 +176,6 @@ public class SceneService {
   }
   
   
-  private boolean containsElement(List<String> sceneRoles, HashSet<String> rolesKeyCloak) {
-	  for(String role: sceneRoles) {
-		  if(rolesKeyCloak.contains(role)) {
-			  return true;
-		  }
-	  }
-	  return false;
-  }
-
-
-
-
-
-
 
 
 
@@ -182,19 +183,12 @@ public class SceneService {
 
     //ini dummy scenes for testing
     public List<Scene> generate() {
-//		Scene.test();
         var scenes = Scene.generateScenes();
         for (var scene : scenes) {
             sceneRepository.save(scene);
         }
         return sceneRepository.findAll();
     }
-
-
-
-
-    //get tags
-
 
     //get keys
 //	public Set<KeyDTO> getAllKeys() {

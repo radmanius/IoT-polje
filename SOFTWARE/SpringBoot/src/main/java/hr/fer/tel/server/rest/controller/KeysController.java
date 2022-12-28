@@ -2,6 +2,9 @@ package hr.fer.tel.server.rest.controller;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
+
+import javax.annotation.security.RolesAllowed;
+
 import java.util.Set;
 
 
@@ -38,8 +41,37 @@ public class KeysController {
     return ResponseEntity.ok(result);
   }
   
+	@RolesAllowed("iot-read")
+	@GetMapping("/keys2")
+	public ResponseEntity<Collection<ShortKeyDTO>> getKeys2() {
+	  Set<ShortKeyDTO> result = keyService.getAll().stream()
+	    .map(k -> k.toDTO())
+	    .collect(Collectors.toSet());
+	
+	  return ResponseEntity.ok(result);
+	}
+  
 	@DeleteMapping("/key/{token}")
 	public ResponseEntity<String> deleteKey(@PathVariable("token") String token){
+		
+		if(keyService.checkIfExists(token) == false) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		
+		boolean isDeleted = keyService.ProbaDeleteKeyById(token);
+		
+		//Check if deleted
+		if(isDeleted == false) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(token);
+
+	}
+	
+	@DeleteMapping("/key2/{token}")
+	@RolesAllowed("iot-read")
+	public ResponseEntity<String> deleteKey2(@PathVariable("token") String token){
 		
 		if(keyService.checkIfExists(token) == false) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -73,8 +105,40 @@ public class KeysController {
 		return ResponseEntity.status(HttpStatus.OK).body(newToken);
 	}
 	
+	@RolesAllowed("iot-read")
+	@PutMapping("/key2/{token}")
+	public ResponseEntity<String> editKey2(@RequestBody String newToken, @PathVariable("token") String oldToken){
+		
+		//Check if scene exists
+		if(keyService.checkIfExists(oldToken) == false) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		
+		boolean isEdited = keyService.editKey(oldToken, newToken);
+		
+		if(isEdited == false) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+
+		return ResponseEntity.status(HttpStatus.OK).body(newToken);
+	}
+	
 	@PostMapping("/keys")
 	public ResponseEntity<String> addKey(@RequestBody Key key){
+		
+		//Check if scene exists
+		if(keyService.checkIfExists(key.getValue()) == true) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("key already exists");
+		}
+				
+		keyService.ProbaAdd(key);
+
+		return ResponseEntity.status(HttpStatus.OK).body(key.getValue());
+	}
+	
+	@RolesAllowed("iot-read")
+	@PostMapping("/keys2")
+	public ResponseEntity<String> addKey2(@RequestBody Key key){
 		
 		//Check if scene exists
 		if(keyService.checkIfExists(key.getValue()) == true) {
