@@ -1,23 +1,6 @@
-//import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-//import { UserLoggedInStateEnum } from "utils/enums";
-//import "./reactTypescriptWrapper.scss";
-//import { useEffect } from "react";
-//import { PATHS } from "utils/paths";
 
 const ReactTypescriptWrapperLoggedIn = () => {
-    /*
-    const userState = useSelector((state: RootState) => state.reactTypescript.userState);
-
-    useEffect(() => {
-        if (userState === UserLoggedInStateEnum.Unauthorized || userState === UserLoggedInStateEnum.Expired) {
-        }
-    }, [userState]);
-
-    if (userState === UserLoggedInStateEnum.Unauthorized || userState === UserLoggedInStateEnum.Expired) {
-        return <></>;
-    }*/
-
     return (
         <div>
             <div className="react-typescript__wrapper">
