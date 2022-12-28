@@ -5,7 +5,7 @@ import { initScenes } from "models/scenes";
 import "./sceneForm.scss";
 import { Button } from "primereact/button";
 import { PAGE_ROUTES } from "utils/paths";
-import { editScene } from "utils/axios/scenesApi";
+import { createNewScene } from "utils/axios/scenesApi";
 import { Multiselect } from "multiselect-react-dropdown";
 //import { tagsTypeOptions } from "models/tags";
 import { roleTypeOptions } from "models/role";
@@ -20,6 +20,7 @@ const SceneForm = () => {
 
     const [tags, setTags] = useState<any>([]);
     const [keys, setKeys] = useState<any>([]);
+    const [roles, setRoles] = useState<any>([]);
 
     const multiselectRefTags = useRef<any>();
     const multiselectRefRoles = useRef<any>();
@@ -28,7 +29,7 @@ const SceneForm = () => {
     const getTags = async () => {
         try {
             const response = await getAllTags();
-            setTags(response);
+            setTags(response.map((tag: any) => tag.name));
         } catch (error) {
             console.log(error);
         }
@@ -37,19 +38,23 @@ const SceneForm = () => {
     const getKeys = async () => {
         try {
             const response = await getAllKeys();
-            setKeys(response);
+            setKeys(response.map((key: any) => key.name));
         }catch (error) {
             console.log(error);
         }
     };
 
+    const getRoles = () => {
+        setRoles(roleTypeOptions.map((role: any) => role.name));
+    }
+
 
     const handleAddNewScene = async (data: any) => {
-        data.tags = multiselectRefTags.current.getSelectedItems().map((item: any) => item.name);
-        data.roles = multiselectRefRoles.current.getSelectedItems().map((item: any) => item.name);
-        data.keys = multiselectRefKeys.current.getSelectedItems().map((item: any) => item.name);
+        data.tags = multiselectRefTags.current.getSelectedItems();
+        data.roles = multiselectRefRoles.current.getSelectedItems();
+        data.keys = multiselectRefKeys.current.getSelectedItems();
         try {
-            await editScene(data);
+            await createNewScene(data);
         } catch (error) {
             console.log("error while adding new scene");
         } finally {
@@ -60,6 +65,7 @@ const SceneForm = () => {
     useEffect(() => {
         getTags();
         getKeys();
+        getRoles();
     }, []);
 
     return (
@@ -158,7 +164,7 @@ const SceneForm = () => {
                                                     className="scene-field-form"
                                                     showArrow
                                                     options={tags}
-                                                    displayValue="name"
+                                                    isObject={false}
                                                     ref={multiselectRefTags}
                                                 />
                                             </div>
@@ -177,8 +183,8 @@ const SceneForm = () => {
                                                     id="roles"
                                                     className="scene-field-form"
                                                     showArrow
-                                                    options={roleTypeOptions}
-                                                    displayValue="name"
+                                                    options={roles}
+                                                    isObject={false}
                                                     ref={multiselectRefRoles}
                                                 />
                                             </div>
@@ -198,7 +204,7 @@ const SceneForm = () => {
                                                     className="scene-field-form"
                                                     showArrow
                                                     options={keys}
-                                                    displayValue="name"
+                                                    isObject={false}
                                                     ref={multiselectRefKeys}
                                                 />
                                             </div>
