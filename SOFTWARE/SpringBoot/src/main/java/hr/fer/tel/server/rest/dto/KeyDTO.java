@@ -4,15 +4,18 @@ import hr.fer.tel.server.rest.model.Key;
 import java.util.List;
 
 public class KeyDTO {
-	    
+	
+    private long id;
+    
     private String name;
     
     private String value;
     
     private boolean canDelete;
 
-	public KeyDTO(String name, String value, boolean canDelete) {
+	public KeyDTO(long id, String name, String value, boolean canDelete) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.value = value;
 		this.canDelete = canDelete;
@@ -26,6 +29,14 @@ public class KeyDTO {
 
 	public KeyDTO() {
 		super();
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {

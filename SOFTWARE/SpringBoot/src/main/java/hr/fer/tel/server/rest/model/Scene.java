@@ -8,6 +8,7 @@ import java.util.Random;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -54,16 +55,20 @@ public class Scene {
 	@JsonManagedReference
 	private List<Role> roles = new ArrayList<>(); // roles required for specific scene
 
-	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference
-	private List<Key> keys = new ArrayList<>(); // keys required for specific scene
+//	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
+//	@JsonManagedReference
+//	private List<Key> keys = new ArrayList<>(); // keys required for specific scene
+	
+	@Column(name="keyNames")
+	@ElementCollection(targetClass=String.class)
+	private List<String> keyNames = new ArrayList<>();
 
 	public Scene() {
 
 	}
 
 	public Scene(String title, String subtitle, Layout layout, String pictureLink, List<Tag> tags, List<View> views,
-			List<Role> roles, List<Key> keys) {
+			List<Role> roles, List<String> keyNames) {
 		this.title = title;
 		this.subtitle = subtitle;
 		this.layout = layout;
@@ -71,7 +76,7 @@ public class Scene {
 		this.tags = tags;
 		this.views = views;
 		this.roles = roles;
-		this.keys = keys;
+		this.keyNames= keyNames;
 
 		for (Tag tag : tags) {
 			tag.setScene(this);
@@ -82,20 +87,15 @@ public class Scene {
 		for (Role role : roles) {
 			role.setScene(this);
 		}
-		for (Key key : keys) {
-			key.setScene(this);
-		}
+//		for (String key : keyNames) {
+//			keyNames.setScene(this);
+//		}
 
 	}
 
 	public Scene(SceneDTO dto) {
 		this.id = dto.getId();
-		
-//		for(String tmp: dto.getKeys()) {
-//			
-//		}
-		
-		this.keys = dto.getKeys().stream().map(key -> new Key(new KeyDTO(key))).toList();
+		this.keyNames = dto.getKeys();   //.stream().map(key -> new Key(new KeyDTO(key))).toList();
 
 		this.layout = new Layout(dto.getLayout());
 
@@ -140,9 +140,9 @@ public class Scene {
 		for (Role role : roles) {
 			role.setScene(this);
 		}
-		for (Key key : keys) {
-			key.setScene(this);
-		}
+//		for (Key key : keys) {
+//			key.setScene(this);
+//		}
 
 	}
 
@@ -210,12 +210,21 @@ public class Scene {
 		this.roles = roles;
 	}
 
-	public List<Key> getKeys() {
-		return keys;
+//	public List<Key> getKeys() {
+//		return keys;
+//	}
+//
+//	public void setKeys(List<Key> keys) {
+//		this.keys = keys;
+//	}
+	
+	
+	public List<String> getKeyNames() {
+		return keyNames;
 	}
-
-	public void setKeys(List<Key> keys) {
-		this.keys = keys;
+	
+	public void setKeyNames(List<String> keyNames) {
+		this.keyNames = keyNames;
 	}
 
 //    public void addTag(Tag tag) {
@@ -227,14 +236,17 @@ public class Scene {
 	public String toString() {
 		return "Scene [id=" + id + ", title=" + title + ", subtitle=" + subtitle + ", layout=" + layout
 				+ ", pictureLink=" + pictureLink + ", tags=" + tags + ", views=" + views + ", roles=" + roles
-				+ ", keys=" + keys + "]";
+				+ ", keys=" + keyNames + "]";
 	}
+
 
 	public static List<Scene> generateScenes() {
 		// http://52.16.186.190/downloads/documentation/data_frame_guide.pdf
-		Key key = new Key("influxFer",
+		Key key1 = new Key("influxFer",
 				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
 				true);
+		String key = "influxFer";
+		String keyTwo = "influxFerit";
 		
 		Scene sceneFerPaprika = new Scene("FER paprika", "sva mjerenja", new Layout("LIST"),
 				"https://www.biobio.hr/upload/catalog/product/20433/10513.jpg",
@@ -243,7 +255,7 @@ public class Scene {
 						sap01SoiltcView(), sap01SoilcView(), sap01TcView(), 
 						createActView()),
 				List.of(new Role("fer")),
-				List.of(key));
+				List.of(key, keyTwo));
 
 		Scene sceneFerRajcica = new Scene("FER rajčica", "sva mjerenja", new Layout("LIST"),
 				"https://cdn.agroklub.com/upload/images/plant-specie/thumb/rajcica32-300x300.jpg",
@@ -253,19 +265,23 @@ public class Scene {
 						sap02TcView(), sap02WvView(),
 						createActView1()),
 				List.of(new Role("fer")),
-				List.of(new Key("influxFer",
-						"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
-						true)));
-
+				List.of(key));
+		
+		Key key2 = new Key("influxFer",
+				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
+				true);
+		
+		Key key3 = new Key("influxFer",
+				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
+				true);
+		
 		Scene sceneFerTlo = new Scene("FER-ov vrt - tlo", "mjerenja tla", new Layout("LIST"),
 				"https://d177d01a9shl9j.cloudfront.net/online-soil/main-page-images/_859xAUTO_crop_center-center_none/what-is-topsoil.jpg",
 				List.of(new Tag("fer"), new Tag("tlo")),
 				List.of(sap01SoiltcView(), sap01SoilcView(), sap02SoiltcView(), sap02SoilbView(), sap02SoilcView(),
 						createActView2()),
 				List.of(new Role("fer")),
-				List.of(new Key("influxFer",
-						"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
-						true)));
+				List.of(key));
 
 		Scene sceneFerZrak = new Scene("FER-ov vrt - zrak", "mjerenja zraka", new Layout("LIST"),
 				"https://www.ccacoalition.org/sites/default/files/styles/full_content_width/public/fields/event_mainimage/cloud2.jpg?itok=XV1BpKIw&timestamp=1587998743",
@@ -275,9 +291,11 @@ public class Scene {
 						sap02WvView(),
 						createActView3()),
 				List.of(new Role("fer")),
-				List.of(new Key("influxFer",
-						"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
-						true)));
+				List.of(key));
+		
+		Key key4 = new Key("influxFer",
+				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
+				true);
 
 		Scene sceneFerTempTlo = new Scene("FER-ov vrt - temp. tla", "mjerenja temperature tla", new Layout("LIST"),
 				"https://www.gardeningknowhow.com/wp-content/uploads/2012/05/spring-temperatures-1024x768.jpg",
@@ -285,9 +303,11 @@ public class Scene {
 				List.of(sap01TcView(), sap02TcView(),
 						createActView4()),
 				List.of(new Role("fer")),
-				List.of(new Key("influxFer",
-						"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
-						true)));
+				List.of(key));
+		
+		Key key5 = new Key("influxFer",
+				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
+				true);
 
 		Scene sceneFerit1 = new Scene("FERIT - 1", "sva mjerenja", new Layout("LIST"),
 				"https://www.no-tillfarmer.com/ext/resources/images/2009/02/Corn_DT_3211396_soft.jpg",
@@ -295,9 +315,11 @@ public class Scene {
 						ferit1BatteryVolatage(), ferit1Irradiation(), ferit1RelativeHumidity(),
 						createActView5()),
 				List.of(new Role("ferit")),
-				List.of(new Key("influxFerit",
-						"kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==",
-						true)));
+				List.of(keyTwo));
+		
+		Key key6 = new Key("influxFerit",
+				"kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==",
+				true);
 
 		Scene sceneFerit2 = new Scene("FERIT - 2", "sva mjerenja", new Layout("LIST"),
 				"https://www.no-tillfarmer.com/ext/resources/images/2009/02/Corn_DT_3211396_soft.jpg",
@@ -308,9 +330,11 @@ public class Scene {
 						ferit2WhiteIllumination(),
 						createActView6()),
 				List.of(new Role("ferit")),
-				List.of(new Key("influxFerit",
-						"kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==",
-						true)));
+				List.of(keyTwo));
+		
+		Key key7 = new Key("influxFerit",
+				"kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==",
+				true);
 
 		return List.of(sceneFerPaprika, sceneFerRajcica, sceneFerTlo, sceneFerZrak, sceneFerTempTlo, sceneFerit1,
 				sceneFerit2);
