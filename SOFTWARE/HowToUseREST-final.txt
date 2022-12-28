@@ -1,0 +1,217 @@
+//Bez autorizacije
+GET
+http://localhost:8080/rest2/scene/1
+http://localhost:8080/rest2/keys
+http://localhost:8080/rest2/scene/290
+
+
+//Sa autorizacijom, dodana je dvojka kod scene u url
+GET
+http://localhost:8080/rest2/scene2/1
+http://localhost:8080/rest2/keys2
+http://localhost:8080/rest2/scene2/290
+
+POST - dodavanje scene
+http://localhost:8080/rest2/scene2
+http://localhost:8080/rest2/scene
+Body
+{
+  "id": "135",
+  "title": "FER SAP01",
+  "subtitle": "uz zid",
+  "pictureLink": "http://example.com/some.png",
+  "layout": "list",
+  "tags": [
+    "fer",
+    "ferit"
+  ],
+  "views": [
+    {
+      "title": "view title",
+      "viewType": "single",
+      "measurementUnit": "C",
+      "selectForm": {
+        "submitSelectionRequest": {
+          "URI": "http://localhost:80/some/path/{{var1}}",
+          "method": "GET",
+          "headers": {
+            "Authorization": "{{accessToken}} {{token1}} ...",
+            "Content-Type": "application/csv",
+            "...": null
+          },
+          "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+        },
+        "inputs": {
+          "inputType": "BOOLEAN",
+          "name": "string",
+          "title": "string",
+          "description": "string",
+          "defaultValue": true
+        }
+      },
+      "query": {
+        "URI": "http://localhost:80/some/path/{{var1}}",
+        "method": "GET",
+        "headers": {
+          "Authorization": "{{accessToken}} {{token1}} ...",
+          "Content-Type": "application/csv",
+          "...": null
+        },
+        "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+      },
+      "responseExtracting": {
+        "dataFormat": "csv",
+        "timeColumn": "_time",
+        "valueColumn": "_value"
+      }
+    },
+    {
+      "title": "view title",
+      "viewType": "actuation",
+      "form": {
+        "defaultValuesRequest": {
+          "URI": "http://localhost:80/some/path/{{var1}}",
+          "method": "GET",
+          "headers": {
+            "Authorization": "{{accessToken}} {{token1}} ...",
+            "Content-Type": "application/csv",
+            "...": null
+          },
+          "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+        },
+        "submitFormRequest": {
+          "URI": "http://localhost:80/some/path/{{var1}}",
+          "method": "GET",
+          "headers": {
+            "Authorization": "{{accessToken}} {{token1}} ...",
+            "Content-Type": "application/csv",
+            "...": null
+          },
+          "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+        },
+        "inputs": {
+          "inputType": "BOOLEAN",
+          "name": "string",
+          "title": "string",
+          "description": "string",
+          "defaultValue": true
+        }
+      }
+    }
+  ],
+  "roles": [
+    "string"
+  ],
+  "keys": [
+    "influxFer"
+  ]
+}
+
+
+
+PUT - dorada scene pod id-em 290
+http://localhost:8080/rest2/scene2/290
+{
+  "title": "FER SAP01",
+  "subtitle": "uz zid",
+  "pictureLink": "http://example.com/some.png",
+  "layout": "list",
+  "tags": [
+    "fer",
+    "ferit"
+  ],
+  "views": [
+    {
+      "title": "view title",
+      "viewType": "single",
+      "measurementUnit": "C",
+      "selectForm": {
+        "submitSelectionRequest": {
+          "URI": "http://localhost:80/some/path/{{var1}}",
+          "method": "GET",
+          "headers": {
+            "Authorization": "{{accessToken}} {{token1}} ...",
+            "Content-Type": "application/csv",
+            "...": null
+          },
+          "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+        },
+        "inputs": {
+          "inputType": "BOOLEAN",
+          "name": "string",
+          "title": "string",
+          "description": "string",
+          "defaultValue": true
+        }
+      },
+      "query": {
+        "URI": "http://localhost:80/some/path/{{var1}}",
+        "method": "GET",
+        "headers": {
+          "Authorization": "{{accessToken}} {{token1}} ...",
+          "Content-Type": "application/csv",
+          "...": null
+        },
+        "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+      },
+      "responseExtracting": {
+        "dataFormat": "csv",
+        "timeColumn": "_time",
+        "valueColumn": "_value"
+      }
+    },
+    {
+      "title": "view title",
+      "viewType": "actuation",
+      "form": {
+        "defaultValuesRequest": {
+          "URI": "http://localhost:80/some/path/{{var1}}",
+          "method": "GET",
+          "headers": {
+            "Authorization": "{{accessToken}} {{token1}} ...",
+            "Content-Type": "application/csv",
+            "...": null
+          },
+          "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+        },
+        "submitFormRequest": {
+          "URI": "http://localhost:80/some/path/{{var1}}",
+          "method": "GET",
+          "headers": {
+            "Authorization": "{{accessToken}} {{token1}} ...",
+            "Content-Type": "application/csv",
+            "...": null
+          },
+          "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
+        },
+        "inputs": {
+          "inputType": "BOOLEAN",
+          "name": "string",
+          "title": "string",
+          "description": "string",
+          "defaultValue": true
+        }
+      }
+    }
+  ],
+  "roles": [
+    "string"
+  ],
+  "keys": [
+    "influxFer"
+  ]
+}
+
+
+DELETE - scene pod idem 290
+http://localhost:8080/rest2/scene2/290
+
+
+
+
+
+
+
+
+
+
