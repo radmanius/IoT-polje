@@ -11,7 +11,7 @@ export interface IMeasurementSelectForm{
 }
 
 export interface IActuationForm{
-    defaultValuesRequest: IRequest;
-    submitFormRequest: IRequest;
-    inputs: IInput;
+    defaultValuesRequest?: IRequest;
+    submitFormRequest?: IRequest;
+    inputs?: IInput;
 }

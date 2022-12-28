@@ -7,6 +7,8 @@ export const PAGE_ROUTES = {
     KeysView: "/keys",
     AddNewKey: "/key-add",
     EditKey: "/key-edit",
+    AddActuationView: "/actuation-view-add",
+    AddMeasurementView: "/measurement-view-add",
 };
 
 export const PATHS = {

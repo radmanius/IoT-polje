@@ -43,20 +43,19 @@ const ShortSceneView = () => {
             navigate(PAGE_ROUTES.EditScene, {
                 state: {
                     scene: res,
-                    from: PAGE_ROUTES.ShortSceneView
-                }
+                    from: PAGE_ROUTES.ShortSceneView,
+                },
             });
-        }
-        catch {
+        } catch {
             console.log("Error");
         }
     };
 
-    const handleChange = (e:any) => {
+    const handleChange = (e: any) => {
         e.preventDefault();
         setSearchInput(e.target.value);
     };
-    
+
     const actionColumnEdit = (rowData: IShortScene) => {
         return (
             <Button
@@ -81,7 +80,7 @@ const ShortSceneView = () => {
             return true;
         }
         return false;
-    }
+    };
 
     const actionColumnDelete = (rowData: IShortScene) => {
         return (
@@ -122,13 +121,19 @@ const ShortSceneView = () => {
                 fetchScenes={fetchShortScenes}
             />
             <div className="short-scene-search-wrap">
-                <input className="short-scene-searchBar" type="search" placeholder="Pretraži..." onChange={handleChange} value={searchInput} />
+                <input
+                    className="short-scene-searchBar"
+                    type="search"
+                    placeholder="Pretraži..."
+                    onChange={handleChange}
+                    value={searchInput}
+                />
             </div>
             <div className="short-scene-table">
                 <DataTable
                     resizableColumns
                     showGridlines
-                    value={shortScene?.filter(scene =>  sceneFilter(scene) )}
+                    value={shortScene?.filter(scene => sceneFilter(scene))}
                     emptyMessage={"Trenutno nema rezultata"}
                     responsiveLayout="stack"
                     onRowClick={rowData => {

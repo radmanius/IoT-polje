@@ -2,13 +2,14 @@ import { IDataExtractor } from "./dataExtractors";
 import { IActuationForm, IMeasurementSelectForm } from "./forms";
 import { IRequest } from "./requests";
 
-
-
-
 export interface IView{
     title: string;
-    viewType: string;
 }
+
+export const initActuatinoView : ActuationView= {
+    title:"",
+    viewType: "actuation",
+};
 
 export interface MeasurementsView extends IView{
     measurementUnit: string;
@@ -21,5 +22,5 @@ export interface MeasurementsView extends IView{
 
 export interface ActuationView extends IView{
     viewType: "actuation";
-    form: IActuationForm;
+    form?: IActuationForm;
 }
