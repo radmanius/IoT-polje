@@ -8,7 +8,7 @@ const LoginPage = () => {
     useEffect(() => {}, []);
     return (
         <div>
-            <div>{`User is ${!keycloak.authenticated ? "NOT " : ""}authenticated`}</div>
+            <div>{`User is ${!keycloak.authenticated ? "NOT " : ""} authenticated`}</div>
 
             {!keycloak.authenticated && (
                 <button
