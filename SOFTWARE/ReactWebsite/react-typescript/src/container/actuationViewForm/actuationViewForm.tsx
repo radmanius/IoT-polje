@@ -38,7 +38,7 @@ const ActuationViewForm = () => {
                                 onSubmit={handleSubmit}
                                 autoComplete="off"
                             >
-                                <div className="actuation-view-form-header">
+                                <div className="actuation-view-form-container-inputs">
                                     <Field
                                         name="title"
                                         render={({ input }) => (
@@ -49,6 +49,7 @@ const ActuationViewForm = () => {
                                                 <span>
                                                     <InputText
                                                         id="title"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -65,6 +66,7 @@ const ActuationViewForm = () => {
                                                 <span>
                                                     <InputText
                                                         id="viewType"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -80,11 +82,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">URI:</p>
+                                                    <p>URI:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.defaultValuesRequest.URI"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -96,11 +99,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">Method:</p>
+                                                    <p>Method:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.defaultValuesRequest.method"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -113,11 +117,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">Headers:</p>
+                                                    <p>Headers:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.defaultValuesRequest.headers"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -129,11 +134,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">Payload:</p>
+                                                    <p>Payload:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.defaultValuesRequest.payload"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -149,11 +155,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">URI:</p>
+                                                    <p>URI:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.submitFormRequest.URI"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -165,11 +172,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">Method:</p>
+                                                    <p>Method:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.submitFormRequest.method"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -182,11 +190,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">Headers:</p>
+                                                    <p>Headers:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.submitFormRequest.headers"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -198,11 +207,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">Payload:</p>
+                                                    <p>Payload:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.submitFormRequest.payload"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -218,11 +228,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">Input name:</p>
+                                                    <p>Input name:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.inputs.name"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -234,11 +245,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">Input title:</p>
+                                                    <p>Input title:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.inputs.title"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -251,11 +263,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">Input type:</p>
+                                                    <p>Input type:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.inputs.inputType"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -267,11 +280,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">Input description:</p>
+                                                    <p>Input description:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.inputs.description"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>
@@ -283,11 +297,12 @@ const ActuationViewForm = () => {
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p className="scene-label">Input default value:</p>
+                                                    <p>Input default value:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
                                                         id="form.inputs.defaultValue"
+                                                        className="scene-field-form"
                                                         {...input}
                                                     />
                                                 </span>

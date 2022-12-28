@@ -17,17 +17,12 @@
 
 .actuation-view-form-container-inputs {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 }
 
 .actuation-view-form-container-inputs > div {
-    width: 19rem;
+    width: 100%;
     margin-right: 10px;
-}
-
-.actuation-view-form-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
 }
 
  
