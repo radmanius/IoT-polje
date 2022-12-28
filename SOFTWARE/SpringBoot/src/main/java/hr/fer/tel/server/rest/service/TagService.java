@@ -2,6 +2,7 @@ package hr.fer.tel.server.rest.service;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class TagService {
     return set;
   }
   
-  public Collection<Tag> getAllTags(){
+  public List<Tag> getAllTags(){
 	  return tagRepository.getAllTags();
   }
   

@@ -25,9 +25,9 @@ public class Key {
 
     private boolean canDelete;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
-    private Scene scene;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonBackReference
+//    private Scene scene;
 
     public Key(String name, String value, boolean canDelete) {
 		super();
@@ -59,13 +59,13 @@ public class Key {
 	}
 
 
-	public void setScene(Scene scene) {
-		this.scene = scene;
-	}
-
-    public Scene getScene() {
-		return this.scene;
-	}
+//	public void setScene(Scene scene) {
+//		this.scene = scene;
+//	}
+//
+//    public Scene getScene() {
+//		return this.scene;
+//	}
 
 	public String getName() {
 		return name;

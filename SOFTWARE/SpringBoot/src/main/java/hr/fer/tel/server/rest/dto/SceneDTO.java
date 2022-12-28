@@ -146,7 +146,7 @@ public class SceneDTO {
 		}
 
 			return new SceneDTO(scene.getId(), scene.getTitle(), scene.getSubtitle(), scene.getLayout().getName(), scene.getPictureLink(),
-					tags, views, roles, KeyDTO.of(scene.getKeys()));
+					tags, views, roles, scene.getKeyNames());
 		}
 
 
