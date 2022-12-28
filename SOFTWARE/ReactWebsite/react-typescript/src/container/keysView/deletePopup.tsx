@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./deletePopup.scss";
-import { deleteScene } from "utils/axios/scenesApi";
+import { deleteKey } from "utils/axios/keysApi";
 import { useNavigate } from "react-router-dom";
 import { PAGE_ROUTES } from "utils/paths";
 
@@ -16,17 +16,17 @@ export default function Popup(props : any) {
     async function handleClick() {
         setError("");
         try {
-            await deleteScene(props.id);
+            await deleteKey(props.name);
             closePopup();
-            if (props.fetchScenes) {
-                props.fetchScenes();
+            if (props.fetchKeys) {
+                props.fetchKeys();
             }
             else {
-                navigate(PAGE_ROUTES.ShortSceneView);
+                navigate(PAGE_ROUTES.KeysView);
             }
         }
         catch {
-            setError("Greška pri brisanju scene.")
+            setError("Greška pri brisanju ključa.")
             console.log("Error");
         }
     }
@@ -45,15 +45,15 @@ export default function Popup(props : any) {
         <div className="popup">
             <div className="popup-inner">
                 {error && <h1 className="errorMsg">{error}</h1>}
-                <h2>Jeste li sigurni da želite obrisati scenu?</h2>
-                <h3>Napišite "OBRIŠI SCENU" za brisanje scene.</h3>
+                <h2>Jeste li sigurni da želite obrisati ključ?</h2>
+                <h3>Napišite "OBRIŠI KLJUČ" za brisanje scene.</h3>
                 <div className="confirmationInput">
                     
                     <input className="confirmationText" type="text" maxLength={20} onChange={handleChange} value={confirmation} />
                     <br />
                 </div>
                 
-                <button className="delete-btn" onClick={handleClick} disabled={confirmation !== "OBRIŠI SCENU"}>Obriši</button>
+                <button className="delete-btn" onClick={handleClick} disabled={confirmation !== "OBRIŠI KLJUČ"}>Obriši</button>
 
                 <button className="close-btn" onClick={closePopup}>
                             X

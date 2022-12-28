@@ -116,6 +116,7 @@ const KeysView = () => {
                 trigger={popup}
                 setTrigger={setPopup}
                 name={popupName}
+                fetchKeys={fetchKeys}
             />
             <div className="keys-search-wrap">
                 <input className="keys-searchBar" type="search" placeholder="Pretraži..." onChange={handleChange} value={searchInput} />
