@@ -111,7 +111,16 @@ const SpecificSceneView = () => {
                     />
                 </div>
             )}
-            <div className="specific-scene-buttons-bottom"></div>
+            <div>
+                <Button
+                    label="Add actuation view"
+                    onClick={() => navigate(PAGE_ROUTES.AddActuationView)}
+                />{" "}
+                <Button
+                    label="Add measurement view"
+                    onClick={() => navigate(PAGE_ROUTES.AddMeasurementView)}
+                />
+            </div>
             <div className="scene-view-table">
                 <div>
                     <h2>POPIS VIEW-a za pripadnu scenu</h2>
