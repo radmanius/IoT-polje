@@ -41,7 +41,7 @@ export interface ITimeInput extends IInput{
 export interface IStringInput extends IInput{
     inputType: "string";
     description: string;
-    defaultValue: string;
+    defaultValue: boolean;
     pattern: string;
     //enum ??
 }

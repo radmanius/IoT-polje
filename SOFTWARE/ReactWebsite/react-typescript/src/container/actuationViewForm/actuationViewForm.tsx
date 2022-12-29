@@ -1,9 +1,10 @@
-import { IScene, IShortScene } from "models/scenes";
-import { initActuationView } from "models/viewsInterfaces/views";
+import { IScene } from "models/scenes";
+import { initActuationView, IView } from "models/viewsInterfaces/views";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Field, Form } from "react-final-form";
 import { useLocation, useNavigate } from "react-router-dom";
+import { editScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
 import "./actuationViewForm.scss";
 
@@ -14,11 +15,14 @@ interface ILocationState {
 const ActuationViewForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const scene = (location.state as ILocationState)?.shortScene as IShortScene;
-
-    const handleAddNewActuationView = async (data: any) => {
+    let scene = (location.state as ILocationState)?.shortScene as IScene;
+    const handleAddNewActuationView = async (data: IView) => {
+        let views = scene.views;
+        views.push(scene.views[8]);
+        console.log(data);
         try {
-            console.log(data);
+            scene = { ...scene, views: views };
+            await editScene(scene);
         } catch (error) {
             console.log("error while adding new actuation view");
         } finally {
@@ -42,7 +46,7 @@ const ActuationViewForm = () => {
                     <h3>Actuation view form for: {scene.title}</h3>
                     <div className="form-fields-container">
                         <Form
-                            onSubmit={data => handleAddNewActuationView(data)}
+                            onSubmit={(data: IView) => handleAddNewActuationView(data)}
                             initialValues={initActuationView}
                             render={({ handleSubmit }) => (
                                 <form
@@ -79,6 +83,7 @@ const ActuationViewForm = () => {
                                                         <InputText
                                                             id="viewType"
                                                             className="scene-field-form"
+                                                            disabled
                                                             {...input}
                                                         />
                                                     </span>
@@ -125,7 +130,7 @@ const ActuationViewForm = () => {
                                         />
 
                                         <Field
-                                            name="form.defaultValuesRequest.headers"
+                                            name="form.defaultValuesRequest.headers.{{accessToken}} {{token1}}"
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
@@ -133,7 +138,7 @@ const ActuationViewForm = () => {
                                                     </span>
                                                     <span>
                                                         <InputText
-                                                            id="form.defaultValuesRequest.headers"
+                                                            id="form.defaultValuesRequest.headers.{{accessToken}} {{token1}}"
                                                             className="scene-field-form"
                                                             {...input}
                                                         />
@@ -198,7 +203,7 @@ const ActuationViewForm = () => {
                                         />
 
                                         <Field
-                                            name="form.submitFormRequest.headers"
+                                            name="form.submitFormRequest.headers.{{accessToken}} {{token1}}"
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
@@ -206,7 +211,7 @@ const ActuationViewForm = () => {
                                                     </span>
                                                     <span>
                                                         <InputText
-                                                            id="form.submitFormRequest.headers"
+                                                            id="form.submitFormRequest.headers.{{accessToken}} {{token1}}"
                                                             className="scene-field-form"
                                                             {...input}
                                                         />
@@ -269,7 +274,6 @@ const ActuationViewForm = () => {
                                                 </div>
                                             )}
                                         />
-
                                         <Field
                                             name="form.inputs.inputType"
                                             render={({ input }) => (

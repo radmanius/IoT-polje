@@ -28,7 +28,7 @@ const SceneEditForm = () => {
     const [tags, setTags] = useState<any>([]);
     const [keys, setKeys] = useState<any>([]);
     const [roles, setRoles] = useState<any>([]);
-    
+
     const multiselectRefTags = useRef<any>();
     const multiselectRefRoles = useRef<any>();
     const multiselectRefKeys = useRef<any>();
@@ -46,14 +46,14 @@ const SceneEditForm = () => {
         try {
             const response = await getAllKeys();
             setKeys(response.map((key: any) => key.name));
-        }catch (error) {
+        } catch (error) {
             console.log(error);
         }
     };
 
     const getRoles = () => {
         setRoles(roleTypeOptions.map((role: any) => role.name));
-    }
+    };
 
     const navigateToPreviousPage = async () => {
         try {
@@ -72,12 +72,11 @@ const SceneEditForm = () => {
 
     const handleEditScene = async (data: IScene) => {
         try {
-
             data.tags = multiselectRefTags.current.getSelectedItems();
             data.roles = multiselectRefRoles.current.getSelectedItems();
             data.keys = multiselectRefKeys.current.getSelectedItems();
 
-            data.views.map(view => {
+            /*data.views.map(view => {
                 if (view.selectForm) {
                     if (view.selectForm.submitSelectionRequest) {
                         delete view.selectForm.submitSelectionRequest.id;
@@ -91,7 +90,7 @@ const SceneEditForm = () => {
                         view.form.submitFormRequest = {};
                     }
                 }
-            });
+            });*/
             await editScene(data);
         } catch (error) {
             console.log(error);
@@ -101,7 +100,6 @@ const SceneEditForm = () => {
     };
 
     const handleChange = (e: any) => {
-
         if (e.target.id === "title") {
             setScene({
                 ...scene,
@@ -133,8 +131,7 @@ const SceneEditForm = () => {
     const handleOdustani = async (e: any) => {
         if (location.state.from) {
             navigate(location.state.from);
-        }
-        else {
+        } else {
             await navigateToPreviousPage();
         }
     };
@@ -247,7 +244,7 @@ const SceneEditForm = () => {
                                                 </span>
                                             </div>
                                         )}
-                                />
+                                    />
                                     <Field
                                         name="tags"
                                         render={({ input }) => (

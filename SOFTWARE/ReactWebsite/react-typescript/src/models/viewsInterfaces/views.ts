@@ -21,7 +21,6 @@ export interface MeasurementsView extends IView{
     selectForm?: IMeasurementSelectForm;
     query?: IRequest;
     responseExtracting?: IDataExtractorCsv | IDataExtractorJson;
-
 }
 
 export interface ActuationView extends IView {
