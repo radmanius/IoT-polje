@@ -6,7 +6,7 @@ import { Field, Form } from "react-final-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { editScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
-import { InputSwitch } from 'primereact/inputswitch';
+import { InputSwitch } from "primereact/inputswitch";
 import "./actuationViewForm.scss";
 
 interface ILocationState {
@@ -21,20 +21,18 @@ const ActuationViewForm = () => {
         let views = [...scene.views];
         views.push(data);
         views.map(view => {
-                if (view.selectForm) {
-                    if (!view.selectForm.submitSelectionRequest) {
-                        view.selectForm.submitSelectionRequest = {};
-                    }
-                } else if (view.form) {
-                    if (!view.form.submitFormRequest) {
-                        view.form.submitFormRequest = {};
-                    } 
+            if (view.selectForm) {
+                if (!view.selectForm.submitSelectionRequest) {
+                    view.selectForm.submitSelectionRequest = {};
                 }
-            });
-        console.log(data);
+            } else if (view.form) {
+                if (!view.form.submitFormRequest) {
+                    view.form.submitFormRequest = {};
+                }
+            }
+        });
         try {
             //scene = { ...scene, views: views };
-            console.log({ ...scene, views: views });
             await editScene({ ...scene, views: views });
         } catch (error) {
             console.log("error while adding new actuation view");
@@ -147,15 +145,16 @@ const ActuationViewForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
-                                                        <p className="headers">Headers:
-                                                        <Button
-                                                            icon="fa fa-plus"
-                                                            className="p-button-success"
-                                                            //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
-                                                                onClick={(e) => {
+                                                        <p className="headers">
+                                                            Headers:
+                                                            <Button
+                                                                icon="fa fa-plus"
+                                                                className="p-button-success"
+                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                onClick={e => {
                                                                     e.preventDefault();
                                                                     console.log("click");
-                                                            }}
+                                                                }}
                                                             />
                                                         </p>
                                                     </span>
@@ -230,15 +229,16 @@ const ActuationViewForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
-                                                        <p className="headers">Headers:
-                                                        <Button
-                                                            icon="fa fa-plus"
-                                                            className="p-button-success"
-                                                            //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
-                                                                onClick={(e) => {
+                                                        <p className="headers">
+                                                            Headers:
+                                                            <Button
+                                                                icon="fa fa-plus"
+                                                                className="p-button-success"
+                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                onClick={e => {
                                                                     e.preventDefault();
                                                                     console.log("click");
-                                                            }}
+                                                                }}
                                                             />
                                                         </p>
                                                     </span>
