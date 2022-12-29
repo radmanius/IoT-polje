@@ -71,8 +71,6 @@ const SpecificSceneView = () => {
         );
     };
 
-    console.log(scene);
-
     return (
         <div className="scene-page">
             {scene && (
@@ -124,7 +122,13 @@ const SpecificSceneView = () => {
                 />{" "}
                 <Button
                     label="Add measurement view"
-                    onClick={() => navigate(PAGE_ROUTES.AddNewScene)}
+                    onClick={() =>
+                        navigate(PAGE_ROUTES.AddMeasurementView, {
+                            state: {
+                                shortScene: scene,
+                            },
+                        })
+                    }
                 />
             </div>
             <div className="scene-view-table">

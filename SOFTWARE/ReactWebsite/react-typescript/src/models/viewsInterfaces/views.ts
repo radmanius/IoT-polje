@@ -11,12 +11,16 @@ export const initActuatinoView : ActuationView= {
     viewType: "actuation",
 };
 
+export const initMeasurementView : MeasurementsView= {
+    title:"",
+};
+
 export interface MeasurementsView extends IView{
-    measurementUnit: string;
-    viewType: "single"|"series";
-    selectForm: IMeasurementSelectForm;
-    query: IRequest;
-    responseExtracting: IDataExtractor;
+    measurementUnit?: string;
+    viewType?: "single"|"series";
+    selectForm?: IMeasurementSelectForm;
+    query?: IRequest;
+    responseExtracting?: IDataExtractor;
 
 }
 

@@ -1,0 +1,28 @@
+.measurement-view-form-container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    width: 1000px;
+    margin: auto;
+    padding: 10px;
+}
+
+.form-fields-container {
+    margin-top: 20px;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.measurement-view-form-container-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.measurement-view-form-container-inputs > div {
+    width: 100%;
+    margin-right: 10px;
+}
+
+ 
