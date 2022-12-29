@@ -75,22 +75,18 @@ const SceneEditForm = () => {
             data.tags = multiselectRefTags.current.getSelectedItems();
             data.roles = multiselectRefRoles.current.getSelectedItems();
             data.keys = multiselectRefKeys.current.getSelectedItems();
-
-            /*data.views.map(view => {
+            console.log(data.views);
+            data.views.map(view => {
                 if (view.selectForm) {
-                    if (view.selectForm.submitSelectionRequest) {
-                        delete view.selectForm.submitSelectionRequest.id;
-                    } else {
+                    if (!view.selectForm.submitSelectionRequest) {
                         view.selectForm.submitSelectionRequest = {};
                     }
                 } else if (view.form) {
-                    if (view.form.submitFormRequest) {
-                        delete view.form.submitFormRequest.id;
-                    } else {
+                    if (!view.form.submitFormRequest) {
                         view.form.submitFormRequest = {};
-                    }
+                    } 
                 }
-            });*/
+            });
             await editScene(data);
         } catch (error) {
             console.log(error);
