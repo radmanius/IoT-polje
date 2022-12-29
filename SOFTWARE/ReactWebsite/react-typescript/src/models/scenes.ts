@@ -1,5 +1,7 @@
 //import { IView } from "./viewsInterfaces/views";
 
+import { IView } from "./viewsInterfaces/views";
+
 
 
 export interface IShortScene{
@@ -7,6 +9,7 @@ export interface IShortScene{
     title: string;
     subtitle: string;
     tags?: IShortTag[];
+    views?: IView[];
 }
 
 export interface IShortTag{

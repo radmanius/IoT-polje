@@ -1,4 +1,4 @@
-import { IInput } from "./inputs";
+import { IBooleanInput, IInput } from "./inputs";
 import { IRequest } from "./requests";
 
 export interface IMeasurementSelectForm {
@@ -9,5 +9,5 @@ export interface IMeasurementSelectForm {
 export interface IActuationForm {
     defaultValuesRequest?: IRequest;
     submitFormRequest?: IRequest;
-    inputs?: IInput;
+    inputs?: IBooleanInput;
 }
