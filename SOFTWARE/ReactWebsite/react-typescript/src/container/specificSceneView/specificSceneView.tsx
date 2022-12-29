@@ -8,6 +8,7 @@ import { getSceneById } from "utils/axios/scenesApi";
 import Popup from "./deletePopup";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { IView } from "models/viewsInterfaces/views";
 
 interface ILocationState {
     shortScene: IScene;
@@ -49,23 +50,21 @@ const SpecificSceneView = () => {
         fetchScene();
     }, [fetchScene]);
 
-    const actionColumnEdit = (rowData: IShortScene) => {
+    const actionColumnEdit = (rowData: IView) => {
         return (
             <Button
                 icon="fa fa-pen-to-square"
                 className="p-button-outlined"
-                //tooltip={"Uredi"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
                 onClick={() => {}}
             />
         );
     };
 
-    const actionColumnDelete = (rowData: IShortScene) => {
+    const actionColumnDelete = (rowData: IView) => {
         return (
             <Button
                 icon="fa fa-trash"
                 className="p-button-danger p-button-outlined"
-                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
                 onClick={() => {}}
             />
         );
@@ -109,7 +108,7 @@ const SpecificSceneView = () => {
                     />
                 </div>
             )}
-            <div>
+            <div className="view-form-create-buttons">
                 <Button
                     label="Add actuation view"
                     onClick={() =>
@@ -119,7 +118,7 @@ const SpecificSceneView = () => {
                             },
                         })
                     }
-                />{" "}
+                />
                 <Button
                     label="Add measurement view"
                     onClick={() =>
@@ -140,14 +139,6 @@ const SpecificSceneView = () => {
                         value={scene?.views}
                         emptyMessage={"Trenutno nema rezultata"}
                         responsiveLayout="stack"
-                        onRowClick={rowData => {
-                            /*
-                        navigate(PAGE_ROUTES.SpecificSceneView, {
-                            state: {
-                                shortScene: shortScene?.find(x => x.id === rowData.data.id),
-                            },
-                        });*/
-                        }}
                     >
                         <Column
                             key={"title"}
