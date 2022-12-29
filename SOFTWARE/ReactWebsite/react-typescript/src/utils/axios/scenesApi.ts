@@ -1,8 +1,12 @@
 import axios from "axios";
 import { IScene, IShortScene } from "models/scenes";
 
-export const getAllScenes = async () => {
-    const response = await axios.get("/scene")
+export const getAllScenes = async (token : string) => {
+    const response = await axios.get("/scene2", {
+        headers: {
+            'Authorization': "Bearer " + token,
+        }
+    })
     return response.data as IShortScene[]; 
 } 
 

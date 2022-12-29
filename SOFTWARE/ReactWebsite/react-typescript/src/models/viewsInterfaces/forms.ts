@@ -2,8 +2,8 @@ import { IBooleanInput, IInput } from "./inputs";
 import { IRequest } from "./requests";
 
 export interface IMeasurementSelectForm {
-    submitSelectionRequest: IRequest;
-    inputs: IInput;
+    submitSelectionRequest?: IRequest;
+    inputs?: IInput;
 }
 
 export interface IActuationForm {

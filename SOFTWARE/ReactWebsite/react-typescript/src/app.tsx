@@ -8,6 +8,8 @@ import NotFound from "container/notFound/notFound";
 import AppHeader from "container/appHeader/appHeader";
 import { useKeycloak } from "@react-keycloak/web";
 import React from "react";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 const ReactTypescriptWrapperLoggedInLazy = React.lazy(
     () => import("./components/wrappers/reactTypescriptWrapperLoggedIn")

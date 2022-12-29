@@ -15,6 +15,7 @@ import { roleTypeOptions } from "models/role";
 import { getAllTags } from "utils/axios/tagsApi";
 import { getAllKeys } from "utils/axios/keysApi";
 import { useEffect } from "react";
+import { useKeycloak } from "@react-keycloak/web";
 
 interface ILocationState {
     scene: IScene;
@@ -32,6 +33,8 @@ const SceneEditForm = () => {
     const multiselectRefTags = useRef<any>();
     const multiselectRefRoles = useRef<any>();
     const multiselectRefKeys = useRef<any>();
+
+    const { keycloak } = useKeycloak();
 
     const getTags = async () => {
         try {
@@ -57,7 +60,7 @@ const SceneEditForm = () => {
 
     const navigateToPreviousPage = async () => {
         try {
-            const res = await getAllScenes();
+            const res = await getAllScenes(keycloak.token??"");
             navigate(PAGE_ROUTES.SpecificSceneView, {
                 state: {
                     shortScene: res?.find(x => x.id === scene.id),
@@ -75,22 +78,18 @@ const SceneEditForm = () => {
             data.tags = multiselectRefTags.current.getSelectedItems();
             data.roles = multiselectRefRoles.current.getSelectedItems();
             data.keys = multiselectRefKeys.current.getSelectedItems();
-
-            /*data.views.map(view => {
-                if (view.selectForm) {
-                    if (view.selectForm.submitSelectionRequest) {
-                        delete view.selectForm.submitSelectionRequest.id;
-                    } else {
-                        view.selectForm.submitSelectionRequest = {};
-                    }
-                } else if (view.form) {
-                    if (view.form.submitFormRequest) {
-                        delete view.form.submitFormRequest.id;
-                    } else {
-                        view.form.submitFormRequest = {};
-                    }
-                }
-            });*/
+            console.log(data.views);
+            // data.views.map(view => {
+            //     if (view.selectForm) {
+            //         if (!view.selectForm.submitSelectionRequest) {
+            //             view.selectForm.submitSelectionRequest = {};
+            //         }
+            //     } else if (view.form) {
+            //         if (!view.form.submitFormRequest) {
+            //             view.form.submitFormRequest = {};
+            //         } 
+            //     }
+            //});
             await editScene(data);
         } catch (error) {
             console.log(error);

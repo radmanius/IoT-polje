@@ -6,6 +6,7 @@ import { Field, Form } from "react-final-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { editScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
+import { InputSwitch } from 'primereact/inputswitch';
 import "./actuationViewForm.scss";
 
 interface ILocationState {
@@ -17,12 +18,24 @@ const ActuationViewForm = () => {
     const location = useLocation();
     let scene = (location.state as ILocationState)?.shortScene as IScene;
     const handleAddNewActuationView = async (data: IView) => {
-        let views = scene.views;
-        views.push(scene.views[8]);
+        let views = [...scene.views];
+        views.push(data);
+        views.map(view => {
+                if (view.selectForm) {
+                    if (!view.selectForm.submitSelectionRequest) {
+                        view.selectForm.submitSelectionRequest = {};
+                    }
+                } else if (view.form) {
+                    if (!view.form.submitFormRequest) {
+                        view.form.submitFormRequest = {};
+                    } 
+                }
+            });
         console.log(data);
         try {
-            scene = { ...scene, views: views };
-            await editScene(scene);
+            //scene = { ...scene, views: views };
+            console.log({ ...scene, views: views });
+            await editScene({ ...scene, views: views });
         } catch (error) {
             console.log("error while adding new actuation view");
         } finally {
@@ -92,7 +105,7 @@ const ActuationViewForm = () => {
                                         />
                                     </div>
                                     <hr />
-                                    <h3>Defualt values request</h3>
+                                    <h3>Default values request</h3>
                                     <div className="actuation-view-form-container-inputs">
                                         <Field
                                             name="form.defaultValuesRequest.URI"
@@ -134,7 +147,17 @@ const ActuationViewForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
-                                                        <p>Headers:</p>
+                                                        <p className="headers">Headers:
+                                                        <Button
+                                                            icon="fa fa-plus"
+                                                            className="p-button-success"
+                                                            //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    console.log("click");
+                                                            }}
+                                                            />
+                                                        </p>
                                                     </span>
                                                     <span>
                                                         <InputText
@@ -151,7 +174,7 @@ const ActuationViewForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
-                                                        <p>Payload:</p>
+                                                        <p className="payload">Payload:</p>
                                                     </span>
                                                     <span>
                                                         <InputText
@@ -207,7 +230,17 @@ const ActuationViewForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
-                                                        <p>Headers:</p>
+                                                        <p className="headers">Headers:
+                                                        <Button
+                                                            icon="fa fa-plus"
+                                                            className="p-button-success"
+                                                            //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    console.log("click");
+                                                            }}
+                                                            />
+                                                        </p>
                                                     </span>
                                                     <span>
                                                         <InputText
@@ -224,7 +257,7 @@ const ActuationViewForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
-                                                        <p>Payload:</p>
+                                                        <p className="payload">Payload:</p>
                                                     </span>
                                                     <span>
                                                         <InputText
@@ -315,13 +348,17 @@ const ActuationViewForm = () => {
                                                     <span>
                                                         <p>Input default value:</p>
                                                     </span>
-                                                    <span>
+                                                    <InputSwitch
+                                                        id="form.inputs.defaultValue"
+                                                        {...input}
+                                                    />
+                                                    {/* <span>
                                                         <InputText
                                                             id="form.inputs.defaultValue"
                                                             className="scene-field-form"
                                                             {...input}
                                                         />
-                                                    </span>
+                                                    </span> */}
                                                 </div>
                                             )}
                                         />
