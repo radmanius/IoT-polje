@@ -17,17 +17,36 @@ const MeasurementViewForm = () => {
     const location = useLocation();
     const scene = (location.state as ILocationState)?.shortScene as IShortScene;
     const [dataFormat, setDataFormat] = useState("");
+    const [timeColumn, setTimeColumn] = useState("");
+    const [valueColumn, setValueColumn] = useState("");
+    const [timeJsonPath, setTimeJsonPath] = useState("");
+    const [valueJsonPath, setValueJsonPath] = useState("");
 
     const handleAddNewMeasurementView = async (data: any) => {
+        let newData = { ...data };
+        if (dataFormat === "csv") {
+            newData = {
+                ...newData,
+                responseExtracting: { dataFormat: dataFormat, timeColumn: timeColumn, valueColumn: valueColumn },
+            };
+        } else if (dataFormat === "json") {
+            newData = {
+                ...newData,
+                responseExtracting: {
+                    dataFormat: dataFormat,
+                    timeJsonPath: timeJsonPath,
+                    valueJsonPath: valueJsonPath,
+                },
+            };
+        }
+
         try {
-            console.log(data);
-            setDataFormat("");
+            console.log(newData);
         } catch (error) {
             console.log("error while adding new actuation view");
         } finally {
         }
     };
-    console.log(dataFormat);
 
     return (
         <div className="measurement-view-form-container">
@@ -285,22 +304,99 @@ const MeasurementViewForm = () => {
                                 <h3>Response extractor</h3>
                                 <div className="measurement-view-form-container-inputs">
                                     <Field
-                                        name="responseExtracting.dataFormat"
-                                        render={({ input }) => (
+                                        name="responseExtracting.timeJsonPath"
+                                        render={input => (
                                             <div>
                                                 <span>
                                                     <p>Data format:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
-                                                        id="responseExtracting.dataFormat"
+                                                        id="responseExtracting.timeJsonPath"
                                                         className="scene-field-form"
-                                                        {...input}
+                                                        onChange={e => setDataFormat(e.target.value)}
+                                                        placeholder={"csv | json"}
                                                     />
                                                 </span>
                                             </div>
                                         )}
                                     />
+                                    {dataFormat === "json" && (
+                                        <>
+                                            <Field
+                                                name="responseExtracting.timeJsonPath"
+                                                render={({ input }) => (
+                                                    <div>
+                                                        <span>
+                                                            <p>Time json path:</p>
+                                                        </span>
+                                                        <span>
+                                                            <InputText
+                                                                id="responseExtracting.timeJsonPath"
+                                                                className="scene-field-form"
+                                                                onChange={e => setTimeJsonPath(e.target.value)}
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            />
+                                            <Field
+                                                name="responseExtracting.valueJsonPath"
+                                                render={({ input }) => (
+                                                    <div>
+                                                        <span>
+                                                            <p>Value json path:</p>
+                                                        </span>
+                                                        <span>
+                                                            <InputText
+                                                                id="responseExtracting.valueJsonPath"
+                                                                className="scene-field-form"
+                                                                onChange={e => setValueJsonPath(e.target.value)}
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            />
+                                        </>
+                                    )}
+
+                                    {dataFormat === "csv" && (
+                                        <>
+                                            <Field
+                                                name="responseExtracting.timeColumn"
+                                                render={({ input }) => (
+                                                    <div>
+                                                        <span>
+                                                            <p>Time column:</p>
+                                                        </span>
+                                                        <span>
+                                                            <InputText
+                                                                className="scene-field-form"
+                                                                onChange={e => setTimeColumn(e.target.value)}
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            />
+                                            <Field
+                                                name="responseExtracting.valueColumn"
+                                                render={({ input }) => (
+                                                    <div>
+                                                        <span>
+                                                            <p>Value column:</p>
+                                                        </span>
+                                                        <span>
+                                                            <InputText
+                                                                id="responseExtracting.valueColumn"
+                                                                className="scene-field-form"
+                                                                onChange={e => setValueColumn(e.target.value)}
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            />
+                                        </>
+                                    )}
                                 </div>
                                 <div className="scene-form-buttons">
                                     <Button
