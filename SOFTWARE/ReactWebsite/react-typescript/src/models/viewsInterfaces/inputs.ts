@@ -1,6 +1,7 @@
 export interface IInput{
     name: string;
     title: string;
+    inputType: string;
 }
 
 export interface IBooleanInput extends IInput{
@@ -12,23 +13,22 @@ export interface IBooleanInput extends IInput{
 export interface IIntegerInput extends IInput{
     inputType: "integer";
     description: string;
-    defaultValue: Number; //should be int
-    min: Number; //should be int
-    max: Number; //should be int
+    defaultValue: number;
+    min: number;
+    max: number;
 }
 
 export interface IDecimalInput extends IInput{
     inputType: "decimal";
     description: string;
-    defaultValue: Number;
-    min: Number;
-    max: Number;
+    defaultValue: number;
+    min: number;
+    max: number;
 }
 
 export interface IDateInput extends IInput{
     inputType: "date";
     description: string;
-    //defaultValue: Date;
     defaultValue: string;
 }
 
@@ -43,10 +43,39 @@ export interface IStringInput extends IInput{
     description: string;
     defaultValue: boolean;
     pattern: string;
-    //enum ??
 }
 
 export interface ISubmitButton extends IInput{
     inputType: "submit";
-    //ovaj nema description
 }
+
+export const viewInputsOptions: any[] = [
+    {
+        text: "boolean",
+        value: "boolean",
+    },
+    {
+        text: "integer",
+        value: "integer",
+    },
+    {
+        text: "decimal",
+        value: "decimal",
+    },
+    {
+        text: "date",
+        value: "date",
+    },
+    {
+        text: "time",
+        value: "time",
+    },
+    {
+        text: "string",
+        value: "string",
+    },
+    {
+        text: "submit",
+        value: "submit",
+    }
+]

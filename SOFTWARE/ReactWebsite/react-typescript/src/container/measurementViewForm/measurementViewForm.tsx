@@ -1,5 +1,10 @@
 import { IScene } from "models/scenes";
-import { initMeasurementView, MeasurementsView } from "models/viewsInterfaces/views";
+import {
+    initMeasurementView,
+    MeasurementsView,
+    viewMethodOptions,
+    viewTypeOptions,
+} from "models/viewsInterfaces/views";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
@@ -7,6 +12,7 @@ import { Field, Form } from "react-final-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { editScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
+import { Dropdown } from "primereact/dropdown";
 import "./measurementViewForm.scss";
 
 interface ILocationState {
@@ -43,16 +49,16 @@ const MeasurementViewForm = () => {
         let views = [...scene.views];
         views.push(newData);
         views.map(view => {
-                if (view.selectForm) {
-                    if (!view.selectForm.submitSelectionRequest) {
-                        view.selectForm.submitSelectionRequest = {};
-                    }
-                } else if (view.form) {
-                    if (!view.form.submitFormRequest) {
-                        view.form.submitFormRequest = {};
-                    } 
+            if (view.selectForm) {
+                if (!view.selectForm.submitSelectionRequest) {
+                    view.selectForm.submitSelectionRequest = {};
                 }
-            });
+            } else if (view.form) {
+                if (!view.form.submitFormRequest) {
+                    view.form.submitFormRequest = {};
+                }
+            }
+        });
 
         try {
             console.log(newData);
@@ -116,11 +122,12 @@ const MeasurementViewForm = () => {
                                                         <p>Tip:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
-                                                            id="viewType"
-                                                            placeholder="single or series"
-                                                            className="scene-field-form"
+                                                        <Dropdown
                                                             {...input}
+                                                            className="scene-field-form"
+                                                            options={viewTypeOptions}
+                                                            optionLabel="text"
+                                                            optionValue="value"
                                                         />
                                                     </span>
                                                 </div>
@@ -172,11 +179,12 @@ const MeasurementViewForm = () => {
                                                         <p>Method:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
-                                                            id="selectForm.submitSelectionRequest.method"
-                                                            className="scene-field-form"
-                                                            placeholder="GET | POST"
+                                                        <Dropdown
                                                             {...input}
+                                                            className="scene-field-form"
+                                                            options={viewMethodOptions}
+                                                            optionLabel="text"
+                                                            optionValue="value"
                                                         />
                                                     </span>
                                                 </div>
@@ -283,11 +291,12 @@ const MeasurementViewForm = () => {
                                                         <p>Method:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
-                                                            id="query.method"
-                                                            placeholder="GET | POST"
-                                                            className="scene-field-form"
+                                                        <Dropdown
                                                             {...input}
+                                                            className="scene-field-form"
+                                                            options={viewMethodOptions}
+                                                            optionLabel="text"
+                                                            optionValue="value"
                                                         />
                                                     </span>
                                                 </div>

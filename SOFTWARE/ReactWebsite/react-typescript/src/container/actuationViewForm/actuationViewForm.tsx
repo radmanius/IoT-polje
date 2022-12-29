@@ -1,5 +1,5 @@
 import { IScene } from "models/scenes";
-import { initActuationView, IView } from "models/viewsInterfaces/views";
+import { initActuationView, IView, viewMethodOptions } from "models/viewsInterfaces/views";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Field, Form } from "react-final-form";
@@ -7,7 +7,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { editScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
 import { InputSwitch } from "primereact/inputswitch";
+import { Dropdown } from "primereact/dropdown";
+//import { useState } from "react";
+
 import "./actuationViewForm.scss";
+import { viewInputsOptions } from "models/viewsInterfaces/inputs";
 
 interface ILocationState {
     shortScene: IScene;
@@ -17,6 +21,8 @@ const ActuationViewForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     let scene = (location.state as ILocationState)?.shortScene as IScene;
+    //const [inputType, setInputType] = useState();
+
     const handleAddNewActuationView = async (data: IView) => {
         let views = [...scene.views];
         views.push(data);
@@ -32,13 +38,14 @@ const ActuationViewForm = () => {
             }
         });
         try {
-            //scene = { ...scene, views: views };
+            scene = { ...scene, views: views };
             await editScene({ ...scene, views: views });
         } catch (error) {
             console.log("error while adding new actuation view");
         } finally {
         }
     };
+
     return (
         <>
             <Button
@@ -59,7 +66,7 @@ const ActuationViewForm = () => {
                         <Form
                             onSubmit={(data: IView) => handleAddNewActuationView(data)}
                             initialValues={initActuationView}
-                            render={({ handleSubmit }) => (
+                            render={({ handleSubmit, values }) => (
                                 <form
                                     id="new-actuation-view"
                                     onSubmit={handleSubmit}
@@ -130,10 +137,12 @@ const ActuationViewForm = () => {
                                                         <p>Method:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
-                                                            id="form.defaultValuesRequest.method"
-                                                            className="scene-field-form"
+                                                        <Dropdown
                                                             {...input}
+                                                            className="scene-field-form"
+                                                            options={viewMethodOptions}
+                                                            optionLabel="text"
+                                                            optionValue="value"
                                                         />
                                                     </span>
                                                 </div>
@@ -214,10 +223,12 @@ const ActuationViewForm = () => {
                                                         <p>Method:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
-                                                            id="form.submitFormRequest.method"
-                                                            className="scene-field-form"
+                                                        <Dropdown
                                                             {...input}
+                                                            className="scene-field-form"
+                                                            options={viewMethodOptions}
+                                                            optionLabel="text"
+                                                            optionValue="value"
                                                         />
                                                     </span>
                                                 </div>
@@ -234,7 +245,6 @@ const ActuationViewForm = () => {
                                                             <Button
                                                                 icon="fa fa-plus"
                                                                 className="p-button-success"
-                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
                                                                 onClick={e => {
                                                                     e.preventDefault();
                                                                     console.log("click");
@@ -315,10 +325,12 @@ const ActuationViewForm = () => {
                                                         <p>Input type:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
-                                                            id="form.inputs.inputType"
-                                                            className="scene-field-form"
+                                                        <Dropdown
                                                             {...input}
+                                                            className="scene-field-form"
+                                                            options={viewInputsOptions}
+                                                            optionLabel="text"
+                                                            optionValue="value"
                                                         />
                                                     </span>
                                                 </div>
