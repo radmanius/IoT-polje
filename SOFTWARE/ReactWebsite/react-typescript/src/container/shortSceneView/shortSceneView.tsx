@@ -9,6 +9,7 @@ import { Button } from "primereact/button";
 import { PAGE_ROUTES } from "utils/paths";
 import { getAllScenes, getSceneById } from "utils/axios/scenesApi";
 import Popup from "container/specificSceneView/deletePopup";
+import { useKeycloak } from "@react-keycloak/web";
 
 const ShortSceneView = () => {
     //const dispatch = useDispatch();
@@ -18,9 +19,11 @@ const ShortSceneView = () => {
     const [popupId, setPopupId] = useState<Number>();
     const [searchInput, setSearchInput] = useState("");
 
+    const { keycloak } = useKeycloak();
+
     const fetchShortScenes = useCallback(async () => {
         try {
-            const res = await getAllScenes();
+            const res = await getAllScenes(keycloak.token??"");
             setShortScene(res);
         } catch (error) {
             //toast message
