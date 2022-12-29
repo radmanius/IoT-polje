@@ -1,4 +1,4 @@
-import { IDataExtractor } from "./dataExtractors";
+import {  IDataExtractorCsv, IDataExtractorJson  } from "./dataExtractors";
 import { IActuationForm, IMeasurementSelectForm } from "./forms";
 import { IRequest } from "./requests";
 
@@ -6,21 +6,25 @@ export interface IView{
     title: string;
 }
 
-export const initActuatinoView : ActuationView= {
+export const initActuationView : ActuationView = {
     title:"",
     viewType: "actuation",
 };
 
+export const initMeasurementView : MeasurementsView = {
+    title: "",
+};
+
 export interface MeasurementsView extends IView{
-    measurementUnit: string;
-    viewType: "single"|"series";
-    selectForm: IMeasurementSelectForm;
-    query: IRequest;
-    responseExtracting: IDataExtractor;
+    measurementUnit?: string;
+    viewType?: "single"|"series";
+    selectForm?: IMeasurementSelectForm;
+    query?: IRequest;
+    responseExtracting?: IDataExtractorCsv | IDataExtractorJson;
 
 }
 
-export interface ActuationView extends IView{
+export interface ActuationView extends IView {
     viewType: "actuation";
     form?: IActuationForm;
 }

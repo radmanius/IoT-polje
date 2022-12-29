@@ -1,4 +1,4 @@
-.actuation-view-form-container {
+.measurement-view-form-container {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -15,18 +15,18 @@
     border-radius: 15px;
 }
 
-.actuation-view-form-container-inputs {
+.measurement-view-form-container-inputs {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
-.actuation-view-form-container-inputs > div {
+.measurement-view-form-container-inputs > div {
     width: 100%;
     margin-right: 10px;
 }
 
-.actuation-view-back-button {
+.measurement-view-back-button {
     margin: 20px;
     width: 10%;
 }

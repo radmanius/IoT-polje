@@ -10,6 +10,10 @@
     justify-content: center;
 }
 
+.scene-view-table > div{
+    margin-bottom: 30px;
+}
+
 .iot-img {
     width: 30vw;
     height: auto;
@@ -39,7 +43,18 @@
     background-color: red;
     width: 10vw;
 }
+
 .edit-and-delete-scene-btn {
     display: inline;
     justify-items: end;
+}
+
+.view-form-create-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.view-form-create-buttons > button {
+    margin-right: 20px;
+    width: 15vw;
 }

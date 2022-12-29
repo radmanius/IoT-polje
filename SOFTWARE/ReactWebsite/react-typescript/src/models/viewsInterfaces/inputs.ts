@@ -3,13 +3,11 @@ export interface IInput{
     title: string;
 }
 
-
 export interface IBooleanInput extends IInput{
     inputType: "boolean";
     description: string;
     defaultValue: boolean;
 }
-
 
 export interface IIntegerInput extends IInput{
     inputType: "integer";
@@ -19,7 +17,6 @@ export interface IIntegerInput extends IInput{
     max: Number; //should be int
 }
 
-
 export interface IDecimalInput extends IInput{
     inputType: "decimal";
     description: string;
@@ -28,7 +25,6 @@ export interface IDecimalInput extends IInput{
     max: Number;
 }
 
-
 export interface IDateInput extends IInput{
     inputType: "date";
     description: string;
@@ -36,13 +32,11 @@ export interface IDateInput extends IInput{
     defaultValue: string;
 }
 
-
 export interface ITimeInput extends IInput{
     inputType: "time";
     description: string;
     defaultValue: string;
 }
-
 
 export interface IStringInput extends IInput{
     inputType: "string";
@@ -51,7 +45,6 @@ export interface IStringInput extends IInput{
     pattern: string;
     //enum ??
 }
-
 
 export interface ISubmitButton extends IInput{
     inputType: "submit";
