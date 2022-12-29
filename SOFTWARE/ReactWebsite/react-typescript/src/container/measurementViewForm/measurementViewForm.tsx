@@ -1,10 +1,11 @@
-import { IScene, IShortScene } from "models/scenes";
-import { initMeasurementView } from "models/viewsInterfaces/views";
+import { IScene } from "models/scenes";
+import { initMeasurementView, MeasurementsView } from "models/viewsInterfaces/views";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 import { Field, Form } from "react-final-form";
 import { useLocation, useNavigate } from "react-router-dom";
+import { editScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
 import "./measurementViewForm.scss";
 
@@ -15,14 +16,14 @@ interface ILocationState {
 const MeasurementViewForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const scene = (location.state as ILocationState)?.shortScene as IShortScene;
+    const scene = (location.state as ILocationState)?.shortScene as IScene;
     const [dataFormat, setDataFormat] = useState("");
     const [timeColumn, setTimeColumn] = useState("");
     const [valueColumn, setValueColumn] = useState("");
     const [timeJsonPath, setTimeJsonPath] = useState("");
     const [valueJsonPath, setValueJsonPath] = useState("");
 
-    const handleAddNewMeasurementView = async (data: any) => {
+    const handleAddNewMeasurementView = async (data: MeasurementsView) => {
         let newData = { ...data };
         if (dataFormat === "csv") {
             newData = {
@@ -39,9 +40,23 @@ const MeasurementViewForm = () => {
                 },
             };
         }
+        let views = [...scene.views];
+        views.push(newData);
+        views.map(view => {
+                if (view.selectForm) {
+                    if (!view.selectForm.submitSelectionRequest) {
+                        view.selectForm.submitSelectionRequest = {};
+                    }
+                } else if (view.form) {
+                    if (!view.form.submitFormRequest) {
+                        view.form.submitFormRequest = {};
+                    } 
+                }
+            });
 
         try {
             console.log(newData);
+            await editScene({ ...scene, views: views });
         } catch (error) {
             console.log("error while adding new actuation view");
         } finally {
@@ -67,7 +82,7 @@ const MeasurementViewForm = () => {
                     <h3>Measurement view form for: {scene.title}</h3>
                     <div className="form-fields-container">
                         <Form
-                            onSubmit={data => handleAddNewMeasurementView(data)}
+                            onSubmit={(data: MeasurementsView) => handleAddNewMeasurementView(data)}
                             initialValues={initMeasurementView}
                             render={({ handleSubmit, values }) => (
                                 <form
@@ -168,7 +183,7 @@ const MeasurementViewForm = () => {
                                             )}
                                         />
                                         <Field
-                                            name="selectForm.submitSelectionRequest.headers"
+                                            name="selectForm.submitSelectionRequest.headers.{{accessToken}} {{token1}}"
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
@@ -176,7 +191,7 @@ const MeasurementViewForm = () => {
                                                     </span>
                                                     <span>
                                                         <InputText
-                                                            id="selectForm.submitSelectionRequest.headers"
+                                                            id="selectForm.submitSelectionRequest.headers.{{accessToken}} {{token1}}"
                                                             className="scene-field-form"
                                                             {...input}
                                                         />
@@ -279,7 +294,7 @@ const MeasurementViewForm = () => {
                                             )}
                                         />
                                         <Field
-                                            name="query.headers"
+                                            name="query.headers.{{accessToken}} {{token1}}"
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
@@ -287,7 +302,7 @@ const MeasurementViewForm = () => {
                                                     </span>
                                                     <span>
                                                         <InputText
-                                                            id="query.headers"
+                                                            id="query.headers.{{accessToken}} {{token1}}"
                                                             className="scene-field-form"
                                                             {...input}
                                                         />

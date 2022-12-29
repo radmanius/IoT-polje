@@ -30,4 +30,25 @@
     margin: 20px;
     width: 10%;
 }
- 
+
+.p-button.p-button-success{
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.headers{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payload{
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
