@@ -1,5 +1,5 @@
 import { IScene, IShortScene } from "models/scenes";
-import { initActuatinoView } from "models/viewsInterfaces/views";
+import { initActuationView } from "models/viewsInterfaces/views";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Field, Form } from "react-final-form";
@@ -31,7 +31,7 @@ const ActuationViewForm = () => {
                 <div className="form-fields-container">
                     <Form
                         onSubmit={data => handleAddNewActuationView(data)}
-                        initialValues={initActuatinoView}
+                        initialValues={initActuationView}
                         render={({ handleSubmit }) => (
                             <form
                                 id="new-actuation-view"

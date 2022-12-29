@@ -1,15 +1,11 @@
-export interface IDataExtractor{
-}
-
-
-export interface IDataExtractorCsv extends IDataExtractor{
+export interface IDataExtractorCsv {
     dataFormat: "csv";
     timeColumn: string;
     valueColumn: string;
 }
 
 
-export interface IDataExtractorJson extends IDataExtractor{
+export interface IDataExtractorJson {
     dataFormat: "json";
     timeJsonPath: string;
     valueJsonPath: string;

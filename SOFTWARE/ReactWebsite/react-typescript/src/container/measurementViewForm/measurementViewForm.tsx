@@ -2,6 +2,7 @@ import { IScene, IShortScene } from "models/scenes";
 import { initMeasurementView } from "models/viewsInterfaces/views";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
+import { useState } from "react";
 import { Field, Form } from "react-final-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PAGE_ROUTES } from "utils/paths";
@@ -15,26 +16,30 @@ const MeasurementViewForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const scene = (location.state as ILocationState)?.shortScene as IShortScene;
+    const [dataFormat, setDataFormat] = useState("");
 
     const handleAddNewMeasurementView = async (data: any) => {
         try {
             console.log(data);
+            setDataFormat("");
         } catch (error) {
             console.log("error while adding new actuation view");
         } finally {
         }
     };
+    console.log(dataFormat);
+
     return (
         <div className="measurement-view-form-container">
             <div>
-                <h3>Actuation view form for: {scene.title}</h3>
+                <h3>Measurement view form for: {scene.title}</h3>
                 <div className="form-fields-container">
                     <Form
                         onSubmit={data => handleAddNewMeasurementView(data)}
                         initialValues={initMeasurementView}
-                        render={({ handleSubmit }) => (
+                        render={({ handleSubmit, values }) => (
                             <form
-                                id="new-actuation-view"
+                                id="new-measurement-view"
                                 onSubmit={handleSubmit}
                                 autoComplete="off"
                             >
@@ -66,6 +71,24 @@ const MeasurementViewForm = () => {
                                                 <span>
                                                     <InputText
                                                         id="viewType"
+                                                        placeholder="single or series"
+                                                        className="scene-field-form"
+                                                        {...input}
+                                                    />
+                                                </span>
+                                            </div>
+                                        )}
+                                    />
+                                    <Field
+                                        name="measurementUnit"
+                                        render={({ input }) => (
+                                            <div>
+                                                <span>
+                                                    <p>Mjerna jedinica:</p>
+                                                </span>
+                                                <span>
+                                                    <InputText
+                                                        id="measurementUnit"
                                                         className="scene-field-form"
                                                         {...input}
                                                     />
@@ -75,10 +98,10 @@ const MeasurementViewForm = () => {
                                     />
                                 </div>
                                 <hr />
-                                <h3>Defualt values request</h3>
+                                <h3>Select form (submit selection request)</h3>
                                 <div className="measurement-view-form-container-inputs">
                                     <Field
-                                        name="form.defaultValuesRequest.URI"
+                                        name="selectForm.submitSelectionRequest.URI"
                                         render={({ input }) => (
                                             <div>
                                                 <span>
@@ -86,7 +109,7 @@ const MeasurementViewForm = () => {
                                                 </span>
                                                 <span>
                                                     <InputText
-                                                        id="form.defaultValuesRequest.URI"
+                                                        id="selectForm.submitSelectionRequest.URI"
                                                         className="scene-field-form"
                                                         {...input}
                                                     />
@@ -95,7 +118,7 @@ const MeasurementViewForm = () => {
                                         )}
                                     />
                                     <Field
-                                        name="form.defaultValuesRequest.method"
+                                        name="selectForm.submitSelectionRequest.method"
                                         render={({ input }) => (
                                             <div>
                                                 <span>
@@ -103,17 +126,17 @@ const MeasurementViewForm = () => {
                                                 </span>
                                                 <span>
                                                     <InputText
-                                                        id="form.defaultValuesRequest.method"
+                                                        id="selectForm.submitSelectionRequest.method"
                                                         className="scene-field-form"
+                                                        placeholder="GET | POST"
                                                         {...input}
                                                     />
                                                 </span>
                                             </div>
                                         )}
                                     />
-
                                     <Field
-                                        name="form.defaultValuesRequest.headers"
+                                        name="selectForm.submitSelectionRequest.headers"
                                         render={({ input }) => (
                                             <div>
                                                 <span>
@@ -121,7 +144,7 @@ const MeasurementViewForm = () => {
                                                 </span>
                                                 <span>
                                                     <InputText
-                                                        id="form.defaultValuesRequest.headers"
+                                                        id="selectForm.submitSelectionRequest.headers"
                                                         className="scene-field-form"
                                                         {...input}
                                                     />
@@ -130,7 +153,7 @@ const MeasurementViewForm = () => {
                                         )}
                                     />
                                     <Field
-                                        name="form.defaultValuesRequest.payload"
+                                        name="selectForm.submitSelectionRequest.payload"
                                         render={({ input }) => (
                                             <div>
                                                 <span>
@@ -138,7 +161,7 @@ const MeasurementViewForm = () => {
                                                 </span>
                                                 <span>
                                                     <InputText
-                                                        id="form.defaultValuesRequest.payload"
+                                                        id="selectForm.submitSelectionRequest.payload"
                                                         className="scene-field-form"
                                                         {...input}
                                                     />
@@ -148,10 +171,48 @@ const MeasurementViewForm = () => {
                                     />
                                 </div>
                                 <hr />
-                                <h3>Submit form request</h3>
+                                <h3>Select form (inputs)</h3>
                                 <div className="measurement-view-form-container-inputs">
                                     <Field
-                                        name="form.submitFormRequest.URI"
+                                        name="selectForm.inputs.name"
+                                        render={({ input }) => (
+                                            <div>
+                                                <span>
+                                                    <p>Name:</p>
+                                                </span>
+                                                <span>
+                                                    <InputText
+                                                        id="selectForm.inputs"
+                                                        className="scene-field-form"
+                                                        {...input}
+                                                    />
+                                                </span>
+                                            </div>
+                                        )}
+                                    />
+                                    <Field
+                                        name="selectForm.inputs.title"
+                                        render={({ input }) => (
+                                            <div>
+                                                <span>
+                                                    <p>Title:</p>
+                                                </span>
+                                                <span>
+                                                    <InputText
+                                                        id="selectForm.inputs"
+                                                        className="scene-field-form"
+                                                        {...input}
+                                                    />
+                                                </span>
+                                            </div>
+                                        )}
+                                    />
+                                </div>
+                                <hr />
+                                <h3>Query</h3>
+                                <div className="measurement-view-form-container-inputs">
+                                    <Field
+                                        name="query.URI"
                                         render={({ input }) => (
                                             <div>
                                                 <span>
@@ -159,7 +220,7 @@ const MeasurementViewForm = () => {
                                                 </span>
                                                 <span>
                                                     <InputText
-                                                        id="form.submitFormRequest.URI"
+                                                        id="query.URI"
                                                         className="scene-field-form"
                                                         {...input}
                                                     />
@@ -168,7 +229,7 @@ const MeasurementViewForm = () => {
                                         )}
                                     />
                                     <Field
-                                        name="form.submitFormRequest.method"
+                                        name="query.method"
                                         render={({ input }) => (
                                             <div>
                                                 <span>
@@ -176,7 +237,8 @@ const MeasurementViewForm = () => {
                                                 </span>
                                                 <span>
                                                     <InputText
-                                                        id="form.submitFormRequest.method"
+                                                        id="query.method"
+                                                        placeholder="GET | POST"
                                                         className="scene-field-form"
                                                         {...input}
                                                     />
@@ -184,9 +246,8 @@ const MeasurementViewForm = () => {
                                             </div>
                                         )}
                                     />
-
                                     <Field
-                                        name="form.submitFormRequest.headers"
+                                        name="query.headers"
                                         render={({ input }) => (
                                             <div>
                                                 <span>
@@ -194,7 +255,7 @@ const MeasurementViewForm = () => {
                                                 </span>
                                                 <span>
                                                     <InputText
-                                                        id="form.submitFormRequest.headers"
+                                                        id="query.headers"
                                                         className="scene-field-form"
                                                         {...input}
                                                     />
@@ -203,7 +264,7 @@ const MeasurementViewForm = () => {
                                         )}
                                     />
                                     <Field
-                                        name="form.submitFormRequest.payload"
+                                        name="query.payload"
                                         render={({ input }) => (
                                             <div>
                                                 <span>
@@ -211,7 +272,7 @@ const MeasurementViewForm = () => {
                                                 </span>
                                                 <span>
                                                     <InputText
-                                                        id="form.submitFormRequest.payload"
+                                                        id="query.payload"
                                                         className="scene-field-form"
                                                         {...input}
                                                     />
@@ -221,87 +282,18 @@ const MeasurementViewForm = () => {
                                     />
                                 </div>
                                 <hr />
-                                <h3>Inputs</h3>
+                                <h3>Response extractor</h3>
                                 <div className="measurement-view-form-container-inputs">
                                     <Field
-                                        name="form.inputs.name"
+                                        name="responseExtracting.dataFormat"
                                         render={({ input }) => (
                                             <div>
                                                 <span>
-                                                    <p>Input name:</p>
+                                                    <p>Data format:</p>
                                                 </span>
                                                 <span>
                                                     <InputText
-                                                        id="form.inputs.name"
-                                                        className="scene-field-form"
-                                                        {...input}
-                                                    />
-                                                </span>
-                                            </div>
-                                        )}
-                                    />
-                                    <Field
-                                        name="form.inputs.title"
-                                        render={({ input }) => (
-                                            <div>
-                                                <span>
-                                                    <p>Input title:</p>
-                                                </span>
-                                                <span>
-                                                    <InputText
-                                                        id="form.inputs.title"
-                                                        className="scene-field-form"
-                                                        {...input}
-                                                    />
-                                                </span>
-                                            </div>
-                                        )}
-                                    />
-
-                                    <Field
-                                        name="form.inputs.inputType"
-                                        render={({ input }) => (
-                                            <div>
-                                                <span>
-                                                    <p>Input type:</p>
-                                                </span>
-                                                <span>
-                                                    <InputText
-                                                        id="form.inputs.inputType"
-                                                        className="scene-field-form"
-                                                        {...input}
-                                                    />
-                                                </span>
-                                            </div>
-                                        )}
-                                    />
-                                    <Field
-                                        name="form.inputs.description"
-                                        render={({ input }) => (
-                                            <div>
-                                                <span>
-                                                    <p>Input description:</p>
-                                                </span>
-                                                <span>
-                                                    <InputText
-                                                        id="form.inputs.description"
-                                                        className="scene-field-form"
-                                                        {...input}
-                                                    />
-                                                </span>
-                                            </div>
-                                        )}
-                                    />
-                                    <Field
-                                        name="form.inputs.defaultValue"
-                                        render={({ input }) => (
-                                            <div>
-                                                <span>
-                                                    <p>Input default value:</p>
-                                                </span>
-                                                <span>
-                                                    <InputText
-                                                        id="form.inputs.defaultValue"
+                                                        id="responseExtracting.dataFormat"
                                                         className="scene-field-form"
                                                         {...input}
                                                     />
