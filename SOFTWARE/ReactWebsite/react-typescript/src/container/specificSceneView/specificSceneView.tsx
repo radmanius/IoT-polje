@@ -8,7 +8,7 @@ import { getSceneById } from "utils/axios/scenesApi";
 import Popup from "./deletePopup";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { IView } from "models/viewsInterfaces/views";
+import { ActuationView, IView, MeasurementsView } from "models/viewsInterfaces/views";
 import { useKeycloak } from "@react-keycloak/web";
 
 interface ILocationState {
@@ -52,12 +52,30 @@ const SpecificSceneView = () => {
         fetchScene();
     }, [fetchScene]);
 
-    const actionColumnEdit = (rowData: IView) => {
+    const actionColumnEdit = (rowData: any) => {
         return (
             <Button
                 icon="fa fa-pen-to-square"
                 className="p-button-outlined"
-                onClick={() => {}}
+                onClick={() => {
+                        if (rowData.viewType === "actuation") {
+                            navigate(PAGE_ROUTES.EditActuationView, {
+                                state: {
+                                    shortScene: scene,
+                                    view: rowData as ActuationView
+                                }
+                            })
+                        }
+                        else {
+                            navigate(PAGE_ROUTES.EditMeasurementView, {
+                                state: {
+                                    shortScene: scene,
+                                    view: rowData as MeasurementsView
+                                }
+                            })
+                        }
+                    }
+                }
             />
         );
     };
