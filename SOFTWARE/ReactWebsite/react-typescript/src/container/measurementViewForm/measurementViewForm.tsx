@@ -15,6 +15,7 @@ import { PAGE_ROUTES } from "utils/paths";
 import { Dropdown } from "primereact/dropdown";
 import "./measurementViewForm.scss";
 import { InputSwitch } from "primereact/inputswitch";
+import { viewInputsOptions } from "models/viewsInterfaces/inputs";
 
 interface ILocationState {
     shortScene: IScene;
@@ -46,6 +47,116 @@ const MeasurementViewForm = () => {
                     valueJsonPath: valueJsonPath,
                 },
             };
+        }
+        switch (data.selectForm.inputs?.inputType) {
+            case "boolean": {
+                newData = {
+                    ...data,
+                    selectForm: {
+                        inputs: {
+                            name: data.selectForm.inputs.name ?? "",
+                            title: data.selectForm.inputs.title ?? "",
+                            description: data.selectForm.inputs.description,
+                            defaultValue: data.selectForm.inputs.defaultValue,
+                            inputType: "boolean",
+                        },
+                    },
+                };
+                break;
+            }
+            case "integer": {
+                newData = {
+                    ...data,
+                    selectForm: {
+                        inputs: {
+                            name: data.selectForm.inputs.name ?? "",
+                            title: data.selectForm.inputs.title ?? "",
+                            description: data.selectForm.inputs.description,
+                            defaultValue: data.selectForm.inputs.defaultValue ?? -1,
+                            min: data.selectForm.inputs.min,
+                            max: data.selectForm.inputs.max,
+                            inputType: "integer",
+                        },
+                    },
+                };
+                break;
+            }
+            case "decimal": {
+                newData = {
+                    ...data,
+                    selectForm: {
+                        inputs: {
+                            name: data.selectForm.inputs.name ?? "",
+                            title: data.selectForm.inputs.title ?? "",
+                            description: data.selectForm.inputs.description,
+                            defaultValue: data.selectForm.inputs.defaultValue ?? -1,
+                            min: data.selectForm.inputs.min,
+                            max: data.selectForm.inputs.max,
+                            inputType: "decimal",
+                        },
+                    },
+                };
+                break;
+            }
+            case "date": {
+                newData = {
+                    ...data,
+                    selectForm: {
+                        inputs: {
+                            name: data.selectForm.inputs.name ?? "",
+                            title: data.selectForm.inputs.title ?? "",
+                            description: data.selectForm.inputs.description,
+                            defaultValue: data.selectForm.inputs.defaultValue ?? "",
+                            inputType: "date",
+                        },
+                    },
+                };
+                break;
+            }
+            case "time": {
+                newData = {
+                    ...data,
+                    selectForm: {
+                        inputs: {
+                            name: data.selectForm.inputs.name ?? "",
+                            title: data.selectForm.inputs.title ?? "",
+                            description: data.selectForm.inputs.description,
+                            defaultValue: data.selectForm.inputs.defaultValue ?? "",
+                            inputType: "time",
+                        },
+                    },
+                };
+                break;
+            }
+            case "string": {
+                newData = {
+                    ...data,
+                    selectForm: {
+                        inputs: {
+                            name: data.selectForm.inputs.name ?? "",
+                            title: data.selectForm.inputs.title ?? "",
+                            description: data.selectForm.inputs.description,
+                            defaultValue: data.selectForm.inputs.defaultValue ?? false,
+                            pattern: data.selectForm.inputs.pattern,
+                            inputType: "string",
+                        },
+                    },
+                };
+                break;
+            }
+            case "submit": {
+                newData = {
+                    ...data,
+                    selectForm: {
+                        inputs: {
+                            name: data.selectForm.inputs.name ?? "",
+                            title: data.selectForm.inputs.title ?? "",
+                            inputType: "submit",
+                        },
+                    },
+                };
+                break;
+            }
         }
         let views = [...scene.views];
         views.push(newData);
@@ -234,11 +345,11 @@ const MeasurementViewForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
-                                                        <p>Name:</p>
+                                                        <p>Input name:</p>
                                                     </span>
                                                     <span>
                                                         <InputText
-                                                            id="selectForm.inputs"
+                                                            id="selectForm.inputs.name"
                                                             className="scene-field-form"
                                                             {...input}
                                                         />
@@ -251,11 +362,11 @@ const MeasurementViewForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
-                                                        <p>Title:</p>
+                                                        <p>Input title:</p>
                                                     </span>
                                                     <span>
                                                         <InputText
-                                                            id="selectForm.inputs"
+                                                            id="selectForm.inputs.title"
                                                             className="scene-field-form"
                                                             {...input}
                                                         />
@@ -263,6 +374,121 @@ const MeasurementViewForm = () => {
                                                 </div>
                                             )}
                                         />
+                                        <Field
+                                            name="selectForm.inputs.inputType"
+                                            render={({ input }) => (
+                                                <div>
+                                                    <span>
+                                                        <p>Input type:</p>
+                                                    </span>
+                                                    <span>
+                                                        <Dropdown
+                                                            {...input}
+                                                            className="scene-field-form dropdown-design"
+                                                            options={viewInputsOptions}
+                                                            optionLabel="text"
+                                                            optionValue="value"
+                                                        />
+                                                    </span>
+                                                </div>
+                                            )}
+                                        />
+                                        {values.selectForm.inputs?.inputType !== "submit" && (
+                                            <Field
+                                                name="selectForm.inputs.description"
+                                                render={({ input }) => (
+                                                    <div>
+                                                        <span>
+                                                            <p>Description:</p>
+                                                        </span>
+                                                        <span>
+                                                            <InputText
+                                                                {...input}
+                                                                id="selectForm.inputs.description"
+                                                                className="scene-field-form"
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            />
+                                        )}
+                                        {values.selectForm.inputs?.inputType !== "submit" && (
+                                            <Field
+                                                name="selectForm.inputs.defaultValue"
+                                                render={({ input }) => (
+                                                    <div>
+                                                        <span>
+                                                            <p>Default value:</p>
+                                                        </span>
+                                                        <span>
+                                                            <InputText
+                                                                {...input}
+                                                                id="selectForm.inputs.defaultValue"
+                                                                className="scene-field-form"
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            />
+                                        )}
+                                        {values.selectForm.inputs?.inputType === "string" && (
+                                            <Field
+                                                name="selectForm.inputs.pattern"
+                                                render={({ input }) => (
+                                                    <div>
+                                                        <span>
+                                                            <p>Pattern:</p>
+                                                        </span>
+                                                        <span>
+                                                            <InputText
+                                                                {...input}
+                                                                id="selectForm.inputs.pattern"
+                                                                className="scene-field-form"
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            />
+                                        )}
+                                        {values.selectForm.inputs?.inputType === "integer" ||
+                                            (values.selectForm.inputs?.inputType === "decimal" && (
+                                                <>
+                                                    <Field
+                                                        name="selectForm.inputs.min"
+                                                        render={({ input }) => (
+                                                            <div>
+                                                                <span>
+                                                                    <p>Minimum:</p>
+                                                                </span>
+                                                                <span>
+                                                                    <InputText
+                                                                        {...input}
+                                                                        id="selectForm.inputs.min"
+                                                                        className="scene-field-form"
+                                                                    />
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    />
+                                                    <Field
+                                                        name="selectForm.inputs.max"
+                                                        render={({ input }) => (
+                                                            <div>
+                                                                <span>
+                                                                    <p>Maximum:</p>
+                                                                </span>
+                                                                <span>
+                                                                    <InputText
+                                                                        {...input}
+                                                                        id="selectForm.inputs.max"
+                                                                        className="scene-field-form"
+                                                                    />
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    />
+                                                </>
+                                            ))}
                                     </div>
                                     <hr />
                                     <h3>Query</h3>
