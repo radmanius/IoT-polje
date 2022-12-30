@@ -11,6 +11,7 @@ import App from "./app";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import keycloak from "keycloak";
 import store from "redux/store/store";
+import { ToastMessage } from "container/toastMessage/toastMessage";
 
 const rootElement = document.getElementById("root");
 render(
@@ -26,6 +27,7 @@ render(
             <BrowserRouter>
                 <App />
             </BrowserRouter>
+            <ToastMessage />
         </Provider>
     </ReactKeycloakProvider>,
     rootElement
