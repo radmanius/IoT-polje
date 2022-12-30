@@ -48,11 +48,13 @@ const MeasurementViewForm = () => {
                 },
             };
         }
+        data = newData;
         switch (data.selectForm.inputs?.inputType) {
             case "boolean": {
                 newData = {
                     ...data,
                     selectForm: {
+                        ...data.selectForm,
                         inputs: {
                             name: data.selectForm.inputs.name ?? "",
                             title: data.selectForm.inputs.title ?? "",
@@ -68,6 +70,7 @@ const MeasurementViewForm = () => {
                 newData = {
                     ...data,
                     selectForm: {
+                        ...data.selectForm,
                         inputs: {
                             name: data.selectForm.inputs.name ?? "",
                             title: data.selectForm.inputs.title ?? "",
@@ -85,6 +88,7 @@ const MeasurementViewForm = () => {
                 newData = {
                     ...data,
                     selectForm: {
+                        ...data.selectForm,
                         inputs: {
                             name: data.selectForm.inputs.name ?? "",
                             title: data.selectForm.inputs.title ?? "",
@@ -102,6 +106,7 @@ const MeasurementViewForm = () => {
                 newData = {
                     ...data,
                     selectForm: {
+                        ...data.selectForm,
                         inputs: {
                             name: data.selectForm.inputs.name ?? "",
                             title: data.selectForm.inputs.title ?? "",
@@ -117,6 +122,7 @@ const MeasurementViewForm = () => {
                 newData = {
                     ...data,
                     selectForm: {
+                        ...data.selectForm,
                         inputs: {
                             name: data.selectForm.inputs.name ?? "",
                             title: data.selectForm.inputs.title ?? "",
@@ -132,6 +138,7 @@ const MeasurementViewForm = () => {
                 newData = {
                     ...data,
                     selectForm: {
+                        ...data.selectForm,
                         inputs: {
                             name: data.selectForm.inputs.name ?? "",
                             title: data.selectForm.inputs.title ?? "",
@@ -148,6 +155,7 @@ const MeasurementViewForm = () => {
                 newData = {
                     ...data,
                     selectForm: {
+                        ...data.selectForm,
                         inputs: {
                             name: data.selectForm.inputs.name ?? "",
                             title: data.selectForm.inputs.title ?? "",
