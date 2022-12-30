@@ -79,23 +79,27 @@ const SceneEditForm = () => {
             data.tags = multiselectRefTags.current.getSelectedItems();
             data.roles = multiselectRefRoles.current.getSelectedItems();
             data.keys = multiselectRefKeys.current.getSelectedItems();
-            console.log(data.views);
-            data.views.map(view => {
-                if (view.selectForm) {
-                    if (!view.selectForm.submitSelectionRequest) {
-                        view.selectForm.submitSelectionRequest = {};
+            if (data.roles.length === 0) {
+                console.log("Need to select at least one role");
+            }
+            else {
+                console.log(data.views);
+                data.views.map(view => {
+                    if (view.selectForm) {
+                        if (!view.selectForm.submitSelectionRequest) {
+                            view.selectForm.submitSelectionRequest = {};
+                        }
+                    } else if (view.form) {
+                        if (!view.form.submitFormRequest) {
+                            view.form.submitFormRequest = {};
+                        }
                     }
-                } else if (view.form) {
-                    if (!view.form.submitFormRequest) {
-                        view.form.submitFormRequest = {};
-                    } 
-                }
-            });
-            await editScene(data, keycloak.token ?? "");
+                });
+                await editScene(data, keycloak.token ?? "");
+                await navigateToPreviousPage();
+            }
         } catch (error) {
             console.log(error);
-        } finally {
-            await navigateToPreviousPage();
         }
     };
 

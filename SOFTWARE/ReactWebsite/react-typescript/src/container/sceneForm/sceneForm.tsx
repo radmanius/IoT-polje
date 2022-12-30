@@ -57,12 +57,15 @@ const SceneForm = () => {
         data.tags = multiselectRefTags.current.getSelectedItems();
         data.roles = multiselectRefRoles.current.getSelectedItems();
         data.keys = multiselectRefKeys.current.getSelectedItems();
-        try {
-            await createNewScene(data, keycloak.token ?? "");
-        } catch (error) {
-            console.log("error while adding new scene");
-        } finally {
-            navigate(PAGE_ROUTES.ShortSceneView);
+        if (data.roles.length === 0) {
+            console.log("Need to select at least one role");
+        }else {
+            try {
+                await createNewScene(data, keycloak.token ?? "");
+                navigate(PAGE_ROUTES.ShortSceneView);
+            } catch (error) {
+                console.log("error while adding new scene");
+            }
         }
     };
 
