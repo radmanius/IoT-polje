@@ -7,17 +7,20 @@ import { PAGE_ROUTES } from "utils/paths";
 import { addKey } from "utils/axios/keysApi";
 import { IKey } from "models/keys";
 import { useKeycloak } from "@react-keycloak/web";
-
+import { useDispatch } from "react-redux";
+import { showToastMessage } from "redux/actions/toastMessageActions";
 
 const KeyForm = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { keycloak } = useKeycloak();
 
     const handleAddNewKey = async (key: IKey) => {
         try {
             await addKey(key, keycloak.token ?? "");
+            dispatch(showToastMessage("Key successfully created", "success"));
         } catch (error) {
-            console.log("error while adding new key");
+            dispatch(showToastMessage("Error while adding new key.", "error"));
         } finally {
             navigate(PAGE_ROUTES.KeysView);
         }
@@ -29,7 +32,7 @@ const KeyForm = () => {
                 <h1>Dodaj novi ključ</h1>
                 <div className="form-fields-container">
                     <Form
-                        onSubmit={(data:IKey) => handleAddNewKey(data)}
+                        onSubmit={(data: IKey) => handleAddNewKey(data)}
                         //initialValues={initkeys}
                         render={({ handleSubmit }) => (
                             <form

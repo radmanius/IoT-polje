@@ -3,12 +3,15 @@ import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/
 import { useDispatch } from "react-redux";
 import modalReducer from "redux/reducers/modalReducer";
 import reactTypescriptReducer from "redux/reducers/reactTypescriptReducer";
+import { toastMessageReducer } from "redux/reducers/toastMessageReducer";
 import { loaderMiddleware } from "redux/store/storeActionMiddleware";
 
 export const store = configureStore({
     reducer: combineReducers({
         reactTypescript: reactTypescriptReducer,
         modal: modalReducer,
+        toastMessageReducer: toastMessageReducer
+
     }),
     middleware: () => getDefaultMiddleware().prepend(loaderMiddleware),
 });
