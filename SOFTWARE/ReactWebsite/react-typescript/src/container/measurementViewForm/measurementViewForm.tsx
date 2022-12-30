@@ -58,7 +58,7 @@ const MeasurementViewForm = () => {
                             title: data.selectForm.inputs.title ?? "",
                             description: data.selectForm.inputs.description,
                             defaultValue: data.selectForm.inputs.defaultValue,
-                            inputType: "boolean",
+                            inputType: "BOOLEAN",
                         },
                     },
                 };
@@ -75,7 +75,7 @@ const MeasurementViewForm = () => {
                             defaultValue: data.selectForm.inputs.defaultValue ?? -1,
                             min: data.selectForm.inputs.min,
                             max: data.selectForm.inputs.max,
-                            inputType: "integer",
+                            inputType: "INTEGER",
                         },
                     },
                 };
@@ -92,7 +92,7 @@ const MeasurementViewForm = () => {
                             defaultValue: data.selectForm.inputs.defaultValue ?? -1,
                             min: data.selectForm.inputs.min,
                             max: data.selectForm.inputs.max,
-                            inputType: "decimal",
+                            inputType: "DECIMAL",
                         },
                     },
                 };
@@ -107,7 +107,7 @@ const MeasurementViewForm = () => {
                             title: data.selectForm.inputs.title ?? "",
                             description: data.selectForm.inputs.description,
                             defaultValue: data.selectForm.inputs.defaultValue ?? "",
-                            inputType: "date",
+                            inputType: "DATE",
                         },
                     },
                 };
@@ -122,7 +122,7 @@ const MeasurementViewForm = () => {
                             title: data.selectForm.inputs.title ?? "",
                             description: data.selectForm.inputs.description,
                             defaultValue: data.selectForm.inputs.defaultValue ?? "",
-                            inputType: "time",
+                            inputType: "TIME",
                         },
                     },
                 };
@@ -138,7 +138,7 @@ const MeasurementViewForm = () => {
                             description: data.selectForm.inputs.description,
                             defaultValue: data.selectForm.inputs.defaultValue ?? false,
                             pattern: data.selectForm.inputs.pattern,
-                            inputType: "string",
+                            inputType: "STRING",
                         },
                     },
                 };
@@ -151,7 +151,7 @@ const MeasurementViewForm = () => {
                         inputs: {
                             name: data.selectForm.inputs.name ?? "",
                             title: data.selectForm.inputs.title ?? "",
-                            inputType: "submit",
+                            inputType: "SUBMIT",
                         },
                     },
                 };

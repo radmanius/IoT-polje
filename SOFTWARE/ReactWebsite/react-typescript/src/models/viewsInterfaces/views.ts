@@ -12,15 +12,20 @@ export const initActuationView : ActuationView = {
     form: {
         defaultValuesRequest: {},
         submitFormRequest: {},
-        inputs: {}
+        inputs: {
+            inputType: "boolean",
+        }
     }
 };
 
 export const initMeasurementView: MeasurementsView = {
     title: "",
-    viewType: "",
+    viewType: "single",
     query: {},
     selectForm: {
+        inputs: {
+            inputType: "boolean",
+        },
         submitSelectionRequest: {},
     },
     responseExtracting: {},
