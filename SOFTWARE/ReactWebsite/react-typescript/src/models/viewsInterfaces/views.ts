@@ -11,7 +11,11 @@ export const initActuationView : ActuationView = {
     viewType: "actuation",
     form: {
         defaultValuesRequest: {},
-        submitFormRequest: {}
+        submitFormRequest: {},
+        inputs: {
+            name: "",
+            title: ""
+        }
     }
 
 };

@@ -1,5 +1,5 @@
 import { IScene } from "models/scenes";
-import { ActuationView, initActuationView, IView, viewMethodOptions } from "models/viewsInterfaces/views";
+import { ActuationView, initActuationView, viewMethodOptions } from "models/viewsInterfaces/views";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Field, Form } from "react-final-form";
@@ -20,10 +20,123 @@ const ActuationViewForm = () => {
     const location = useLocation();
     let scene = (location.state as ILocationState)?.shortScene as IScene;
 
-    const handleAddNewActuationView = async (data: IView) => {
-        console.log(data);
+    const handleAddNewActuationView = async (data: ActuationView) => {
+        console.log(data.form.inputs?.inputType);
+        let newData = {};
+        switch (data.form.inputs?.inputType) {
+            case "boolean": {
+                newData = {
+                    ...data,
+                    form: {
+                        inputs: {
+                            name: data.form.inputs.name,
+                            title: data.form.inputs.title,
+                            description: data.form.inputs.description,
+                            defaultValue: data.form.inputs.defaultValue,
+                            inputType: "boolean",
+                        },
+                    },
+                };
+                break;
+            }
+            case "integer": {
+                newData = {
+                    ...data,
+                    form: {
+                        inputs: {
+                            name: data.form.inputs.name,
+                            title: data.form.inputs.title,
+                            description: data.form.inputs.description,
+                            defaultValue: data.form.inputs.defaultValue ?? -1,
+                            min: data.form.inputs.min,
+                            max: data.form.inputs.max,
+                            inputType: "integer",
+                        },
+                    },
+                };
+                break;
+            }
+            case "decimal": {
+                newData = {
+                    ...data,
+                    form: {
+                        inputs: {
+                            name: data.form.inputs.name,
+                            title: data.form.inputs.title,
+                            description: data.form.inputs.description,
+                            defaultValue: data.form.inputs.defaultValue ?? -1,
+                            min: data.form.inputs.min,
+                            max: data.form.inputs.max,
+                            inputType: "decimal",
+                        },
+                    },
+                };
+                break;
+            }
+            case "date": {
+                newData = {
+                    ...data,
+                    form: {
+                        inputs: {
+                            name: data.form.inputs.name,
+                            title: data.form.inputs.title,
+                            description: data.form.inputs.description,
+                            defaultValue: data.form.inputs.defaultValue ?? "",
+                            inputType: "date",
+                        },
+                    },
+                };
+                break;
+            }
+            case "time": {
+                newData = {
+                    ...data,
+                    form: {
+                        inputs: {
+                            name: data.form.inputs.name,
+                            title: data.form.inputs.title,
+                            description: data.form.inputs.description,
+                            defaultValue: data.form.inputs.defaultValue ?? "",
+                            inputType: "time",
+                        },
+                    },
+                };
+                break;
+            }
+            case "string": {
+                newData = {
+                    ...data,
+                    form: {
+                        inputs: {
+                            name: data.form.inputs.name,
+                            title: data.form.inputs.title,
+                            description: data.form.inputs.description,
+                            defaultValue: data.form.inputs.defaultValue ?? false,
+                            pattern: data.form.inputs.pattern,
+                            inputType: "string",
+                        },
+                    },
+                };
+                break;
+            }
+            case "submit": {
+                newData = {
+                    ...data,
+                    form: {
+                        inputs: {
+                            name: data.form.inputs.name,
+                            title: data.form.inputs.title,
+                            inputType: "submit",
+                        },
+                    },
+                };
+                break;
+            }
+        }
+        console.log(newData);
+
         let views = [...scene.views];
-        views.push(data);
+        views.push(newData);
         views.map(view => {
             if (view.selectForm) {
                 if (!view.selectForm.submitSelectionRequest) {
