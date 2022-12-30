@@ -11,31 +11,31 @@ export interface IInput{
 
 export const viewInputsOptions: any[] = [
     {
-        text: "boolean",
-        value: "boolean",
+        text: "BOOLEAN",
+        value: "BOOLEAN",
     },
     {
-        text: "integer",
-        value: "integer",
+        text: "INTEGER",
+        value: "INTEGER",
     },
     {
-        text: "decimal",
-        value: "decimal",
+        text: "DECIMAL",
+        value: "DECIMAL",
     },
     {
-        text: "date",
-        value: "date",
+        text: "DATE",
+        value: "DATE",
     },
     {
-        text: "time",
-        value: "time",
+        text: "TIME",
+        value: "TIME",
     },
     {
-        text: "string",
-        value: "string",
+        text: "STRING",
+        value: "STRING",
     },
     {
-        text: "submit",
-        value: "submit",
+        text: "SUMBIT",
+        value: "SUMBIT",
     }
 ]

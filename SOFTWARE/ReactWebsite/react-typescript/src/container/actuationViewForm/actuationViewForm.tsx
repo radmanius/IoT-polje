@@ -25,7 +25,7 @@ const ActuationViewForm = () => {
     const handleAddNewActuationView = async (data: ActuationView) => {
         let newData = { ...data };
         switch (data.form.inputs?.inputType) {
-            case "boolean": {
+            case "BOOLEAN": {
                 newData = {
                     ...data,
                     form: {
@@ -41,7 +41,7 @@ const ActuationViewForm = () => {
                 };
                 break;
             }
-            case "integer": {
+            case "INTEGER": {
                 newData = {
                     ...data,
                     form: {
@@ -59,7 +59,7 @@ const ActuationViewForm = () => {
                 };
                 break;
             }
-            case "decimal": {
+            case "DECIMAL": {
                 newData = {
                     ...data,
                     form: {
@@ -77,7 +77,7 @@ const ActuationViewForm = () => {
                 };
                 break;
             }
-            case "date": {
+            case "DATE": {
                 newData = {
                     ...data,
                     form: {
@@ -93,7 +93,7 @@ const ActuationViewForm = () => {
                 };
                 break;
             }
-            case "time": {
+            case "TIME": {
                 newData = {
                     ...data,
                     form: {
@@ -109,7 +109,7 @@ const ActuationViewForm = () => {
                 };
                 break;
             }
-            case "string": {
+            case "STRING": {
                 newData = {
                     ...data,
                     form: {
@@ -126,7 +126,7 @@ const ActuationViewForm = () => {
                 };
                 break;
             }
-            case "submit": {
+            case "SUBMIT": {
                 newData = {
                     ...data,
                     form: {
@@ -455,7 +455,7 @@ const ActuationViewForm = () => {
                                                 </div>
                                             )}
                                         />
-                                        {values.form.inputs?.inputType !== "submit" && (
+                                        {values.form.inputs?.inputType !== "SUBMIT" && (
                                             <Field
                                                 name="form.inputs.description"
                                                 render={({ input }) => (
@@ -474,7 +474,7 @@ const ActuationViewForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {values.form.inputs?.inputType !== "submit" && (
+                                        {values.form.inputs?.inputType !== "SUBMIT" && (
                                             <Field
                                                 name="form.inputs.defaultValue"
                                                 render={({ input }) => (
@@ -493,7 +493,7 @@ const ActuationViewForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {values.form.inputs?.inputType === "string" && (
+                                        {values.form.inputs?.inputType === "STRING" && (
                                             <Field
                                                 name="form.inputs.pattern"
                                                 render={({ input }) => (
@@ -512,8 +512,8 @@ const ActuationViewForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {((values.form.inputs?.inputType === "integer" ||
-                                            values.form.inputs?.inputType === "decimal") && (
+                                        {((values.form.inputs?.inputType === "INTEGER" ||
+                                            values.form.inputs?.inputType === "DECIMAL") && (
                                                 <>
                                                     <Field
                                                         name="form.inputs.min"
