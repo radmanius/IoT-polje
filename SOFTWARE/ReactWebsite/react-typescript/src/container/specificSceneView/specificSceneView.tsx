@@ -10,6 +10,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { ActuationView, IView, MeasurementsView } from "models/viewsInterfaces/views";
 import { useKeycloak } from "@react-keycloak/web";
+import PopupView from "./deleteViewPopup";
 
 interface ILocationState {
     shortScene: IScene;
@@ -23,6 +24,9 @@ const SpecificSceneView = () => {
     const { keycloak } = useKeycloak();
 
     const [popup, setPopup] = useState<Boolean>(false);
+
+    const [popupView, setPopupView] = useState<Boolean>(false);
+    const [deleteView, setDeleteView] = useState<IView>();
 
     const fetchScene = useCallback(async () => {
         try {
@@ -85,7 +89,10 @@ const SpecificSceneView = () => {
             <Button
                 icon="fa fa-trash"
                 className="p-button-danger p-button-outlined"
-                onClick={() => {}}
+                onClick={() => {
+                    setDeleteView(rowData);
+                    setPopupView(true)
+                }}
             />
         );
     };
@@ -118,6 +125,13 @@ const SpecificSceneView = () => {
                         trigger={popup}
                         setTrigger={setPopup}
                         id={shortScene.id}
+                    />
+                    <PopupView
+                        trigger={popupView}
+                        setTrigger={setPopupView}
+                        view={deleteView}
+                        scene={scene}
+                        fetchScene={fetchScene}
                     />
                     <h1>{scene.title}</h1>
                     <h3>{scene.subtitle}</h3>

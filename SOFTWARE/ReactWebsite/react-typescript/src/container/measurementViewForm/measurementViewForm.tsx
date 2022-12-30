@@ -231,7 +231,6 @@ const MeasurementViewForm = () => {
                                                         <InputText
                                                             id="title"
                                                             className="scene-field-form"
-                                                            disabled
                                                             {...input}
                                                         />
                                                     </span>
