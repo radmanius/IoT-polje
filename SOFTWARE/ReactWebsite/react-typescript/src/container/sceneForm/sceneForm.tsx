@@ -14,6 +14,7 @@ import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { getAllTags } from "utils/axios/tagsApi";
 import { getAllKeys } from "utils/axios/keysApi";
+import { useKeycloak } from "@react-keycloak/web";
 
 const SceneForm = () => {
     const navigate = useNavigate();
@@ -26,10 +27,12 @@ const SceneForm = () => {
     const multiselectRefRoles = useRef<any>();
     const multiselectRefKeys = useRef<any>();
 
+    const { keycloak } = useKeycloak();
+
     const getTags = async () => {
         try {
-            const response = await getAllTags();
-            setTags(response.map((tag: any) => tag.name));
+            const response = await getAllTags(keycloak.token ?? "");
+            setTags(response);
         } catch (error) {
             console.log(error);
         }
@@ -37,7 +40,7 @@ const SceneForm = () => {
 
     const getKeys = async () => {
         try {
-            const response = await getAllKeys();
+            const response = await getAllKeys(keycloak.token ?? "");
             setKeys(response.map((key: any) => key.name));
         }catch (error) {
             console.log(error);
@@ -54,7 +57,7 @@ const SceneForm = () => {
         data.roles = multiselectRefRoles.current.getSelectedItems();
         data.keys = multiselectRefKeys.current.getSelectedItems();
         try {
-            await createNewScene(data);
+            await createNewScene(data, keycloak.token ?? "");
         } catch (error) {
             console.log("error while adding new scene");
         } finally {
