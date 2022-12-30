@@ -157,11 +157,10 @@ const ActuationViewForm = () => {
             }
         });
         try {
-            //scene = { ...scene, views: views };
             await editScene({ ...scene, views: views }, keycloak.token ?? "");
+            navigate(-1);
         } catch (error) {
             console.log("error while adding new actuation view");
-        } finally {
         }
     };
 

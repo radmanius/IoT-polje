@@ -149,7 +149,6 @@ const ActuationViewEditForm = () => {
         let views = [...scene.views];
         const index = views.indexOf(view);
         views.splice(index, 1, newData);
-        //views.push(newData);
         views.map(view => {
             if (view.selectForm) {
                 if (!view.selectForm.submitSelectionRequest) {
@@ -162,11 +161,10 @@ const ActuationViewEditForm = () => {
             }
         });
         try {
-            //scene = { ...scene, views: views };
             await editScene({ ...scene, views: views }, keycloak.token ?? "");
+            navigate(-1);
         } catch (error) {
             console.log("error while adding new actuation view");
-        } finally {
         }
     };
 
@@ -209,6 +207,7 @@ const ActuationViewEditForm = () => {
                                                             id="title"
                                                             className="scene-field-form"
                                                             {...input}
+                                                            disabled
                                                         />
                                                     </span>
                                                 </div>

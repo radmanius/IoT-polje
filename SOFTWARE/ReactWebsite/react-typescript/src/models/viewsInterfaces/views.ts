@@ -1,4 +1,4 @@
-import {  IDataExtractorCsv, IDataExtractorJson  } from "./dataExtractors";
+import {  IDataExtractorCsv, IDataExtractorJson } from "./dataExtractors";
 import { IActuationForm, IMeasurementSelectForm } from "./forms";
 import { IRequest } from "./requests";
 
@@ -10,10 +10,14 @@ export const initActuationView : ActuationView = {
     title:"",
     viewType: "actuation",
     form: {
-        defaultValuesRequest: {},
-        submitFormRequest: {},
+        defaultValuesRequest: {
+            method: "GET",
+        },
+        submitFormRequest: {
+            method: "POST",
+        },
         inputs: {
-            inputType: "boolean",
+            inputType: "BOOLEAN",
         }
     }
 };
@@ -21,12 +25,16 @@ export const initActuationView : ActuationView = {
 export const initMeasurementView: MeasurementsView = {
     title: "",
     viewType: "single",
-    query: {},
+    query: {
+        method: "GET",
+    },
     selectForm: {
         inputs: {
-            inputType: "boolean",
+            inputType: "BOOLEAN",
         },
-        submitSelectionRequest: {},
+        submitSelectionRequest: {
+            method: "GET",
+        },
     },
     responseExtracting: {},
 };

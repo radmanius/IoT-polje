@@ -44,8 +44,10 @@ const MeasurementViewForm = () => {
                 ...newData,
                 responseExtracting: {
                     dataFormat: dataFormat,
-                    timeJsonPath: timeJsonPath,
-                    valueJsonPath: valueJsonPath,
+                    //timeJsonPath: timeJsonPath,
+                    //valueJsonPath: valueJsonPath,
+                    timeColumn: timeJsonPath,
+                    valueColumn: valueJsonPath,
                 },
             };
         }
@@ -184,9 +186,9 @@ const MeasurementViewForm = () => {
         try {
             console.log(newData);
             await editScene({ ...scene, views: views }, keycloak.token ?? "");
+            navigate(-1);
         } catch (error) {
             console.log("error while adding new actuation view");
-        } finally {
         }
     };
 
