@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Field, Form } from "react-final-form";
 import { InputText } from "primereact/inputtext";
-import { IScene } from "models/scenes";
+import { IScene, sceneLayoutOptions } from "models/scenes";
 import "./sceneEditForm.scss";
 import { Button } from "primereact/button";
 import { editScene } from "utils/axios/scenesApi";
@@ -16,6 +16,7 @@ import { getAllTags } from "utils/axios/tagsApi";
 import { getAllKeys } from "utils/axios/keysApi";
 import { useEffect } from "react";
 import { useKeycloak } from "@react-keycloak/web";
+import { Dropdown } from "primereact/dropdown";
 
 interface ILocationState {
     scene: IScene;
@@ -230,16 +231,15 @@ const SceneEditForm = () => {
                                                     <p className="scene-label">Layout:</p>
                                                 </span>
                                                 <span>
-                                                    <InputText
-                                                        id="layout"
-                                                        className="scene-field-form"
-                                                        {...input}
-                                                        value={scene.layout}
-                                                        onChange={e => handleChange(e)}
-                                                        onKeyPress={e => {
-                                                            e.key === "Enter" && handleClick(e);
-                                                        }}
-                                                    />
+                                                <Dropdown
+                                                    id="layout"
+                                                    value={scene.layout}
+                                                    onChange={e => handleChange(e)}
+                                                    className="scene-field-form dropdown-design2"
+                                                    options={sceneLayoutOptions}
+                                                    optionLabel="text"
+                                                    optionValue="value"
+                                                />
                                                 </span>
                                             </div>
                                         )}

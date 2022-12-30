@@ -55,97 +55,13 @@ export const initScenes = {
     keys: []
 };
 
-/*
-{
-    "id": -1,
-    title: "FER fer",
-    "subtitle": "zid wall 00",
-    "pictureLink": "http://example.com/some.png",
-    "layout": "list",
-    "tags": [
-        "fer",
-        "ferit"
-    ],
-    "views": [
-        {
-            "title": "view title",
-            "viewType": "single",
-            "measurementUnit": "C",
-            "selectForm": {
-                "id": 123,
-                "submitSelectionRequest": {
-                    "URI": "http://localhost:80/some/path/{{var1}}",
-                    "method": "GET",
-                    "headers": {
-                        "Authorization": "{{accessToken}} {{token1}} ...",
-                        "Content-Type": "application/csv",
-                        "...": null
-                    },
-                    "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
-                },
-                "inputs": {
-                    "inputType": "boolean",
-                    "name": "string",
-                    "title": "string",
-                    "description": "string",
-                    "defaultValue": true
-                }
-            },
-            "query": {
-                "URI": "http://localhost:80/some/path/{{var1}}",
-                "method": "GET",
-                "headers": {
-                    "Authorization": "{{accessToken}} {{token1}} ...",
-                    "Content-Type": "application/csv",
-                    "...": null
-                },
-                "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
-            },
-            "responseExtracting": {
-                "dataFormat": "csv",
-                "timeColumn": "_time",
-                "valueColumn": "_value"
-            }
-        },
-        {
-            "title": "view title",
-            "viewType": "actuation",
-            "form": {
-                "defaultValuesRequest": {
-                    "URI": "http://localhost:80/some/path/{{var1}}",
-                    "method": "GET",
-                    "headers": {
-                        "Authorization": "{{accessToken}} {{token1}} ...",
-                        "Content-Type": "application/csv",
-                        "...": null
-                    },
-                    "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
-                },
-                "submitFormRequest": {
-                    "URI": "http://localhost:80/some/path/{{var1}}",
-                    "method": "GET",
-                    "headers": {
-                        "Authorization": "{{accessToken}} {{token1}} ...",
-                        "Content-Type": "application/csv",
-                        "...": null
-                    },
-                    "payload": "template {{var1}} ... {{aggregationRange, period, startTimeUTC, startTimeISO, startTimeDuration}}"
-                },
-                "inputs": {
-                    "inputType": "boolean",
-                    "name": "string",
-                    "title": "string",
-                    "description": "string",
-                    "defaultValue": true
-                }
-            }
-        }
-    ],
-    "roles": [
-        "string"
-    ],
-    "keys": [
-        "string"
-    ]
-}
-*/ 
+export const sceneLayoutOptions: any[] = [
+    {
+        text: "LIST",
+        value: "list",
+    },
+    {
+        text: "GRID",
+        value: "grid",
+    }
+]
