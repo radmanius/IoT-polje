@@ -14,6 +14,7 @@ import { editScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
 import { Dropdown } from "primereact/dropdown";
 import "./measurementViewForm.scss";
+import { InputSwitch } from "primereact/inputswitch";
 
 interface ILocationState {
     shortScene: IScene;
@@ -23,7 +24,7 @@ const MeasurementViewForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const scene = (location.state as ILocationState)?.shortScene as IScene;
-    const [dataFormat, setDataFormat] = useState("");
+    const [dataFormat, setDataFormat] = useState("csv");
     const [timeColumn, setTimeColumn] = useState("");
     const [valueColumn, setValueColumn] = useState("");
     const [timeJsonPath, setTimeJsonPath] = useState("");
@@ -124,7 +125,7 @@ const MeasurementViewForm = () => {
                                                     <span>
                                                         <Dropdown
                                                             {...input}
-                                                            className="scene-field-form"
+                                                            className="scene-field-form dropdown-design"
                                                             options={viewTypeOptions}
                                                             optionLabel="text"
                                                             optionValue="value"
@@ -181,7 +182,7 @@ const MeasurementViewForm = () => {
                                                     <span>
                                                         <Dropdown
                                                             {...input}
-                                                            className="scene-field-form"
+                                                            className="scene-field-form dropdown-design"
                                                             options={viewMethodOptions}
                                                             optionLabel="text"
                                                             optionValue="value"
@@ -293,7 +294,7 @@ const MeasurementViewForm = () => {
                                                     <span>
                                                         <Dropdown
                                                             {...input}
-                                                            className="scene-field-form"
+                                                            className="scene-field-form dropdown-design"
                                                             options={viewMethodOptions}
                                                             optionLabel="text"
                                                             optionValue="value"
@@ -342,19 +343,27 @@ const MeasurementViewForm = () => {
                                     <div className="measurement-view-form-container-inputs">
                                         <Field
                                             name="responseExtracting.timeJsonPath"
-                                            render={input => (
+                                            render={() => (
                                                 <div>
                                                     <span>
                                                         <p>Data format:</p>
                                                     </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="responseExtracting.timeJsonPath"
-                                                            className="scene-field-form"
-                                                            onChange={e => setDataFormat(e.target.value)}
-                                                            placeholder={"csv | json"}
-                                                        />
-                                                    </span>
+                                                    <div className="data-format-switch-options">
+                                                        <div>
+                                                            <span>csv</span>
+                                                            <span>
+                                                                <InputSwitch
+                                                                    checked={dataFormat === "json"}
+                                                                    onChange={() => {
+                                                                        dataFormat === "csv"
+                                                                            ? setDataFormat("json")
+                                                                            : setDataFormat("csv");
+                                                                    }}
+                                                                />
+                                                            </span>
+                                                            <span>json</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             )}
                                         />

@@ -60,3 +60,14 @@ export const viewMethodOptions: any[] = [
         value: "POST",
     }
 ]
+
+export const dataFormatOptions: any[] = [
+    {
+        text: "csv",
+        value: "csv",
+    },
+    {
+        text: "json",
+        value: "json",
+    }
+]

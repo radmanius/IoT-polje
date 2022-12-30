@@ -137,7 +137,7 @@ const ActuationViewForm = () => {
                                                     <span>
                                                         <Dropdown
                                                             {...input}
-                                                            className="scene-field-form"
+                                                            className="scene-field-form dropdown-design"
                                                             options={viewMethodOptions}
                                                             optionLabel="text"
                                                             optionValue="value"
@@ -223,7 +223,7 @@ const ActuationViewForm = () => {
                                                     <span>
                                                         <Dropdown
                                                             {...input}
-                                                            className="scene-field-form"
+                                                            className="scene-field-form dropdown-design"
                                                             options={viewMethodOptions}
                                                             optionLabel="text"
                                                             optionValue="value"
@@ -325,7 +325,7 @@ const ActuationViewForm = () => {
                                                     <span>
                                                         <Dropdown
                                                             {...input}
-                                                            className="scene-field-form"
+                                                            className="scene-field-form dropdown-design"
                                                             options={viewInputsOptions}
                                                             optionLabel="text"
                                                             optionValue="value"
