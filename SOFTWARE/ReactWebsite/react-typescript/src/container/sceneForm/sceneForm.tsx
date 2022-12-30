@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Field, Form } from "react-final-form";
 import { InputText } from "primereact/inputtext";
-import { initScenes } from "models/scenes";
+import { initScenes, sceneLayoutOptions } from "models/scenes";
 import "./sceneForm.scss";
 import { Button } from "primereact/button";
 import { PAGE_ROUTES } from "utils/paths";
@@ -15,6 +15,7 @@ import { useState } from "react";
 import { getAllTags } from "utils/axios/tagsApi";
 import { getAllKeys } from "utils/axios/keysApi";
 import { useKeycloak } from "@react-keycloak/web";
+import { Dropdown } from "primereact/dropdown";
 
 const SceneForm = () => {
     const navigate = useNavigate();
@@ -56,12 +57,15 @@ const SceneForm = () => {
         data.tags = multiselectRefTags.current.getSelectedItems();
         data.roles = multiselectRefRoles.current.getSelectedItems();
         data.keys = multiselectRefKeys.current.getSelectedItems();
-        try {
-            await createNewScene(data, keycloak.token ?? "");
-        } catch (error) {
-            console.log("error while adding new scene");
-        } finally {
-            navigate(PAGE_ROUTES.ShortSceneView);
+        if (data.roles.length === 0) {
+            console.log("Need to select at least one role");
+        }else {
+            try {
+                await createNewScene(data, keycloak.token ?? "");
+                navigate(PAGE_ROUTES.ShortSceneView);
+            } catch (error) {
+                console.log("error while adding new scene");
+            }
         }
     };
 
@@ -145,10 +149,12 @@ const SceneForm = () => {
                                                 <p className="scene-label">Layout:</p>
                                             </span>
                                             <span>
-                                                <InputText
-                                                    id="layout"
-                                                    className="scene-field-form"
+                                                <Dropdown
                                                     {...input}
+                                                    className="scene-field-form dropdown-design2"
+                                                    options={sceneLayoutOptions}
+                                                    optionLabel="text"
+                                                    optionValue="value"
                                                 />
                                             </span>
                                         </div>

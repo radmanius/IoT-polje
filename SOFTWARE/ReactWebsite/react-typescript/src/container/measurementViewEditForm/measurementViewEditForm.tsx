@@ -28,10 +28,10 @@ const MeasurementViewEditForm = () => {
     const scene = (location.state as ILocationState)?.shortScene as IScene;
     const view = (location.state as ILocationState)?.view as MeasurementsView;
     const [dataFormat, setDataFormat] = useState(view.responseExtracting.dataFormat);
-    const [timeColumn, setTimeColumn] = useState("");
-    const [valueColumn, setValueColumn] = useState("");
-    const [timeJsonPath, setTimeJsonPath] = useState("");
-    const [valueJsonPath, setValueJsonPath] = useState("");
+    const [timeColumn, setTimeColumn] = useState(view.responseExtracting.timeColumn??"");
+    const [valueColumn, setValueColumn] = useState(view.responseExtracting.valueColumn??"");
+    //const [timeJsonPath, setTimeJsonPath] = useState(view.responseExtracting.timeJsonPath??"");
+    //const [valueJsonPath, setValueJsonPath] = useState(view.responseExtracting.valueJsonPath??"");
 
     const handleAddNewMeasurementView = async (data: MeasurementsView) => {
         let newData = { ...data };
@@ -47,8 +47,8 @@ const MeasurementViewEditForm = () => {
                     dataFormat: dataFormat,
                     //timeJsonPath: timeJsonPath,
                     //valueJsonPath: valueJsonPath,
-                    timeColumn: timeJsonPath,
-                    valueColumn: valueJsonPath,
+                    timeColumn: timeColumn,
+                    valueColumn: valueColumn,
                 },
             };
         }
@@ -622,7 +622,10 @@ const MeasurementViewEditForm = () => {
                                                                     //id="responseExtracting.timeJsonPath"
                                                                     id="responseExtracting.timeColumn"
                                                                     className="scene-field-form"
-                                                                    onChange={e => setTimeJsonPath(e.target.value)}
+                                                                    //value = {timeJsonPath}
+                                                                    //onChange={e => setTimeJsonPath(e.target.value)}
+                                                                    value={timeColumn}
+                                                                    onChange={e => setTimeColumn(e.target.value)}
                                                                 />
                                                             </span>
                                                         </div>
@@ -641,7 +644,10 @@ const MeasurementViewEditForm = () => {
                                                                     //id="responseExtracting.valueJsonPath"
                                                                     id="responseExtracting.valueColumn"
                                                                     className="scene-field-form"
-                                                                    onChange={e => setValueJsonPath(e.target.value)}
+                                                                    //value = {valueJsonPath}
+                                                                    //onChange={e => setValueJsonPath(e.target.value)}
+                                                                    value={valueColumn}
+                                                                    onChange={e => setValueColumn(e.target.value)}
                                                                 />
                                                             </span>
                                                         </div>
@@ -661,7 +667,9 @@ const MeasurementViewEditForm = () => {
                                                             </span>
                                                             <span>
                                                                 <InputText
+                                                                    id="responseExtracting.timeColumn"
                                                                     className="scene-field-form"
+                                                                    value = {timeColumn}
                                                                     onChange={e => setTimeColumn(e.target.value)}
                                                                 />
                                                             </span>
@@ -679,6 +687,7 @@ const MeasurementViewEditForm = () => {
                                                                 <InputText
                                                                     id="responseExtracting.valueColumn"
                                                                     className="scene-field-form"
+                                                                    value = {valueColumn}
                                                                     onChange={e => setValueColumn(e.target.value)}
                                                                 />
                                                             </span>
