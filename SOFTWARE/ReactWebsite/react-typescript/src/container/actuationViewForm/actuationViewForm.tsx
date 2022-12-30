@@ -27,12 +27,13 @@ const ActuationViewForm = () => {
                 newData = {
                     ...data,
                     form: {
+                        ...data.form,
                         inputs: {
                             name: data.form.inputs.name ?? "",
                             title: data.form.inputs.title ?? "",
                             description: data.form.inputs.description,
                             defaultValue: data.form.inputs.defaultValue,
-                            inputType: "boolean",
+                            inputType: "BOOLEAN",
                         },
                     },
                 };
@@ -42,6 +43,7 @@ const ActuationViewForm = () => {
                 newData = {
                     ...data,
                     form: {
+                        ...data.form,
                         inputs: {
                             name: data.form.inputs.name ?? "",
                             title: data.form.inputs.title ?? "",
@@ -49,7 +51,7 @@ const ActuationViewForm = () => {
                             defaultValue: data.form.inputs.defaultValue ?? -1,
                             min: data.form.inputs.min,
                             max: data.form.inputs.max,
-                            inputType: "integer",
+                            inputType: "INTEGER",
                         },
                     },
                 };
@@ -59,6 +61,7 @@ const ActuationViewForm = () => {
                 newData = {
                     ...data,
                     form: {
+                        ...data.form,
                         inputs: {
                             name: data.form.inputs.name ?? "",
                             title: data.form.inputs.title ?? "",
@@ -66,7 +69,7 @@ const ActuationViewForm = () => {
                             defaultValue: data.form.inputs.defaultValue ?? -1,
                             min: data.form.inputs.min,
                             max: data.form.inputs.max,
-                            inputType: "decimal",
+                            inputType: "DECIMAL",
                         },
                     },
                 };
@@ -76,12 +79,13 @@ const ActuationViewForm = () => {
                 newData = {
                     ...data,
                     form: {
+                        ...data.form,
                         inputs: {
                             name: data.form.inputs.name ?? "",
                             title: data.form.inputs.title ?? "",
                             description: data.form.inputs.description,
                             defaultValue: data.form.inputs.defaultValue ?? "",
-                            inputType: "date",
+                            inputType: "DATE",
                         },
                     },
                 };
@@ -91,12 +95,13 @@ const ActuationViewForm = () => {
                 newData = {
                     ...data,
                     form: {
+                        ...data.form,
                         inputs: {
                             name: data.form.inputs.name ?? "",
                             title: data.form.inputs.title ?? "",
                             description: data.form.inputs.description,
                             defaultValue: data.form.inputs.defaultValue ?? "",
-                            inputType: "time",
+                            inputType: "TIME",
                         },
                     },
                 };
@@ -106,13 +111,14 @@ const ActuationViewForm = () => {
                 newData = {
                     ...data,
                     form: {
+                        ...data.form,
                         inputs: {
                             name: data.form.inputs.name ?? "",
                             title: data.form.inputs.title ?? "",
                             description: data.form.inputs.description,
                             defaultValue: data.form.inputs.defaultValue ?? false,
                             pattern: data.form.inputs.pattern,
-                            inputType: "string",
+                            inputType: "STRING",
                         },
                     },
                 };
@@ -122,10 +128,11 @@ const ActuationViewForm = () => {
                 newData = {
                     ...data,
                     form: {
+                        ...data.form,
                         inputs: {
                             name: data.form.inputs.name ?? "",
                             title: data.form.inputs.title ?? "",
-                            inputType: "submit",
+                            inputType: "SUBMIT",
                         },
                     },
                 };
@@ -148,7 +155,7 @@ const ActuationViewForm = () => {
             }
         });
         try {
-            scene = { ...scene, views: views };
+            //scene = { ...scene, views: views };
             await editScene({ ...scene, views: views });
         } catch (error) {
             console.log("error while adding new actuation view");
@@ -503,8 +510,8 @@ const ActuationViewForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {values.form.inputs?.inputType === "integer" ||
-                                            (values.form.inputs?.inputType === "decimal" && (
+                                        {((values.form.inputs?.inputType === "integer" ||
+                                            values.form.inputs?.inputType === "decimal") && (
                                                 <>
                                                     <Field
                                                         name="form.inputs.min"
