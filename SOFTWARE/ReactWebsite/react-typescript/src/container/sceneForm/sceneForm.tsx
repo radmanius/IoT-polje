@@ -7,27 +7,25 @@ import { Button } from "primereact/button";
 import { PAGE_ROUTES } from "utils/paths";
 import { createNewScene } from "utils/axios/scenesApi";
 import { Multiselect } from "multiselect-react-dropdown";
-//import { tagsTypeOptions } from "models/tags";
 import { roleTypeOptions } from "models/role";
-//import { keysTypeOptions } from "models/keys";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { getAllTags } from "utils/axios/tagsApi";
 import { getAllKeys } from "utils/axios/keysApi";
 import { useKeycloak } from "@react-keycloak/web";
 import { Dropdown } from "primereact/dropdown";
+import { useDispatch } from "react-redux";
+import { showToastMessage } from "redux/actions/toastMessageActions";
 
 const SceneForm = () => {
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     const [tags, setTags] = useState<any>([]);
     const [keys, setKeys] = useState<any>([]);
     const [roles, setRoles] = useState<any>([]);
-
     const multiselectRefTags = useRef<any>();
     const multiselectRefRoles = useRef<any>();
     const multiselectRefKeys = useRef<any>();
-
     const { keycloak } = useKeycloak();
 
     const getTags = async () => {
@@ -35,7 +33,7 @@ const SceneForm = () => {
             const response = await getAllTags(keycloak.token ?? "");
             setTags(response);
         } catch (error) {
-            console.log(error);
+            dispatch(showToastMessage("Error while fetching all tags.", "error"));
         }
     };
 
@@ -43,28 +41,28 @@ const SceneForm = () => {
         try {
             const response = await getAllKeys(keycloak.token ?? "");
             setKeys(response.map((key: any) => key.name));
-        }catch (error) {
-            console.log(error);
+        } catch (error) {
+            dispatch(showToastMessage("Error while fetching all keys.", "error"));
         }
     };
 
     const getRoles = () => {
         setRoles(roleTypeOptions.map((role: any) => role.name));
-    }
-
+    };
 
     const handleAddNewScene = async (data: any) => {
         data.tags = multiselectRefTags.current.getSelectedItems();
         data.roles = multiselectRefRoles.current.getSelectedItems();
         data.keys = multiselectRefKeys.current.getSelectedItems();
         if (data.roles.length === 0) {
-            console.log("Need to select at least one role");
-        }else {
+            dispatch(showToastMessage("Need to select at least one role", "warn"));
+        } else {
             try {
                 await createNewScene(data, keycloak.token ?? "");
+                dispatch(showToastMessage("Scene successfully created", "success"));
                 navigate(PAGE_ROUTES.ShortSceneView);
             } catch (error) {
-                console.log("error while adding new scene");
+                dispatch(showToastMessage("Error while adding new scene.", "error"));
             }
         }
     };

@@ -1,9 +1,5 @@
 import { IScene } from "models/scenes";
-import {
-    MeasurementsView,
-    viewMethodOptions,
-    viewTypeOptions,
-} from "models/viewsInterfaces/views";
+import { MeasurementsView, viewMethodOptions, viewTypeOptions } from "models/viewsInterfaces/views";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
@@ -16,6 +12,8 @@ import "./measurementViewEditForm.scss";
 import { InputSwitch } from "primereact/inputswitch";
 import { viewInputsOptions } from "models/viewsInterfaces/inputs";
 import keycloak from "keycloak";
+import { showToastMessage } from "redux/actions/toastMessageActions";
+import { useDispatch } from "react-redux";
 
 interface ILocationState {
     shortScene: IScene;
@@ -25,11 +23,12 @@ interface ILocationState {
 const MeasurementViewEditForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
     const scene = (location.state as ILocationState)?.shortScene as IScene;
     const view = (location.state as ILocationState)?.view as MeasurementsView;
     const [dataFormat, setDataFormat] = useState(view.responseExtracting.dataFormat);
-    const [timeColumn, setTimeColumn] = useState(view.responseExtracting.timeColumn??"");
-    const [valueColumn, setValueColumn] = useState(view.responseExtracting.valueColumn??"");
+    const [timeColumn, setTimeColumn] = useState(view.responseExtracting.timeColumn ?? "");
+    const [valueColumn, setValueColumn] = useState(view.responseExtracting.valueColumn ?? "");
     //const [timeJsonPath, setTimeJsonPath] = useState(view.responseExtracting.timeJsonPath??"");
     //const [valueJsonPath, setValueJsonPath] = useState(view.responseExtracting.valueJsonPath??"");
 
@@ -186,11 +185,11 @@ const MeasurementViewEditForm = () => {
         });
 
         try {
-            console.log(newData);
             await editScene({ ...scene, views: views }, keycloak.token ?? "");
+            dispatch(showToastMessage("Measurement view successfully edited", "success"));
             navigate(-1);
         } catch (error) {
-            console.log("error while adding new actuation view");
+            dispatch(showToastMessage("Unable to edit current measurement view.", "error"));
         }
     };
 
@@ -464,45 +463,45 @@ const MeasurementViewEditForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {((values.selectForm.inputs?.inputType === "INTEGER" ||
+                                        {(values.selectForm.inputs?.inputType === "INTEGER" ||
                                             values.selectForm.inputs?.inputType === "DECIMAL") && (
-                                                <>
-                                                    <Field
-                                                        name="selectForm.inputs.min"
-                                                        render={({ input }) => (
-                                                            <div>
-                                                                <span>
-                                                                    <p>Minimum:</p>
-                                                                </span>
-                                                                <span>
-                                                                    <InputText
-                                                                        {...input}
-                                                                        id="selectForm.inputs.min"
-                                                                        className="scene-field-form"
-                                                                    />
-                                                                </span>
-                                                            </div>
-                                                        )}
-                                                    />
-                                                    <Field
-                                                        name="selectForm.inputs.max"
-                                                        render={({ input }) => (
-                                                            <div>
-                                                                <span>
-                                                                    <p>Maximum:</p>
-                                                                </span>
-                                                                <span>
-                                                                    <InputText
-                                                                        {...input}
-                                                                        id="selectForm.inputs.max"
-                                                                        className="scene-field-form"
-                                                                    />
-                                                                </span>
-                                                            </div>
-                                                        )}
-                                                    />
-                                                </>
-                                            ))}
+                                            <>
+                                                <Field
+                                                    name="selectForm.inputs.min"
+                                                    render={({ input }) => (
+                                                        <div>
+                                                            <span>
+                                                                <p>Minimum:</p>
+                                                            </span>
+                                                            <span>
+                                                                <InputText
+                                                                    {...input}
+                                                                    id="selectForm.inputs.min"
+                                                                    className="scene-field-form"
+                                                                />
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                />
+                                                <Field
+                                                    name="selectForm.inputs.max"
+                                                    render={({ input }) => (
+                                                        <div>
+                                                            <span>
+                                                                <p>Maximum:</p>
+                                                            </span>
+                                                            <span>
+                                                                <InputText
+                                                                    {...input}
+                                                                    id="selectForm.inputs.max"
+                                                                    className="scene-field-form"
+                                                                />
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                />
+                                            </>
+                                        )}
                                     </div>
                                     <hr />
                                     <h3>Query</h3>
@@ -669,7 +668,7 @@ const MeasurementViewEditForm = () => {
                                                                 <InputText
                                                                     id="responseExtracting.timeColumn"
                                                                     className="scene-field-form"
-                                                                    value = {timeColumn}
+                                                                    value={timeColumn}
                                                                     onChange={e => setTimeColumn(e.target.value)}
                                                                 />
                                                             </span>
@@ -687,7 +686,7 @@ const MeasurementViewEditForm = () => {
                                                                 <InputText
                                                                     id="responseExtracting.valueColumn"
                                                                     className="scene-field-form"
-                                                                    value = {valueColumn}
+                                                                    value={valueColumn}
                                                                     onChange={e => setValueColumn(e.target.value)}
                                                                 />
                                                             </span>

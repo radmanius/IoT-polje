@@ -8,7 +8,8 @@ import { useState } from "react";
 import { editKey } from "utils/axios/keysApi";
 import { IKey } from "models/keys";
 import { useKeycloak } from "@react-keycloak/web";
-
+import { useDispatch } from "react-redux";
+import { showToastMessage } from "redux/actions/toastMessageActions";
 
 interface ILocationState {
     key: IKey;
@@ -17,21 +18,22 @@ interface ILocationState {
 const KeyEditForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
     const [key, setKey] = useState<IKey>((location.state as ILocationState)?.key as IKey);
     const { keycloak } = useKeycloak();
 
     const handleEditKey = async (data: IKey) => {
         try {
             await editKey(data, keycloak.token ?? "");
+            dispatch(showToastMessage("Key successfully edited", "success"));
         } catch (error) {
-            console.log(error);
+            dispatch(showToastMessage("Unable to edit current key.", "error"));
         } finally {
             navigate(PAGE_ROUTES.KeysView);
         }
     };
 
     const handleChange = (e: any) => {
-
         if (e.target.id === "name") {
             setKey({
                 ...key,
