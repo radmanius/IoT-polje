@@ -21,16 +21,15 @@ const ActuationViewForm = () => {
     let scene = (location.state as ILocationState)?.shortScene as IScene;
 
     const handleAddNewActuationView = async (data: ActuationView) => {
-        console.log(data.form.inputs?.inputType);
-        let newData = {};
+        let newData = { ...data };
         switch (data.form.inputs?.inputType) {
             case "boolean": {
                 newData = {
                     ...data,
                     form: {
                         inputs: {
-                            name: data.form.inputs.name,
-                            title: data.form.inputs.title,
+                            name: data.form.inputs.name ?? "",
+                            title: data.form.inputs.title ?? "",
                             description: data.form.inputs.description,
                             defaultValue: data.form.inputs.defaultValue,
                             inputType: "boolean",
@@ -44,8 +43,8 @@ const ActuationViewForm = () => {
                     ...data,
                     form: {
                         inputs: {
-                            name: data.form.inputs.name,
-                            title: data.form.inputs.title,
+                            name: data.form.inputs.name ?? "",
+                            title: data.form.inputs.title ?? "",
                             description: data.form.inputs.description,
                             defaultValue: data.form.inputs.defaultValue ?? -1,
                             min: data.form.inputs.min,
@@ -61,8 +60,8 @@ const ActuationViewForm = () => {
                     ...data,
                     form: {
                         inputs: {
-                            name: data.form.inputs.name,
-                            title: data.form.inputs.title,
+                            name: data.form.inputs.name ?? "",
+                            title: data.form.inputs.title ?? "",
                             description: data.form.inputs.description,
                             defaultValue: data.form.inputs.defaultValue ?? -1,
                             min: data.form.inputs.min,
@@ -78,8 +77,8 @@ const ActuationViewForm = () => {
                     ...data,
                     form: {
                         inputs: {
-                            name: data.form.inputs.name,
-                            title: data.form.inputs.title,
+                            name: data.form.inputs.name ?? "",
+                            title: data.form.inputs.title ?? "",
                             description: data.form.inputs.description,
                             defaultValue: data.form.inputs.defaultValue ?? "",
                             inputType: "date",
@@ -93,8 +92,8 @@ const ActuationViewForm = () => {
                     ...data,
                     form: {
                         inputs: {
-                            name: data.form.inputs.name,
-                            title: data.form.inputs.title,
+                            name: data.form.inputs.name ?? "",
+                            title: data.form.inputs.title ?? "",
                             description: data.form.inputs.description,
                             defaultValue: data.form.inputs.defaultValue ?? "",
                             inputType: "time",
@@ -108,8 +107,8 @@ const ActuationViewForm = () => {
                     ...data,
                     form: {
                         inputs: {
-                            name: data.form.inputs.name,
-                            title: data.form.inputs.title,
+                            name: data.form.inputs.name ?? "",
+                            title: data.form.inputs.title ?? "",
                             description: data.form.inputs.description,
                             defaultValue: data.form.inputs.defaultValue ?? false,
                             pattern: data.form.inputs.pattern,
@@ -124,8 +123,8 @@ const ActuationViewForm = () => {
                     ...data,
                     form: {
                         inputs: {
-                            name: data.form.inputs.name,
-                            title: data.form.inputs.title,
+                            name: data.form.inputs.name ?? "",
+                            title: data.form.inputs.title ?? "",
                             inputType: "submit",
                         },
                     },

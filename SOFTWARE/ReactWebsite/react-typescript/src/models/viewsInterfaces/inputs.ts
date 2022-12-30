@@ -1,6 +1,6 @@
 export interface IInput{
-    name: string;
-    title: string;
+    name?: string;
+    title?: string;
     description?: string;
     defaultValue?: boolean | string | number;
     min?: number;

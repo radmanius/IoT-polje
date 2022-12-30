@@ -12,12 +12,8 @@ export const initActuationView : ActuationView = {
     form: {
         defaultValuesRequest: {},
         submitFormRequest: {},
-        inputs: {
-            name: "",
-            title: ""
-        }
+        inputs: {}
     }
-
 };
 
 export const initMeasurementView: MeasurementsView = {
