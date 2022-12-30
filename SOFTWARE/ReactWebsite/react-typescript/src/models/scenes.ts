@@ -58,10 +58,10 @@ export const initScenes = {
 export const sceneLayoutOptions: any[] = [
     {
         text: "LIST",
-        value: "list",
+        value: "LIST",
     },
     {
         text: "GRID",
-        value: "grid",
+        value: "GRID",
     }
 ]

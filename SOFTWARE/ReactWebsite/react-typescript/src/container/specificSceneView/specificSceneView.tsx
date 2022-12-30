@@ -31,6 +31,7 @@ const SpecificSceneView = () => {
     const fetchScene = useCallback(async () => {
         try {
             const res = await getSceneById(shortScene.id, keycloak.token ?? "");
+            console.log(res);
             setScene(res);
         } catch (error) {
             console.log("error");
