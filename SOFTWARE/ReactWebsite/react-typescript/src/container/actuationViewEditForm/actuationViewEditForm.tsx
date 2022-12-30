@@ -147,7 +147,9 @@ const ActuationViewEditForm = () => {
         console.log(newData);
 
         let views = [...scene.views];
-        views.push(newData);
+        const index = views.indexOf(view);
+        views.splice(index, 1, newData);
+        //views.push(newData);
         views.map(view => {
             if (view.selectForm) {
                 if (!view.selectForm.submitSelectionRequest) {
