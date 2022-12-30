@@ -1,6 +1,5 @@
 import { IScene } from "models/scenes";
 import {
-    initMeasurementView,
     MeasurementsView,
     viewMethodOptions,
     viewTypeOptions,
@@ -13,19 +12,22 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { editScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
 import { Dropdown } from "primereact/dropdown";
-import "./measurementViewForm.scss";
+import "./measurementViewEditForm.scss";
 import { InputSwitch } from "primereact/inputswitch";
 import { viewInputsOptions } from "models/viewsInterfaces/inputs";
 import keycloak from "keycloak";
 
 interface ILocationState {
     shortScene: IScene;
+    view: MeasurementsView;
 }
 
-const MeasurementViewForm = () => {
+const MeasurementViewEditForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const scene = (location.state as ILocationState)?.shortScene as IScene;
+    const view = (location.state as ILocationState)?.view as MeasurementsView;
+    console.log(view);
     const [dataFormat, setDataFormat] = useState("csv");
     const [timeColumn, setTimeColumn] = useState("");
     const [valueColumn, setValueColumn] = useState("");
@@ -168,7 +170,9 @@ const MeasurementViewForm = () => {
             }
         }
         let views = [...scene.views];
-        views.push(newData);
+        const index = views.indexOf(view);
+        views.splice(index, 1, newData);
+        //views.push(newData);
         views.map(view => {
             if (view.selectForm) {
                 if (!view.selectForm.submitSelectionRequest) {
@@ -210,7 +214,7 @@ const MeasurementViewForm = () => {
                     <div className="form-fields-container">
                         <Form
                             onSubmit={(data: MeasurementsView) => handleAddNewMeasurementView(data)}
-                            initialValues={initMeasurementView}
+                            initialValues={view}
                             render={({ handleSubmit, values }) => (
                                 <form
                                     id="new-measurement-view"
@@ -229,7 +233,6 @@ const MeasurementViewForm = () => {
                                                         <InputText
                                                             id="title"
                                                             className="scene-field-form"
-                                                            disabled
                                                             {...input}
                                                         />
                                                     </span>
@@ -707,4 +710,4 @@ const MeasurementViewForm = () => {
     );
 };
 
-export default MeasurementViewForm;
+export default MeasurementViewEditForm;
