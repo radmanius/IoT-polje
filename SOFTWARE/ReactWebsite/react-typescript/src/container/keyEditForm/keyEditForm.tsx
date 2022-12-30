@@ -7,6 +7,7 @@ import { PAGE_ROUTES } from "utils/paths";
 import { useState } from "react";
 import { editKey } from "utils/axios/keysApi";
 import { IKey } from "models/keys";
+import { useKeycloak } from "@react-keycloak/web";
 
 
 interface ILocationState {
@@ -17,11 +18,11 @@ const KeyEditForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [key, setKey] = useState<IKey>((location.state as ILocationState)?.key as IKey);
-
+    const { keycloak } = useKeycloak();
 
     const handleEditKey = async (data: IKey) => {
         try {
-            await editKey(data);
+            await editKey(data, keycloak.token ?? "");
         } catch (error) {
             console.log(error);
         } finally {

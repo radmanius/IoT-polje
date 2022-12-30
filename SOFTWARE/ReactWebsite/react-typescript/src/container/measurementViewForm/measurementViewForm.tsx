@@ -16,6 +16,7 @@ import { Dropdown } from "primereact/dropdown";
 import "./measurementViewForm.scss";
 import { InputSwitch } from "primereact/inputswitch";
 import { viewInputsOptions } from "models/viewsInterfaces/inputs";
+import keycloak from "keycloak";
 
 interface ILocationState {
     shortScene: IScene;
@@ -182,7 +183,7 @@ const MeasurementViewForm = () => {
 
         try {
             console.log(newData);
-            await editScene({ ...scene, views: views });
+            await editScene({ ...scene, views: views }, keycloak.token ?? "");
         } catch (error) {
             console.log("error while adding new actuation view");
         } finally {

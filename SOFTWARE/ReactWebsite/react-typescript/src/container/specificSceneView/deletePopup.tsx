@@ -3,6 +3,7 @@ import "./deletePopup.scss";
 import { deleteScene } from "utils/axios/scenesApi";
 import { useNavigate } from "react-router-dom";
 import { PAGE_ROUTES } from "utils/paths";
+import { useKeycloak } from "@react-keycloak/web";
 
 export default function Popup(props : any) {
 
@@ -12,11 +13,13 @@ export default function Popup(props : any) {
     const [error, setError] = useState("");
 
     const [confirmation, setConfirmation] = useState("");
+
+    const { keycloak } = useKeycloak();
     
     async function handleClick() {
         setError("");
         try {
-            await deleteScene(props.id);
+            await deleteScene(props.id, keycloak.token ?? "");
             closePopup();
             if (props.fetchScenes) {
                 props.fetchScenes();

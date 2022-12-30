@@ -9,6 +9,7 @@ import Popup from "./deletePopup";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { IView } from "models/viewsInterfaces/views";
+import { useKeycloak } from "@react-keycloak/web";
 
 interface ILocationState {
     shortScene: IScene;
@@ -19,12 +20,13 @@ const SpecificSceneView = () => {
     const shortScene = (location.state as ILocationState)?.shortScene as IShortScene;
     const [scene, setScene] = useState<IScene>();
     const navigate = useNavigate();
+    const { keycloak } = useKeycloak();
 
     const [popup, setPopup] = useState<Boolean>(false);
 
     const fetchScene = useCallback(async () => {
         try {
-            const res = await getSceneById(shortScene.id);
+            const res = await getSceneById(shortScene.id, keycloak.token ?? "");
             setScene(res);
         } catch (error) {
             console.log("error");

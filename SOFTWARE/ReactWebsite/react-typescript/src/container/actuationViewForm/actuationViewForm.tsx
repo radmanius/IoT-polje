@@ -10,6 +10,7 @@ import { Dropdown } from "primereact/dropdown";
 
 import "./actuationViewForm.scss";
 import { viewInputsOptions } from "models/viewsInterfaces/inputs";
+import { useKeycloak } from "@react-keycloak/web";
 
 interface ILocationState {
     shortScene: IScene;
@@ -18,6 +19,7 @@ interface ILocationState {
 const ActuationViewForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { keycloak } = useKeycloak();
     let scene = (location.state as ILocationState)?.shortScene as IScene;
 
     const handleAddNewActuationView = async (data: ActuationView) => {
@@ -156,7 +158,7 @@ const ActuationViewForm = () => {
         });
         try {
             //scene = { ...scene, views: views };
-            await editScene({ ...scene, views: views });
+            await editScene({ ...scene, views: views }, keycloak.token ?? "");
         } catch (error) {
             console.log("error while adding new actuation view");
         } finally {
