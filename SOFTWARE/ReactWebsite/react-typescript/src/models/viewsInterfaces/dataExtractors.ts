@@ -7,6 +7,8 @@ export interface IDataExtractorCsv {
 
 export interface IDataExtractorJson {
     dataFormat?: string; 
-    timeJsonPath?: string;
-    valueJsonPath?: string;
+    //timeJsonPath?: string;
+    //valueJsonPath?: string;
+    timeColumn?: string;
+    valueColumn?: string;
 }
