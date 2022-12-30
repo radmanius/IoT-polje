@@ -9,7 +9,10 @@ export interface IView{
 export const initActuationView : ActuationView = {
     title:"",
     viewType: "actuation",
-    form: {}
+    form: {
+        defaultValuesRequest: {},
+        submitFormRequest: {}
+    }
 
 };
 

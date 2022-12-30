@@ -1,14 +1,12 @@
 import { IScene } from "models/scenes";
-import { initActuationView, IView, viewMethodOptions } from "models/viewsInterfaces/views";
+import { ActuationView, initActuationView, IView, viewMethodOptions } from "models/viewsInterfaces/views";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Field, Form } from "react-final-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { editScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
-import { InputSwitch } from "primereact/inputswitch";
 import { Dropdown } from "primereact/dropdown";
-//import { useState } from "react";
 
 import "./actuationViewForm.scss";
 import { viewInputsOptions } from "models/viewsInterfaces/inputs";
@@ -21,9 +19,9 @@ const ActuationViewForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     let scene = (location.state as ILocationState)?.shortScene as IScene;
-    //const [inputType, setInputType] = useState();
 
     const handleAddNewActuationView = async (data: IView) => {
+        console.log(data);
         let views = [...scene.views];
         views.push(data);
         views.map(view => {
@@ -64,7 +62,7 @@ const ActuationViewForm = () => {
                     <h3>Actuation view form for: {scene.title}</h3>
                     <div className="form-fields-container">
                         <Form
-                            onSubmit={(data: IView) => handleAddNewActuationView(data)}
+                            onSubmit={(data: ActuationView) => handleAddNewActuationView(data)}
                             initialValues={initActuationView}
                             render={({ handleSubmit, values }) => (
                                 <form
@@ -336,44 +334,102 @@ const ActuationViewForm = () => {
                                                 </div>
                                             )}
                                         />
-                                        <Field
-                                            name="form.inputs.description"
-                                            render={({ input }) => (
-                                                <div>
-                                                    <span>
-                                                        <p>Input description:</p>
-                                                    </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="form.inputs.description"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span>
-                                                </div>
-                                            )}
-                                        />
-                                        <Field
-                                            name="form.inputs.defaultValue"
-                                            render={({ input }) => (
-                                                <div>
-                                                    <span>
-                                                        <p>Input default value:</p>
-                                                    </span>
-                                                    <InputSwitch
-                                                        id="form.inputs.defaultValue"
-                                                        {...input}
+                                        {values.form.inputs?.inputType !== "submit" && (
+                                            <Field
+                                                name="form.inputs.description"
+                                                render={({ input }) => (
+                                                    <div>
+                                                        <span>
+                                                            <p>Description:</p>
+                                                        </span>
+                                                        <span>
+                                                            <InputText
+                                                                {...input}
+                                                                id="form.inputs.description"
+                                                                className="scene-field-form"
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            />
+                                        )}
+                                        {values.form.inputs?.inputType !== "submit" && (
+                                            <Field
+                                                name="form.inputs.defaultValue"
+                                                render={({ input }) => (
+                                                    <div>
+                                                        <span>
+                                                            <p>Default value:</p>
+                                                        </span>
+                                                        <span>
+                                                            <InputText
+                                                                {...input}
+                                                                id="form.inputs.defaultValue"
+                                                                className="scene-field-form"
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            />
+                                        )}
+                                        {values.form.inputs?.inputType === "string" && (
+                                            <Field
+                                                name="form.inputs.pattern"
+                                                render={({ input }) => (
+                                                    <div>
+                                                        <span>
+                                                            <p>Pattern:</p>
+                                                        </span>
+                                                        <span>
+                                                            <InputText
+                                                                {...input}
+                                                                id="form.inputs.pattern"
+                                                                className="scene-field-form"
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            />
+                                        )}
+                                        {values.form.inputs?.inputType === "integer" ||
+                                            (values.form.inputs?.inputType === "decimal" && (
+                                                <>
+                                                    <Field
+                                                        name="form.inputs.min"
+                                                        render={({ input }) => (
+                                                            <div>
+                                                                <span>
+                                                                    <p>Minimum:</p>
+                                                                </span>
+                                                                <span>
+                                                                    <InputText
+                                                                        {...input}
+                                                                        id="form.inputs.min"
+                                                                        className="scene-field-form"
+                                                                    />
+                                                                </span>
+                                                            </div>
+                                                        )}
                                                     />
-                                                    {/* <span>
-                                                        <InputText
-                                                            id="form.inputs.defaultValue"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span> */}
-                                                </div>
-                                            )}
-                                        />
+                                                    <Field
+                                                        name="form.inputs.max"
+                                                        render={({ input }) => (
+                                                            <div>
+                                                                <span>
+                                                                    <p>Maximum:</p>
+                                                                </span>
+                                                                <span>
+                                                                    <InputText
+                                                                        {...input}
+                                                                        id="form.inputs.max"
+                                                                        className="scene-field-form"
+                                                                    />
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    />
+                                                </>
+                                            ))}
                                     </div>
                                     <div className="scene-form-buttons">
                                         <Button
