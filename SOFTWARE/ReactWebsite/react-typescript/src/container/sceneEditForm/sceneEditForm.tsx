@@ -38,8 +38,8 @@ const SceneEditForm = () => {
 
     const getTags = async () => {
         try {
-            const response = await getAllTags();
-            setTags(response.map((tag: any) => tag.name));
+            const response = await getAllTags(keycloak.token ?? "");
+            setTags(response);
         } catch (error) {
             console.log(error);
         }
@@ -47,7 +47,7 @@ const SceneEditForm = () => {
 
     const getKeys = async () => {
         try {
-            const response = await getAllKeys();
+            const response = await getAllKeys(keycloak.token ?? "");
             setKeys(response.map((key: any) => key.name));
         } catch (error) {
             console.log(error);
@@ -79,18 +79,18 @@ const SceneEditForm = () => {
             data.roles = multiselectRefRoles.current.getSelectedItems();
             data.keys = multiselectRefKeys.current.getSelectedItems();
             console.log(data.views);
-            // data.views.map(view => {
-            //     if (view.selectForm) {
-            //         if (!view.selectForm.submitSelectionRequest) {
-            //             view.selectForm.submitSelectionRequest = {};
-            //         }
-            //     } else if (view.form) {
-            //         if (!view.form.submitFormRequest) {
-            //             view.form.submitFormRequest = {};
-            //         } 
-            //     }
-            //});
-            await editScene(data);
+            data.views.map(view => {
+                if (view.selectForm) {
+                    if (!view.selectForm.submitSelectionRequest) {
+                        view.selectForm.submitSelectionRequest = {};
+                    }
+                } else if (view.form) {
+                    if (!view.form.submitFormRequest) {
+                        view.form.submitFormRequest = {};
+                    } 
+                }
+            });
+            await editScene(data, keycloak.token ?? "");
         } catch (error) {
             console.log(error);
         } finally {

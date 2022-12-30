@@ -8,6 +8,7 @@ import { PAGE_ROUTES } from "utils/paths";
 import Popup from "./deletePopup";
 import { getAllKeys } from "utils/axios/keysApi";
 import { IKey } from "models/keys";
+import { useKeycloak } from "@react-keycloak/web";
 
 
 
@@ -18,10 +19,11 @@ const KeysView = () => {
     const [popup, setPopup] = useState<Boolean>(false);
     const [popupName, setPopupName] = useState<string>();
     const [searchInput, setSearchInput] = useState("");
+    const { keycloak } = useKeycloak();
 
     const fetchKeys = useCallback(async () => {
         try {
-            const res = await getAllKeys();
+            const res = await getAllKeys(keycloak.token ?? "");
             setKeys(res);
         } catch (error) {
             //toast message

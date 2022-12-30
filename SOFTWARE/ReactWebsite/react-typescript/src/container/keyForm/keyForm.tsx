@@ -6,14 +6,16 @@ import { Button } from "primereact/button";
 import { PAGE_ROUTES } from "utils/paths";
 import { addKey } from "utils/axios/keysApi";
 import { IKey } from "models/keys";
+import { useKeycloak } from "@react-keycloak/web";
 
 
 const KeyForm = () => {
     const navigate = useNavigate();
+    const { keycloak } = useKeycloak();
 
     const handleAddNewKey = async (key: IKey) => {
         try {
-            await addKey(key);
+            await addKey(key, keycloak.token ?? "");
         } catch (error) {
             console.log("error while adding new key");
         } finally {

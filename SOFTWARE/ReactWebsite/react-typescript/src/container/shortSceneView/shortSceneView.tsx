@@ -23,7 +23,7 @@ const ShortSceneView = () => {
 
     const fetchShortScenes = useCallback(async () => {
         try {
-            const res = await getAllScenes(keycloak.token??"");
+            const res = await getAllScenes(keycloak.token ?? "");
             setShortScene(res);
         } catch (error) {
             //toast message
@@ -42,7 +42,7 @@ const ShortSceneView = () => {
 
     const handleEditScene = async (scene: IShortScene) => {
         try {
-            const res = await getSceneById(scene.id);
+            const res = await getSceneById(scene.id, keycloak.token ?? "");
             navigate(PAGE_ROUTES.EditScene, {
                 state: {
                     scene: res,
