@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Field, Form } from "react-final-form";
 import { InputText } from "primereact/inputtext";
-import { IScene } from "models/scenes";
+import { IScene, sceneLayoutOptions } from "models/scenes";
 import "./sceneEditForm.scss";
 import { Button } from "primereact/button";
 import { editScene } from "utils/axios/scenesApi";
@@ -16,6 +16,7 @@ import { getAllTags } from "utils/axios/tagsApi";
 import { getAllKeys } from "utils/axios/keysApi";
 import { useEffect } from "react";
 import { useKeycloak } from "@react-keycloak/web";
+import { Dropdown } from "primereact/dropdown";
 
 interface ILocationState {
     scene: IScene;
@@ -78,23 +79,27 @@ const SceneEditForm = () => {
             data.tags = multiselectRefTags.current.getSelectedItems();
             data.roles = multiselectRefRoles.current.getSelectedItems();
             data.keys = multiselectRefKeys.current.getSelectedItems();
-            console.log(data.views);
-            data.views.map(view => {
-                if (view.selectForm) {
-                    if (!view.selectForm.submitSelectionRequest) {
-                        view.selectForm.submitSelectionRequest = {};
+            if (data.roles.length === 0) {
+                console.log("Need to select at least one role");
+            }
+            else {
+                console.log(data.views);
+                data.views.map(view => {
+                    if (view.selectForm) {
+                        if (!view.selectForm.submitSelectionRequest) {
+                            view.selectForm.submitSelectionRequest = {};
+                        }
+                    } else if (view.form) {
+                        if (!view.form.submitFormRequest) {
+                            view.form.submitFormRequest = {};
+                        }
                     }
-                } else if (view.form) {
-                    if (!view.form.submitFormRequest) {
-                        view.form.submitFormRequest = {};
-                    } 
-                }
-            });
-            await editScene(data, keycloak.token ?? "");
+                });
+                await editScene(data, keycloak.token ?? "");
+                await navigateToPreviousPage();
+            }
         } catch (error) {
             console.log(error);
-        } finally {
-            await navigateToPreviousPage();
         }
     };
 
@@ -230,16 +235,15 @@ const SceneEditForm = () => {
                                                     <p className="scene-label">Layout:</p>
                                                 </span>
                                                 <span>
-                                                    <InputText
-                                                        id="layout"
-                                                        className="scene-field-form"
-                                                        {...input}
-                                                        value={scene.layout}
-                                                        onChange={e => handleChange(e)}
-                                                        onKeyPress={e => {
-                                                            e.key === "Enter" && handleClick(e);
-                                                        }}
-                                                    />
+                                                <Dropdown
+                                                    id="layout"
+                                                    value={scene.layout}
+                                                    onChange={e => handleChange(e)}
+                                                    className="scene-field-form dropdown-design2"
+                                                    options={sceneLayoutOptions}
+                                                    optionLabel="text"
+                                                    optionValue="value"
+                                                />
                                                 </span>
                                             </div>
                                         )}
