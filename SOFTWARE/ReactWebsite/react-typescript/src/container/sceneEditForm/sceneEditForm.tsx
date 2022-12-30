@@ -17,6 +17,8 @@ import { getAllKeys } from "utils/axios/keysApi";
 import { useEffect } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import { Dropdown } from "primereact/dropdown";
+import { useDispatch } from "react-redux";
+import { showToastMessage } from "redux/actions/toastMessageActions";
 
 interface ILocationState {
     scene: IScene;
@@ -25,6 +27,7 @@ interface ILocationState {
 const SceneEditForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
     const [scene, setScene] = useState<IScene>((location.state as ILocationState)?.scene as IScene);
 
     const [tags, setTags] = useState<any>([]);
@@ -42,7 +45,7 @@ const SceneEditForm = () => {
             const response = await getAllTags(keycloak.token ?? "");
             setTags(response);
         } catch (error) {
-            console.log(error);
+            dispatch(showToastMessage("Error while fetching tags.", "error"));
         }
     };
 
@@ -51,7 +54,7 @@ const SceneEditForm = () => {
             const response = await getAllKeys(keycloak.token ?? "");
             setKeys(response.map((key: any) => key.name));
         } catch (error) {
-            console.log(error);
+            dispatch(showToastMessage("Error while fetching all keys.", "error"));
         }
     };
 
@@ -61,15 +64,14 @@ const SceneEditForm = () => {
 
     const navigateToPreviousPage = async () => {
         try {
-            const res = await getAllScenes(keycloak.token??"");
+            const res = await getAllScenes(keycloak.token ?? "");
             navigate(PAGE_ROUTES.SpecificSceneView, {
                 state: {
                     shortScene: res?.find(x => x.id === scene.id),
                 },
-            }); //vrati se nazad na scenu koju si editirao
+            });
         } catch (error) {
-            //toast message
-            console.log("error");
+            dispatch(showToastMessage("Error while fetching all scenes.", "error"));
             navigate(PAGE_ROUTES.ShortSceneView);
         }
     };
@@ -80,10 +82,8 @@ const SceneEditForm = () => {
             data.roles = multiselectRefRoles.current.getSelectedItems();
             data.keys = multiselectRefKeys.current.getSelectedItems();
             if (data.roles.length === 0) {
-                console.log("Need to select at least one role");
-            }
-            else {
-                console.log(data.views);
+                dispatch(showToastMessage("Need to select at least one role", "warn"));
+            } else {
                 data.views.map(view => {
                     if (view.selectForm) {
                         if (!view.selectForm.submitSelectionRequest) {
@@ -96,10 +96,11 @@ const SceneEditForm = () => {
                     }
                 });
                 await editScene(data, keycloak.token ?? "");
+                dispatch(showToastMessage("Scene successfully edited", "success"));
                 await navigateToPreviousPage();
             }
         } catch (error) {
-            console.log(error);
+            dispatch(showToastMessage("Unable to edit current scene.", "error"));
         }
     };
 
@@ -129,14 +130,14 @@ const SceneEditForm = () => {
 
     const handleClick = async (e: any) => {
         e.preventDefault();
-        await handleEditScene(scene);
+        handleEditScene(scene);
     };
 
     const handleOdustani = async (e: any) => {
         if (location.state.from) {
             navigate(location.state.from);
         } else {
-            await navigateToPreviousPage();
+            navigateToPreviousPage();
         }
     };
 
@@ -235,15 +236,15 @@ const SceneEditForm = () => {
                                                     <p className="scene-label">Layout:</p>
                                                 </span>
                                                 <span>
-                                                <Dropdown
-                                                    id="layout"
-                                                    value={scene.layout}
-                                                    onChange={e => handleChange(e)}
-                                                    className="scene-field-form dropdown-design2"
-                                                    options={sceneLayoutOptions}
-                                                    optionLabel="text"
-                                                    optionValue="value"
-                                                />
+                                                    <Dropdown
+                                                        id="layout"
+                                                        value={scene.layout}
+                                                        onChange={e => handleChange(e)}
+                                                        className="scene-field-form dropdown-design2"
+                                                        options={sceneLayoutOptions}
+                                                        optionLabel="text"
+                                                        optionValue="value"
+                                                    />
                                                 </span>
                                             </div>
                                         )}

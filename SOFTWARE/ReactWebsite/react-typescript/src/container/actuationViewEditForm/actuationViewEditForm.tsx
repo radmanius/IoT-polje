@@ -11,6 +11,8 @@ import { Dropdown } from "primereact/dropdown";
 import "./actuationViewEditForm.scss";
 import { viewInputsOptions } from "models/viewsInterfaces/inputs";
 import { useKeycloak } from "@react-keycloak/web";
+import { useDispatch } from "react-redux";
+import { showToastMessage } from "redux/actions/toastMessageActions";
 
 interface ILocationState {
     shortScene: IScene;
@@ -20,10 +22,10 @@ interface ILocationState {
 const ActuationViewEditForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
     const { keycloak } = useKeycloak();
     let scene = (location.state as ILocationState)?.shortScene as IScene;
     let view = (location.state as ILocationState)?.view as ActuationView;
-    console.log(view);
 
     const handleAddNewActuationView = async (data: ActuationView) => {
         let newData = { ...data };
@@ -162,9 +164,10 @@ const ActuationViewEditForm = () => {
         });
         try {
             await editScene({ ...scene, views: views }, keycloak.token ?? "");
+            dispatch(showToastMessage("Actuation view successfully edited", "success"));
             navigate(-1);
         } catch (error) {
-            console.log("error while adding new actuation view");
+            dispatch(showToastMessage("Unable to edit current actuation view.", "error"));
         }
     };
 
@@ -516,45 +519,45 @@ const ActuationViewEditForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {((values.form.inputs?.inputType === "INTEGER" ||
+                                        {(values.form.inputs?.inputType === "INTEGER" ||
                                             values.form.inputs?.inputType === "DECIMAL") && (
-                                                <>
-                                                    <Field
-                                                        name="form.inputs.min"
-                                                        render={({ input }) => (
-                                                            <div>
-                                                                <span>
-                                                                    <p>Minimum:</p>
-                                                                </span>
-                                                                <span>
-                                                                    <InputText
-                                                                        {...input}
-                                                                        id="form.inputs.min"
-                                                                        className="scene-field-form"
-                                                                    />
-                                                                </span>
-                                                            </div>
-                                                        )}
-                                                    />
-                                                    <Field
-                                                        name="form.inputs.max"
-                                                        render={({ input }) => (
-                                                            <div>
-                                                                <span>
-                                                                    <p>Maximum:</p>
-                                                                </span>
-                                                                <span>
-                                                                    <InputText
-                                                                        {...input}
-                                                                        id="form.inputs.max"
-                                                                        className="scene-field-form"
-                                                                    />
-                                                                </span>
-                                                            </div>
-                                                        )}
-                                                    />
-                                                </>
-                                            ))}
+                                            <>
+                                                <Field
+                                                    name="form.inputs.min"
+                                                    render={({ input }) => (
+                                                        <div>
+                                                            <span>
+                                                                <p>Minimum:</p>
+                                                            </span>
+                                                            <span>
+                                                                <InputText
+                                                                    {...input}
+                                                                    id="form.inputs.min"
+                                                                    className="scene-field-form"
+                                                                />
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                />
+                                                <Field
+                                                    name="form.inputs.max"
+                                                    render={({ input }) => (
+                                                        <div>
+                                                            <span>
+                                                                <p>Maximum:</p>
+                                                            </span>
+                                                            <span>
+                                                                <InputText
+                                                                    {...input}
+                                                                    id="form.inputs.max"
+                                                                    className="scene-field-form"
+                                                                />
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                />
+                                            </>
+                                        )}
                                     </div>
                                     <div className="scene-form-buttons">
                                         <Button

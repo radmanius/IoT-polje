@@ -9,11 +9,11 @@ import Popup from "./deletePopup";
 import { getAllKeys } from "utils/axios/keysApi";
 import { IKey } from "models/keys";
 import { useKeycloak } from "@react-keycloak/web";
-
-
+import { showToastMessage } from "redux/actions/toastMessageActions";
+import { useDispatch } from "react-redux";
 
 const KeysView = () => {
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [keys, setKeys] = useState<IKey[]>();
     const [popup, setPopup] = useState<Boolean>(false);
@@ -26,8 +26,7 @@ const KeysView = () => {
             const res = await getAllKeys(keycloak.token ?? "");
             setKeys(res);
         } catch (error) {
-            //toast message
-            console.log("error while fetching keys");
+            dispatch(showToastMessage("Error while fetching all keys.", "error"));
         }
     }, []);
 
@@ -41,30 +40,24 @@ const KeysView = () => {
     };
 
     const handleEditKey = async (key: IKey) => {
-        try {
-            navigate(PAGE_ROUTES.EditKey, {
-                state: {
-                    key: key,
-                    from: PAGE_ROUTES.KeysView
-                }
-            });
-        }
-        catch {
-            console.log("Error");
-        }
+        navigate(PAGE_ROUTES.EditKey, {
+            state: {
+                key: key,
+                from: PAGE_ROUTES.KeysView,
+            },
+        });
     };
 
-    const handleChange = (e:any) => {
+    const handleChange = (e: any) => {
         e.preventDefault();
         setSearchInput(e.target.value);
     };
-    
+
     const actionColumnEdit = (rowData: IKey) => {
         return (
             <Button
                 icon="fa fa-pen-to-square"
                 className="p-button-outlined"
-                //tooltip={"Uredi"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
                 onClick={() => {
                     handleEditKey(rowData);
                 }}
@@ -80,14 +73,13 @@ const KeysView = () => {
             return true;
         }
         return false;
-    }
+    };
 
     const actionColumnDelete = (rowData: IKey) => {
         return (
             <Button
                 icon="fa fa-trash"
                 className="p-button-danger p-button-outlined"
-                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
                 onClick={() => {
                     handleDeleteKey(rowData);
                 }}
@@ -121,13 +113,19 @@ const KeysView = () => {
                 fetchKeys={fetchKeys}
             />
             <div className="keys-search-wrap">
-                <input className="keys-searchBar" type="search" placeholder="Pretraži..." onChange={handleChange} value={searchInput} />
+                <input
+                    className="keys-searchBar"
+                    type="search"
+                    placeholder="Pretraži..."
+                    onChange={handleChange}
+                    value={searchInput}
+                />
             </div>
             <div className="keys-table">
                 <DataTable
                     resizableColumns
                     showGridlines
-                    value={keys?.filter((key:IKey) =>  keyFilter(key) )}
+                    value={keys?.filter((key: IKey) => keyFilter(key))}
                     emptyMessage={"Trenutno nema rezultata"}
                     responsiveLayout="stack"
                 >

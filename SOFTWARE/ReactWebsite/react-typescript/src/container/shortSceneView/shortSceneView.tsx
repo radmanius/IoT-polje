@@ -1,4 +1,4 @@
-//import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { IShortScene } from "models/scenes";
 import { useCallback, useEffect, useState } from "react";
@@ -10,9 +10,10 @@ import { PAGE_ROUTES } from "utils/paths";
 import { getAllScenes, getSceneById } from "utils/axios/scenesApi";
 import Popup from "container/specificSceneView/deletePopup";
 import { useKeycloak } from "@react-keycloak/web";
+import { showToastMessage } from "redux/actions/toastMessageActions";
 
 const ShortSceneView = () => {
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [shortScene, setShortScene] = useState<IShortScene[]>();
     const [popup, setPopup] = useState<Boolean>(false);
@@ -26,8 +27,7 @@ const ShortSceneView = () => {
             const res = await getAllScenes(keycloak.token ?? "");
             setShortScene(res);
         } catch (error) {
-            //toast message
-            console.log("error while fetching scenes");
+            dispatch(showToastMessage("Error while fetching all scenes.", "error"));
         }
     }, []);
 
@@ -50,7 +50,7 @@ const ShortSceneView = () => {
                 },
             });
         } catch {
-            console.log("Error");
+            dispatch(showToastMessage("Error while fetching specific scene", "error"));
         }
     };
 
@@ -64,7 +64,6 @@ const ShortSceneView = () => {
             <Button
                 icon="fa fa-pen-to-square"
                 className="p-button-outlined"
-                //tooltip={"Uredi"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
                 onClick={() => {
                     handleEditScene(rowData);
                 }}

@@ -11,6 +11,8 @@ import { Column } from "primereact/column";
 import { ActuationView, IView, MeasurementsView } from "models/viewsInterfaces/views";
 import { useKeycloak } from "@react-keycloak/web";
 import PopupView from "./deleteViewPopup";
+import { useDispatch } from "react-redux";
+import { showToastMessage } from "redux/actions/toastMessageActions";
 
 interface ILocationState {
     shortScene: IScene;
@@ -18,23 +20,21 @@ interface ILocationState {
 
 const SpecificSceneView = () => {
     const location = useLocation();
+    const dispatch = useDispatch();
     const shortScene = (location.state as ILocationState)?.shortScene as IShortScene;
     const [scene, setScene] = useState<IScene>();
     const navigate = useNavigate();
     const { keycloak } = useKeycloak();
-
     const [popup, setPopup] = useState<Boolean>(false);
-
     const [popupView, setPopupView] = useState<Boolean>(false);
     const [deleteView, setDeleteView] = useState<IView>();
 
     const fetchScene = useCallback(async () => {
         try {
             const res = await getSceneById(shortScene.id, keycloak.token ?? "");
-            console.log(res);
             setScene(res);
         } catch (error) {
-            console.log("error");
+            dispatch(showToastMessage("Error while fetching specific scene.", "error"));
         }
     }, []);
 
@@ -63,24 +63,22 @@ const SpecificSceneView = () => {
                 icon="fa fa-pen-to-square"
                 className="p-button-outlined"
                 onClick={() => {
-                        if (rowData.viewType === "actuation") {
-                            navigate(PAGE_ROUTES.EditActuationView, {
-                                state: {
-                                    shortScene: scene,
-                                    view: rowData as ActuationView
-                                }
-                            })
-                        }
-                        else {
-                            navigate(PAGE_ROUTES.EditMeasurementView, {
-                                state: {
-                                    shortScene: scene,
-                                    view: rowData as MeasurementsView
-                                }
-                            })
-                        }
+                    if (rowData.viewType === "actuation") {
+                        navigate(PAGE_ROUTES.EditActuationView, {
+                            state: {
+                                shortScene: scene,
+                                view: rowData as ActuationView,
+                            },
+                        });
+                    } else {
+                        navigate(PAGE_ROUTES.EditMeasurementView, {
+                            state: {
+                                shortScene: scene,
+                                view: rowData as MeasurementsView,
+                            },
+                        });
                     }
-                }
+                }}
             />
         );
     };
@@ -92,7 +90,7 @@ const SpecificSceneView = () => {
                 className="p-button-danger p-button-outlined"
                 onClick={() => {
                     setDeleteView(rowData);
-                    setPopupView(true)
+                    setPopupView(true);
                 }}
             />
         );
