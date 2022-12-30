@@ -458,8 +458,8 @@ const MeasurementViewForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {values.selectForm.inputs?.inputType === "integer" ||
-                                            (values.selectForm.inputs?.inputType === "decimal" && (
+                                        {((values.selectForm.inputs?.inputType === "integer" ||
+                                            values.selectForm.inputs?.inputType === "decimal") && (
                                                 <>
                                                     <Field
                                                         name="selectForm.inputs.min"
