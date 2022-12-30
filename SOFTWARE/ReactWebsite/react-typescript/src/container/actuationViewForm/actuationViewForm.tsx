@@ -510,8 +510,8 @@ const ActuationViewForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {values.form.inputs?.inputType === "integer" ||
-                                            (values.form.inputs?.inputType === "decimal" && (
+                                        {((values.form.inputs?.inputType === "integer" ||
+                                            values.form.inputs?.inputType === "decimal") && (
                                                 <>
                                                     <Field
                                                         name="form.inputs.min"
