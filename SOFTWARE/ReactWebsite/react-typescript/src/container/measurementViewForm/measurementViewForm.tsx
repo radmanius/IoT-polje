@@ -369,6 +369,7 @@ const MeasurementViewForm = () => {
                                                             <span className="headerRow">
                                                                 <InputText
                                                                     id="selectForm.submitSelectionRequest.headers.key"
+                                                                    placeholder={index === 0 ? "Key" : ""}
                                                                     className="scene-field-form-key"
                                                                     value={headersSubmit[index][0]}
                                                                     onChange={e => {
@@ -379,6 +380,7 @@ const MeasurementViewForm = () => {
                                                                 />
                                                                 <InputText
                                                                     id="selectForm.submitSelectionRequest.headers.value"
+                                                                    placeholder={index === 0 ? "Value" : ""}
                                                                     className="scene-field-form-value"
                                                                     value={headersSubmit[index][1]}
                                                                     onChange={e => {
@@ -636,6 +638,7 @@ const MeasurementViewForm = () => {
                                                             <span className="headerRow">
                                                                 <InputText
                                                                     id="selectForm.query.headers.key"
+                                                                    placeholder={index === 0 ? "Key" : ""}
                                                                     className="scene-field-form-key"
                                                                     value={headersQuery[index][0]}
                                                                     onChange={e => {
@@ -646,6 +649,7 @@ const MeasurementViewForm = () => {
                                                                 />
                                                                 <InputText
                                                                     id="selectForm.query.headers.value"
+                                                                    placeholder={index === 0 ? "Value" : ""}
                                                                     className="scene-field-form-value"
                                                                     value={headersQuery[index][1]}
                                                                     onChange={e => {
