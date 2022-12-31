@@ -6,5 +6,5 @@ export interface IRequest{
 }
 
 export interface IHeader {
-    '{{accessToken}} {{token1}}': string
+    [key: string]: string;
 }

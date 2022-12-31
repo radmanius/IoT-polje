@@ -41,6 +41,7 @@
 }
 
 .headers{
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,7 +49,29 @@
 
 .payload{
     height: 26px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.p-inputtext.scene-field-form-value
+{
+    margin-left: 10px;
+}
+
+.p-button.small-button{
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.headerRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
 }
