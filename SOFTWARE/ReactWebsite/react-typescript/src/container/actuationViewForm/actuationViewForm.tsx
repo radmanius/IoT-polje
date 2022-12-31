@@ -13,6 +13,7 @@ import { viewInputsOptions } from "models/viewsInterfaces/inputs";
 import { useKeycloak } from "@react-keycloak/web";
 import { useDispatch } from "react-redux";
 import { showToastMessage } from "redux/actions/toastMessageActions";
+import { useState } from "react";
 
 interface ILocationState {
     shortScene: IScene;
@@ -24,6 +25,9 @@ const ActuationViewForm = () => {
     const dispatch = useDispatch();
     const { keycloak } = useKeycloak();
     let scene = (location.state as ILocationState)?.shortScene as IScene;
+
+    const [headersDefault, setHeadersDefault] = useState<Array<Array<string>>>([["", ""]]);
+    const [headersSubmit, setHeadersSubmit] = useState<Array<Array<string>>>([["", ""]]);
 
     const handleAddNewActuationView = async (data: ActuationView) => {
         let newData = { ...data };
@@ -144,6 +148,30 @@ const ActuationViewForm = () => {
                 break;
             }
         }
+        let keySubmit = headersSubmit[0][0];
+        let valueSubmit = headersSubmit[0][1];
+        let headersSubmitMap = {} as { [key: string]: string };
+        headersSubmitMap[keySubmit] = valueSubmit;
+
+        let keyDefault = headersDefault[0][0];
+        let valueDefault = headersDefault[0][1];
+        let headersDefaultMap = {} as { [key: string]: string };
+        headersDefaultMap[keyDefault] = valueDefault;
+
+        newData = {
+            ...newData,
+            form: {
+                ...newData.form,
+                defaultValuesRequest: {
+                    ...newData.form.defaultValuesRequest,
+                    headers: headersDefaultMap,
+                },
+                submitFormRequest: {
+                    ...newData.form.submitFormRequest,
+                    headers: headersSubmitMap,
+                },
+            },
+        };
         console.log(newData);
 
         let views = [...scene.views];
@@ -291,9 +319,24 @@ const ActuationViewForm = () => {
                                                     </span>
                                                     <span>
                                                         <InputText
-                                                            id="form.defaultValuesRequest.headers.{{accessToken}} {{token1}}"
-                                                            className="scene-field-form"
-                                                            {...input}
+                                                            id="form.defaultValuesRequest.headers.key"
+                                                            className="scene-field-form-key"
+                                                            value={headersDefault[0][0]}
+                                                            onChange={e => {
+                                                                let headersCopy = [...headersDefault];
+                                                                headersCopy[0][0] = e.target.value;
+                                                                setHeadersDefault(headersCopy);
+                                                            }}
+                                                        />
+                                                        <InputText
+                                                            id="form.defaultValuesRequest.headers.value"
+                                                            className="scene-field-form-value"
+                                                            value={headersDefault[0][1]}
+                                                            onChange={e => {
+                                                                let headersCopy = [...headersDefault];
+                                                                headersCopy[0][1] = e.target.value;
+                                                                setHeadersDefault(headersCopy);
+                                                            }}
                                                         />
                                                     </span>
                                                 </div>
@@ -376,9 +419,24 @@ const ActuationViewForm = () => {
                                                     </span>
                                                     <span>
                                                         <InputText
-                                                            id="form.submitFormRequest.headers.{{accessToken}} {{token1}}"
-                                                            className="scene-field-form"
-                                                            {...input}
+                                                            id="form.submitFormRequest.headers.key"
+                                                            className="scene-field-form-key"
+                                                            value={headersSubmit[0][0]}
+                                                            onChange={e => {
+                                                                let headersCopy = [...headersSubmit];
+                                                                headersCopy[0][0] = e.target.value;
+                                                                setHeadersSubmit(headersCopy);
+                                                            }}
+                                                        />
+                                                        <InputText
+                                                            id="form.submitFormRequest.headers.value"
+                                                            className="scene-field-form-value"
+                                                            value={headersSubmit[0][1]}
+                                                            onChange={e => {
+                                                                let headersCopy = [...headersSubmit];
+                                                                headersCopy[0][1] = e.target.value;
+                                                                setHeadersSubmit(headersCopy);
+                                                            }}
                                                         />
                                                     </span>
                                                 </div>
