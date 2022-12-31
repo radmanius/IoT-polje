@@ -2,7 +2,7 @@ import { IScene } from "models/scenes";
 import { MeasurementsView, viewMethodOptions, viewTypeOptions } from "models/viewsInterfaces/views";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { editScene } from "utils/axios/scenesApi";
@@ -31,6 +31,33 @@ const MeasurementViewEditForm = () => {
     const [valueColumn, setValueColumn] = useState(view.responseExtracting.valueColumn ?? "");
     //const [timeJsonPath, setTimeJsonPath] = useState(view.responseExtracting.timeJsonPath??"");
     //const [valueJsonPath, setValueJsonPath] = useState(view.responseExtracting.valueJsonPath??"");
+
+    const [headersQuery, setHeadersQuery] = useState<Array<Array<string>>>([["", ""]]);
+    const [headersSubmit, setHeadersSubmit] = useState<Array<Array<string>>>([["", ""]]);
+
+    const fillHeadersQuery = () => {
+        let newHeadersQuery = view.query.headers;
+        let headersArray : any = [];
+        if (newHeadersQuery) {
+            headersArray = Object.entries(newHeadersQuery);
+        }
+        if (headersArray.length === 0) {
+            headersArray = [["", ""]];
+        }
+        setHeadersQuery(headersArray);
+    }
+
+    const fillHeadersSubmit = () => {
+        let newHeadersSubmit = view?.selectForm?.submitSelectionRequest?.headers;
+        let headersArray: any = [];
+        if (newHeadersSubmit) {
+            headersArray = Object.entries(newHeadersSubmit);
+        }
+        if (headersArray.length === 0) {
+            headersArray = [["", ""]];
+        }
+        setHeadersSubmit(headersArray);
+    }
 
     const handleAddNewMeasurementView = async (data: MeasurementsView) => {
         let newData = { ...data };
@@ -169,6 +196,35 @@ const MeasurementViewEditForm = () => {
                 break;
             }
         }
+        
+        let headersSubmitMap = {} as { [key: string]: string };
+        headersSubmit.forEach(pair => {
+            if(pair[0] !== "")
+                headersSubmitMap[pair[0]] = pair[1];
+        });
+
+        let headersQueryMap = {} as { [key: string]: string };
+        
+        headersQuery.forEach(pair => {
+            if (pair[0] !== "")
+                headersQueryMap[pair[0]] = pair[1];
+        });
+
+        newData = {
+            ...newData,
+            selectForm: {
+                ...newData.selectForm,
+                submitSelectionRequest: {
+                    ...newData.selectForm.submitSelectionRequest,
+                    headers: headersSubmitMap,
+                },
+            },
+            query: {
+                ...newData.query,
+                headers: headersQueryMap,
+            },
+        };
+
         let views = [...scene.views];
         const index = views.indexOf(view);
         views.splice(index, 1, newData);
@@ -192,6 +248,11 @@ const MeasurementViewEditForm = () => {
             dispatch(showToastMessage("Unable to edit current measurement view.", "error"));
         }
     };
+
+    useEffect(() => {
+        fillHeadersQuery();
+        fillHeadersSubmit();
+    }, []);
 
     return (
         <>
@@ -319,16 +380,58 @@ const MeasurementViewEditForm = () => {
                                             name="selectForm.submitSelectionRequest.headers.{{accessToken}} {{token1}}"
                                             render={({ input }) => (
                                                 <div>
-                                                    <span>
-                                                        <p>Headers:</p>
-                                                    </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="selectForm.submitSelectionRequest.headers.{{accessToken}} {{token1}}"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span>
+                                                    <p className="headers">
+                                                            Headers:
+                                                            <Button
+                                                                icon="fa fa-plus"
+                                                                className="p-button-success"
+                                                                onClick={e => {
+                                                                    e.preventDefault();
+                                                                    let headersSubmitCopy = [...headersSubmit];
+                                                                    headersSubmitCopy.push(["", ""]);
+                                                                    setHeadersSubmit(headersSubmitCopy);
+                                                                }}
+                                                            />
+                                                    </p>
+                                                    <div>
+                                                        {headersSubmit.map((header, index) => (
+                                                            <span className="headerRow">
+                                                                <InputText
+                                                                    id="selectForm.submitSelectionRequest.headers.key"
+                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    className="scene-field-form-key"
+                                                                    value={headersSubmit[index][0]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersSubmit];
+                                                                        headersCopy[index][0] = e.target.value;
+                                                                        setHeadersSubmit(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <InputText
+                                                                    id="selectForm.submitSelectionRequest.headers.value"
+                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    className="scene-field-form-value"
+                                                                    value={headersSubmit[index][1]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersSubmit];
+                                                                        headersCopy[index][1] = e.target.value;
+                                                                        setHeadersSubmit(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <Button
+                                                                icon="fa-sharp fa-solid fa-xmark"
+                                                                className="p-button-danger small-button"
+                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                onClick={e => {
+                                                                    e.preventDefault();
+                                                                    let headersSubmitCopy = [...headersSubmit];
+                                                                    headersSubmitCopy.splice(index, 1);
+                                                                    setHeadersSubmit(headersSubmitCopy);
+                                                                    }}
+                                                                />
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             )}
                                         />
@@ -337,7 +440,7 @@ const MeasurementViewEditForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
-                                                        <p>Payload:</p>
+                                                        <p className="payload">Payload:</p>
                                                     </span>
                                                     <span>
                                                         <InputText
@@ -546,16 +649,58 @@ const MeasurementViewEditForm = () => {
                                             name="query.headers.{{accessToken}} {{token1}}"
                                             render={({ input }) => (
                                                 <div>
-                                                    <span>
-                                                        <p>Headers:</p>
-                                                    </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="query.headers.{{accessToken}} {{token1}}"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span>
+                                                    <p className="headers">
+                                                            Headers:
+                                                            <Button
+                                                                icon="fa fa-plus"
+                                                                className="p-button-success"
+                                                                onClick={e => {
+                                                                    e.preventDefault();
+                                                                    let headersQueryCopy = [...headersQuery];
+                                                                    headersQueryCopy.push(["", ""]);
+                                                                    setHeadersQuery(headersQueryCopy);
+                                                                }}
+                                                            />
+                                                    </p>
+                                                    <div>
+                                                        {headersQuery.map((header, index) => (
+                                                            <span className="headerRow">
+                                                                <InputText
+                                                                    id="selectForm.query.headers.key"
+                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    className="scene-field-form-key"
+                                                                    value={headersQuery[index][0]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersQuery];
+                                                                        headersCopy[index][0] = e.target.value;
+                                                                        setHeadersQuery(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <InputText
+                                                                    id="selectForm.query.headers.value"
+                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    className="scene-field-form-value"
+                                                                    value={headersQuery[index][1]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersQuery];
+                                                                        headersCopy[index][1] = e.target.value;
+                                                                        setHeadersQuery(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <Button
+                                                                icon="fa-sharp fa-solid fa-xmark"
+                                                                className="p-button-danger small-button"
+                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                onClick={e => {
+                                                                    e.preventDefault();
+                                                                    let headersQueryCopy = [...headersQuery];
+                                                                    headersQueryCopy.splice(index, 1);
+                                                                    setHeadersQuery(headersQueryCopy);
+                                                                    }}
+                                                                />
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             )}
                                         />
@@ -564,7 +709,7 @@ const MeasurementViewEditForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
-                                                        <p>Payload:</p>
+                                                        <p className="payload">Payload:</p>
                                                     </span>
                                                     <span>
                                                         <InputText

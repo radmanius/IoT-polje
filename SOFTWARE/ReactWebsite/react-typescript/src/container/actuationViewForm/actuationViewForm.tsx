@@ -13,6 +13,7 @@ import { viewInputsOptions } from "models/viewsInterfaces/inputs";
 import { useKeycloak } from "@react-keycloak/web";
 import { useDispatch } from "react-redux";
 import { showToastMessage } from "redux/actions/toastMessageActions";
+import { useState } from "react";
 
 interface ILocationState {
     shortScene: IScene;
@@ -24,6 +25,9 @@ const ActuationViewForm = () => {
     const dispatch = useDispatch();
     const { keycloak } = useKeycloak();
     let scene = (location.state as ILocationState)?.shortScene as IScene;
+
+    const [headersDefault, setHeadersDefault] = useState<Array<Array<string>>>([["", ""]]);
+    const [headersSubmit, setHeadersSubmit] = useState<Array<Array<string>>>([["", ""]]);
 
     const handleAddNewActuationView = async (data: ActuationView) => {
         let newData = { ...data };
@@ -144,6 +148,34 @@ const ActuationViewForm = () => {
                 break;
             }
         }
+
+        let headersSubmitMap = {} as { [key: string]: string };
+        headersSubmit.forEach(pair => {
+            if(pair[0] !== "")
+                headersSubmitMap[pair[0]] = pair[1];
+        });
+
+        let headersDefaultMap = {} as { [key: string]: string };
+        
+        headersDefault.forEach(pair => {
+            if (pair[0] !== "")
+                headersDefaultMap[pair[0]] = pair[1];
+        });
+
+        newData = {
+            ...newData,
+            form: {
+                ...newData.form,
+                defaultValuesRequest: {
+                    ...newData.form.defaultValuesRequest,
+                    headers: headersDefaultMap,
+                },
+                submitFormRequest: {
+                    ...newData.form.submitFormRequest,
+                    headers: headersSubmitMap,
+                },
+            },
+        };
         console.log(newData);
 
         let views = [...scene.views];
@@ -272,7 +304,7 @@ const ActuationViewForm = () => {
                                         />
 
                                         <Field
-                                            name="form.defaultValuesRequest.headers.{{accessToken}} {{token1}}"
+                                            name="form.defaultValuesRequest.headers"
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
@@ -281,21 +313,55 @@ const ActuationViewForm = () => {
                                                             <Button
                                                                 icon="fa fa-plus"
                                                                 className="p-button-success"
-                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                //tooltip={"Obriši"}
                                                                 onClick={e => {
                                                                     e.preventDefault();
-                                                                    console.log("click");
+                                                                    let headersDefaultCopy = [...headersDefault];
+                                                                    headersDefaultCopy.push(["", ""]);
+                                                                    setHeadersDefault(headersDefaultCopy);
                                                                 }}
                                                             />
                                                         </p>
                                                     </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="form.defaultValuesRequest.headers.{{accessToken}} {{token1}}"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span>
+                                                    <div>
+                                                        {headersDefault.map((header, index) => (
+                                                            <span className="headerRow">
+                                                                <InputText
+                                                                    id="form.defaultValuesRequest.headers.key"
+                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    className="scene-field-form-key"
+                                                                    value={headersDefault[index][0]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersDefault];
+                                                                        headersCopy[index][0] = e.target.value;
+                                                                        setHeadersDefault(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <InputText
+                                                                    id="form.defaultValuesRequest.headers.value"
+                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    className="scene-field-form-value"
+                                                                    value={headersDefault[index][1]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersDefault];
+                                                                        headersCopy[index][1] = e.target.value;
+                                                                        setHeadersDefault(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <Button
+                                                                icon="fa-sharp fa-solid fa-xmark"
+                                                                className="p-button-danger small-button"
+                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                onClick={e => {
+                                                                    e.preventDefault();
+                                                                    let headersDefaultCopy = [...headersDefault];
+                                                                    headersDefaultCopy.splice(index, 1);
+                                                                    setHeadersDefault(headersDefaultCopy);
+                                                                }}
+                                                            />
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             )}
                                         />
@@ -358,7 +424,7 @@ const ActuationViewForm = () => {
                                         />
 
                                         <Field
-                                            name="form.submitFormRequest.headers.{{accessToken}} {{token1}}"
+                                            name="form.submitFormRequest.headers"
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
@@ -369,18 +435,52 @@ const ActuationViewForm = () => {
                                                                 className="p-button-success"
                                                                 onClick={e => {
                                                                     e.preventDefault();
-                                                                    console.log("click");
+                                                                    let headersSubmitCopy = [...headersSubmit];
+                                                                    headersSubmitCopy.push(["", ""]);
+                                                                    setHeadersSubmit(headersSubmitCopy);
                                                                 }}
                                                             />
                                                         </p>
                                                     </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="form.submitFormRequest.headers.{{accessToken}} {{token1}}"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span>
+                                                    <div>
+                                                        {headersSubmit.map((header, index) => (
+                                                            <span className="headerRow">
+                                                                <InputText
+                                                                    id="form.submitFormRequest.headers.key"
+                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    className="scene-field-form-key"
+                                                                    value={headersSubmit[index][0]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersSubmit];
+                                                                        headersCopy[index][0] = e.target.value;
+                                                                        setHeadersSubmit(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <InputText
+                                                                    id="form.submitFormRequest.headers.value"
+                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    className="scene-field-form-value"
+                                                                    value={headersSubmit[index][1]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersSubmit];
+                                                                        headersCopy[index][1] = e.target.value;
+                                                                        setHeadersSubmit(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <Button
+                                                                icon="fa-sharp fa-solid fa-xmark"
+                                                                className="p-button-danger small-button"
+                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                onClick={e => {
+                                                                    e.preventDefault();
+                                                                    let headersSubmitCopy = [...headersSubmit];
+                                                                    headersSubmitCopy.splice(index, 1);
+                                                                    setHeadersSubmit(headersSubmitCopy);
+                                                                    }}
+                                                                />
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             )}
                                         />

@@ -35,6 +35,9 @@ const MeasurementViewForm = () => {
     const [timeJsonPath, setTimeJsonPath] = useState("");
     const [valueJsonPath, setValueJsonPath] = useState("");
 
+    const [headersQuery, setHeadersQuery] = useState<Array<Array<string>>>([["", ""]]);
+    const [headersSubmit, setHeadersSubmit] = useState<Array<Array<string>>>([["", ""]]);
+
     const handleAddNewMeasurementView = async (data: MeasurementsView) => {
         let newData = { ...data };
         if (dataFormat === "csv") {
@@ -172,6 +175,34 @@ const MeasurementViewForm = () => {
                 break;
             }
         }
+        let headersSubmitMap = {} as { [key: string]: string };
+        headersSubmit.forEach(pair => {
+            if(pair[0] !== "")
+                headersSubmitMap[pair[0]] = pair[1];
+        });
+
+        let headersQueryMap = {} as { [key: string]: string };
+        
+        headersQuery.forEach(pair => {
+            if (pair[0] !== "")
+                headersQueryMap[pair[0]] = pair[1];
+        });
+
+        newData = {
+            ...newData,
+            selectForm: {
+                ...newData.selectForm,
+                submitSelectionRequest: {
+                    ...newData.selectForm.submitSelectionRequest,
+                    headers: headersSubmitMap,
+                },
+            },
+            query: {
+                ...newData.query,
+                headers: headersQueryMap,
+            },
+        };
+
         let views = [...scene.views];
         views.push(newData);
         views.map(view => {
@@ -317,19 +348,61 @@ const MeasurementViewForm = () => {
                                             )}
                                         />
                                         <Field
-                                            name="selectForm.submitSelectionRequest.headers.{{accessToken}} {{token1}}"
+                                            name="selectForm.submitSelectionRequest.headers"
                                             render={({ input }) => (
                                                 <div>
-                                                    <span>
-                                                        <p>Headers:</p>
-                                                    </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="selectForm.submitSelectionRequest.headers.{{accessToken}} {{token1}}"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span>
+                                                    <p className="headers">
+                                                            Headers:
+                                                            <Button
+                                                                icon="fa fa-plus"
+                                                                className="p-button-success"
+                                                                onClick={e => {
+                                                                    e.preventDefault();
+                                                                    let headersSubmitCopy = [...headersSubmit];
+                                                                    headersSubmitCopy.push(["", ""]);
+                                                                    setHeadersSubmit(headersSubmitCopy);
+                                                                }}
+                                                            />
+                                                    </p>
+                                                    <div>
+                                                        {headersSubmit.map((header, index) => (
+                                                            <span className="headerRow">
+                                                                <InputText
+                                                                    id="selectForm.submitSelectionRequest.headers.key"
+                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    className="scene-field-form-key"
+                                                                    value={headersSubmit[index][0]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersSubmit];
+                                                                        headersCopy[index][0] = e.target.value;
+                                                                        setHeadersSubmit(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <InputText
+                                                                    id="selectForm.submitSelectionRequest.headers.value"
+                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    className="scene-field-form-value"
+                                                                    value={headersSubmit[index][1]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersSubmit];
+                                                                        headersCopy[index][1] = e.target.value;
+                                                                        setHeadersSubmit(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <Button
+                                                                icon="fa-sharp fa-solid fa-xmark"
+                                                                className="p-button-danger small-button"
+                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                onClick={e => {
+                                                                    e.preventDefault();
+                                                                    let headersSubmitCopy = [...headersSubmit];
+                                                                    headersSubmitCopy.splice(index, 1);
+                                                                    setHeadersSubmit(headersSubmitCopy);
+                                                                    }}
+                                                                />
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             )}
                                         />
@@ -337,7 +410,7 @@ const MeasurementViewForm = () => {
                                             name="selectForm.submitSelectionRequest.payload"
                                             render={({ input }) => (
                                                 <div>
-                                                    <span>
+                                                    <span className="payload">
                                                         <p>Payload:</p>
                                                     </span>
                                                     <span>
@@ -544,19 +617,61 @@ const MeasurementViewForm = () => {
                                             )}
                                         />
                                         <Field
-                                            name="query.headers.{{accessToken}} {{token1}}"
+                                            name="query.headers"
                                             render={({ input }) => (
                                                 <div>
-                                                    <span>
-                                                        <p>Headers:</p>
-                                                    </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="query.headers.{{accessToken}} {{token1}}"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span>
+                                                    <p className="headers">
+                                                            Headers:
+                                                            <Button
+                                                                icon="fa fa-plus"
+                                                                className="p-button-success"
+                                                                onClick={e => {
+                                                                    e.preventDefault();
+                                                                    let headersQueryCopy = [...headersQuery];
+                                                                    headersQueryCopy.push(["", ""]);
+                                                                    setHeadersQuery(headersQueryCopy);
+                                                                }}
+                                                            />
+                                                    </p>
+                                                    <div>
+                                                        {headersQuery.map((header, index) => (
+                                                            <span className="headerRow">
+                                                                <InputText
+                                                                    id="selectForm.query.headers.key"
+                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    className="scene-field-form-key"
+                                                                    value={headersQuery[index][0]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersQuery];
+                                                                        headersCopy[index][0] = e.target.value;
+                                                                        setHeadersQuery(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <InputText
+                                                                    id="selectForm.query.headers.value"
+                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    className="scene-field-form-value"
+                                                                    value={headersQuery[index][1]}
+                                                                    onChange={e => {
+                                                                        let headersCopy = [...headersQuery];
+                                                                        headersCopy[index][1] = e.target.value;
+                                                                        setHeadersQuery(headersCopy);
+                                                                    }}
+                                                                />
+                                                                <Button
+                                                                icon="fa-sharp fa-solid fa-xmark"
+                                                                className="p-button-danger small-button"
+                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                onClick={e => {
+                                                                    e.preventDefault();
+                                                                    let headersQueryCopy = [...headersQuery];
+                                                                    headersQueryCopy.splice(index, 1);
+                                                                    setHeadersQuery(headersQueryCopy);
+                                                                    }}
+                                                                />
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             )}
                                         />
@@ -564,7 +679,7 @@ const MeasurementViewForm = () => {
                                             name="query.payload"
                                             render={({ input }) => (
                                                 <div>
-                                                    <span>
+                                                    <span className="payload">
                                                         <p>Payload:</p>
                                                     </span>
                                                     <span>
