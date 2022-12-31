@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import hr.fer.tel.server.rest.model.Key;
+import hr.fer.tel.server.rest.model.Scene;
 import hr.fer.tel.server.rest.repository.dao.KeyRepository;
 
 @Service
@@ -40,17 +41,28 @@ public class KeyService {
 	public Set<Key> getAll() {
 		return keyRepository.findAll().stream().collect(Collectors.toSet());
 	}
-	
-	public List<String> getAllKeyNames(){
+
+	public List<String> getAllKeyNames() {
 		return keyRepository.findAll().stream().map(key -> key.getName()).toList();
 	}
 
 	public boolean ProbaDeleteKeyById(String token) {
 
 		List<Key> keys = keyRepository.findAll();
+		String keyName = null;
 
 		for (Key key : keys) {
 			if (key.getValue().equals(token)) {
+				keyName = key.getName();
+
+				for (Scene scene : sceneService.getAllScenes()) {
+					if (scene.getKeyNames().contains(keyName)) {
+						scene.getKeyNames().remove(keyName);
+//						sceneService.editSceneAuthorize(scene.getId(), scene);
+						sceneService.probaEditScene(scene.getId(), scene);
+					}
+				}
+
 				keyRepository.delete(key);
 			}
 		}
