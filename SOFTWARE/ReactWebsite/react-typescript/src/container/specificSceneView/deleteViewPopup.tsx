@@ -33,6 +33,7 @@ export default function PopupView(props: any) {
                 }
             });
             await editScene({ ...props.scene, views: views }, keycloak.token ?? "");
+            dispatch(showToastMessage("View successfully deleted", "success"));
             closePopup();
 
             if (props.fetchScene) {

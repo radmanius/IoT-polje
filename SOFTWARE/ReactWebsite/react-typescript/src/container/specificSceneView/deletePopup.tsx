@@ -18,6 +18,7 @@ export default function Popup(props: any) {
         setError("");
         try {
             await deleteScene(props.id, keycloak.token ?? "");
+            dispatch(showToastMessage("Scene successfully deleted", "success"));
             closePopup();
             if (props.fetchScenes) {
                 props.fetchScenes();
