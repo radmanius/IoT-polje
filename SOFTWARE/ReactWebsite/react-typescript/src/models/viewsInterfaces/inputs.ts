@@ -35,7 +35,7 @@ export const viewInputsOptions: any[] = [
         value: "STRING",
     },
     {
-        text: "SUMBIT",
-        value: "SUMBIT",
+        text: "SUBMIT",
+        value: "SUBMIT",
     }
 ]
