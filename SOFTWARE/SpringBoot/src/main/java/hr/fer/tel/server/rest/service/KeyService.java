@@ -17,7 +17,6 @@ public class KeyService {
 	@Autowired
 	private KeyRepository keyRepository;
 
-	@SuppressWarnings("unused")
 	@Autowired
 	private SceneService sceneService;
 
@@ -29,7 +28,7 @@ public class KeyService {
 		List<Key> keys = keyRepository.findAll();
 
 		for (Key key : keys) {
-			if (key.getValue().equals(token)) {
+			if (key.getName().equals(token)) {
 				return true;
 			}
 		}
@@ -82,7 +81,7 @@ public class KeyService {
 		List<Key> keys = keyRepository.findAll();
 
 		for (Key key : keys) {
-			if (key.getValue().equals(oldToken)) {
+			if (key.getName().equals(oldToken)) {
 				key.setValue(newToken);
 				keyRepository.save(key);
 			}

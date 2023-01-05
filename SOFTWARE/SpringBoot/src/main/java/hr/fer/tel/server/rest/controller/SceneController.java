@@ -2,6 +2,7 @@ package hr.fer.tel.server.rest.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -149,8 +150,71 @@ public class SceneController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("given key does not exist in database");
 
 		}
+	}
+	
+	@PostMapping("check/scene")
+	public ResponseEntity<String> checkPayload(@RequestBody String model){
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.setSerializationInclusion(Include.NON_NULL);
 
+		SceneDTO sceneDTO = new SceneDTO();
 
+		try {
+			sceneDTO = objectMapper.readValue(model, sceneDTO.getClass());
+		} catch (Exception igornable) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		Scene scene = new Scene(sceneDTO);
+		
+		for(View tmp: scene.getViews()) {
+			if(tmp instanceof ActuationView) {
+				tmp = (ActuationView) tmp;
+				ActuationForm form = ((ActuationView) tmp).getForm();
+				
+				
+//	             "headers": {
+//	                    "Accept": "application/csv",
+//	                    "Content-type": "application/vnd.flux",
+//	                    "Authorization": "Token {{influxFerit}}"
+//	                },
+				//influxFerit je key, trebaš ga dohvatit iz keyservica
+				
+				Request req1 = form.getDefaultValuesRequest();
+				Map<String, String> headers1 = req1.getHeaders();
+				String payload1 = req1.getPayload();
+				String uri1 = req1.getUri();
+				
+				//Provjeri je li valid, poslat upit kao u postmanu, ako vrati podatke onda radi
+				
+				
+				Request req2 = form.getSubmitFormRequest();
+				Map<String, String> headers2 = req2.getHeaders();
+				String payload2 = req2.getPayload();
+				String uri2 = req2.getUri();
+				
+				//Provjeri je li valid
+			}
+			
+			if(tmp instanceof MesurmentView) {
+				tmp = (MesurmentView) tmp;
+				MeasurmentSelectForm form = ((MesurmentView) tmp).getSelectForm();
+				
+				Request req = form.getSubmitSelectionRequest();
+				Map<String, String> headers1 = req.getHeaders();
+				String payload1 = req.getPayload();
+				String uri1 = req.getUri();
+				
+				//Provjeri je li valid
+				
+				
+				
+			}
+			
+		}
+		
+		return null;
 	}
 	
 	@PostMapping("/scene2")
@@ -284,5 +348,7 @@ public class SceneController {
 		return ResponseEntity.status(HttpStatus.OK).body("deleted scene with id: " + id);
 
 	}
+	
+
 
 }
