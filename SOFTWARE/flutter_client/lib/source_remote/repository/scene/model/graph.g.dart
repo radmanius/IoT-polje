@@ -11,7 +11,7 @@ Graph _$GraphFromJson(Map<String, dynamic> json) => Graph(
       json['table'] as int,
       json['measurement'] as String,
       json['idWasp'] as String,
-      json['value'] as String,
+      (json['value'] as num).toDouble(),
       DateTime.parse(json['time'] as String),
     );
 

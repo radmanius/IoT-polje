@@ -7,7 +7,6 @@ part of 'request.dart';
 // **************************************************************************
 
 Request _$RequestFromJson(Map<String, dynamic> json) => Request(
-      json['id'] as int,
       json['method'] as String,
       json['URI'] as String,
       Map<String, String>.from(json['headers'] as Map),
@@ -15,7 +14,6 @@ Request _$RequestFromJson(Map<String, dynamic> json) => Request(
     );
 
 Map<String, dynamic> _$RequestToJson(Request instance) => <String, dynamic>{
-      'id': instance.id,
       'method': instance.method,
       'URI': instance.uri,
       'headers': instance.headers,

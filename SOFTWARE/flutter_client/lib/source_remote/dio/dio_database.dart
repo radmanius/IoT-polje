@@ -3,9 +3,9 @@ import 'package:flutter_loggy_dio/flutter_loggy_dio.dart';
 import 'package:pdp2022/main.dart';
 import 'package:pdp2022/source_remote/dio/api_endpoints.dart';
 
-Dio createDio() {
+Dio createDioDatabase() {
   final options = BaseOptions(
-    baseUrl: ApiEndpoints.databaseUrl, //ApiEndpoints.restServerBaseUrl,
+    baseUrl: ApiEndpoints.databaseUrl,
     responseType: ResponseType.json,
   );
 

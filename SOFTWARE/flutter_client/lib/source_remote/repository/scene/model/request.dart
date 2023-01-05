@@ -4,9 +4,9 @@ part 'request.g.dart';
 
 @JsonSerializable()
 class Request {
-  Request(this.id, this.method, this.uri, this.headers, this.payload);
+  Request(this.method, this.uri, this.headers, this.payload);
 
-  final int id;
+  //final int id;
   final String method;
   @JsonKey(name: 'URI')
   final String uri;

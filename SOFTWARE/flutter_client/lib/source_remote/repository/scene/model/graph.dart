@@ -21,7 +21,7 @@ class Graph {
   final int table;
   final String measurement;
   final String idWasp;
-  final String value;
+  final double value;
  final DateTime time;
 
   factory Graph.fromJson(Map<String, dynamic> json) => _$GraphFromJson(json);

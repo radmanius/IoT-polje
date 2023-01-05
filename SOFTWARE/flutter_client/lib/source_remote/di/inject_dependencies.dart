@@ -8,10 +8,12 @@ import 'package:pdp2022/source_remote/repository/auth/auth_repository_impl.dart'
 import 'package:pdp2022/source_remote/repository/auth/auth_token_persistence_manager.dart';
 import 'package:pdp2022/source_remote/repository/scene/scene_repository.dart';
 import 'package:pdp2022/source_remote/repository/scene/scene_repository_impl.dart';
+import 'package:pdp2022/source_remote/repository/scene/graph_repository.dart';
+import 'package:pdp2022/source_remote/repository/scene/graph_repository_impl.dart';
 
 void injectDependencies(GetIt getIt) {
   getIt.registerLazySingleton<Dio>(
-    () => createDio(),
+    () => createDioRest(),
 
   );
 
@@ -28,6 +30,12 @@ void injectDependencies(GetIt getIt) {
   getIt.registerFactory<SceneRepository>(
     () => SceneRepositoryImpl(
       getIt.get(),
+    ),
+  );
+
+  getIt.registerFactory<GraphRepository>(
+    () => GraphRepositoryImpl(
+    
     ),
   );
 }
