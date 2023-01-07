@@ -9,6 +9,7 @@ import 'package:pdp2022/source_remote/repository/scene/model/graph.dart';
 import 'model/request.dart';
 import 'model/view/view.dart';
 import 'graph_repository.dart';
+import  'package:intl/intl.dart';
 
 class GraphRepositoryImpl implements GraphRepository {
   GraphRepositoryImpl();
@@ -20,14 +21,29 @@ class GraphRepositoryImpl implements GraphRepository {
     final dio=createDioDatabase();
 
 if(query!=null){
-  String pl = "from(bucket:\"telegraf\")\n|> range(start: 2021-12-01T00:00:00Z, stop:2023-01-01T00:00:00Z)\n|> filter(fn: (r) => r._measurement == \"HUM\" and r.id_wasp == \"SAP01\" and r._field == \"value\")\n|> drop(columns: [\"_start\", \"_stop\", \"_field\", \"host\", \"id\"])\n|> window(every: 3h)\n|> mean()\n|> duplicate(column: \"_stop\", as: \"_time\")\n|> drop(columns: [\"_start\", \"_stop\"])\n";
+  String data = query.payload;
+  String window = "3h";
+  data = data.replaceAll('{{aggregationWindow}}', window);
 
-    final response = await dio.post('', data:pl,
+  DateTime today = DateTime.now();
+  String endDate = DateFormat("yyyy-MM-dd;HH:mm:ss/").format(today);
+  endDate= endDate.replaceAll(';', 'T');
+  endDate= endDate.replaceAll('/', 'Z');
+  data = data.replaceAll('{{endTimeISO}}', endDate);
+
+  DateTime day = today.subtract(const Duration(days:1));
+  DateTime week = today.subtract(const Duration(days:7));
+  DateTime month = today.subtract(const Duration(days:30));
+  String startDate = DateFormat("yyyy-MM-dd;HH:mm:ss/").format(week);
+  startDate= startDate.replaceAll(';', 'T');
+  startDate= startDate.replaceAll('/', 'Z');
+  data = data.replaceAll('{{startTimeISO}}', startDate);
+
+    final response = await dio.post('', data:data,
           options: Options(headers: {
           "Authorization": "Token bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
            "Accept": "application/json" ,
            "Content-type": "application/vnd.flux" 
-
 
           }
            //query.headers
@@ -47,7 +63,6 @@ List<String> p = s.split(",");
 
 Graph g = Graph(p.elementAt(0), int.parse(p.elementAt(1)), p.elementAt(2), p.elementAt(3), double.parse(p.elementAt(4)), DateTime.parse(p.elementAt(5)));
 grafovi.add(g);
-print(g.value);
 }
 }
 
