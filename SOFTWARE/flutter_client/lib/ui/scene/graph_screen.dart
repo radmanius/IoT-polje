@@ -7,6 +7,10 @@ import 'package:pdp2022/ui/home/widget/view_list_widget.dart';
 import 'package:pdp2022/source_remote/repository/scene/model/view/view.dart';
 import 'package:pdp2022/source_remote/repository/scene/model/request.dart';
 import 'package:pdp2022/source_remote/repository/scene/model/graph.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+
+
 class GraphScreen extends HookConsumerWidget {
   const GraphScreen._(this.title, this.query,{Key? key}) : super(key: key);
 
@@ -35,7 +39,44 @@ final Request? query;
        child: (query!=null)?ref.watch(graphProvider(query)).maybeWhen(
               orElse: () => const CircularProgressIndicator(),
               failure: (e) => Text(e.toString()),
-              success:(graph)=>ListView(children:[for(Graph g in graph) Text(g.time.toString() +"     "+ g.value.toString())])
+              success:(graph)=>SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+             child: AspectRatio(
+      aspectRatio: 500,
+      child: LineChart(
+        LineChartData(
+            lineBarsData: [
+              LineChartBarData(
+                spots: (graph).map((point) => FlSpot(DateTime.parse(point.time.toString().substring(0,point.time.toString().length-2)).millisecondsSinceEpoch.toDouble(), point.value)).toList(),
+                isCurved: false,
+                dotData: FlDotData(
+                  show: false,
+                 ),
+              ),
+            ],
+          ),
+      ),
+              ),
+              )
+      
+              
+//               SingleChildScrollView(
+//   physics: const BouncingScrollPhysics(),
+//   scrollDirection: Axis.vertical,
+//   child:DataTable(
+//    columns: [
+//      DataColumn(label: Text('DATE')),
+//      DataColumn(label: Text('VALUE')),
+//    ],
+//   rows: [ for(Graph g in graph)
+//      DataRow(cells: [DataCell(Text(g.time.toString().substring(0,g.time.toString().length-2))), DataCell(Text(g.value.toString()))]),
+//    ],
+// )
+//               ),             
+              
+              
+              
+              //ListView(children:[for(Graph g in graph) Text(g.time.toString() +"     "+ g.value.toString())])
         ):const Text("nema grafa"),
       
       ),
