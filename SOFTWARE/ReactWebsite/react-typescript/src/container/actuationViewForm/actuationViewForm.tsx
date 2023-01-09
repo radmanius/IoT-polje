@@ -151,15 +151,13 @@ const ActuationViewForm = () => {
 
         let headersSubmitMap = {} as { [key: string]: string };
         headersSubmit.forEach(pair => {
-            if(pair[0] !== "")
-                headersSubmitMap[pair[0]] = pair[1];
+            if (pair[0] !== "") headersSubmitMap[pair[0]] = pair[1];
         });
 
         let headersDefaultMap = {} as { [key: string]: string };
-        
+
         headersDefault.forEach(pair => {
-            if (pair[0] !== "")
-                headersDefaultMap[pair[0]] = pair[1];
+            if (pair[0] !== "") headersDefaultMap[pair[0]] = pair[1];
         });
 
         newData = {
@@ -349,16 +347,16 @@ const ActuationViewForm = () => {
                                                                     }}
                                                                 />
                                                                 <Button
-                                                                icon="fa-sharp fa-solid fa-xmark"
-                                                                className="p-button-danger small-button"
-                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
-                                                                onClick={e => {
-                                                                    e.preventDefault();
-                                                                    let headersDefaultCopy = [...headersDefault];
-                                                                    headersDefaultCopy.splice(index, 1);
-                                                                    setHeadersDefault(headersDefaultCopy);
-                                                                }}
-                                                            />
+                                                                    icon="fa-sharp fa-solid fa-xmark"
+                                                                    className="p-button-danger small-button"
+                                                                    //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                    onClick={e => {
+                                                                        e.preventDefault();
+                                                                        let headersDefaultCopy = [...headersDefault];
+                                                                        headersDefaultCopy.splice(index, 1);
+                                                                        setHeadersDefault(headersDefaultCopy);
+                                                                    }}
+                                                                />
                                                             </span>
                                                         ))}
                                                     </div>
@@ -468,14 +466,14 @@ const ActuationViewForm = () => {
                                                                     }}
                                                                 />
                                                                 <Button
-                                                                icon="fa-sharp fa-solid fa-xmark"
-                                                                className="p-button-danger small-button"
-                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
-                                                                onClick={e => {
-                                                                    e.preventDefault();
-                                                                    let headersSubmitCopy = [...headersSubmit];
-                                                                    headersSubmitCopy.splice(index, 1);
-                                                                    setHeadersSubmit(headersSubmitCopy);
+                                                                    icon="fa-sharp fa-solid fa-xmark"
+                                                                    className="p-button-danger small-button"
+                                                                    //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                    onClick={e => {
+                                                                        e.preventDefault();
+                                                                        let headersSubmitCopy = [...headersSubmit];
+                                                                        headersSubmitCopy.splice(index, 1);
+                                                                        setHeadersSubmit(headersSubmitCopy);
                                                                     }}
                                                                 />
                                                             </span>
@@ -670,6 +668,11 @@ const ActuationViewForm = () => {
                                                     },
                                                 })
                                             }
+                                        />
+                                        <Button
+                                            label="Test"
+                                            icon="pi pi-exclamation-triangle"
+                                            onClick={() => {}}
                                         />
                                     </div>
                                 </form>

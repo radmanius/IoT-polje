@@ -33,7 +33,7 @@ const ActuationViewEditForm = () => {
 
     const fillHeadersDefault = () => {
         let newHeadersDefault = view?.form?.defaultValuesRequest?.headers;
-        let headersArray : any = [];
+        let headersArray: any = [];
         if (newHeadersDefault) {
             headersArray = Object.entries(newHeadersDefault);
         }
@@ -41,7 +41,7 @@ const ActuationViewEditForm = () => {
             headersArray = [["", ""]];
         }
         setHeadersDefault(headersArray);
-    }
+    };
 
     const fillHeadersSubmit = () => {
         let newHeadersSubmit = view?.form?.submitFormRequest?.headers;
@@ -53,7 +53,7 @@ const ActuationViewEditForm = () => {
             headersArray = [["", ""]];
         }
         setHeadersSubmit(headersArray);
-    }
+    };
 
     const handleAddNewActuationView = async (data: ActuationView) => {
         let newData = { ...data };
@@ -174,18 +174,16 @@ const ActuationViewEditForm = () => {
                 break;
             }
         }
-        
+
         let headersSubmitMap = {} as { [key: string]: string };
         headersSubmit.forEach(pair => {
-            if(pair[0] !== "")
-                headersSubmitMap[pair[0]] = pair[1];
+            if (pair[0] !== "") headersSubmitMap[pair[0]] = pair[1];
         });
 
         let headersDefaultMap = {} as { [key: string]: string };
-        
+
         headersDefault.forEach(pair => {
-            if (pair[0] !== "")
-                headersDefaultMap[pair[0]] = pair[1];
+            if (pair[0] !== "") headersDefaultMap[pair[0]] = pair[1];
         });
 
         newData = {
@@ -382,16 +380,16 @@ const ActuationViewEditForm = () => {
                                                                     }}
                                                                 />
                                                                 <Button
-                                                                icon="fa-sharp fa-solid fa-xmark"
-                                                                className="p-button-danger small-button"
-                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
-                                                                onClick={e => {
-                                                                    e.preventDefault();
-                                                                    let headersDefaultCopy = [...headersDefault];
-                                                                    headersDefaultCopy.splice(index, 1);
-                                                                    setHeadersDefault(headersDefaultCopy);
-                                                                }}
-                                                            />
+                                                                    icon="fa-sharp fa-solid fa-xmark"
+                                                                    className="p-button-danger small-button"
+                                                                    //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                    onClick={e => {
+                                                                        e.preventDefault();
+                                                                        let headersDefaultCopy = [...headersDefault];
+                                                                        headersDefaultCopy.splice(index, 1);
+                                                                        setHeadersDefault(headersDefaultCopy);
+                                                                    }}
+                                                                />
                                                             </span>
                                                         ))}
                                                     </div>
@@ -501,14 +499,14 @@ const ActuationViewEditForm = () => {
                                                                     }}
                                                                 />
                                                                 <Button
-                                                                icon="fa-sharp fa-solid fa-xmark"
-                                                                className="p-button-danger small-button"
-                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
-                                                                onClick={e => {
-                                                                    e.preventDefault();
-                                                                    let headersSubmitCopy = [...headersSubmit];
-                                                                    headersSubmitCopy.splice(index, 1);
-                                                                    setHeadersSubmit(headersSubmitCopy);
+                                                                    icon="fa-sharp fa-solid fa-xmark"
+                                                                    className="p-button-danger small-button"
+                                                                    //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                    onClick={e => {
+                                                                        e.preventDefault();
+                                                                        let headersSubmitCopy = [...headersSubmit];
+                                                                        headersSubmitCopy.splice(index, 1);
+                                                                        setHeadersSubmit(headersSubmitCopy);
                                                                     }}
                                                                 />
                                                             </span>
@@ -703,6 +701,13 @@ const ActuationViewEditForm = () => {
                                                     },
                                                 })
                                             }
+                                        />
+                                        <Button
+                                            label="Test"
+                                            icon="pi pi-exclamation-triangle"
+                                            onClick={() => {
+                                                //test method
+                                            }}
                                         />
                                     </div>
                                 </form>

@@ -37,7 +37,7 @@ const MeasurementViewEditForm = () => {
 
     const fillHeadersQuery = () => {
         let newHeadersQuery = view.query.headers;
-        let headersArray : any = [];
+        let headersArray: any = [];
         if (newHeadersQuery) {
             headersArray = Object.entries(newHeadersQuery);
         }
@@ -45,7 +45,7 @@ const MeasurementViewEditForm = () => {
             headersArray = [["", ""]];
         }
         setHeadersQuery(headersArray);
-    }
+    };
 
     const fillHeadersSubmit = () => {
         let newHeadersSubmit = view?.selectForm?.submitSelectionRequest?.headers;
@@ -57,7 +57,7 @@ const MeasurementViewEditForm = () => {
             headersArray = [["", ""]];
         }
         setHeadersSubmit(headersArray);
-    }
+    };
 
     const handleAddNewMeasurementView = async (data: MeasurementsView) => {
         let newData = { ...data };
@@ -196,18 +196,16 @@ const MeasurementViewEditForm = () => {
                 break;
             }
         }
-        
+
         let headersSubmitMap = {} as { [key: string]: string };
         headersSubmit.forEach(pair => {
-            if(pair[0] !== "")
-                headersSubmitMap[pair[0]] = pair[1];
+            if (pair[0] !== "") headersSubmitMap[pair[0]] = pair[1];
         });
 
         let headersQueryMap = {} as { [key: string]: string };
-        
+
         headersQuery.forEach(pair => {
-            if (pair[0] !== "")
-                headersQueryMap[pair[0]] = pair[1];
+            if (pair[0] !== "") headersQueryMap[pair[0]] = pair[1];
         });
 
         newData = {
@@ -381,17 +379,17 @@ const MeasurementViewEditForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <p className="headers">
-                                                            Headers:
-                                                            <Button
-                                                                icon="fa fa-plus"
-                                                                className="p-button-success"
-                                                                onClick={e => {
-                                                                    e.preventDefault();
-                                                                    let headersSubmitCopy = [...headersSubmit];
-                                                                    headersSubmitCopy.push(["", ""]);
-                                                                    setHeadersSubmit(headersSubmitCopy);
-                                                                }}
-                                                            />
+                                                        Headers:
+                                                        <Button
+                                                            icon="fa fa-plus"
+                                                            className="p-button-success"
+                                                            onClick={e => {
+                                                                e.preventDefault();
+                                                                let headersSubmitCopy = [...headersSubmit];
+                                                                headersSubmitCopy.push(["", ""]);
+                                                                setHeadersSubmit(headersSubmitCopy);
+                                                            }}
+                                                        />
                                                     </p>
                                                     <div>
                                                         {headersSubmit.map((header, index) => (
@@ -419,14 +417,14 @@ const MeasurementViewEditForm = () => {
                                                                     }}
                                                                 />
                                                                 <Button
-                                                                icon="fa-sharp fa-solid fa-xmark"
-                                                                className="p-button-danger small-button"
-                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
-                                                                onClick={e => {
-                                                                    e.preventDefault();
-                                                                    let headersSubmitCopy = [...headersSubmit];
-                                                                    headersSubmitCopy.splice(index, 1);
-                                                                    setHeadersSubmit(headersSubmitCopy);
+                                                                    icon="fa-sharp fa-solid fa-xmark"
+                                                                    className="p-button-danger small-button"
+                                                                    //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                    onClick={e => {
+                                                                        e.preventDefault();
+                                                                        let headersSubmitCopy = [...headersSubmit];
+                                                                        headersSubmitCopy.splice(index, 1);
+                                                                        setHeadersSubmit(headersSubmitCopy);
                                                                     }}
                                                                 />
                                                             </span>
@@ -650,17 +648,17 @@ const MeasurementViewEditForm = () => {
                                             render={({ input }) => (
                                                 <div>
                                                     <p className="headers">
-                                                            Headers:
-                                                            <Button
-                                                                icon="fa fa-plus"
-                                                                className="p-button-success"
-                                                                onClick={e => {
-                                                                    e.preventDefault();
-                                                                    let headersQueryCopy = [...headersQuery];
-                                                                    headersQueryCopy.push(["", ""]);
-                                                                    setHeadersQuery(headersQueryCopy);
-                                                                }}
-                                                            />
+                                                        Headers:
+                                                        <Button
+                                                            icon="fa fa-plus"
+                                                            className="p-button-success"
+                                                            onClick={e => {
+                                                                e.preventDefault();
+                                                                let headersQueryCopy = [...headersQuery];
+                                                                headersQueryCopy.push(["", ""]);
+                                                                setHeadersQuery(headersQueryCopy);
+                                                            }}
+                                                        />
                                                     </p>
                                                     <div>
                                                         {headersQuery.map((header, index) => (
@@ -688,14 +686,14 @@ const MeasurementViewEditForm = () => {
                                                                     }}
                                                                 />
                                                                 <Button
-                                                                icon="fa-sharp fa-solid fa-xmark"
-                                                                className="p-button-danger small-button"
-                                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
-                                                                onClick={e => {
-                                                                    e.preventDefault();
-                                                                    let headersQueryCopy = [...headersQuery];
-                                                                    headersQueryCopy.splice(index, 1);
-                                                                    setHeadersQuery(headersQueryCopy);
+                                                                    icon="fa-sharp fa-solid fa-xmark"
+                                                                    className="p-button-danger small-button"
+                                                                    //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                                    onClick={e => {
+                                                                        e.preventDefault();
+                                                                        let headersQueryCopy = [...headersQuery];
+                                                                        headersQueryCopy.splice(index, 1);
+                                                                        setHeadersQuery(headersQueryCopy);
                                                                     }}
                                                                 />
                                                             </span>
@@ -856,6 +854,13 @@ const MeasurementViewEditForm = () => {
                                                     },
                                                 })
                                             }
+                                        />
+                                        <Button
+                                            label="Test"
+                                            icon="pi pi-exclamation-triangle"
+                                            onClick={() => {
+                                                //test method
+                                            }}
                                         />
                                     </div>
                                 </form>
