@@ -33,7 +33,7 @@ public class Inputs {
 	}
 
 	public Inputs(InputsDTO inputs) {
-//		this.inputType = inputs.getInputType();
+		this.inputType = inputs.getInputType();
 		this.name = inputs.getName();
 		this.title = inputs.getTitle();
 		//this(0, inputs.getInputType(), inputs.getName(), inputs.getTitle());

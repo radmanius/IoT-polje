@@ -3,6 +3,7 @@ package hr.fer.tel.server.rest.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -81,6 +82,7 @@ public class SceneController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("given key does not exist in database");
 
 		}
+
 
 	}
 
@@ -172,6 +174,8 @@ public class SceneController {
 		}
 
 		Scene scene = new Scene(sceneDTO);
+		
+		ResponseEntity<String> httpResponse = null;
 
 		for (View tmp : scene.getViews()) {
 			if (tmp instanceof ActuationView) {
@@ -192,17 +196,24 @@ public class SceneController {
 
 				RestTemplate template = new RestTemplate();
 				HttpHeaders headers = new HttpHeaders();
-				headers.setContentType(new MediaType("Authorization", "bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ"));
-				HttpEntity request = new HttpEntity(payload1);
 				
-				ResponseEntity<String> httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
-				
+				for(Entry<String, String> ent : headers1.entrySet()) {
+					headers.set(ent.getKey(), ent.getValue());
+				}
+				HttpEntity<String> request = new HttpEntity<>(payload1, headers);
+				try {
+					httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
+				} catch (RestClientException e) {
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+				}
 				
 				if (httpResponse.getStatusCode() != HttpStatus.OK) {
 					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
 				}
+				
+				
+				
 
-				return ResponseEntity.status(HttpStatus.OK).body("lala");
 				// Provjeri je li valid, poslat upit kao u postmanu, ako vrati podatke onda radi
 
 				
@@ -221,17 +232,22 @@ public class SceneController {
 
 				RestTemplate template = new RestTemplate();
 				HttpHeaders headers = new HttpHeaders();
-				headers.setContentType(new MediaType("Authorization", "bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ"));
-
-				HttpEntity request = new HttpEntity(payload1, headers);
-				ResponseEntity<String> httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
 				
+				for(Entry<String, String> ent : headers1.entrySet()) {
+					headers.set(ent.getKey(), ent.getValue());
+				}
+				HttpEntity<String> request = new HttpEntity<>(payload1, headers);
+				try {
+					httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
+				} catch (RestClientException e) {
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+					
+				}
 				
 				if (httpResponse.getStatusCode() != HttpStatus.OK) {
 					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
 				}
 
-				return ResponseEntity.status(HttpStatus.OK).body("lal");
 				// Provjeri je li valid, poslat upit kao u postmanu, ako vrati podatke onda radi
 
 				// Provjeri je li valid
@@ -239,7 +255,7 @@ public class SceneController {
 			}
 
 		}
-		return ResponseEntity.status(HttpStatus.OK).body("lala");
+		return ResponseEntity.status(HttpStatus.OK).body("true");
 
 	}
 
