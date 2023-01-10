@@ -58,9 +58,9 @@ public class Scene {
 //	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, orphanRemoval = true)
 //	@JsonManagedReference
 //	private List<Key> keys = new ArrayList<>(); // keys required for specific scene
-	
-	@Column(name="keyNames")
-	@ElementCollection(targetClass=String.class)
+
+	@Column(name = "keyNames")
+	@ElementCollection(targetClass = String.class)
 	private List<String> keyNames = new ArrayList<>();
 
 	public Scene() {
@@ -76,7 +76,7 @@ public class Scene {
 		this.tags = tags;
 		this.views = views;
 		this.roles = roles;
-		this.keyNames= keyNames;
+		this.keyNames = keyNames;
 
 		for (Tag tag : tags) {
 			tag.setScene(this);
@@ -95,7 +95,7 @@ public class Scene {
 
 	public Scene(SceneDTO dto) {
 		this.id = dto.getId();
-		this.keyNames = dto.getKeys();   //.stream().map(key -> new Key(new KeyDTO(key))).toList();
+		this.keyNames = dto.getKeys(); // .stream().map(key -> new Key(new KeyDTO(key))).toList();
 
 		this.layout = new Layout(dto.getLayout());
 
@@ -217,12 +217,11 @@ public class Scene {
 //	public void setKeys(List<Key> keys) {
 //		this.keys = keys;
 //	}
-	
-	
+
 	public List<String> getKeyNames() {
 		return keyNames;
 	}
-	
+
 	public void setKeyNames(List<String> keyNames) {
 		this.keyNames = keyNames;
 	}
@@ -239,87 +238,68 @@ public class Scene {
 				+ ", keys=" + keyNames + "]";
 	}
 
-
 	public static List<Scene> generateScenes() {
 		// http://52.16.186.190/downloads/documentation/data_frame_guide.pdf
 		Key key1 = new Key("influxFer",
-				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
-				true);
+				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", true);
 		String key = "influxFer";
 		String keyTwo = "influxFerit";
-		
+
 		Scene sceneFerPaprika = new Scene("FER paprika", "sva mjerenja", new Layout("LIST"),
 				"https://www.biobio.hr/upload/catalog/product/20433/10513.jpg",
 				List.of(new Tag("fer"), new Tag("paprika"), new Tag("svi senzori")),
 				List.of(sap01BatView(), sap01HumView(), sap01LwView(), sap01ParView(), sap01PresView(),
-						sap01SoiltcView(), sap01SoilcView(), sap01TcView(), 
-						createActView()),
-				List.of(new Role("fer")),
-				List.of(key, keyTwo));
+						sap01SoiltcView(), sap01SoilcView(), sap01TcView(), createActView()),
+				List.of(new Role("fer")), List.of(key, keyTwo));
 
 		Scene sceneFerRajcica = new Scene("FER rajčica", "sva mjerenja", new Layout("LIST"),
 				"https://cdn.agroklub.com/upload/images/plant-specie/thumb/rajcica32-300x300.jpg",
 				List.of(new Tag("fer"), new Tag("rajčica"), new Tag("svi senzori")),
 				List.of(sap02AneView(), sap02BatView(), sap02HumView(), sap02LwView(), sap02Plv1View(), sap02Plv2View(),
 						sap02Plv3View(), sap02PresView(), sap02SoiltcView(), sap02SoilbView(), sap02SoilcView(),
-						sap02TcView(), sap02WvView(),
-						createActView1()),
-				List.of(new Role("fer")),
-				List.of(key));
-		
+						sap02TcView(), sap02WvView(), createActView1()),
+				List.of(new Role("fer")), List.of(key));
+
 		Key key2 = new Key("influxFer",
-				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
-				true);
-		
+				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", true);
+
 		Key key3 = new Key("influxFer",
-				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
-				true);
-		
+				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", true);
+
 		Scene sceneFerTlo = new Scene("FER-ov vrt - tlo", "mjerenja tla", new Layout("LIST"),
 				"https://d177d01a9shl9j.cloudfront.net/online-soil/main-page-images/_859xAUTO_crop_center-center_none/what-is-topsoil.jpg",
-				List.of(new Tag("fer"), new Tag("tlo")),
-				List.of(sap01SoiltcView(), sap01SoilcView(), sap02SoiltcView(), sap02SoilbView(), sap02SoilcView(),
-						createActView2()),
-				List.of(new Role("fer")),
-				List.of(key));
+				List.of(new Tag("fer"), new Tag("tlo")), List.of(sap01SoiltcView(), sap01SoilcView(), sap02SoiltcView(),
+						sap02SoilbView(), sap02SoilcView(), createActView2()),
+				List.of(new Role("fer")), List.of(key));
 
 		Scene sceneFerZrak = new Scene("FER-ov vrt - zrak", "mjerenja zraka", new Layout("LIST"),
 				"https://www.ccacoalition.org/sites/default/files/styles/full_content_width/public/fields/event_mainimage/cloud2.jpg?itok=XV1BpKIw&timestamp=1587998743",
 				List.of(new Tag("fer"), new Tag("zrak")),
 				List.of(sap01HumView(), sap01ParView(), sap01PresView(), sap01TcView(), sap02AneView(), sap02HumView(),
 						sap02Plv1View(), sap02Plv2View(), sap02Plv3View(), sap02PresView(), sap02TcView(),
-						sap02WvView(),
-						createActView3()),
-				List.of(new Role("fer")),
-				List.of(key));
-		
+						sap02WvView(), createActView3()),
+				List.of(new Role("fer")), List.of(key));
+
 		Key key4 = new Key("influxFer",
-				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
-				true);
+				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", true);
 
 		Scene sceneFerTempTlo = new Scene("FER-ov vrt - temp. tla", "mjerenja temperature tla", new Layout("LIST"),
 				"https://www.gardeningknowhow.com/wp-content/uploads/2012/05/spring-temperatures-1024x768.jpg",
-				List.of(new Tag("fer"), new Tag("tlo"), new Tag("temperatura")), 
-				List.of(sap01TcView(), sap02TcView(),
-						createActView4()),
-				List.of(new Role("fer")),
-				List.of(key));
-		
+				List.of(new Tag("fer"), new Tag("tlo"), new Tag("temperatura")),
+				List.of(sap01TcView(), sap02TcView(), createActView4()), List.of(new Role("fer")), List.of(key));
+
 		Key key5 = new Key("influxFer",
-				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
-				true);
+				"bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", true);
 
 		Scene sceneFerit1 = new Scene("FERIT - 1", "sva mjerenja", new Layout("LIST"),
 				"https://www.no-tillfarmer.com/ext/resources/images/2009/02/Corn_DT_3211396_soft.jpg",
-				List.of(new Tag("ferit")), List.of(ferit1airTemperature(), ferit1atmosphericPressure(),
-						ferit1BatteryVolatage(), ferit1Irradiation(), ferit1RelativeHumidity(),
-						createActView5()),
-				List.of(new Role("ferit")),
-				List.of(keyTwo));
-		
+				List.of(new Tag("ferit")),
+				List.of(ferit1airTemperature(), ferit1atmosphericPressure(), ferit1BatteryVolatage(),
+						ferit1Irradiation(), ferit1RelativeHumidity(), createActView5()),
+				List.of(new Role("ferit")), List.of(keyTwo));
+
 		Key key6 = new Key("influxFerit",
-				"kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==",
-				true);
+				"kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==", true);
 
 		Scene sceneFerit2 = new Scene("FERIT - 2", "sva mjerenja", new Layout("LIST"),
 				"https://www.no-tillfarmer.com/ext/resources/images/2009/02/Corn_DT_3211396_soft.jpg",
@@ -327,14 +307,11 @@ public class Scene {
 				List.of(ferit2airPressure(), ferit2BateryLevel(), ferit2Humidity(), ferit2Illumination(),
 						ferit2lightIntensityR(), ferit2lightIntensityS(), ferit2lightIntensityT(),
 						ferit2lightIntensityU(), ferit2lightIntensityV(), ferit2lightIntensityW(), ferit2temperature(),
-						ferit2WhiteIllumination(),
-						createActView6()),
-				List.of(new Role("ferit")),
-				List.of(keyTwo));
-		
+						ferit2WhiteIllumination(), createActView6()),
+				List.of(new Role("ferit")), List.of(keyTwo));
+
 		Key key7 = new Key("influxFerit",
-				"kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==",
-				true);
+				"kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==", true);
 
 		return List.of(sceneFerPaprika, sceneFerRajcica, sceneFerTlo, sceneFerZrak, sceneFerTempTlo, sceneFerit1,
 				sceneFerit2);
@@ -410,9 +387,26 @@ public class Scene {
 
 	private static View createFeritView(String viewTitle, String measurementUnit, String measurementType,
 			String sensorId) {
-		return new MesurmentView(viewTitle, "series", measurementUnit, new MeasurmentSelectForm(null, // submitSelectionRequest
-				new StringInput("string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")				
-				),
+		return new MesurmentView(viewTitle, "series", measurementUnit, new MeasurmentSelectForm(new Request("POST", // method
+				"https://iotat.tel.fer.hr:57786/api/v2/query?org=fer", // uri
+				Map.of( // Map<String, String> headers,
+						"Authorization", "Token {{influxFer}}", "Accept", "application/csv", "Content-type",
+						"application/vnd.flux"),
+				String.format(
+						"""
+								from(bucket:"telegraf")
+								|> range(start: {{startTimeISO}}, stop: {{endTimeISO}})
+								|> filter(fn: (r) => r._measurement == "%s" and r.id_wasp == "%s" and r._field == "value")
+								|> drop(columns: ["_start", "_stop", "_field", "host", "id"])
+								|> window(every: {{aggregationWindow}})
+								|> mean()
+								|> duplicate(column: "_stop", as: "_time")
+								|> drop(columns: ["_start", "_stop"])
+								""",
+						measurementType, sensorId) // payload
+		), // submitSelectionRequest
+				new StringInput(
+						"string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")),
 				new Request("POST", // method
 						"https://iotat.tel.fer.hr:57786/api/v2/query?org=ferit", // uri
 						Map.of( // Map<String, String> headers,
@@ -519,9 +513,24 @@ public class Scene {
 
 	private static View createFerView(String viewTitle, String measurementUnit, String measurementType,
 			String sensorId) {
-		return new MesurmentView(viewTitle, "series", measurementUnit, new MeasurmentSelectForm(null, // submitSelectionRequest
-				new StringInput("string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")				
-				),
+		return new MesurmentView(viewTitle, "series", measurementUnit, new MeasurmentSelectForm(new Request("POST", // method
+				"https://iotat.tel.fer.hr:57786/api/v2/query?org=fer", // uri
+				Map.of( // Map<String, String> headers,
+						"Authorization", "Token {{influxFer}}", "Accept", "application/csv", "Content-type",
+						"application/vnd.flux"),
+				String.format("""
+						from(bucket:"telegraf")
+						|> range(start: {{startTimeISO}}, stop: {{endTimeISO}})
+						|> filter(fn: (r) => r._measurement == "%s" and r.id_wasp == "%s" and r._field == "value")
+						|> drop(columns: ["_start", "_stop", "_field", "host", "id"])
+						|> window(every: {{aggregationWindow}})
+						|> mean()
+						|> duplicate(column: "_stop", as: "_time")
+						|> drop(columns: ["_start", "_stop"])
+						""", measurementType, sensorId) // payload
+		), // submitSelectionRequest
+				new StringInput(
+						"string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")),
 				new Request("POST", // method
 						"https://iotat.tel.fer.hr:57786/api/v2/query?org=fer", // uri
 						Map.of( // Map<String, String> headers,
@@ -561,8 +570,8 @@ public class Scene {
 	}
 
 	public static MeasurmentSelectForm createMeasurementForm() {
-		MeasurmentSelectForm selectForm1 = new MeasurmentSelectForm(createRequestQuery(), 
-				new StringInput("string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\""));
+		MeasurmentSelectForm selectForm1 = new MeasurmentSelectForm(createRequestQuery(), new StringInput("string",
+				"period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\""));
 		return selectForm1;
 	}
 
@@ -625,7 +634,6 @@ public class Scene {
 		return view2;
 	}
 
-	
 	// actuation forme
 	public static ActuationForm createActuationForm() {
 		ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
@@ -646,29 +654,27 @@ public class Scene {
 	}
 
 	public static ActuationForm createActuationForm3() {
-		ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(), 
+		ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
 				new IntegerInput("int", "integer", "brojač", 5, 0, 1000));
 		return actForm1;
 	}
 
 	public static ActuationForm createActuationForm4() {
-		ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(), 
+		ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
 				new StringInput("string", "str", "text", "lala", "......"));
 		return actForm1;
 	}
 
 	public static ActuationForm createActuationForm5() {
-		ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(), 
+		ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
 				new SubmitButton("samouništenje", "veliki crveni gumb"));
 		return actForm1;
 	}
 
 	public static ActuationForm createActuationForm6() {
-		ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(), 
+		ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
 				new TimeInput("vrijeme", "podne", "sredina dana", "12:00"));
 		return actForm1;
 	}
-
-
 
 }

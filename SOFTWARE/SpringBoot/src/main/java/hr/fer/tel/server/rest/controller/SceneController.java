@@ -8,8 +8,13 @@ import javax.annotation.security.RolesAllowed;
 
 import hr.fer.tel.server.rest.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +24,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -40,7 +47,6 @@ public class SceneController {
 	@Autowired
 	private KeyService keyService;
 
-	
 	@PutMapping("/scene/{id}")
 	public ResponseEntity<?> sceneEdit(@RequestBody String model, @PathVariable("id") Long id)
 			throws JsonMappingException, JsonProcessingException {
@@ -77,7 +83,7 @@ public class SceneController {
 		}
 
 	}
-	
+
 	@PutMapping("/scene2/{id}")
 	@RolesAllowed("iot-read")
 	public ResponseEntity<?> sceneEdit2(@RequestBody String model, @PathVariable("id") Long id)
@@ -117,8 +123,7 @@ public class SceneController {
 	}
 
 	@PostMapping("/scene")
-	public ResponseEntity<?> addEdit(@RequestBody String model)
-			throws JsonMappingException, JsonProcessingException {
+	public ResponseEntity<?> addEdit(@RequestBody String model) throws JsonMappingException, JsonProcessingException {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
@@ -151,10 +156,10 @@ public class SceneController {
 
 		}
 	}
-	
-	@PostMapping("check/scene")
-	public ResponseEntity<String> checkPayload(@RequestBody String model){
-		
+
+	@PostMapping("/check/scene")
+	public ResponseEntity<String> checkPayload(@RequestBody String model) throws RestClientException {
+
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
 
@@ -165,62 +170,82 @@ public class SceneController {
 		} catch (Exception igornable) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		
+
 		Scene scene = new Scene(sceneDTO);
-		
-		for(View tmp: scene.getViews()) {
-			if(tmp instanceof ActuationView) {
+
+		for (View tmp : scene.getViews()) {
+			if (tmp instanceof ActuationView) {
 				tmp = (ActuationView) tmp;
 				ActuationForm form = ((ActuationView) tmp).getForm();
-				
-				
+
 //	             "headers": {
 //	                    "Accept": "application/csv",
 //	                    "Content-type": "application/vnd.flux",
 //	                    "Authorization": "Token {{influxFerit}}"
 //	                },
-				//influxFerit je key, trebaš ga dohvatit iz keyservica
-				
+				// influxFerit je key, trebaš ga dohvatit iz keyservica
+
 				Request req1 = form.getDefaultValuesRequest();
 				Map<String, String> headers1 = req1.getHeaders();
 				String payload1 = req1.getPayload();
 				String uri1 = req1.getUri();
+
+				RestTemplate template = new RestTemplate();
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentType(new MediaType("Authorization", "bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ"));
+				HttpEntity request = new HttpEntity(payload1);
 				
-				//Provjeri je li valid, poslat upit kao u postmanu, ako vrati podatke onda radi
+				ResponseEntity<String> httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
 				
 				
-				Request req2 = form.getSubmitFormRequest();
-				Map<String, String> headers2 = req2.getHeaders();
-				String payload2 = req2.getPayload();
-				String uri2 = req2.getUri();
+				if (httpResponse.getStatusCode() != HttpStatus.OK) {
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+				}
+
+				return ResponseEntity.status(HttpStatus.OK).body("lala");
+				// Provjeri je li valid, poslat upit kao u postmanu, ako vrati podatke onda radi
+
 				
-				//Provjeri je li valid
+
+				// Provjeri je li valid
 			}
-			
-			if(tmp instanceof MesurmentView) {
+
+			if (tmp instanceof MesurmentView) {
 				tmp = (MesurmentView) tmp;
-				MeasurmentSelectForm form = ((MesurmentView) tmp).getSelectForm();
+				MeasurmentSelectForm form2 = ((MesurmentView) tmp).getSelectForm();
+
+				Request req1 = form2.getSubmitSelectionRequest();
+				Map<String, String> headers1 = req1.getHeaders();
+				String payload1 = req1.getPayload();
+				String uri1 = req1.getUri();
+
+				RestTemplate template = new RestTemplate();
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentType(new MediaType("Authorization", "bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ"));
+
+				HttpEntity request = new HttpEntity(payload1, headers);
+				ResponseEntity<String> httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
 				
-				Request req = form.getSubmitSelectionRequest();
-				Map<String, String> headers1 = req.getHeaders();
-				String payload1 = req.getPayload();
-				String uri1 = req.getUri();
 				
-				//Provjeri je li valid
-				
-				
-				
+				if (httpResponse.getStatusCode() != HttpStatus.OK) {
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+				}
+
+				return ResponseEntity.status(HttpStatus.OK).body("lal");
+				// Provjeri je li valid, poslat upit kao u postmanu, ako vrati podatke onda radi
+
+				// Provjeri je li valid
+
 			}
-			
+
 		}
-		
-		return null;
+		return ResponseEntity.status(HttpStatus.OK).body("lala");
+
 	}
-	
+
 	@PostMapping("/scene2")
 	@RolesAllowed("iot-read")
-	public ResponseEntity<?> addEdit2(@RequestBody String model)
-			throws JsonMappingException, JsonProcessingException {
+	public ResponseEntity<?> addEdit2(@RequestBody String model) throws JsonMappingException, JsonProcessingException {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
@@ -287,8 +312,8 @@ public class SceneController {
 	public ResponseEntity<SceneDTO> getScene(@PathVariable("id") Long id) {
 
 		Scene scene = service.probaGetById(id);
-		
-		if(scene == null) {
+
+		if (scene == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 
@@ -296,14 +321,14 @@ public class SceneController {
 
 		return ResponseEntity.status(HttpStatus.OK).body(sceneDTO);
 	}
-	
+
 	@GetMapping("/scene2/{id}")
 	@RolesAllowed("iot-read")
 	public ResponseEntity<SceneDTO> getScene2(@PathVariable("id") Long id) {
 
 		Scene scene = service.getByIdAuthorize(id);
-		
-		if(scene == null) {
+
+		if (scene == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 
@@ -329,7 +354,7 @@ public class SceneController {
 		return ResponseEntity.status(HttpStatus.OK).body("deleted scene with id: " + id);
 
 	}
-	
+
 	@DeleteMapping("/scene2/{id}")
 	@RolesAllowed("iot-read")
 	public ResponseEntity<String> deleteScene2(@PathVariable("id") Long id) {
@@ -348,7 +373,5 @@ public class SceneController {
 		return ResponseEntity.status(HttpStatus.OK).body("deleted scene with id: " + id);
 
 	}
-	
-
 
 }
