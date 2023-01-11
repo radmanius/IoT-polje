@@ -344,8 +344,8 @@ public class Scene {
               "https://iotat.tel.fer.hr:58443/gdd/search", //uri
               Map.of( //Map<String, String> headers,
                   "Authorization", "Token {{influxFerit}}",
-                  "Accept", "application/csv",
-                  "Content-type", "application/vnd.flux"
+                  "Accept", "application/json",
+                  "Content-type", "application/json"
                   ),
               String.format("""
               {
