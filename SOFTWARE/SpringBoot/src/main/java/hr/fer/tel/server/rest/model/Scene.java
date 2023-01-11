@@ -19,7 +19,6 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import hr.fer.tel.server.rest.dto.ActuationViewDTO;
-import hr.fer.tel.server.rest.dto.KeyDTO;
 import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
 import hr.fer.tel.server.rest.dto.SceneDTO;
 
@@ -248,16 +247,16 @@ public class Scene {
 		Scene sceneFerPaprika = new Scene("FER paprika", "sva mjerenja", new Layout("LIST"),
 				"https://www.biobio.hr/upload/catalog/product/20433/10513.jpg",
 				List.of(new Tag("fer"), new Tag("paprika"), new Tag("svi senzori")),
-				List.of(sap01BatView(), sap01HumView(), sap01LwView(), sap01ParView(), sap01PresView(),
-						sap01SoiltcView(), sap01SoilcView(), sap01TcView(), createActView()),
+				List.of(sap01TcView(), sap01HumView(), sap01ParView(), sap01SoiltcView(), sap01SoilcView(), sap01LwView(), sap01PresView(),
+				    sap01BatView(), createActView()),
 				List.of(new Role("fer")), List.of(key, keyTwo));
 
 		Scene sceneFerRajcica = new Scene("FER rajčica", "sva mjerenja", new Layout("LIST"),
 				"https://cdn.agroklub.com/upload/images/plant-specie/thumb/rajcica32-300x300.jpg",
 				List.of(new Tag("fer"), new Tag("rajčica"), new Tag("svi senzori")),
-				List.of(sap02AneView(), sap02BatView(), sap02HumView(), sap02LwView(), sap02Plv1View(), sap02Plv2View(),
-						sap02Plv3View(), sap02PresView(), sap02SoiltcView(), sap02SoilbView(), sap02SoilcView(),
-						sap02TcView(), sap02WvView(), createActView1()),
+				List.of(sap02TcView(), sap02HumView(), sap02SoiltcView(), sap02SoilbView(), sap02SoilcView(), sap02LwView(), sap02PresView(),
+				    sap02AneView(), sap02Plv1View(), sap02Plv2View(), sap02Plv3View(), sap02WvView(),
+				    sap02BatView(), createActView1()),
 				List.of(new Role("fer")), List.of(key));
 
 		Key key2 = new Key("influxFer",
@@ -268,16 +267,18 @@ public class Scene {
 
 		Scene sceneFerTlo = new Scene("FER-ov vrt - tlo", "mjerenja tla", new Layout("LIST"),
 				"https://d177d01a9shl9j.cloudfront.net/online-soil/main-page-images/_859xAUTO_crop_center-center_none/what-is-topsoil.jpg",
-				List.of(new Tag("fer"), new Tag("tlo")), List.of(sap01SoiltcView(), sap01SoilcView(), sap02SoiltcView(),
-						sap02SoilbView(), sap02SoilcView(), createActView2()),
+				List.of(new Tag("fer"), new Tag("tlo")),
+				List.of(sap01SoiltcView(), sap01SoilcView(),
+				    sap02SoiltcView(), sap02SoilbView(), sap02SoilcView(), createActView2()),
 				List.of(new Role("fer")), List.of(key));
 
 		Scene sceneFerZrak = new Scene("FER-ov vrt - zrak", "mjerenja zraka", new Layout("LIST"),
 				"https://www.ccacoalition.org/sites/default/files/styles/full_content_width/public/fields/event_mainimage/cloud2.jpg?itok=XV1BpKIw&timestamp=1587998743",
 				List.of(new Tag("fer"), new Tag("zrak")),
-				List.of(sap01HumView(), sap01ParView(), sap01PresView(), sap01TcView(), sap02AneView(), sap02HumView(),
-						sap02Plv1View(), sap02Plv2View(), sap02Plv3View(), sap02PresView(), sap02TcView(),
-						sap02WvView(), createActView3()),
+				List.of(sap01TcView(), sap01HumView(), sap01ParView(), sap01PresView(),
+				    sap02TcView(), sap02HumView(), sap02PresView(),
+				    sap02AneView(), sap02WvView(), sap02Plv1View(), sap02Plv2View(), sap02Plv3View(),
+						createActView3()),
 				List.of(new Role("fer")), List.of(key));
 
 		Key key4 = new Key("influxFer",
@@ -294,8 +295,8 @@ public class Scene {
 		Scene sceneFerit1 = new Scene("FERIT - 1", "sva mjerenja", new Layout("LIST"),
 				"https://www.no-tillfarmer.com/ext/resources/images/2009/02/Corn_DT_3211396_soft.jpg",
 				List.of(new Tag("ferit")),
-				List.of(ferit1airTemperature(), ferit1atmosphericPressure(), ferit1BatteryVolatage(),
-						ferit1Irradiation(), ferit1RelativeHumidity(), createActView5()),
+				List.of(ferit1airTemperature(), ferit1RelativeHumidity(), ferit1Irradiation(), ferit1atmosphericPressure(),
+				    ferit1BatteryVolatage(), createActView5()),
 				List.of(new Role("ferit")), List.of(keyTwo));
 
 		Key key6 = new Key("influxFerit",
@@ -304,18 +305,64 @@ public class Scene {
 		Scene sceneFerit2 = new Scene("FERIT - 2", "sva mjerenja", new Layout("LIST"),
 				"https://www.no-tillfarmer.com/ext/resources/images/2009/02/Corn_DT_3211396_soft.jpg",
 				List.of(new Tag("ferit")),
-				List.of(ferit2airPressure(), ferit2BateryLevel(), ferit2Humidity(), ferit2Illumination(),
-						ferit2lightIntensityR(), ferit2lightIntensityS(), ferit2lightIntensityT(),
-						ferit2lightIntensityU(), ferit2lightIntensityV(), ferit2lightIntensityW(), ferit2temperature(),
-						ferit2WhiteIllumination(), createActView6()),
+				List.of(ferit2temperature(), ferit2Humidity(), ferit2Illumination(),
+                    ferit2lightIntensityR(), ferit2lightIntensityS(), ferit2lightIntensityT(),
+                    ferit2lightIntensityU(), ferit2lightIntensityV(), ferit2lightIntensityW(),
+                    ferit2WhiteIllumination(), ferit2airPressure(),
+                    ferit2BateryLevel(), createActView6()),
 				List.of(new Role("ferit")), List.of(keyTwo));
 
 		Key key7 = new Key("influxFerit",
 				"kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==", true);
 
+		Scene gddFerit = new Scene(
+	          "FERIT - GDD",
+	          "GDD na FERIT-ovim stranicama",
+	          new Layout("LIST"),
+	          "https://assets-global.website-files.com/6022ede4a244183c63eed50b/6032f3f0569821be08437652_GDD.png",
+	          List.of(new Tag("ferit")),
+	          List.of(gddFerit1()),
+	          List.of(new Role("ferit")),
+	          List.of());
+
 		return List.of(sceneFerPaprika, sceneFerRajcica, sceneFerTlo, sceneFerZrak, sceneFerTempTlo, sceneFerit1,
-				sceneFerit2);
+				sceneFerit2, gddFerit);
 	}
+
+    private static View gddFerit1() {
+      return new MesurmentView(
+          "GDD test",
+          "series",
+          "GDU",
+          new MeasurmentSelectForm(
+              null, // submitSelectionRequest
+              // TODO ovo nije dobro
+              new StringInput("period", "Period", "period u kojem se prikazuje graf", "", null)
+          ),
+          new Request(
+              "POST", //method
+              "https://iotat.tel.fer.hr:58443/gdd/search", //uri
+              Map.of( //Map<String, String> headers,
+                  "Authorization", "Token {{influxFerit}}",
+                  "Accept", "application/csv",
+                  "Content-type", "application/vnd.flux"
+                  ),
+              String.format("""
+              {
+                sensorId: "0004A30B0021EF31",
+                startDate: "2022-08-01",
+                endDate: "2022-08-31",
+                minTemp: 10,
+                maxTemp: 30,
+                cumulative: true,
+              }
+              """) //payload
+          ),
+          new DataExtractor("json", "$[*].date", "$[*].value")
+       );
+
+    }
+
 
 	private static View ferit2WhiteIllumination() {
 		return createFeritView("Bijela iluminacija", "lm*m−2", "whiteIllumination", "BE7A00000000304A");
@@ -366,7 +413,7 @@ public class Scene {
 	}
 
 	private static View ferit1RelativeHumidity() {
-		return createFeritView("Vlažnost zraka", "%", "relativeHumidit", "0004A30B0021EF31");
+		return createFeritView("Vlaga zraka", "%", "relativeHumidit", "0004A30B0021EF31");
 	}
 
 	private static View ferit1Irradiation() {
@@ -484,11 +531,11 @@ public class Scene {
 	}
 
 	private static View sap01SoilcView() {
-		return createFerView("Vlažnost tla", "Frequency", "SOIL_C", "SAP01");
+		return createFerView("Vlaga tla", "Frequency", "SOIL_C", "SAP01");
 	}
 
 	private static View sap01SoiltcView() {
-		return createFerView("Temperatura zemlje", "C", "SOILTC", "SAP01");
+		return createFerView("Temperatura tla", "C", "SOILTC", "SAP01");
 	}
 
 	private static View sap01PresView() {
@@ -504,7 +551,7 @@ public class Scene {
 	}
 
 	private static View sap01HumView() {
-		return createFerView("Vlaga sraka", "%", "HUM", "SAP01");
+		return createFerView("Vlaga zraka", "%", "HUM", "SAP01");
 	}
 
 	private static View sap01BatView() {
