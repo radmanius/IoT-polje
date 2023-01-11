@@ -349,12 +349,12 @@ public class Scene {
                   ),
               String.format("""
               {
-                sensorId: "0004A30B0021EF31",
-                startDate: "2022-08-01",
-                endDate: "2022-08-31",
-                minTemp: 10,
-                maxTemp: 30,
-                cumulative: true,
+                "sensorId": "0004A30B0021EF31",
+                "startDate": "2022-08-01",
+                "endDate": "2022-08-31",
+                "minTemp": 10,
+                "maxTemp": 30,
+                "cumulative": true,
               }
               """) //payload
           ),
