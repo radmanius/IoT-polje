@@ -354,7 +354,7 @@ public class Scene {
                 "endDate": "2022-08-31",
                 "minTemp": 10,
                 "maxTemp": 30,
-                "cumulative": true,
+                "cumulative": true
               }
               """) //payload
           ),
