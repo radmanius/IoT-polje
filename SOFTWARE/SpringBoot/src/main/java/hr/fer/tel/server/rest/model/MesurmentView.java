@@ -2,9 +2,7 @@ package hr.fer.tel.server.rest.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-
 import javax.persistence.OneToOne;
-
 
 import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
 
@@ -18,25 +16,25 @@ import hr.fer.tel.server.rest.dto.MesurmentViewDTO;
 public class MesurmentView extends View{
 
 
-	
+
 //    @Id
 //    @GeneratedValue
 //	private long id;
-	
+
 	private String measurementUnit;
-	
+
     @OneToOne(cascade = CascadeType.ALL)
 	private MeasurmentSelectForm selectForm;
-	
+
     @OneToOne(cascade = CascadeType.ALL)
 	private Request query;
-	
+
     @OneToOne(cascade = CascadeType.ALL)
 	private DataExtractor responseExtracting;
 
-	public MesurmentView(String title, String viewType, String measurementUnit, MeasurmentSelectForm selectForm,
+	public MesurmentView(String title, String description, String viewType, String measurementUnit, MeasurmentSelectForm selectForm,
 			Request query, DataExtractor responseExtracting) {
-		super(0, title, viewType);
+		super(0, title, description, viewType);
 //		setTitle(title);
 //		setViewType(viewType);
 		this.measurementUnit = measurementUnit;
@@ -48,10 +46,10 @@ public class MesurmentView extends View{
 	public MesurmentView() {
 		super();
 	}
-	
+
 	public MesurmentView(MesurmentViewDTO dto) {
-		super(0, dto.getTitle(), dto.getViewType());
-		
+		super(0, dto.getTitle(), dto.getDescription(), dto.getViewType());
+
 		this.measurementUnit = dto.getMeasurementUnit();
 		this.selectForm = new MeasurmentSelectForm(dto.getSelectForm());
 		this.query = new Request(dto.getQuery());
@@ -113,5 +111,5 @@ public class MesurmentView extends View{
 	public void setResponseExtracting(DataExtractor responseExtracting) {
 		this.responseExtracting = responseExtracting;
 	}
-	
+
 }
