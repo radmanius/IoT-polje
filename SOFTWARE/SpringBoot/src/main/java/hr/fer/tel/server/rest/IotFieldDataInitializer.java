@@ -32,14 +32,10 @@ import hr.fer.tel.server.rest.model.TimeInput;
 import hr.fer.tel.server.rest.model.View;
 import hr.fer.tel.server.rest.repository.dao.SceneRepository;
 import hr.fer.tel.server.rest.service.KeyService;
-import hr.fer.tel.server.rest.service.SceneService;
 
 @Component
 public class IotFieldDataInitializer implements CommandLineRunner {
 	protected final Log logger = LogFactory.getLog(getClass());
-
-	@Autowired
-	private SceneService sceneService;
 
 	@Autowired
 	private KeyService keyService;
@@ -179,8 +175,10 @@ public class IotFieldDataInitializer implements CommandLineRunner {
         "GDU",
         new MeasurmentSelectForm(
             null, // submitSelectionRequest
-            // TODO ovo nije dobro
-            new StringInput("period", "Period", "period u kojem se prikazuje graf", "", null)
+            List.of(
+                new DateInput("Početak", "startDate", "Datum početka grafa", null),
+                new DateInput("Kraj", "endDate", "Datum kraja grafa", null)
+            )
         ),
         new Request(
             "POST", //method
@@ -193,8 +191,9 @@ public class IotFieldDataInitializer implements CommandLineRunner {
             String.format("""
             {
               "sensorId": "0004A30B0021EF31",
-              "startDate": "2022-08-01",
-              "endDate": "2022-08-31",
+              "plantingDate": "2022-08-01",
+              "startDate": "{{startDate}}",
+              "endDate": "{{endDate}}",
               "minTemp": 10,
               "maxTemp": 30,
               "cumulative": true
@@ -295,8 +294,8 @@ public class IotFieldDataInitializer implements CommandLineRunner {
                               """,
                       measurementType, sensorId) // payload
       ), // submitSelectionRequest
-              new StringInput(
-                      "string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")),
+          List.of(new StringInput(
+                      "string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\""))),
               new Request("POST", // method
                       "https://iotat.tel.fer.hr:57786/api/v2/query?org=ferit", // uri
                       Map.of( // Map<String, String> headers,
@@ -419,8 +418,8 @@ public class IotFieldDataInitializer implements CommandLineRunner {
                       |> drop(columns: ["_start", "_stop"])
                       """, measurementType, sensorId) // payload
       ), // submitSelectionRequest
-              new StringInput(
-                      "string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")),
+      List.of(new StringInput(
+                      "string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\""))),
               new Request("POST", // method
                       "https://iotat.tel.fer.hr:57786/api/v2/query?org=fer", // uri
                       Map.of( // Map<String, String> headers,
@@ -460,8 +459,8 @@ public class IotFieldDataInitializer implements CommandLineRunner {
   }
 
   public static MeasurmentSelectForm createMeasurementForm() {
-      MeasurmentSelectForm selectForm1 = new MeasurmentSelectForm(createRequestQuery(), new StringInput("string",
-              "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\""));
+      MeasurmentSelectForm selectForm1 = new MeasurmentSelectForm(createRequestQuery(),
+          List.of(new StringInput("string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")));
       return selectForm1;
   }
 
@@ -527,43 +526,43 @@ public class IotFieldDataInitializer implements CommandLineRunner {
   // actuation forme
   private static ActuationForm createActuationForm() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new BooleanInput("biti ili ne biti", "Hamlet", "Mišolovka", true));
+              List.of(new BooleanInput("biti ili ne biti", "Hamlet", "Mišolovka", true)));
       return actForm1;
   }
 
   private static ActuationForm createActuationForm1() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new DateInput("datum", "rođendan", "petak", "1.1.2023."));
+          List.of(new DateInput("datum", "rođendan", "petak", "1.1.2023.")));
       return actForm1;
   }
 
   private static ActuationForm createActuationForm2() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new DecimalInput("decimal", "float", "realni broj", 0.5, 0.0, 100.0));
+          List.of(new DecimalInput("decimal", "float", "realni broj", 0.5, 0.0, 100.0)));
       return actForm1;
   }
 
   private static ActuationForm createActuationForm3() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new IntegerInput("int", "integer", "brojač", 5, 0, 1000));
+          List.of(new IntegerInput("int", "integer", "brojač", 5, 0, 1000)));
       return actForm1;
   }
 
   private static ActuationForm createActuationForm4() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new StringInput("string", "str", "text", "lala", "......"));
+          List.of(new StringInput("string", "str", "text", "lala", "......")));
       return actForm1;
   }
 
   private static ActuationForm createActuationForm5() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new SubmitButton("samouništenje", "veliki crveni gumb"));
+          List.of(new SubmitButton("samouništenje", "veliki crveni gumb")));
       return actForm1;
   }
 
   private static ActuationForm createActuationForm6() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new TimeInput("vrijeme", "podne", "sredina dana", "12:00"));
+          List.of(new TimeInput("vrijeme", "podne", "sredina dana", "12:00")));
       return actForm1;
   }
 
