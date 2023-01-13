@@ -52,20 +52,20 @@ public class KeysController {
 	}
   
 	@DeleteMapping("/key/{token}")
-	public ResponseEntity<String> deleteKey(@PathVariable("token") String token){
+	public ResponseEntity<String> deleteKey(@PathVariable("token") String keyName){
 		
-		if(keyService.checkIfExists(token) == false) {
+		if(keyService.checkIfExists(keyName) == false) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		
-		boolean isDeleted = keyService.ProbaDeleteKeyById(token);
+		boolean isDeleted = keyService.ProbaDeleteKeyById(keyName);
 		
 		//Check if deleted
 		if(isDeleted == false) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
-		return ResponseEntity.status(HttpStatus.OK).body(token);
+		return ResponseEntity.status(HttpStatus.OK).body(keyName);
 
 	}
 	
@@ -88,21 +88,21 @@ public class KeysController {
 
 	}
 	
-	@PutMapping("/key/{token}")
-	public ResponseEntity<String> editKey(@RequestBody String newToken, @PathVariable("token") String oldToken){
+	@PutMapping("/key/{oldKeyName}")
+	public ResponseEntity<String> editKey(@RequestBody String newKeyToken, @PathVariable("oldKeyName") String oldKeyName){
 		
 		//Check if scene exists
-		if(keyService.checkIfExists(oldToken) == false) {
+		if(keyService.checkIfExists(oldKeyName) == false) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		
-		boolean isEdited = keyService.editKey(oldToken, newToken);
+		boolean isEdited = keyService.editKey(oldKeyName, newKeyToken);
 		
 		if(isEdited == false) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 
-		return ResponseEntity.status(HttpStatus.OK).body(newToken);
+		return ResponseEntity.status(HttpStatus.OK).body(newKeyToken);
 	}
 	
 	@RolesAllowed("iot-read")

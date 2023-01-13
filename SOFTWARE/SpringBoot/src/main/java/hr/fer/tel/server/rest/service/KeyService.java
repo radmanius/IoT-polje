@@ -24,11 +24,11 @@ public class KeyService {
 		return keyRepository.findById(value);
 	}
 
-	public boolean checkIfExists(String token) {
+	public boolean checkIfExists(String keyName) {
 		List<Key> keys = keyRepository.findAll();
 
 		for (Key key : keys) {
-			if (key.getName().equals(token)) {
+			if (key.getName().equals(keyName)) {
 				return true;
 			}
 		}
@@ -45,13 +45,13 @@ public class KeyService {
 		return keyRepository.findAll().stream().map(key -> key.getName()).toList();
 	}
 
-	public boolean ProbaDeleteKeyById(String token) {
+	public boolean ProbaDeleteKeyById(String deleteKeyName) {
 
 		List<Key> keys = keyRepository.findAll();
 		String keyName = null;
 
 		for (Key key : keys) {
-			if (key.getValue().equals(token)) {
+			if (key.getName().equals(deleteKeyName)) {
 				keyName = key.getName();
 
 				for (Scene scene : sceneService.getAllScenes()) {
@@ -76,12 +76,12 @@ public class KeyService {
 		return key;
 	}
 
-	public boolean editKey(String oldToken, String newToken) {
+	public boolean editKey(String oldKeyName, String newToken) {
 
 		List<Key> keys = keyRepository.findAll();
 
 		for (Key key : keys) {
-			if (key.getName().equals(oldToken)) {
+			if (key.getName().equals(oldKeyName)) {
 				key.setValue(newToken);
 				keyRepository.save(key);
 			}
