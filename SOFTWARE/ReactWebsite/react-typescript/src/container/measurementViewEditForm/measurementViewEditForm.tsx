@@ -15,6 +15,7 @@ import keycloak from "keycloak";
 import { showToastMessage } from "redux/actions/toastMessageActions";
 import { useDispatch } from "react-redux";
 import { InputTextarea } from 'primereact/inputtextarea';
+import Popup from "container/testViewPopup/testViewPopup";
 
 interface ILocationState {
     shortScene: IScene;
@@ -35,6 +36,11 @@ const MeasurementViewEditForm = () => {
 
     const [headersQuery, setHeadersQuery] = useState<Array<Array<string>>>([["", ""]]);
     const [headersSubmit, setHeadersSubmit] = useState<Array<Array<string>>>([["", ""]]);
+
+    const [popup, setPopup] = useState<Boolean>(false);
+    const [option, setOption] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
+    const [spremnaScena, setSpremnaScena] = useState<IScene>(scene);
 
     const fillHeadersQuery = () => {
         let newHeadersQuery = view.query.headers;
@@ -243,8 +249,30 @@ const MeasurementViewEditForm = () => {
 
     const handleAddNewMeasurementView = async (data: MeasurementsView) => {
         const assembledViews = assembleViews(data);
+        setSpremnaScena({ ...scene, views: assembledViews })
+        try {
+            await testScene(spremnaScena, keycloak.token ?? "");
+        } catch (error) {
+            console.log(error);
+            setOption("submit");
+            setMessage("Scene is not valid.");
+            setPopup(true);
+            dispatch(showToastMessage("Scene is not valid.", "error"));
+            return;
+        }
+
         try {
             await editScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            dispatch(showToastMessage("Measurement view successfully edited", "success"));
+            navigate(-1);
+        } catch (error) {
+            dispatch(showToastMessage("Unable to edit current measurement view.", "error"));
+        }
+    };
+
+    const addNewMeasurementView = async () => {
+        try {
+            await editScene(spremnaScena, keycloak.token ?? "");
             dispatch(showToastMessage("Measurement view successfully edited", "success"));
             navigate(-1);
         } catch (error) {
@@ -258,6 +286,10 @@ const MeasurementViewEditForm = () => {
             await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             dispatch(showToastMessage("Scene is valid", "success"));
         } catch (error) {
+            setPopup(true);
+            setOption("test");
+            setMessage("Scene is not valid.");
+            
             dispatch(showToastMessage("Scene is not valid.", "error"));
         }
     };
@@ -269,6 +301,13 @@ const MeasurementViewEditForm = () => {
 
     return (
         <>
+            <Popup
+                trigger={popup}
+                setTrigger={setPopup}
+                option={option}
+                message={message}
+                submit={addNewMeasurementView}
+            />
             <Button
                 label="Natrag"
                 className="measurement-view-back-button"

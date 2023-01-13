@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { showToastMessage } from "redux/actions/toastMessageActions";
 import { useState } from "react";
 import { InputTextarea } from "primereact/inputtextarea";
+import Popup from "container/testViewPopup/testViewPopup";
 
 interface ILocationState {
     shortScene: IScene;
@@ -29,6 +30,11 @@ const ActuationViewForm = () => {
 
     const [headersDefault, setHeadersDefault] = useState<Array<Array<string>>>([["Authorization", ""], ["Content-Type", ""]]);
     const [headersSubmit, setHeadersSubmit] = useState<Array<Array<string>>>([["Authorization", ""], ["Content-Type", ""]]);
+
+    const [popup, setPopup] = useState<Boolean>(false);
+    const [option, setOption] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
+    const [spremnaScena, setSpremnaScena] = useState<IScene>(scene);
 
     const assembleViews = (data: ActuationView) => {
         let newData = { ...data };
@@ -195,10 +201,34 @@ const ActuationViewForm = () => {
 
 
     const handleAddNewActuationView = async (data: ActuationView) => {
-        let assembledViews = assembleViews(data);
+
+        const assembledViews = assembleViews(data);
+        setSpremnaScena({ ...scene, views: assembledViews })
+
+        try {
+            await testScene(spremnaScena, keycloak.token ?? "");
+        } catch (error) {
+            console.log(error);
+            setOption("submit");
+            setMessage("Scene is not valid.");
+            setPopup(true);
+            dispatch(showToastMessage("Scene is not valid.", "error"));
+            return;
+        }
+
         try {
             await editScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
-            dispatch(showToastMessage("Actuation view successfully created", "success"));
+            dispatch(showToastMessage("Measurement view successfully created", "success"));
+            navigate(-1);
+        } catch (error) {
+            dispatch(showToastMessage("Error while adding new actuation view.", "error"));
+        }
+    };
+
+    const addNewActuationView = async () => {
+        try {
+            await editScene(spremnaScena, keycloak.token ?? "");
+            dispatch(showToastMessage("Measurement view successfully created", "success"));
             navigate(-1);
         } catch (error) {
             dispatch(showToastMessage("Error while adding new actuation view.", "error"));
@@ -210,13 +240,25 @@ const ActuationViewForm = () => {
         try {
             await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             dispatch(showToastMessage("Scene is valid", "success"));
+
         } catch (error) {
+            setPopup(true);
+            setOption("test");
+            setMessage("Scene is not valid.");
+
             dispatch(showToastMessage("Scene is not valid.", "error"));
         }
     };
 
     return (
         <>
+            <Popup
+                trigger={popup}
+                setTrigger={setPopup}
+                option={option}
+                message={message}
+                submit={addNewActuationView}
+            />
             <Button
                 label="Natrag"
                 className="actuation-view-back-button"

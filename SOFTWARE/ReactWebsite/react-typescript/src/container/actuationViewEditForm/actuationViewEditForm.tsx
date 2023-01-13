@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { showToastMessage } from "redux/actions/toastMessageActions";
 import { useEffect, useState } from "react";
 import { InputTextarea } from "primereact/inputtextarea";
+import Popup from "container/testViewPopup/testViewPopup";
 
 interface ILocationState {
     shortScene: IScene;
@@ -31,6 +32,11 @@ const ActuationViewEditForm = () => {
 
     const [headersDefault, setHeadersDefault] = useState<Array<Array<string>>>([["", ""]]);
     const [headersSubmit, setHeadersSubmit] = useState<Array<Array<string>>>([["", ""]]);
+    
+    const [popup, setPopup] = useState<Boolean>(false);
+    const [option, setOption] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
+    const [spremnaScena, setSpremnaScena] = useState<IScene>(scene);
 
     const fillHeadersDefault = () => {
         let newHeadersDefault = view?.form?.defaultValuesRequest?.headers;
@@ -223,9 +229,31 @@ const ActuationViewEditForm = () => {
 
     const handleAddNewActuationView = async (data: ActuationView) => {
         const assembledViews = assembleViews(data);
+        setSpremnaScena({ ...scene, views: assembledViews })
+
+        try {
+            await testScene(spremnaScena, keycloak.token ?? "");
+        } catch (error) {
+            console.log(error);
+            setOption("submit");
+            setMessage("Scene is not valid.");
+            setPopup(true);
+            dispatch(showToastMessage("Scene is not valid.", "error"));
+            return;
+        }
 
         try {
             await editScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            dispatch(showToastMessage("Actuation view successfully edited", "success"));
+            navigate(-1);
+        } catch (error) {
+            dispatch(showToastMessage("Unable to edit current actuation view.", "error"));
+        }
+    };
+
+    const addNewActuationView = async () => {
+        try {
+            await editScene(spremnaScena, keycloak.token ?? "");
             dispatch(showToastMessage("Actuation view successfully edited", "success"));
             navigate(-1);
         } catch (error) {
@@ -239,6 +267,10 @@ const ActuationViewEditForm = () => {
             await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             dispatch(showToastMessage("Scene is valid", "success"));
         } catch (error) {
+            setPopup(true);
+            setOption("test");
+            setMessage("Scene is not valid.");
+
             dispatch(showToastMessage("Scene is not valid.", "error"));
         }
     };
@@ -250,6 +282,14 @@ const ActuationViewEditForm = () => {
 
     return (
         <>
+            <Popup
+                trigger={popup}
+                setTrigger={setPopup}
+                option={option}
+                message={message}
+                submit={addNewActuationView}
+            />
+
             <Button
                 label="Natrag"
                 className="actuation-view-back-button"
