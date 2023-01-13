@@ -43,3 +43,12 @@ export const deleteScene = async (id: number, token: string) => {
         }
     });
 }
+
+export const testScene = async (scene: any, token: string) => {
+    const response = await axios.post("/check/scene", scene, {
+        headers: {
+            'Authorization': "Bearer " + token,
+        }
+    });
+    return response.data;
+};

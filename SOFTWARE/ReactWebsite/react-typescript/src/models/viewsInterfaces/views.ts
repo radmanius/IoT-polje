@@ -12,9 +12,17 @@ export const initActuationView : ActuationView = {
     form: {
         defaultValuesRequest: {
             method: "GET",
+            headers: {
+            "Authorization": "",
+            "Content-Type": "",
+            },
         },
         submitFormRequest: {
             method: "POST",
+            headers: {
+            "Authorization": "",
+            "Content-Type": "",
+            },
         },
         inputs: {
             inputType: "BOOLEAN",
@@ -27,6 +35,10 @@ export const initMeasurementView: MeasurementsView = {
     viewType: "single",
     query: {
         method: "GET",
+        headers: {
+            "Authorization": "",
+            "Content-Type": "",
+        },
     },
     selectForm: {
         inputs: {
@@ -34,6 +46,10 @@ export const initMeasurementView: MeasurementsView = {
         },
         submitSelectionRequest: {
             method: "GET",
+            headers: {
+            "Authorization": "",
+            "Content-Type": "",
+            },
         },
     },
     responseExtracting: {},
