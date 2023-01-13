@@ -61,7 +61,7 @@ public class ActuationFormDTO {
 			req2 = null;
 		}
 		else {
-			req2 = RequestDTO.of(form.getDefaultValuesRequest());
+			req2 = RequestDTO.of(form.getSubmitFormRequest());
 		}
 
 		return new ActuationFormDTO(req1, req2, InputsDTO.of(form.getInputs()));

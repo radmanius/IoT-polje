@@ -32,7 +32,7 @@ public class ApplicationStartupRunner implements CommandLineRunner {
 			keyService.ProbaAdd(keyFer);
 			keyService.ProbaAdd(keyFerit);
 
-			sceneService.generate();
+//			sceneService.generate();
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -16,4 +16,6 @@ public interface SceneRepository extends JpaRepository<Scene, Long> {
     
     @Query(value="SELECT scene.* FROM ROLE INNER JOIN scene ON role.scene_id = scene.id WHERE role.name IN ?1 AND scene.id = ?2", nativeQuery = true)
     Scene dobijSceneSOvimRolamaiID(Collection<String> roles, Long findID);
+    
+    
 }

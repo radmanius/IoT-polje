@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import hr.fer.tel.server.rest.model.Key;
+import hr.fer.tel.server.rest.model.Scene;
 import hr.fer.tel.server.rest.repository.dao.KeyRepository;
 
 @Service
@@ -16,7 +17,6 @@ public class KeyService {
 	@Autowired
 	private KeyRepository keyRepository;
 
-	@SuppressWarnings("unused")
 	@Autowired
 	private SceneService sceneService;
 
@@ -24,11 +24,11 @@ public class KeyService {
 		return keyRepository.findById(value);
 	}
 
-	public boolean checkIfExists(String token) {
+	public boolean checkIfExists(String keyName) {
 		List<Key> keys = keyRepository.findAll();
 
 		for (Key key : keys) {
-			if (key.getValue().equals(token)) {
+			if (key.getName().equals(keyName)) {
 				return true;
 			}
 		}
@@ -40,17 +40,28 @@ public class KeyService {
 	public Set<Key> getAll() {
 		return keyRepository.findAll().stream().collect(Collectors.toSet());
 	}
-	
-	public List<String> getAllKeyNames(){
+
+	public List<String> getAllKeyNames() {
 		return keyRepository.findAll().stream().map(key -> key.getName()).toList();
 	}
 
-	public boolean ProbaDeleteKeyById(String token) {
+	public boolean ProbaDeleteKeyById(String deleteKeyName) {
 
 		List<Key> keys = keyRepository.findAll();
+		String keyName = null;
 
 		for (Key key : keys) {
-			if (key.getValue().equals(token)) {
+			if (key.getName().equals(deleteKeyName)) {
+				keyName = key.getName();
+
+				for (Scene scene : sceneService.getAllScenes()) {
+					if (scene.getKeyNames().contains(keyName)) {
+						scene.getKeyNames().remove(keyName);
+//						sceneService.editSceneAuthorize(scene.getId(), scene);
+						sceneService.probaEditScene(scene.getId(), scene);
+					}
+				}
+
 				keyRepository.delete(key);
 			}
 		}
@@ -65,12 +76,12 @@ public class KeyService {
 		return key;
 	}
 
-	public boolean editKey(String oldToken, String newToken) {
+	public boolean editKey(String oldKeyName, String newToken) {
 
 		List<Key> keys = keyRepository.findAll();
 
 		for (Key key : keys) {
-			if (key.getValue().equals(oldToken)) {
+			if (key.getName().equals(oldKeyName)) {
 				key.setValue(newToken);
 				keyRepository.save(key);
 			}
