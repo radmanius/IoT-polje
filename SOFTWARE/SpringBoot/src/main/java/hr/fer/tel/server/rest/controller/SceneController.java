@@ -182,13 +182,6 @@ public class SceneController {
 				tmp = (ActuationView) tmp;
 				ActuationForm form = ((ActuationView) tmp).getForm();
 
-//	             "headers": {
-//	                    "Accept": "application/csv",
-//	                    "Content-type": "application/vnd.flux",
-//	                    "Authorization": "Token {{influxFerit}}"
-//	                },
-				// influxFerit je key, trebaš ga dohvatit iz keyservica
-
 				Request req1 = form.getDefaultValuesRequest();
 				Map<String, String> headers1 = req1.getHeaders();
 				String payload1 = req1.getPayload();
@@ -204,11 +197,11 @@ public class SceneController {
 				try {
 					httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
 				} catch (RestClientException e) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 				}
 				
 				if (httpResponse.getStatusCode() != HttpStatus.OK) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(httpResponse.getBody());
 				}
 				
 			}
@@ -232,12 +225,12 @@ public class SceneController {
 				try {
 					httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
 				} catch (RestClientException e) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 					
 				}
 				
 				if (httpResponse.getStatusCode() != HttpStatus.OK) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(httpResponse.getBody());
 				}
 
 			}
