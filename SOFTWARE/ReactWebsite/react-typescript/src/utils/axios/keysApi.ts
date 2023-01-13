@@ -23,6 +23,7 @@ export const editKey = async (key: IKey, token: string) => {
     const response = await axios.put("/key2/" + key.name, key.value, {
         headers: {
             'Authorization': "Bearer " + token,
+            "Content-Type": "text/plain"
         }
     });
     return response.data as any;

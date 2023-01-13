@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { editScene } from "utils/axios/scenesApi";
+import { editScene, testScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
 import { Dropdown } from "primereact/dropdown";
 import "./measurementViewEditForm.scss";
@@ -14,6 +14,7 @@ import { viewInputsOptions } from "models/viewsInterfaces/inputs";
 import keycloak from "keycloak";
 import { showToastMessage } from "redux/actions/toastMessageActions";
 import { useDispatch } from "react-redux";
+import { InputTextarea } from 'primereact/inputtextarea';
 
 interface ILocationState {
     shortScene: IScene;
@@ -59,7 +60,7 @@ const MeasurementViewEditForm = () => {
         setHeadersSubmit(headersArray);
     };
 
-    const handleAddNewMeasurementView = async (data: MeasurementsView) => {
+    const assembleViews = (data: MeasurementsView) => {
         let newData = { ...data };
         if (dataFormat === "csv") {
             newData = {
@@ -237,13 +238,27 @@ const MeasurementViewEditForm = () => {
                 }
             }
         });
+        return views;
+    };
 
+    const handleAddNewMeasurementView = async (data: MeasurementsView) => {
+        const assembledViews = assembleViews(data);
         try {
-            await editScene({ ...scene, views: views }, keycloak.token ?? "");
+            await editScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             dispatch(showToastMessage("Measurement view successfully edited", "success"));
             navigate(-1);
         } catch (error) {
             dispatch(showToastMessage("Unable to edit current measurement view.", "error"));
+        }
+    };
+
+    const handleTest = async (data: MeasurementsView) => {
+        let assembledViews = assembleViews(data);
+        try {
+            await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            dispatch(showToastMessage("Scene is valid", "success"));
+        } catch (error) {
+            dispatch(showToastMessage("Scene is not valid.", "error"));
         }
     };
 
@@ -441,7 +456,8 @@ const MeasurementViewEditForm = () => {
                                                         <p className="payload">Payload:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
+                                                        <InputTextarea
+                                                            rows={6}
                                                             id="selectForm.submitSelectionRequest.payload"
                                                             className="scene-field-form"
                                                             {...input}
@@ -710,7 +726,8 @@ const MeasurementViewEditForm = () => {
                                                         <p className="payload">Payload:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
+                                                        <InputTextarea
+                                                            rows={6}
                                                             id="query.payload"
                                                             className="scene-field-form"
                                                             {...input}
@@ -847,19 +864,22 @@ const MeasurementViewEditForm = () => {
                                         />
                                         <Button
                                             label="Odustani"
-                                            onClick={() =>
-                                                navigate(PAGE_ROUTES.SpecificSceneView, {
-                                                    state: {
-                                                        shortScene: scene,
-                                                    },
-                                                })
+                                            onClick={(e) => {
+                                                    e.preventDefault();
+                                                    navigate(PAGE_ROUTES.SpecificSceneView, {
+                                                        state: {
+                                                            shortScene: scene,
+                                                        },
+                                                    })
+                                                }
                                             }
                                         />
                                         <Button
                                             label="Test"
                                             icon="pi pi-exclamation-triangle"
-                                            onClick={() => {
-                                                //test method
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                handleTest(values);
                                             }}
                                         />
                                     </div>

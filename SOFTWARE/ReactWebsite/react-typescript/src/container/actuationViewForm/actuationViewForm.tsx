@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Field, Form } from "react-final-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { editScene } from "utils/axios/scenesApi";
+import { editScene, testScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
 import { Dropdown } from "primereact/dropdown";
 
@@ -14,6 +14,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import { useDispatch } from "react-redux";
 import { showToastMessage } from "redux/actions/toastMessageActions";
 import { useState } from "react";
+import { InputTextarea } from "primereact/inputtextarea";
 
 interface ILocationState {
     shortScene: IScene;
@@ -29,7 +30,7 @@ const ActuationViewForm = () => {
     const [headersDefault, setHeadersDefault] = useState<Array<Array<string>>>([["Authorization", ""], ["Content-Type", ""]]);
     const [headersSubmit, setHeadersSubmit] = useState<Array<Array<string>>>([["Authorization", ""], ["Content-Type", ""]]);
 
-    const handleAddNewActuationView = async (data: ActuationView) => {
+    const assembleViews = (data: ActuationView) => {
         let newData = { ...data };
         switch (data.form.inputs?.inputType) {
             case "BOOLEAN": {
@@ -189,12 +190,28 @@ const ActuationViewForm = () => {
                 }
             }
         });
+        return views;
+    };
+
+
+    const handleAddNewActuationView = async (data: ActuationView) => {
+        let assembledViews = assembleViews(data);
         try {
-            await editScene({ ...scene, views: views }, keycloak.token ?? "");
+            await editScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             dispatch(showToastMessage("Actuation view successfully created", "success"));
             navigate(-1);
         } catch (error) {
             dispatch(showToastMessage("Error while adding new actuation view.", "error"));
+        }
+    };
+
+    const handleTest = async (data: ActuationView) => {
+        let assembledViews = assembleViews(data);
+        try {
+            await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            dispatch(showToastMessage("Scene is valid", "success"));
+        } catch (error) {
+            dispatch(showToastMessage("Scene is not valid.", "error"));
         }
     };
 
@@ -217,6 +234,7 @@ const ActuationViewForm = () => {
                     <div className="form-fields-container">
                         <Form
                             onSubmit={(data: ActuationView) => handleAddNewActuationView(data)}
+                            onChange={(data: any) => console.log(data)}
                             initialValues={initActuationView}
                             render={({ handleSubmit, values }) => (
                                 <form
@@ -371,7 +389,8 @@ const ActuationViewForm = () => {
                                                         <p className="payload">Payload:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
+                                                        <InputTextarea
+                                                            rows={6}
                                                             id="form.defaultValuesRequest.payload"
                                                             className="scene-field-form"
                                                             {...input}
@@ -490,7 +509,8 @@ const ActuationViewForm = () => {
                                                         <p className="payload">Payload:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
+                                                        <InputTextarea
+                                                            rows={6}
                                                             id="form.submitFormRequest.payload"
                                                             className="scene-field-form"
                                                             {...input}
@@ -661,18 +681,24 @@ const ActuationViewForm = () => {
                                         />
                                         <Button
                                             label="Odustani"
-                                            onClick={() =>
-                                                navigate(PAGE_ROUTES.SpecificSceneView, {
-                                                    state: {
-                                                        shortScene: scene,
-                                                    },
-                                                })
+                                            onClick={(e) => {
+                                                    e.preventDefault();
+                                                    navigate(PAGE_ROUTES.SpecificSceneView, {
+                                                        state: {
+                                                            shortScene: scene,
+                                                        },
+                                                    })
+                                                }
                                             }
                                         />
                                         <Button
                                             label="Test"
                                             icon="pi pi-exclamation-triangle"
-                                            onClick={() => {}}
+                                            type="button"
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                handleTest(values);
+                                            }}
                                         />
                                     </div>
                                 </form>
