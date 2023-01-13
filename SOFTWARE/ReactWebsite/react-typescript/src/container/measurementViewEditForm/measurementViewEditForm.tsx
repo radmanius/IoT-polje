@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { editScene } from "utils/axios/scenesApi";
+import { editScene, testScene } from "utils/axios/scenesApi";
 import { PAGE_ROUTES } from "utils/paths";
 import { Dropdown } from "primereact/dropdown";
 import "./measurementViewEditForm.scss";
@@ -14,6 +14,8 @@ import { viewInputsOptions } from "models/viewsInterfaces/inputs";
 import keycloak from "keycloak";
 import { showToastMessage } from "redux/actions/toastMessageActions";
 import { useDispatch } from "react-redux";
+import { InputTextarea } from 'primereact/inputtextarea';
+import Popup from "container/testViewPopup/testViewPopup";
 
 interface ILocationState {
     shortScene: IScene;
@@ -34,6 +36,11 @@ const MeasurementViewEditForm = () => {
 
     const [headersQuery, setHeadersQuery] = useState<Array<Array<string>>>([["", ""]]);
     const [headersSubmit, setHeadersSubmit] = useState<Array<Array<string>>>([["", ""]]);
+
+    const [popup, setPopup] = useState<Boolean>(false);
+    const [option, setOption] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
+    const [spremnaScena, setSpremnaScena] = useState<IScene>(scene);
 
     const fillHeadersQuery = () => {
         let newHeadersQuery = view.query.headers;
@@ -59,7 +66,7 @@ const MeasurementViewEditForm = () => {
         setHeadersSubmit(headersArray);
     };
 
-    const handleAddNewMeasurementView = async (data: MeasurementsView) => {
+    const assembleViews = (data: MeasurementsView) => {
         let newData = { ...data };
         if (dataFormat === "csv") {
             newData = {
@@ -237,13 +244,53 @@ const MeasurementViewEditForm = () => {
                 }
             }
         });
+        return views;
+    };
+
+    const handleAddNewMeasurementView = async (data: MeasurementsView) => {
+        const assembledViews = assembleViews(data);
+        setSpremnaScena({ ...scene, views: assembledViews })
+        try {
+            await testScene(spremnaScena, keycloak.token ?? "");
+        } catch (error) {
+            console.log(error);
+            setOption("submit");
+            setMessage("Scene is not valid.");
+            setPopup(true);
+            dispatch(showToastMessage("Scene is not valid.", "error"));
+            return;
+        }
 
         try {
-            await editScene({ ...scene, views: views }, keycloak.token ?? "");
+            await editScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             dispatch(showToastMessage("Measurement view successfully edited", "success"));
             navigate(-1);
         } catch (error) {
             dispatch(showToastMessage("Unable to edit current measurement view.", "error"));
+        }
+    };
+
+    const addNewMeasurementView = async () => {
+        try {
+            await editScene(spremnaScena, keycloak.token ?? "");
+            dispatch(showToastMessage("Measurement view successfully edited", "success"));
+            navigate(-1);
+        } catch (error) {
+            dispatch(showToastMessage("Unable to edit current measurement view.", "error"));
+        }
+    };
+
+    const handleTest = async (data: MeasurementsView) => {
+        let assembledViews = assembleViews(data);
+        try {
+            await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            dispatch(showToastMessage("Scene is valid", "success"));
+        } catch (error) {
+            setPopup(true);
+            setOption("test");
+            setMessage("Scene is not valid.");
+            
+            dispatch(showToastMessage("Scene is not valid.", "error"));
         }
     };
 
@@ -254,6 +301,13 @@ const MeasurementViewEditForm = () => {
 
     return (
         <>
+            <Popup
+                trigger={popup}
+                setTrigger={setPopup}
+                option={option}
+                message={message}
+                submit={addNewMeasurementView}
+            />
             <Button
                 label="Natrag"
                 className="measurement-view-back-button"
@@ -396,7 +450,7 @@ const MeasurementViewEditForm = () => {
                                                             <span className="headerRow">
                                                                 <InputText
                                                                     id="selectForm.submitSelectionRequest.headers.key"
-                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    placeholder="Key"
                                                                     className="scene-field-form-key"
                                                                     value={headersSubmit[index][0]}
                                                                     onChange={e => {
@@ -407,7 +461,7 @@ const MeasurementViewEditForm = () => {
                                                                 />
                                                                 <InputText
                                                                     id="selectForm.submitSelectionRequest.headers.value"
-                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    placeholder="Value"
                                                                     className="scene-field-form-value"
                                                                     value={headersSubmit[index][1]}
                                                                     onChange={e => {
@@ -441,7 +495,8 @@ const MeasurementViewEditForm = () => {
                                                         <p className="payload">Payload:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
+                                                        <InputTextarea
+                                                            rows={6}
                                                             id="selectForm.submitSelectionRequest.payload"
                                                             className="scene-field-form"
                                                             {...input}
@@ -665,7 +720,7 @@ const MeasurementViewEditForm = () => {
                                                             <span className="headerRow">
                                                                 <InputText
                                                                     id="selectForm.query.headers.key"
-                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    placeholder="Key"
                                                                     className="scene-field-form-key"
                                                                     value={headersQuery[index][0]}
                                                                     onChange={e => {
@@ -676,7 +731,7 @@ const MeasurementViewEditForm = () => {
                                                                 />
                                                                 <InputText
                                                                     id="selectForm.query.headers.value"
-                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    placeholder="Value"
                                                                     className="scene-field-form-value"
                                                                     value={headersQuery[index][1]}
                                                                     onChange={e => {
@@ -710,7 +765,8 @@ const MeasurementViewEditForm = () => {
                                                         <p className="payload">Payload:</p>
                                                     </span>
                                                     <span>
-                                                        <InputText
+                                                        <InputTextarea
+                                                            rows={6}
                                                             id="query.payload"
                                                             className="scene-field-form"
                                                             {...input}
@@ -847,19 +903,22 @@ const MeasurementViewEditForm = () => {
                                         />
                                         <Button
                                             label="Odustani"
-                                            onClick={() =>
-                                                navigate(PAGE_ROUTES.SpecificSceneView, {
-                                                    state: {
-                                                        shortScene: scene,
-                                                    },
-                                                })
+                                            onClick={(e) => {
+                                                    e.preventDefault();
+                                                    navigate(PAGE_ROUTES.SpecificSceneView, {
+                                                        state: {
+                                                            shortScene: scene,
+                                                        },
+                                                    })
+                                                }
                                             }
                                         />
                                         <Button
                                             label="Test"
                                             icon="pi pi-exclamation-triangle"
-                                            onClick={() => {
-                                                //test method
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                handleTest(values);
                                             }}
                                         />
                                     </div>
