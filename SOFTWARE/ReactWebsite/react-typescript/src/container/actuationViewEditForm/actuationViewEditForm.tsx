@@ -359,7 +359,7 @@ const ActuationViewEditForm = () => {
                                                             <span className="headerRow">
                                                                 <InputText
                                                                     id="form.defaultValuesRequest.headers.key"
-                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    placeholder="Key"
                                                                     className="scene-field-form-key"
                                                                     value={headersDefault[index][0]}
                                                                     onChange={e => {
@@ -370,7 +370,7 @@ const ActuationViewEditForm = () => {
                                                                 />
                                                                 <InputText
                                                                     id="form.defaultValuesRequest.headers.value"
-                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    placeholder="Value"
                                                                     className="scene-field-form-value"
                                                                     value={headersDefault[index][1]}
                                                                     onChange={e => {
@@ -478,7 +478,7 @@ const ActuationViewEditForm = () => {
                                                             <span className="headerRow">
                                                                 <InputText
                                                                     id="form.submitFormRequest.headers.key"
-                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    placeholder="Key"
                                                                     className="scene-field-form-key"
                                                                     value={headersSubmit[index][0]}
                                                                     onChange={e => {
@@ -489,7 +489,7 @@ const ActuationViewEditForm = () => {
                                                                 />
                                                                 <InputText
                                                                     id="form.submitFormRequest.headers.value"
-                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    placeholder="Value"
                                                                     className="scene-field-form-value"
                                                                     value={headersSubmit[index][1]}
                                                                     onChange={e => {

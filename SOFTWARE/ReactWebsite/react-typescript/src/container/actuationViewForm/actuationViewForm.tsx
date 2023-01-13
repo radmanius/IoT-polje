@@ -26,8 +26,8 @@ const ActuationViewForm = () => {
     const { keycloak } = useKeycloak();
     let scene = (location.state as ILocationState)?.shortScene as IScene;
 
-    const [headersDefault, setHeadersDefault] = useState<Array<Array<string>>>([["", ""]]);
-    const [headersSubmit, setHeadersSubmit] = useState<Array<Array<string>>>([["", ""]]);
+    const [headersDefault, setHeadersDefault] = useState<Array<Array<string>>>([["Authorization", ""], ["Content-Type", ""]]);
+    const [headersSubmit, setHeadersSubmit] = useState<Array<Array<string>>>([["Authorization", ""], ["Content-Type", ""]]);
 
     const handleAddNewActuationView = async (data: ActuationView) => {
         let newData = { ...data };
@@ -326,7 +326,7 @@ const ActuationViewForm = () => {
                                                             <span className="headerRow">
                                                                 <InputText
                                                                     id="form.defaultValuesRequest.headers.key"
-                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    placeholder="Key"
                                                                     className="scene-field-form-key"
                                                                     value={headersDefault[index][0]}
                                                                     onChange={e => {
@@ -337,7 +337,7 @@ const ActuationViewForm = () => {
                                                                 />
                                                                 <InputText
                                                                     id="form.defaultValuesRequest.headers.value"
-                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    placeholder="Value"
                                                                     className="scene-field-form-value"
                                                                     value={headersDefault[index][1]}
                                                                     onChange={e => {
@@ -445,7 +445,7 @@ const ActuationViewForm = () => {
                                                             <span className="headerRow">
                                                                 <InputText
                                                                     id="form.submitFormRequest.headers.key"
-                                                                    placeholder={index === 0 ? "Key" : ""}
+                                                                    placeholder="Key"
                                                                     className="scene-field-form-key"
                                                                     value={headersSubmit[index][0]}
                                                                     onChange={e => {
@@ -456,7 +456,7 @@ const ActuationViewForm = () => {
                                                                 />
                                                                 <InputText
                                                                     id="form.submitFormRequest.headers.value"
-                                                                    placeholder={index === 0 ? "Value" : ""}
+                                                                    placeholder="Value"
                                                                     className="scene-field-form-value"
                                                                     value={headersSubmit[index][1]}
                                                                     onChange={e => {
