@@ -45,6 +45,7 @@ public class Request {
 	}
 
 	public Request(RequestDTO dto) {
+		
 		this.method = dto.getMethod();
 		this.uri = dto.getUri();
 		this.headers = dto.getHeaders();

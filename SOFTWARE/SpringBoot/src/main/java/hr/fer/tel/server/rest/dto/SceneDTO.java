@@ -7,8 +7,6 @@ import hr.fer.tel.server.rest.model.*;
 
 public class SceneDTO {
 
-	private long id;
-
 	private String title;
 
 	private String subtitle;
@@ -28,7 +26,6 @@ public class SceneDTO {
 	public SceneDTO(long id, String title, String subtitle, String layout, String pictureLink, List<String> tags,
 					List<ViewDTO> views, List<String> roles, List<String> keys) {
 		super();
-		this.id = id;
 		this.title = title;
 		this.subtitle = subtitle;
 		this.layout = layout;
@@ -104,14 +101,6 @@ public class SceneDTO {
 
 	public void setKeys(List<String> keys) {
 		this.keys = keys;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public static SceneDTO of(Scene scene) {

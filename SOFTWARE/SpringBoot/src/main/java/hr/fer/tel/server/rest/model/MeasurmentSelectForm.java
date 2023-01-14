@@ -56,12 +56,16 @@ public class MeasurmentSelectForm {
 	}
 
 	public MeasurmentSelectForm(MeasurmentSelectFormDTO dto) {
-		this.submitSelectionRequest = new Request(dto.getSubmitSelectionRequest());
-		//this.inputs = new Inputs(dto.getInputs());
+		if(dto.getSubmitSelectionRequest() == null) {
+			this.submitSelectionRequest = null;
+		}else {			
+			this.submitSelectionRequest = new Request(dto.getSubmitSelectionRequest());
+		}
 
 		this.inputs = new LinkedList<>();
 		for(InputsDTO inputDto: dto.getInputs()) {
 		  Inputs input = extractInput(inputDto);
+		  
 		  if(input != null) // TODO ovo bi trebalo raditi s exceptionma
 		    this.inputs.add(input);
 		}

@@ -13,9 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -129,6 +128,7 @@ public class SceneController {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 		SceneDTO sceneDTO = new SceneDTO();
 
@@ -136,11 +136,6 @@ public class SceneController {
 			sceneDTO = objectMapper.readValue(model, sceneDTO.getClass());
 		} catch (Exception igornable) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-
-		// Check if scene exists
-		if (service.checkIfExists(sceneDTO.getId()) == true) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 
 		Scene scene = new Scene(sceneDTO);
@@ -182,13 +177,6 @@ public class SceneController {
 				tmp = (ActuationView) tmp;
 				ActuationForm form = ((ActuationView) tmp).getForm();
 
-//	             "headers": {
-//	                    "Accept": "application/csv",
-//	                    "Content-type": "application/vnd.flux",
-//	                    "Authorization": "Token {{influxFerit}}"
-//	                },
-				// influxFerit je key, trebaš ga dohvatit iz keyservica
-
 				Request req1 = form.getDefaultValuesRequest();
 				Map<String, String> headers1 = req1.getHeaders();
 				String payload1 = req1.getPayload();
@@ -204,21 +192,13 @@ public class SceneController {
 				try {
 					httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
 				} catch (RestClientException e) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 				}
 				
 				if (httpResponse.getStatusCode() != HttpStatus.OK) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(httpResponse.getBody());
 				}
 				
-				
-				
-
-				// Provjeri je li valid, poslat upit kao u postmanu, ako vrati podatke onda radi
-
-				
-
-				// Provjeri je li valid
 			}
 
 			if (tmp instanceof MesurmentView) {
@@ -240,18 +220,13 @@ public class SceneController {
 				try {
 					httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
 				} catch (RestClientException e) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 					
 				}
 				
 				if (httpResponse.getStatusCode() != HttpStatus.OK) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(httpResponse.getBody());
 				}
-
-				// Provjeri je li valid, poslat upit kao u postmanu, ako vrati podatke onda radi
-
-				// Provjeri je li valid
-
 			}
 
 		}
@@ -272,11 +247,6 @@ public class SceneController {
 			sceneDTO = objectMapper.readValue(model, sceneDTO.getClass());
 		} catch (Exception igornable) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-
-		// Check if scene exists
-		if (service.checkIfExists(sceneDTO.getId()) == true) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 
 		Scene scene = new Scene(sceneDTO);
