@@ -25,7 +25,7 @@ class GraphRepositoryImpl implements GraphRepository {
 if(query!=null){
   String data = query.payload;
   String window = "2h";
-  data = data.replaceAll('{{aggregationWindow}}', window);
+
 
   DateTime today = DateTime.now();
   String endDate = DateFormat("yyyy-MM-dd;HH:mm:ss/").format(today);
@@ -33,9 +33,19 @@ if(query!=null){
   endDate= endDate.replaceAll('/', 'Z');
   data = data.replaceAll('{{endTimeISO}}', endDate);
 
-  DateTime day = today.subtract(const Duration(days:1));
-  DateTime week = today.subtract(const Duration(days:7));
-  DateTime month = today.subtract(const Duration(days:30));
+   DateTime oneday = today.subtract(const Duration(days:1));
+   DateTime week = today.subtract(const Duration(days:7));
+   DateTime month = today.subtract(const Duration(days:30));
+  DateTime day = query.startDate!;
+
+  if(oneday.difference(day) < const Duration(minutes: 1))
+  { window = "1h";
+  }else if(week.difference(day) < const Duration(minutes: 1)){
+    window = "8h";
+  }else if(month.difference(day) < const Duration(minutes: 1)){
+    window = "24h";
+  }
+  data = data.replaceAll('{{aggregationWindow}}', window);
   String startDate = DateFormat("yyyy-MM-dd;HH:mm:ss/").format(day);
   startDate= startDate.replaceAll(';', 'T');
   startDate= startDate.replaceAll('/', 'Z');

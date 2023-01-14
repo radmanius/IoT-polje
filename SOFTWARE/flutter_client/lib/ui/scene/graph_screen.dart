@@ -13,9 +13,11 @@ import 'package:pdp2022/source_remote/repository/scene/model/graph.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import 'frontscreen.dart';
+
 
 class GraphScreen extends HookConsumerWidget {
-  
+
   const GraphScreen(this.title, this.query,{Key? key}) : super(key: key);
 static Route route(String title, Request? query) {
     return MaterialPageRoute<dynamic>(
@@ -36,17 +38,19 @@ final Request? query;
 
 
 
-// String data= query!.payload;
-//   DateTime today = DateTime.now();
-//   DateTime day = today.subtract(const Duration(days:30));
-// if(a == "30 dana"){
-//   day = today.subtract(const Duration(days:30));
+    DateTime today = DateTime.now();
+    DateTime day = DateTime.now();
+    if (a == "30 dana") {
+      day = today.subtract(const Duration(days: 30));
+    } else if (a == "7 dana") {
+      day = today.subtract(const Duration(days: 7));
+    } else if (a == "1 dan") {
+      day = today.subtract(const Duration(days: 1));
+    }
+    print(day);
+    print(a);
+    query!.startDate = day;
 
-// }else if(a == "7 dana" ){
-//   day = today.subtract(const Duration(days:7));
-// }else if(a == "1 dan"){
-//    day = today.subtract(const Duration(days:1));
-// }
 //   String startDate = DateFormat("yyyy-MM-dd;HH:mm:ss/").format(day);
 //   startDate= startDate.replaceAll(';', 'T');
 //   startDate= startDate.replaceAll('/', 'Z');
@@ -58,15 +62,21 @@ final Request? query;
         title: Text(title),
       ),
       body: SafeArea(
-        
+
        child: Column(children:<Widget>[
-       
-       DropdownButtonExample(),
-        
-        
-        
-        
-       (query!=null)?ref.watch(graphProvider(query..startDate)).maybeWhen(
+        Row(
+            children:<Widget>[
+              DropdownButtonExample(),
+              ElevatedButton(onPressed: () => {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavBar(title, query, 0)))
+              },child:Text('Promijeni') ),
+            ]
+        ),
+
+
+
+
+       (query!=null)?ref.watch(graphProvider(query)).maybeWhen(
               orElse: () => const CircularProgressIndicator(),
               failure: (e) => Text(e.toString()),
             success:(graph)=>Expanded(
@@ -79,7 +89,7 @@ final Request? query;
         LineChartData(
         //  borderData: FlBorderData(border: const Border(bottom: BorderSide(),left: BorderSide()), ),
         //   titlesData: FlTitlesData(bottomTitles: AxisTitles(sideTitles: SideTitles(interval: 10,
-                            
+
         //       showTitles: true,
         //    getTitlesWidget: (value, meta) {
         //    return  Text("e");
@@ -99,8 +109,8 @@ final Request? query;
               ),
             ),
             )
-      
-              
+
+
 //               SingleChildScrollView(
 //   physics: const BouncingScrollPhysics(),
 //   scrollDirection: Axis.vertical,
@@ -114,17 +124,19 @@ final Request? query;
 //    ],
 // )
 //               ),             
-              
-              
-              
+
+
+
               //ListView(children:[for(Graph g in graph) Text(g.time.toString() +"     "+ g.value.toString())])
         ):const Text("nema grafa"),
-       
+
       ])),
 
     );
   }
 }
+
+
 
 class DropdownButtonExample extends StatefulWidget {
   const DropdownButtonExample();
@@ -132,9 +144,10 @@ class DropdownButtonExample extends StatefulWidget {
   @override
   State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
 }
-String a="30 dana";
+String a = "30 dana";
 class _DropdownButtonExampleState extends State<DropdownButtonExample> {
-  String dropdownValue="30 dana";
+  String dropdownValue="";
+
   String holder = '' ;
  String getValue(){
 return dropdownValue;
@@ -142,15 +155,15 @@ return dropdownValue;
   @override
   Widget build(BuildContext context) {
     return   DropdownButton<String>(
-      value: dropdownValue,
+      value: a,
  
-        onChanged: (value) {
+        onChanged: (String? newvalue) {
    setState(() {
-        dropdownValue = value!;
-        a=dropdownValue;
-   });
+        a = newvalue!;
 
-        print(a);},
+   });
+        print(a);
+        },
         items: [DropdownMenuItem(child: Text("30 dana"),
         value: "30 dana",),
         DropdownMenuItem(child: Text("7 dana"),value: "7 dana",),

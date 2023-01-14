@@ -11,6 +11,9 @@ Request _$RequestFromJson(Map<String, dynamic> json) => Request(
       json['URI'] as String,
       Map<String, String>.from(json['headers'] as Map),
       json['payload'] as String,
+      json['startDate'] == null
+          ? null
+          : DateTime.parse(json['startDate'] as String),
     );
 
 Map<String, dynamic> _$RequestToJson(Request instance) => <String, dynamic>{
@@ -18,4 +21,5 @@ Map<String, dynamic> _$RequestToJson(Request instance) => <String, dynamic>{
       'URI': instance.uri,
       'headers': instance.headers,
       'payload': instance.payload,
+      'startDate': instance.startDate?.toIso8601String(),
     };
