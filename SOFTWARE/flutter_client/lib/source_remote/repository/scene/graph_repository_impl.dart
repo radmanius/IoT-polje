@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pdp2022/source_remote/dio/api_endpoints.dart';
 import 'package:pdp2022/source_remote/dio/dio_database.dart';
+import 'package:pdp2022/source_remote/repository/auth/auth_token_persistence_manager.dart';
 import 'package:pdp2022/source_remote/repository/scene/model/graph.dart';
 
 import 'model/request.dart';
@@ -22,7 +24,7 @@ class GraphRepositoryImpl implements GraphRepository {
 
 if(query!=null){
   String data = query.payload;
-  String window = "3h";
+  String window = "2h";
   data = data.replaceAll('{{aggregationWindow}}', window);
 
   DateTime today = DateTime.now();
@@ -34,7 +36,7 @@ if(query!=null){
   DateTime day = today.subtract(const Duration(days:1));
   DateTime week = today.subtract(const Duration(days:7));
   DateTime month = today.subtract(const Duration(days:30));
-  String startDate = DateFormat("yyyy-MM-dd;HH:mm:ss/").format(week);
+  String startDate = DateFormat("yyyy-MM-dd;HH:mm:ss/").format(day);
   startDate= startDate.replaceAll(';', 'T');
   startDate= startDate.replaceAll('/', 'Z');
   data = data.replaceAll('{{startTimeISO}}', startDate);
@@ -43,8 +45,8 @@ if(query!=null){
           options: Options(headers: {
           "Authorization": "Token bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
            "Accept": "application/json" ,
-           "Content-type": "application/vnd.flux" 
-
+           "Content-type": "application/vnd.flux",
+          // "Token":   GetIt.I.get<AuthTokenPersistenceManager>().accessToken
           }
            //query.headers
           ) );

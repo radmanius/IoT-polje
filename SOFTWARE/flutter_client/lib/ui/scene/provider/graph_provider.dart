@@ -8,6 +8,7 @@ import 'package:pdp2022/source_remote/repository/scene/model/request.dart';
 final graphProvider = StateNotifierProvider.autoDispose.family<GraphProvider, RequestState<List<Graph>>, Request?>(
   (ref, viewquery) => GraphProvider(
     viewquery,
+   
     GetIt.I.get(),
   ),
 );
@@ -19,7 +20,7 @@ class GraphProvider extends RequestNotifier<List<Graph>> {
 
   final Request? query;
   final GraphRepository _graphRepository;
-
+//final String a;
 void _getGraph() {
     executeRequest(requestBuilder: () async { 
  final data= await _graphRepository.getGraphDetails(query);
