@@ -45,7 +45,7 @@ const MeasurementViewForm = () => {
     const [message, setMessage] = useState<string>("");
     const [spremnaScena, setSpremnaScena] = useState<IScene>(scene);
 
-    const [inputsNumber, setInputsNumber] = useState<string[]>([""]);
+    const [inputsNumber, setInputsNumber] = useState<IInput[]>([{ inputType: "BOOLEAN" }]);
 
     const assembleViews = (data: MeasurementsView) => {
         let newData = { ...data };
@@ -67,94 +67,94 @@ const MeasurementViewForm = () => {
             };
         }
         data = newData;
-        if (data.selectForm.inputs) {
-            let listaInputa: IInput[] = [];
-            console.log(data.selectForm.inputs);
-            data.selectForm.inputs.forEach((input, index) => {
-                switch (input.inputType) {
-                    case "BOOLEAN": {
-                        listaInputa.push({
-                                    name: input.name ?? "",
-                                    title: input.title ?? "",
-                                    description: input.description,
-                                    defaultValue: input.defaultValue,
-                                    inputType: "BOOLEAN",
-                                    });
-                        break;
-                    }
-                    case "INTEGER": {
-                        listaInputa.push({
-                                    name: input.name ?? "",
-                                    title: input.title ?? "",
-                                    description: input.description,
-                                    defaultValue: input.defaultValue ?? -1,
-                                    min: input.min,
-                                    max: input.max,
-                                    inputType: "INTEGER",
-                                    });
-                        break;
-                    }
-                    case "DECIMAL": {
-                        listaInputa.push({
-                                    name: input.name ?? "",
-                                    title: input.title ?? "",
-                                    description: input.description,
-                                    defaultValue: input.defaultValue ?? -1,
-                                    min: input.min,
-                                    max: input.max,
-                                    inputType: "DECIMAL",
-                                    });
-                        break;
-                    }
-                    case "DATE": {
-                        listaInputa.push({
-                                    name: input.name ?? "",
-                                    title: input.title ?? "",
-                                    description: input.description,
-                                    defaultValue: input.defaultValue ?? "",
-                                    inputType: "DATE",
-                                    });
-                        break;
-                    }
-                    case "TIME": {
-                        listaInputa.push({
-                                    name: input.name ?? "",
-                                    title: input.title ?? "",
-                                    description: input.description,
-                                    defaultValue: input.defaultValue ?? "",
-                                    inputType: "TIME",
-                                    });
-                        break;
-                    }
-                    case "STRING": {
-                        listaInputa.push({
-                                    name: input.name ?? "",
-                                    title: input.title ?? "",
-                                    description: input.description,
-                                    defaultValue: input.defaultValue ?? false,
-                                    pattern: input.pattern,
-                                    inputType: "STRING",
-                                    });
-                        break;
-                    }
-                    case "SUBMIT": {
-                        listaInputa.push({
-                                    name: input.name ?? "",
-                                    title: input.title ?? "",
-                                    inputType: "SUBMIT",
-                                    });
-                        break;
-                    }
+
+        let listaInputa: IInput[] = [];
+
+        inputsNumber.forEach((input, index) => {
+            switch (input.inputType) {
+                case "BOOLEAN": {
+                    listaInputa.push({
+                                name: input.name ?? "",
+                                title: input.title ?? "",
+                                description: input.description,
+                                defaultValue: input.defaultValue,
+                                inputType: "BOOLEAN",
+                                });
+                    break;
                 }
-                newData = {
-                            ...data,
-                            selectForm: {
-                                ...data.selectForm,
-                                inputs: listaInputa,
-                            },
-                        };
-            });
-        }
+                case "INTEGER": {
+                    listaInputa.push({
+                                name: input.name ?? "",
+                                title: input.title ?? "",
+                                description: input.description,
+                                defaultValue: input.defaultValue ?? -1,
+                                min: input.min,
+                                max: input.max,
+                                inputType: "INTEGER",
+                                });
+                    break;
+                }
+                case "DECIMAL": {
+                    listaInputa.push({
+                                name: input.name ?? "",
+                                title: input.title ?? "",
+                                description: input.description,
+                                defaultValue: input.defaultValue ?? -1,
+                                min: input.min,
+                                max: input.max,
+                                inputType: "DECIMAL",
+                                });
+                    break;
+                }
+                case "DATE": {
+                    listaInputa.push({
+                                name: input.name ?? "",
+                                title: input.title ?? "",
+                                description: input.description,
+                                defaultValue: input.defaultValue ?? "",
+                                inputType: "DATE",
+                                });
+                    break;
+                }
+                case "TIME": {
+                    listaInputa.push({
+                                name: input.name ?? "",
+                                title: input.title ?? "",
+                                description: input.description,
+                                defaultValue: input.defaultValue ?? "",
+                                inputType: "TIME",
+                                });
+                    break;
+                }
+                case "STRING": {
+                    listaInputa.push({
+                                name: input.name ?? "",
+                                title: input.title ?? "",
+                                description: input.description,
+                                defaultValue: input.defaultValue ?? false,
+                                pattern: input.pattern,
+                                inputType: "STRING",
+                                });
+                    break;
+                }
+                case "SUBMIT": {
+                    listaInputa.push({
+                                name: input.name ?? "",
+                                title: input.title ?? "",
+                                inputType: "SUBMIT",
+                                });
+                    break;
+                }
+            }
+        });
+        newData = {
+            ...data,
+            selectForm: {
+                ...data.selectForm,
+                inputs: listaInputa,
+            },
+        };
+        console.log(listaInputa);
         let headersSubmitMap = {} as { [key: string]: string };
         headersSubmit.forEach(pair => {
             if (pair[0] !== "") headersSubmitMap[pair[0]] = pair[1];
@@ -478,19 +478,11 @@ const MeasurementViewForm = () => {
                                         className="p-button-success"
                                         onClick={e => {
                                             e.preventDefault();
-                                            if (values.selectForm.inputs) {
-                                                let inputsCopy = [...values.selectForm.inputs];
-                                                inputsCopy.push({ inputType: "BOOLEAN" });
-                                                values.selectForm.inputs = inputsCopy;
-                                                let inputsNumberCopy = [...inputsNumber];
-                                                inputsNumberCopy.push("");
-                                                setInputsNumber(inputsNumberCopy);
+                                            let inputsNumberCopy = [...inputsNumber];
+                                            inputsNumberCopy.push({ inputType: "BOOLEAN" });
+                                            setInputsNumber(inputsNumberCopy);
                                             }
-                                            else {
-                                                values.selectForm.inputs = [{ inputType: "BOOLEAN" }];
-                                                setInputsNumber([""]);
-                                            }
-                                        }}
+                                        }
                                         />
                                     </p>
                                     
@@ -502,24 +494,14 @@ const MeasurementViewForm = () => {
                                                 //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
                                                 onClick={e => {
                                                     e.preventDefault();
-                                                    if (values.selectForm.inputs) {
-                                                        let inputsCopy = [...values.selectForm.inputs];
-                                                        inputsCopy.splice(index, 1);
-                                                        values.selectForm.inputs = inputsCopy;
-                                                        let inputsNumberCopy = [...inputsNumber];
-                                                        inputsNumberCopy.splice(index, 1);
-                                                        setInputsNumber(inputsNumberCopy);
-                                                        console.log(values.selectForm.inputs);
-                                                    }
-                                                    else {
-                                                        values.selectForm.inputs = [];
-                                                        setInputsNumber([]);
-                                                    }
+                                                    let inputsNumberCopy = [...inputsNumber];
+                                                    inputsNumberCopy.splice(index, 1);
+                                                    setInputsNumber(inputsNumberCopy);
                                                 }}
                                             />
                                             <Field
                                                 name={"selectForm.inputs[" + index + "].name"}
-                                                render={({ input }) => (
+                                                render={({ }) => (
                                                     <div>
                                                         <span>
                                                             <p>Input name:</p>
@@ -528,7 +510,17 @@ const MeasurementViewForm = () => {
                                                             <InputText
                                                                 id="selectForm.inputs.name"
                                                                 className="scene-field-form"
-                                                                {...input}
+                                                                value={input.name}
+                                                                onChange={e => {
+                                                                    setInputsNumber([
+                                                                        ...inputsNumber.slice(0, index),
+                                                                        {
+                                                                            ...inputsNumber[index],
+                                                                            name: e.target.value
+                                                                        },
+                                                                        ...inputsNumber.slice(index + 1)
+                                                                    ])
+                                                                }}
                                                             />
                                                         </span>
                                                     </div>
@@ -536,7 +528,7 @@ const MeasurementViewForm = () => {
                                             />
                                             <Field
                                                 name={"selectForm.inputs[" + index + "].title"}
-                                                render={({ input }) => (
+                                                render={({ }) => (
                                                     <div>
                                                         <span>
                                                             <p>Input title:</p>
@@ -545,7 +537,17 @@ const MeasurementViewForm = () => {
                                                             <InputText
                                                                 id="selectForm.inputs.title"
                                                                 className="scene-field-form"
-                                                                {...input}
+                                                                value={input.title}
+                                                                onChange={e => {
+                                                                    setInputsNumber([
+                                                                        ...inputsNumber.slice(0, index),
+                                                                        {
+                                                                            ...inputsNumber[index],
+                                                                            title: e.target.value
+                                                                        },
+                                                                        ...inputsNumber.slice(index + 1)
+                                                                    ])
+                                                                }}
                                                             />
                                                         </span>
                                                     </div>
@@ -553,14 +555,24 @@ const MeasurementViewForm = () => {
                                             />
                                             <Field
                                                 name={"selectForm.inputs[" + index + "].inputType"}
-                                                render={({ input }) => (
+                                                render={({ }) => (
                                                     <div>
                                                         <span>
                                                             <p>Input type:</p>
                                                         </span>
                                                         <span>
                                                             <Dropdown
-                                                                {...input}
+                                                                value={input.inputType}
+                                                                onChange={e => {
+                                                                    setInputsNumber([
+                                                                        ...inputsNumber.slice(0, index),
+                                                                        {
+                                                                            ...inputsNumber[index],
+                                                                            inputType: e.target.value
+                                                                        },
+                                                                        ...inputsNumber.slice(index + 1)
+                                                                    ])
+                                                                }}
                                                                 className="scene-field-form dropdown-design"
                                                                 options={viewInputsOptions}
                                                                 optionLabel="text"
@@ -570,17 +582,27 @@ const MeasurementViewForm = () => {
                                                     </div>
                                                 )}
                                             />
-                                            {values.selectForm.inputs && values.selectForm.inputs[index].inputType !== "SUBMIT" && (
+                                            {input.inputType !== "SUBMIT" && (
                                                 <Field
                                                     name={"selectForm.inputs[" + index + "].description"}
-                                                    render={({ input }) => (
+                                                    render={({ }) => (
                                                         <div>
                                                             <span>
                                                                 <p>Description:</p>
                                                             </span>
                                                             <span>
                                                                 <InputText
-                                                                    {...input}
+                                                                    value={input.description}
+                                                                    onChange={e => {
+                                                                        setInputsNumber([
+                                                                            ...inputsNumber.slice(0, index),
+                                                                            {
+                                                                                ...inputsNumber[index],
+                                                                                description: e.target.value
+                                                                            },
+                                                                            ...inputsNumber.slice(index + 1)
+                                                                        ])
+                                                                    }}
                                                                     id="selectForm.inputs.description"
                                                                     className="scene-field-form"
                                                                 />
@@ -589,17 +611,27 @@ const MeasurementViewForm = () => {
                                                     )}
                                                 />
                                             )}
-                                            {values.selectForm.inputs && values.selectForm.inputs[index].inputType !== "SUBMIT" && (
+                                            {input.inputType !== "SUBMIT" && (
                                                 <Field
                                                     name={"selectForm.inputs[" + index + "].defaultValue"}
-                                                    render={({ input }) => (
+                                                    render={({ }) => (
                                                         <div>
                                                             <span>
                                                                 <p>Default value:</p>
                                                             </span>
                                                             <span>
                                                                 <InputText
-                                                                    {...input}
+                                                                    value={input.defaultValue?.toString()}
+                                                                    onChange={e => {
+                                                                        setInputsNumber([
+                                                                            ...inputsNumber.slice(0, index),
+                                                                            {
+                                                                                ...inputsNumber[index],
+                                                                                defaultValue: e.target.value
+                                                                            },
+                                                                            ...inputsNumber.slice(index + 1)
+                                                                        ])
+                                                                    }}
                                                                     id="selectForm.inputs.defaultValue"
                                                                     className="scene-field-form"
                                                                 />
@@ -608,17 +640,27 @@ const MeasurementViewForm = () => {
                                                     )}
                                                 />
                                             )}
-                                            {values.selectForm.inputs && values.selectForm.inputs[index].inputType === "STRING" && (
+                                            {input.inputType === "STRING" && (
                                                 <Field
                                                     name={"selectForm.inputs[" + index + "].pattern"}
-                                                    render={({ input }) => (
+                                                    render={({ }) => (
                                                         <div>
                                                             <span>
                                                                 <p>Pattern:</p>
                                                             </span>
                                                             <span>
                                                                 <InputText
-                                                                    {...input}
+                                                                    value={input.pattern}
+                                                                    onChange={e => {
+                                                                        setInputsNumber([
+                                                                            ...inputsNumber.slice(0, index),
+                                                                            {
+                                                                                ...inputsNumber[index],
+                                                                                pattern: e.target.value
+                                                                            },
+                                                                            ...inputsNumber.slice(index + 1)
+                                                                        ])
+                                                                    }}
                                                                     id="selectForm.inputs.pattern"
                                                                     className="scene-field-form"
                                                                 />
@@ -627,19 +669,29 @@ const MeasurementViewForm = () => {
                                                     )}
                                                 />
                                             )}
-                                            {(values.selectForm.inputs && values.selectForm.inputs[index].inputType === "INTEGER" ||
-                                                values.selectForm.inputs && values.selectForm.inputs[index].inputType === "DECIMAL") && (
+                                            {(input.inputType === "INTEGER" ||
+                                                input.inputType === "DECIMAL") && (
                                                     <>
                                                         <Field
                                                             name={"selectForm.inputs[" + index + "].min"}
-                                                            render={({ input }) => (
+                                                            render={({ }) => (
                                                                 <div>
                                                                     <span>
                                                                         <p>Minimum:</p>
                                                                     </span>
                                                                     <span>
                                                                         <InputText
-                                                                            {...input}
+                                                                            value={input.min}
+                                                                            onChange={e => {
+                                                                                setInputsNumber([
+                                                                                    ...inputsNumber.slice(0, index),
+                                                                                    {
+                                                                                        ...inputsNumber[index],
+                                                                                        min: parseInt(e.target.value)
+                                                                                    },
+                                                                                    ...inputsNumber.slice(index + 1)
+                                                                                ])
+                                                                            }}
                                                                             id="selectForm.inputs.min"
                                                                             className="scene-field-form"
                                                                         />
@@ -649,14 +701,24 @@ const MeasurementViewForm = () => {
                                                         />
                                                         <Field
                                                             name={"selectForm.inputs[" + index + "].max"}
-                                                            render={({ input }) => (
+                                                            render={({ }) => (
                                                                 <div>
                                                                     <span>
                                                                         <p>Maximum:</p>
                                                                     </span>
                                                                     <span>
                                                                         <InputText
-                                                                            {...input}
+                                                                            value={input.max}
+                                                                            onChange={e => {
+                                                                                setInputsNumber([
+                                                                                    ...inputsNumber.slice(0, index),
+                                                                                    {
+                                                                                        ...inputsNumber[index],
+                                                                                        max: parseInt(e.target.value)
+                                                                                    },
+                                                                                    ...inputsNumber.slice(index + 1)
+                                                                                ])
+                                                                            }}
                                                                             id="selectForm.inputs.max"
                                                                             className="scene-field-form"
                                                                         />
