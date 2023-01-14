@@ -28,6 +28,7 @@ const SpecificSceneView = () => {
     const [popup, setPopup] = useState<Boolean>(false);
     const [popupView, setPopupView] = useState<Boolean>(false);
     const [deleteView, setDeleteView] = useState<IView>();
+    const [searchInput, setSearchInput] = useState("");
 
     const fetchScene = useCallback(async () => {
         try {
@@ -94,6 +95,13 @@ const SpecificSceneView = () => {
                 }}
             />
         );
+    };
+
+    const viewFilter = (view: IView) => {
+        if (view.title.toLowerCase().includes(searchInput.toLowerCase())) {
+            return true;
+        }
+        return false;
     };
 
     return (
@@ -166,10 +174,22 @@ const SpecificSceneView = () => {
             <div className="scene-view-table">
                 <div>
                     <h2>POPIS VIEW-a za pripadnu scenu</h2>
+                    <div className="short-scene-search-wrap">
+                    <input
+                        className="short-scene-searchBar"
+                        type="search"
+                        placeholder="Pretraži..."
+                        onChange={(e: any) => {
+                                    e.preventDefault();
+                                    setSearchInput(e.target.value);
+                                }}
+                        value={searchInput}
+                    />
+            </div>
                     <DataTable
                         resizableColumns
                         showGridlines
-                        value={scene?.views}
+                        value={scene?.views.filter(view => viewFilter(view))}
                         emptyMessage={"Trenutno nema rezultata"}
                         responsiveLayout="stack"
                     >

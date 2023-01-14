@@ -3,8 +3,8 @@ export interface IInput{
     title?: string;
     description?: string;
     defaultValue?: boolean | string | number;
-    min?: number;
-    max?: number;
+    min?: string;
+    max?: string;
     pattern?: string;
     inputType?: string;
 }
