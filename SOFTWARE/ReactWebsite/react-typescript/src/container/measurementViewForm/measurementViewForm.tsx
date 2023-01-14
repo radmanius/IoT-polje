@@ -729,7 +729,8 @@ const MeasurementViewForm = () => {
                                                         />
                                                     </>
                                                 )}
-                                        </div>))}
+                                        </div>
+                                    ))}
                                     <hr />
                                     <h3>Query</h3>
                                     <div className="measurement-view-form-container-inputs">
