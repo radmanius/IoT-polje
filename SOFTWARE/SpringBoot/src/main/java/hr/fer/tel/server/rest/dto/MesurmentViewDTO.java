@@ -6,13 +6,13 @@ import hr.fer.tel.server.rest.model.MesurmentView;
 
 @JsonTypeName("mesurment")
 public class MesurmentViewDTO extends ViewDTO{
-	
+
 	private String measurementUnit;
-	
+
 	private MeasurmentSelectFormDTO selectForm;
-	
+
 	private RequestDTO query;
-	
+
 	private DataExtractorDTO responseExtracting;
 
 	public MesurmentViewDTO(String measurementUnit, MeasurmentSelectFormDTO selectForm, RequestDTO query,
@@ -85,13 +85,14 @@ public class MesurmentViewDTO extends ViewDTO{
 		else {
 			extractor = DataExtractorDTO.of(view.getResponseExtracting());
 		}
-		
+
 		MesurmentViewDTO tmp = new MesurmentViewDTO(view.getMeasurementUnit(), form, req, extractor);
 
 		tmp.setTitle(view.getTitle());
+		tmp.setDescription(view.getDescription());
 		tmp.setViewType(view.getViewType());
-		
+
 		return tmp;
 	}
-	
+
 }

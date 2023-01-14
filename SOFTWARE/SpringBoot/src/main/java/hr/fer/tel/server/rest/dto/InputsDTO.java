@@ -1,5 +1,8 @@
 package hr.fer.tel.server.rest.dto;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
@@ -16,8 +19,8 @@ import hr.fer.tel.server.rest.model.TimeInput;
 
 
 @JsonTypeInfo(
-	      use = JsonTypeInfo.Id.NAME, 
-	      include = As.EXISTING_PROPERTY, 
+	      use = JsonTypeInfo.Id.NAME,
+	      include = As.EXISTING_PROPERTY,
 	      visible = true,
 	      property = "inputType")
 	    @JsonSubTypes({
@@ -69,59 +72,64 @@ public class InputsDTO {
 		this.title = title;
 	}
 
-	public static InputsDTO of(Inputs inputs) {
+	public static List<InputsDTO> of(List<Inputs> inputs) {
 
-		if (inputs instanceof BooleanInput) {
+	  List<InputsDTO> inputDtos = new LinkedList<>();
 
-			BooleanInput a = (BooleanInput) inputs;
+	  for(Inputs input: inputs) {
+
+		if (input instanceof BooleanInput) {
+
+			BooleanInput a = (BooleanInput) input;
 			BooleanInputDTO input1 = BooleanInputDTO.of(a);
-			return input1;
+			inputDtos.add(input1);
 
 		}
-		if (inputs instanceof DateInput) {
+		if (input instanceof DateInput) {
 
-			DateInput a = (DateInput) inputs;
+			DateInput a = (DateInput) input;
 			DateInputDTO input1 = DateInputDTO.of(a);
-			return input1;
+			inputDtos.add(input1);
 
 		}
-		if (inputs instanceof DecimalInput) {
+		if (input instanceof DecimalInput) {
 
-			DecimalInput a = (DecimalInput) inputs;
+			DecimalInput a = (DecimalInput) input;
 			DecimalInputDTO input1 = DecimalInputDTO.of(a);
-			return input1;
+			inputDtos.add(input1);
 
 		}
-		if (inputs instanceof IntegerInput) {
+		if (input instanceof IntegerInput) {
 
-			IntegerInput a = (IntegerInput) inputs;
+			IntegerInput a = (IntegerInput) input;
 			IntegerInputDTO input1 = IntegerInputDTO.of(a);
-			return input1;
+			inputDtos.add(input1);
 
 		}
-		if (inputs instanceof StringInput) {
+		if (input instanceof StringInput) {
 
-			StringInput a = (StringInput) inputs;
+			StringInput a = (StringInput) input;
 			StringInputDTO input1 = StringInputDTO.of(a);
-			return input1;
+			inputDtos.add(input1);
 
 		}
-		if (inputs instanceof SubmitButton) {
+		if (input instanceof SubmitButton) {
 
-			SubmitButton a = (SubmitButton) inputs;
+			SubmitButton a = (SubmitButton) input;
 			SubmitButtonDTO input1 = SubmitButtonDTO.of(a);
-			return input1;
+			inputDtos.add(input1);
 
 		}
-		if (inputs instanceof TimeInput) {
+		if (input instanceof TimeInput) {
 
-			TimeInput a = (TimeInput) inputs;
+			TimeInput a = (TimeInput) input;
 			TimeInputDTO input1 = TimeInputDTO.of(a);
-			return input1;
+			inputDtos.add(input1);
 
 		}
-		
-		return null;
+	  }
+
+		return inputDtos;
 
 	}
 }

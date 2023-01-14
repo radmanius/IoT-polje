@@ -1,17 +1,19 @@
 package hr.fer.tel.server.rest.dto;
 
+import java.util.List;
+
 import hr.fer.tel.server.rest.model.ActuationForm;
 
 public class ActuationFormDTO {
-	    
+
     private RequestDTO defaultValuesRequest;
-    
+
     private RequestDTO submitFormRequest;
-        
-    private InputsDTO inputs;
+
+    private List<InputsDTO> inputs;
 
 	public ActuationFormDTO(RequestDTO defaultValuesRequest, RequestDTO submitFormRequest,
-			InputsDTO inputs) {
+			List<InputsDTO> inputs) {
 		super();
 		this.defaultValuesRequest = defaultValuesRequest;
 		this.submitFormRequest = submitFormRequest;
@@ -38,14 +40,14 @@ public class ActuationFormDTO {
 		this.submitFormRequest = submitFormRequest;
 	}
 
-	public InputsDTO getInputs() {
+	public List<InputsDTO> getInputs() {
 		return inputs;
 	}
 
-	public void setInputs(InputsDTO inputs) {
+	public void setInputs(List<InputsDTO> inputs) {
 		this.inputs = inputs;
 	}
-	
+
 	public static ActuationFormDTO of(ActuationForm form) {
 
 		RequestDTO req1;
@@ -66,5 +68,5 @@ public class ActuationFormDTO {
 
 		return new ActuationFormDTO(req1, req2, InputsDTO.of(form.getInputs()));
 	}
-    
+
 }

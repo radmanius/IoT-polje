@@ -90,7 +90,6 @@ public class Scene {
 	}
 
 	public Scene(SceneDTO dto) {
-		this.id = dto.getId();
 		this.keyNames = dto.getKeys(); // .stream().map(key -> new Key(new KeyDTO(key))).toList();
 
 		this.layout = new Layout(dto.getLayout());
@@ -233,4 +232,5 @@ public class Scene {
 				+ ", pictureLink=" + pictureLink + ", tags=" + tags + ", views=" + views + ", roles=" + roles
 				+ ", keys=" + keyNames + "]";
 	}
+
 }

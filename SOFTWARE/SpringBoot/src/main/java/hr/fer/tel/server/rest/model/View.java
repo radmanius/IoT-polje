@@ -1,15 +1,14 @@
 package hr.fer.tel.server.rest.model;
 
-import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 
 import hr.fer.tel.server.rest.dto.ViewDTO;
 
@@ -26,6 +25,8 @@ public class View {
 
     private String title;
 
+    private String description;
+
     private String viewType;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,9 +42,10 @@ public class View {
 
 	}
 
-	public View(long id, String title, String viewType) {
+	public View(long id, String title, String description, String viewType) {
 		this.id = id;
 		this.title = title;
+		this.description = description;
 		this.viewType = viewType;
 	}
 
@@ -63,7 +65,15 @@ public class View {
 		this.title = title;
 	}
 
-	public String getViewType() {
+	public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+  public String getViewType() {
 		return viewType;
 	}
 

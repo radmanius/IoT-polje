@@ -1,14 +1,15 @@
 package hr.fer.tel.server.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import hr.fer.tel.server.rest.model.View;
-
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import hr.fer.tel.server.rest.model.View;
+
 @JsonTypeInfo(
-	      use = JsonTypeInfo.Id.NAME, 
-	      include = JsonTypeInfo.As.EXISTING_PROPERTY, 
+	      use = JsonTypeInfo.Id.NAME,
+	      include = JsonTypeInfo.As.EXISTING_PROPERTY,
 	      visible = true,
 	      property = "viewType")
 	    @JsonSubTypes({
@@ -21,16 +22,19 @@ import java.util.List;
 public class ViewDTO {
 
     private String title;
-    
+
+    private String description;
+
     private String viewType;
-    
-	public ViewDTO(String title, String viewType) {
+
+	public ViewDTO(String title, String description, String viewType) {
 		super();
 		this.title = title;
+		this.description = description;
 		this.viewType = viewType;
 	}
-	
-	
+
+
 	public ViewDTO() {
 		super();
 	}
@@ -43,7 +47,16 @@ public class ViewDTO {
 		this.title = title;
 	}
 
-	public String getViewType() {
+	public String getDescription() {
+        return description;
+    }
+
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+  public String getViewType() {
 		return viewType;
 	}
 
@@ -56,8 +69,7 @@ public class ViewDTO {
 	}
 
 	public static ViewDTO of(View view) {
-		return new ViewDTO(view.getTitle(), view.getViewType());
+		return new ViewDTO(view.getTitle(), view.getDescription(), view.getViewType());
 	}
-    
+
 }
-    

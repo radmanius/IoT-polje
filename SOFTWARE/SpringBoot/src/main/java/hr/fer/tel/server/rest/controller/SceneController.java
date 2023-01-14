@@ -13,9 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -129,6 +128,7 @@ public class SceneController {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 		SceneDTO sceneDTO = new SceneDTO();
 
@@ -136,11 +136,6 @@ public class SceneController {
 			sceneDTO = objectMapper.readValue(model, sceneDTO.getClass());
 		} catch (Exception igornable) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-
-		// Check if scene exists
-		if (service.checkIfExists(sceneDTO.getId()) == true) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 
 		Scene scene = new Scene(sceneDTO);
@@ -232,7 +227,6 @@ public class SceneController {
 				if (httpResponse.getStatusCode() != HttpStatus.OK) {
 					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(httpResponse.getBody());
 				}
-
 			}
 
 		}
@@ -253,11 +247,6 @@ public class SceneController {
 			sceneDTO = objectMapper.readValue(model, sceneDTO.getClass());
 		} catch (Exception igornable) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-
-		// Check if scene exists
-		if (service.checkIfExists(sceneDTO.getId()) == true) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 
 		Scene scene = new Scene(sceneDTO);

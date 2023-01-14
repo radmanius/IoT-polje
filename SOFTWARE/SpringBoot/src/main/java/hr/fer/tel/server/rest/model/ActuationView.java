@@ -15,27 +15,27 @@ import hr.fer.tel.server.rest.dto.ActuationViewDTO;
 //@JsonTypeName("actuation")
 public class ActuationView extends View{
 
-	
+
 //    @Id
 //    @GeneratedValue
 //	private long id;
-    
-	
+
+
     @OneToOne(cascade = CascadeType.ALL)
 	private ActuationForm form;
 
-	public ActuationView(String title, String viewType, ActuationForm form) {
-		super(0, title, viewType);
+	public ActuationView(String title, String description, String viewType, ActuationForm form) {
+		super(0, title, description, viewType);
 		this.form = form;
 	}
 
 	public ActuationView() {
-		
+
 	}
-	
+
 	public ActuationView(ActuationViewDTO dto) {
-		super(0, dto.getTitle(), dto.getViewType());
-		
+		super(0, dto.getTitle(), dto.getDescription(), dto.getViewType());
+
 		this.form = new ActuationForm(dto.getForm());
 
 	}
@@ -47,5 +47,5 @@ public class ActuationView extends View{
 	public void setForm(ActuationForm form) {
 		this.form = form;
 	}
-	
+
 }

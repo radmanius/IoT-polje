@@ -32,14 +32,10 @@ import hr.fer.tel.server.rest.model.TimeInput;
 import hr.fer.tel.server.rest.model.View;
 import hr.fer.tel.server.rest.repository.dao.SceneRepository;
 import hr.fer.tel.server.rest.service.KeyService;
-import hr.fer.tel.server.rest.service.SceneService;
 
 @Component
 public class IotFieldDataInitializer implements CommandLineRunner {
 	protected final Log logger = LogFactory.getLog(getClass());
-
-	@Autowired
-	private SceneService sceneService;
 
 	@Autowired
 	private KeyService keyService;
@@ -68,14 +64,14 @@ public class IotFieldDataInitializer implements CommandLineRunner {
 		}
 	}
 
-    public void generateAndSaveScenes() {
+    private void generateAndSaveScenes() {
         var scenes = generateScenes();
         for (var scene : scenes) {
           sceneRepository.save(scene);
         }
     }
 
-    public static List<Scene> generateScenes() {
+    private static List<Scene> generateScenes() {
       // http://52.16.186.190/downloads/documentation/data_frame_guide.pdf
       Key key1 = new Key("influxFer",
               "bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==", true);
@@ -170,12 +166,19 @@ public class IotFieldDataInitializer implements CommandLineRunner {
   private static View gddFerit1() {
     return new MesurmentView(
         "GDD test",
+        """
+        [akcija]: GDU
+        prskanje: 200
+        žetva: 500",
+        """,
         "series",
         "GDU",
         new MeasurmentSelectForm(
             null, // submitSelectionRequest
-            // TODO ovo nije dobro
-            new StringInput("period", "Period", "period u kojem se prikazuje graf", "", null)
+            List.of(
+                new DateInput("Početak", "startDate", "Datum početka grafa", null),
+                new DateInput("Kraj", "endDate", "Datum kraja grafa", null)
+            )
         ),
         new Request(
             "POST", //method
@@ -188,8 +191,9 @@ public class IotFieldDataInitializer implements CommandLineRunner {
             String.format("""
             {
               "sensorId": "0004A30B0021EF31",
-              "startDate": "2022-08-01",
-              "endDate": "2022-08-31",
+              "plantingDate": "2022-08-01",
+              "startDate": "{{startDate}}",
+              "endDate": "{{endDate}}",
               "minTemp": 10,
               "maxTemp": 30,
               "cumulative": true
@@ -203,76 +207,76 @@ public class IotFieldDataInitializer implements CommandLineRunner {
 
 
   private static View ferit2WhiteIllumination() {
-      return createFeritView("Bijela iluminacija", "lm*m−2", "whiteIllumination", "BE7A00000000304A");
+      return createFeritView("Bijela iluminacija", "", "lm*m−2", "whiteIllumination", "BE7A00000000304A");
   }
 
   private static View ferit2temperature() {
-      return createFeritView("Temperatura zraka", "C", "temperature", "BE7A00000000304A");
+      return createFeritView("Temperatura zraka", "", "C", "temperature", "BE7A00000000304A");
   }
 
   private static View ferit2lightIntensityW() {
-      return createFeritView("Intenzitet svjetla W", "", "lightIntensityW", "BE7A00000000304A");
+      return createFeritView("Intenzitet svjetla W", "", "", "lightIntensityW", "BE7A00000000304A");
   }
 
   private static View ferit2lightIntensityV() {
-      return createFeritView("Intenzitet svjetla V", "", "lightIntensityV", "BE7A00000000304A");
+      return createFeritView("Intenzitet svjetla V", "", "", "lightIntensityV", "BE7A00000000304A");
   }
 
   private static View ferit2lightIntensityU() {
-      return createFeritView("Intenzitet svjetla U", "", "lightIntensityU", "BE7A00000000304A");
+      return createFeritView("Intenzitet svjetla U", "", "", "lightIntensityU", "BE7A00000000304A");
   }
 
   private static View ferit2lightIntensityT() {
-      return createFeritView("Intenzitet svjetla T", "", "lightIntensityT", "BE7A00000000304A");
+      return createFeritView("Intenzitet svjetla T", "", "", "lightIntensityT", "BE7A00000000304A");
   }
 
   private static View ferit2lightIntensityS() {
-      return createFeritView("Intenzitet svjetla S", "", "lightIntensityS", "BE7A00000000304A");
+      return createFeritView("Intenzitet svjetla S", "", "", "lightIntensityS", "BE7A00000000304A");
   }
 
   private static View ferit2lightIntensityR() {
-      return createFeritView("Intenzitet svjetla R", "", "lightIntensityR", "BE7A00000000304A");
+      return createFeritView("Intenzitet svjetla R", "", "", "lightIntensityR", "BE7A00000000304A");
   }
 
   private static View ferit2Illumination() {
-      return createFeritView("Iluminacija", "lm*m−2", "illumination", "BE7A00000000304A");
+      return createFeritView("Iluminacija", "", "lm*m−2", "illumination", "BE7A00000000304A");
   }
 
   private static View ferit2Humidity() {
-      return createFeritView("Vlaga zraka", "%", "humidity", "BE7A00000000304A");
+      return createFeritView("Vlaga zraka", "", "%", "humidity", "BE7A00000000304A");
   }
 
   private static View ferit2BateryLevel() {
-      return createFeritView("Baterija", "%", "batteryLevel", "BE7A00000000304A");
+      return createFeritView("Baterija", "", "%", "batteryLevel", "BE7A00000000304A");
   }
 
   private static View ferit2airPressure() {
-      return createFeritView("Tlak zraka", "Pa", "airPressure", "BE7A00000000304A");
+      return createFeritView("Tlak zraka", "", "Pa", "airPressure", "BE7A00000000304A");
   }
 
   private static View ferit1RelativeHumidity() {
-      return createFeritView("Vlaga zraka", "%", "relativeHumidit", "0004A30B0021EF31");
+      return createFeritView("Vlaga zraka", "", "%", "relativeHumidit", "0004A30B0021EF31");
   }
 
   private static View ferit1Irradiation() {
-      return createFeritView("Solarna radijacija", "μmol*m-2*s-1", "irridation", "0004A30B0021EF31");
+      return createFeritView("Solarna radijacija", "", "μmol*m-2*s-1", "irridation", "0004A30B0021EF31");
   }
 
   private static View ferit1BatteryVolatage() {
-      return createFeritView("Baterijaa", "%", "batteryVoltage", "0004A30B0021EF31");
+      return createFeritView("Baterijaa", "", "%", "batteryVoltage", "0004A30B0021EF31");
   }
 
   private static View ferit1atmosphericPressure() {
-      return createFeritView("Vlaga zraka", "%", "atmosphericPressure", "0004A30B0021EF31");
+      return createFeritView("Vlaga zraka", "", "%", "atmosphericPressure", "0004A30B0021EF31");
   }
 
   private static View ferit1airTemperature() {
-      return createFeritView("Temperatura zraka", "C", "airTemperature", "0004A30B0021EF31");
+      return createFeritView("Temperatura zraka", "", "C", "airTemperature", "0004A30B0021EF31");
   }
 
-  private static View createFeritView(String viewTitle, String measurementUnit, String measurementType,
+  private static View createFeritView(String viewTitle, String description, String measurementUnit, String measurementType,
           String sensorId) {
-      return new MesurmentView(viewTitle, "series", measurementUnit, new MeasurmentSelectForm(new Request("POST", // method
+      return new MesurmentView(viewTitle, description, "series", measurementUnit, new MeasurmentSelectForm(new Request("POST", // method
               "https://iotat.tel.fer.hr:57786/api/v2/query?org=fer", // uri
               Map.of( // Map<String, String> headers,
                       "Authorization", "Token {{influxFer}}", "Accept", "application/csv", "Content-type",
@@ -290,8 +294,8 @@ public class IotFieldDataInitializer implements CommandLineRunner {
                               """,
                       measurementType, sensorId) // payload
       ), // submitSelectionRequest
-              new StringInput(
-                      "string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")),
+          List.of(new StringInput(
+                      "string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\""))),
               new Request("POST", // method
                       "https://iotat.tel.fer.hr:57786/api/v2/query?org=ferit", // uri
                       Map.of( // Map<String, String> headers,
@@ -313,92 +317,92 @@ public class IotFieldDataInitializer implements CommandLineRunner {
   }
 
   private static View sap02WvView() {
-      return createFerView("Smjer vjetra", "smjer (0 - sjever)", "WV", "SAP02");
+      return createFerView("Smjer vjetra", "", "smjer (0 - sjever)", "WV", "SAP02");
   }
 
   private static View sap02TcView() {
-      return createFerView("Temperatura zraka", "C", "TC", "SAP02");
+      return createFerView("Temperatura zraka", "", "C", "TC", "SAP02");
   }
 
   private static View sap02SoilcView() {
-      return createFerView("Vlaga tla (C)", "Frequency", "SOIL_C", "SAP02");
+      return createFerView("Vlaga tla (C)", "", "Frequency", "SOIL_C", "SAP02");
   }
 
   private static View sap02SoilbView() {
-      return createFerView("Vlaga tla (B)", "Frequency", "SOIL_B", "SAP02");
+      return createFerView("Vlaga tla (B)", "", "Frequency", "SOIL_B", "SAP02");
   }
 
   private static View sap02SoiltcView() {
-      return createFerView("Temperatura tla", "C", "SOILTC", "SAP02");
+      return createFerView("Temperatura tla", "", "C", "SOILTC", "SAP02");
   }
 
   private static View sap02PresView() {
-      return createFerView("Tlak zraka", "Pa", "PRES", "SAP02");
+      return createFerView("Tlak zraka", "", "Pa", "PRES", "SAP02");
   }
 
   private static View sap02Plv3View() {
-      return createFerView("Količina kiše u danu", "mm/day", "PLV3", "SAP02");
+      return createFerView("Količina kiše u danu", "", "mm/day", "PLV3", "SAP02");
   }
 
   private static View sap02Plv2View() {
-      return createFerView("Količina kiše u prošlom satu", "mm/h", "PLV2", "SAP02");
+      return createFerView("Količina kiše u prošlom satu", "", "mm/h", "PLV2", "SAP02");
   }
 
   private static View sap02Plv1View() {
-      return createFerView("Količina kiše u trenutnom satu", "mm", "PLV1", "SAP02");
+      return createFerView("Količina kiše u trenutnom satu", "", "mm", "PLV1", "SAP02");
   }
 
   private static View sap02LwView() {
-      return createFerView("Vlaga lista", "V", "LW", "SAP02");
+      return createFerView("Vlaga lista", "", "V", "LW", "SAP02");
   }
 
   private static View sap02HumView() {
-      return createFerView("Vlaga zraka", "%", "HUM", "SAP02");
+      return createFerView("Vlaga zraka", "", "%", "HUM", "SAP02");
   }
 
   private static View sap02BatView() {
-      return createFerView("Baterija", "%", "BAT", "SAP02");
+      return createFerView("Baterija", "", "%", "BAT", "SAP02");
   }
 
   private static View sap02AneView() {
-      return createFerView("Jačina vjetra", "km/h", "ANE", "SAP02");
+      return createFerView("Jačina vjetra", "", "km/h", "ANE", "SAP02");
   }
 
   private static View sap01TcView() {
-      return createFerView("Temperatura zraka", "C", "TC", "SAP01");
+      return createFerView("Temperatura zraka", "", "C", "TC", "SAP01");
   }
 
   private static View sap01SoilcView() {
-      return createFerView("Vlaga tla", "Frequency", "SOIL_C", "SAP01");
+      return createFerView("Vlaga tla", "Frequency", "", "SOIL_C", "SAP01");
   }
 
   private static View sap01SoiltcView() {
-      return createFerView("Temperatura tla", "C", "SOILTC", "SAP01");
+      return createFerView("Temperatura tla", "", "C", "SOILTC", "SAP01");
   }
 
   private static View sap01PresView() {
-      return createFerView("Tlak zraka", "Pa", "PRES", "SAP01");
+      return createFerView("Tlak zraka", "", "Pa", "PRES", "SAP01");
   }
 
   private static View sap01ParView() {
-      return createFerView("Solarna radijacija", "μmol*m-2*s-1", "PAR", "SAP01");
+      return createFerView("Solarna radijacija", "", "μmol*m-2*s-1", "PAR", "SAP01");
   }
 
   private static View sap01LwView() {
-      return createFerView("Vlaga lista", "V", "LW", "SAP01");
+      return createFerView("Vlaga lista", "", "V", "LW", "SAP01");
   }
 
   private static View sap01HumView() {
-      return createFerView("Vlaga zraka", "%", "HUM", "SAP01");
+      return createFerView("Vlaga zraka", "", "%", "HUM", "SAP01");
   }
 
   private static View sap01BatView() {
-      return createFerView("Baterija", "%", "BAT", "SAP01");
+      return createFerView("Baterija", "", "%", "BAT", "SAP01");
   }
 
-  private static View createFerView(String viewTitle, String measurementUnit, String measurementType,
+  private static View createFerView(String viewTitle, String description, String measurementUnit, String measurementType,
           String sensorId) {
-      return new MesurmentView(viewTitle, "series", measurementUnit, new MeasurmentSelectForm(new Request("POST", // method
+      return new MesurmentView(viewTitle, description, "series", measurementUnit, new MeasurmentSelectForm(new Request("POST", // method
               "https://iotat.tel.fer.hr:57786/api/v2/query?org=fer", // uri
               Map.of( // Map<String, String> headers,
                       "Authorization", "Token {{influxFer}}", "Accept", "application/csv", "Content-type",
@@ -414,8 +418,8 @@ public class IotFieldDataInitializer implements CommandLineRunner {
                       |> drop(columns: ["_start", "_stop"])
                       """, measurementType, sensorId) // payload
       ), // submitSelectionRequest
-              new StringInput(
-                      "string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")),
+      List.of(new StringInput(
+                      "string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\""))),
               new Request("POST", // method
                       "https://iotat.tel.fer.hr:57786/api/v2/query?org=fer", // uri
                       Map.of( // Map<String, String> headers,
@@ -436,8 +440,8 @@ public class IotFieldDataInitializer implements CommandLineRunner {
               ), new DataExtractor("csv", "_time", "_value"));
   }
 
-  private static View createActuationView(String title, String viewType, ActuationForm form) {
-      return new ActuationView(title, viewType, form);
+  private static View createActuationView(String title, String description, String viewType, ActuationForm form) {
+      return new ActuationView(title, description, viewType, form);
   }
 
   public static View createView() {
@@ -445,18 +449,18 @@ public class IotFieldDataInitializer implements CommandLineRunner {
       int number = rand.nextInt(3);
 
       if (number == 0) {
-          View view1 = new MesurmentView("view title1", "single", "C", createMeasurementForm(), createRequestQuery(),
+          View view1 = new MesurmentView("view title1", "description", "single", "C", createMeasurementForm(), createRequestQuery(),
                   createDataExtractor());
           return view1;
       } else {
-          View view2 = new ActuationView("view title2", "actuation", createActuationForm());
+          View view2 = new ActuationView("view title2", "description", "actuation", createActuationForm());
           return view2;
       }
   }
 
   public static MeasurmentSelectForm createMeasurementForm() {
-      MeasurmentSelectForm selectForm1 = new MeasurmentSelectForm(createRequestQuery(), new StringInput("string",
-              "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\""));
+      MeasurmentSelectForm selectForm1 = new MeasurmentSelectForm(createRequestQuery(),
+          List.of(new StringInput("string", "period", "Period", "period u kojem se prikazuje graf", "\"24h\", \"7d\", \"30d\"")));
       return selectForm1;
   }
 
@@ -484,81 +488,81 @@ public class IotFieldDataInitializer implements CommandLineRunner {
   }
 
   // actuation views
-  public static View createActView() {
-      View view2 = new ActuationView("view title", "actuation", createActuationForm());
+  private static View createActView() {
+      View view2 = new ActuationView("view title", "description", "actuation", createActuationForm());
       return view2;
   }
 
-  public static View createActView1() {
-      View view2 = new ActuationView("view title1", "actuation", createActuationForm1());
+  private static View createActView1() {
+      View view2 = new ActuationView("view title1", "description", "actuation", createActuationForm1());
       return view2;
   }
 
-  public static View createActView2() {
-      View view2 = new ActuationView("view title2", "actuation", createActuationForm2());
+  private static View createActView2() {
+      View view2 = new ActuationView("view title2", "description", "actuation", createActuationForm2());
       return view2;
   }
 
-  public static View createActView3() {
-      View view2 = new ActuationView("view title3", "actuation", createActuationForm3());
+  private static View createActView3() {
+      View view2 = new ActuationView("view title3", "description", "actuation", createActuationForm3());
       return view2;
   }
 
-  public static View createActView4() {
-      View view2 = new ActuationView("view title4", "actuation", createActuationForm4());
+  private static View createActView4() {
+      View view2 = new ActuationView("view title4", "description", "actuation", createActuationForm4());
       return view2;
   }
 
-  public static View createActView5() {
-      View view2 = new ActuationView("view title5", "actuation", createActuationForm5());
+  private static View createActView5() {
+      View view2 = new ActuationView("view title5", "description", "actuation", createActuationForm5());
       return view2;
   }
 
-  public static View createActView6() {
-      View view2 = new ActuationView("view title6", "actuation", createActuationForm6());
+  private static View createActView6() {
+      View view2 = new ActuationView("view title6", "description", "actuation", createActuationForm6());
       return view2;
   }
 
   // actuation forme
-  public static ActuationForm createActuationForm() {
+  private static ActuationForm createActuationForm() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new BooleanInput("biti ili ne biti", "Hamlet", "Mišolovka", true));
+              List.of(new BooleanInput("biti ili ne biti", "Hamlet", "Mišolovka", true)));
       return actForm1;
   }
 
-  public static ActuationForm createActuationForm1() {
+  private static ActuationForm createActuationForm1() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new DateInput("datum", "rođendan", "petak", "1.1.2023."));
+          List.of(new DateInput("datum", "rođendan", "petak", "1.1.2023.")));
       return actForm1;
   }
 
-  public static ActuationForm createActuationForm2() {
+  private static ActuationForm createActuationForm2() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new DecimalInput("decimal", "float", "realni broj", 0.5, 0.0, 100.0));
+          List.of(new DecimalInput("decimal", "float", "realni broj", 0.5, 0.0, 100.0)));
       return actForm1;
   }
 
-  public static ActuationForm createActuationForm3() {
+  private static ActuationForm createActuationForm3() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new IntegerInput("int", "integer", "brojač", 5, 0, 1000));
+          List.of(new IntegerInput("int", "integer", "brojač", 5, 0, 1000)));
       return actForm1;
   }
 
-  public static ActuationForm createActuationForm4() {
+  private static ActuationForm createActuationForm4() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new StringInput("string", "str", "text", "lala", "......"));
+          List.of(new StringInput("string", "str", "text", "lala", "......")));
       return actForm1;
   }
 
-  public static ActuationForm createActuationForm5() {
+  private static ActuationForm createActuationForm5() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new SubmitButton("samouništenje", "veliki crveni gumb"));
+          List.of(new SubmitButton("samouništenje", "veliki crveni gumb")));
       return actForm1;
   }
 
-  public static ActuationForm createActuationForm6() {
+  private static ActuationForm createActuationForm6() {
       ActuationForm actForm1 = new ActuationForm(createRequestQuery(), createRequestQuery(),
-              new TimeInput("vrijeme", "podne", "sredina dana", "12:00"));
+          List.of(new TimeInput("vrijeme", "podne", "sredina dana", "12:00")));
       return actForm1;
   }
 

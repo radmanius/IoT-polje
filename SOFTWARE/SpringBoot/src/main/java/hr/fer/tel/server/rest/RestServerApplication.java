@@ -12,6 +12,4 @@ public class RestServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RestServerApplication.class, args);
 	}
-
-
 }
