@@ -231,10 +231,9 @@ const MeasurementViewEditForm = () => {
         setSpremnaScena({ ...scene, views: assembledViews })
         try {
             await testScene(spremnaScena, keycloak.token ?? "");
-        } catch (error) {
-            console.log(error);
+        } catch (error:any) {
             setOption("submit");
-            setMessage("Scene is not valid.");
+            setMessage(error.message??error.stack);
             setPopup(true);
             dispatch(showToastMessage("Scene is not valid.", "error"));
             return;
@@ -264,10 +263,10 @@ const MeasurementViewEditForm = () => {
         try {
             await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             dispatch(showToastMessage("Scene is valid", "success"));
-        } catch (error) {
+        } catch (error:any) {
             setPopup(true);
             setOption("test");
-            setMessage("Scene is not valid.");
+            setMessage(error.message??error.stack);
             
             dispatch(showToastMessage("Scene is not valid.", "error"));
         }

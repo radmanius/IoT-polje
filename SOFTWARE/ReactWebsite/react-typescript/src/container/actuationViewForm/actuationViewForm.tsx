@@ -153,7 +153,6 @@ const ActuationViewForm = () => {
                 },
             },
         };
-        console.log(newData);
 
         let views = [...scene.views];
         views.push(newData);
@@ -179,10 +178,9 @@ const ActuationViewForm = () => {
 
         try {
             await testScene(spremnaScena, keycloak.token ?? "");
-        } catch (error) {
-            console.log(error);
+        } catch (error:any) {
             setOption("submit");
-            setMessage("Scene is not valid.");
+            setMessage(error.message??error.stack);
             setPopup(true);
             dispatch(showToastMessage("Scene is not valid.", "error"));
             return;
@@ -213,10 +211,10 @@ const ActuationViewForm = () => {
             await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             dispatch(showToastMessage("Scene is valid", "success"));
 
-        } catch (error) {
+        } catch (error:any) {
             setPopup(true);
             setOption("test");
-            setMessage("Scene is not valid.");
+            setMessage(error.message??error.stack);
 
             dispatch(showToastMessage("Scene is not valid.", "error"));
         }
@@ -248,7 +246,6 @@ const ActuationViewForm = () => {
                     <div className="form-fields-container">
                         <Form
                             onSubmit={(data: ActuationView) => handleAddNewActuationView(data)}
-                            onChange={(data: any) => console.log(data)}
                             initialValues={initActuationView}
                             render={({ handleSubmit, values }) => (
                                 <form
@@ -764,7 +761,6 @@ const ActuationViewForm = () => {
                                                                         <InputText
                                                                             value={input.min}
                                                                             onChange={e => {
-                                                                                console.log(e.target.value)
                                                                                 setInputsNumber([
                                                                                     ...inputsNumber.slice(0, index),
                                                                                     {

@@ -185,7 +185,6 @@ const assembleViews = (data: ActuationView) => {
                 },
             },
         };
-        console.log(newData);
 
         let views = [...scene.views];
         const index = views.indexOf(view);
@@ -210,10 +209,9 @@ const assembleViews = (data: ActuationView) => {
 
         try {
             await testScene(spremnaScena, keycloak.token ?? "");
-        } catch (error) {
-            console.log(error);
+        } catch (error:any) {
             setOption("submit");
-            setMessage("Scene is not valid.");
+            setMessage(error.message??error.stack);
             setPopup(true);
             dispatch(showToastMessage("Scene is not valid.", "error"));
             return;
@@ -243,11 +241,10 @@ const assembleViews = (data: ActuationView) => {
         try {
             await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             dispatch(showToastMessage("Scene is valid", "success"));
-        } catch (error) {
+        } catch (error:any) {
             setPopup(true);
             setOption("test");
-            setMessage("Scene is not valid.");
-
+            setMessage(error.message??error.stack);
             dispatch(showToastMessage("Scene is not valid.", "error"));
         }
     };
@@ -801,7 +798,6 @@ const assembleViews = (data: ActuationView) => {
                                                                         <InputText
                                                                             value={input.min}
                                                                             onChange={e => {
-                                                                                console.log(e.target.value)
                                                                                 setInputsNumber([
                                                                                     ...inputsNumber.slice(0, index),
                                                                                     {
