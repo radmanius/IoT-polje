@@ -38,121 +38,123 @@ const ActuationViewForm = () => {
 
     const assembleViews = (data: ActuationView) => {
         let newData = { ...data };
-        switch (data.form.inputs?.inputType) {
-            case "BOOLEAN": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue,
-                            inputType: "BOOLEAN",
+        if (data.form.inputs) {
+            switch (data.form.inputs[0].inputType) {
+                case "BOOLEAN": {
+                    newData = {
+                        ...data,
+                        form: {
+                            ...data.form,
+                            inputs: [{
+                                name: data.form.inputs[0].name ?? "",
+                                title: data.form.inputs[0].title ?? "",
+                                description: data.form.inputs[0].description,
+                                defaultValue: data.form.inputs[0].defaultValue,
+                                inputType: "BOOLEAN",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "INTEGER": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue ?? -1,
-                            min: data.form.inputs.min,
-                            max: data.form.inputs.max,
-                            inputType: "INTEGER",
+                    };
+                    break;
+                }
+                case "INTEGER": {
+                    newData = {
+                        ...data,
+                        form: {
+                            ...data.form,
+                            inputs: [{
+                                name: data.form.inputs[0].name ?? "",
+                                title: data.form.inputs[0].title ?? "",
+                                description: data.form.inputs[0].description,
+                                defaultValue: data.form.inputs[0].defaultValue ?? -1,
+                                min: data.form.inputs[0].min,
+                                max: data.form.inputs[0].max,
+                                inputType: "INTEGER",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "DECIMAL": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue ?? -1,
-                            min: data.form.inputs.min,
-                            max: data.form.inputs.max,
-                            inputType: "DECIMAL",
+                    };
+                    break;
+                }
+                case "DECIMAL": {
+                    newData = {
+                        ...data,
+                        form: {
+                            ...data.form,
+                            inputs: [{
+                                name: data.form.inputs[0].name ?? "",
+                                title: data.form.inputs[0].title ?? "",
+                                description: data.form.inputs[0].description,
+                                defaultValue: data.form.inputs[0].defaultValue ?? -1,
+                                min: data.form.inputs[0].min,
+                                max: data.form.inputs[0].max,
+                                inputType: "DECIMAL",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "DATE": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue ?? "",
-                            inputType: "DATE",
+                    };
+                    break;
+                }
+                case "DATE": {
+                    newData = {
+                        ...data,
+                        form: {
+                            ...data.form,
+                            inputs: [{
+                                name: data.form.inputs[0].name ?? "",
+                                title: data.form.inputs[0].title ?? "",
+                                description: data.form.inputs[0].description,
+                                defaultValue: data.form.inputs[0].defaultValue ?? "",
+                                inputType: "DATE",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "TIME": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue ?? "",
-                            inputType: "TIME",
+                    };
+                    break;
+                }
+                case "TIME": {
+                    newData = {
+                        ...data,
+                        form: {
+                            ...data.form,
+                            inputs: [{
+                                name: data.form.inputs[0].name ?? "",
+                                title: data.form.inputs[0].title ?? "",
+                                description: data.form.inputs[0].description,
+                                defaultValue: data.form.inputs[0].defaultValue ?? "",
+                                inputType: "TIME",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "STRING": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue ?? false,
-                            pattern: data.form.inputs.pattern,
-                            inputType: "STRING",
+                    };
+                    break;
+                }
+                case "STRING": {
+                    newData = {
+                        ...data,
+                        form: {
+                            ...data.form,
+                            inputs: [{
+                                name: data.form.inputs[0].name ?? "",
+                                title: data.form.inputs[0].title ?? "",
+                                description: data.form.inputs[0].description,
+                                defaultValue: data.form.inputs[0].defaultValue ?? false,
+                                pattern: data.form.inputs[0].pattern,
+                                inputType: "STRING",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "SUBMIT": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            inputType: "SUBMIT",
+                    };
+                    break;
+                }
+                case "SUBMIT": {
+                    newData = {
+                        ...data,
+                        form: {
+                            ...data.form,
+                            inputs: [{
+                                name: data.form.inputs[0].name ?? "",
+                                title: data.form.inputs[0].title ?? "",
+                                inputType: "SUBMIT",
+                            }],
                         },
-                    },
-                };
-                break;
+                    };
+                    break;
+                }
             }
         }
 
@@ -314,6 +316,24 @@ const ActuationViewForm = () => {
                                                             id="viewType"
                                                             className="scene-field-form"
                                                             disabled
+                                                            {...input}
+                                                        />
+                                                    </span>
+                                                </div>
+                                            )}
+                                        />
+                                        <Field
+                                            name="description"
+                                            render={({ input }) => (
+                                                <div>
+                                                    <span>
+                                                        <p>Opis:</p>
+                                                    </span>
+                                                    <span>
+                                                        <InputTextarea
+                                                            id="description"
+                                                            rows={3}
+                                                            className="scene-field-form"
                                                             {...input}
                                                         />
                                                     </span>
@@ -618,7 +638,7 @@ const ActuationViewForm = () => {
                                                 </div>
                                             )}
                                         />
-                                        {values.form.inputs?.inputType !== "SUBMIT" && (
+                                        {values.form.inputs && values.form.inputs[0].inputType !== "SUBMIT" && (
                                             <Field
                                                 name="form.inputs.description"
                                                 render={({ input }) => (
@@ -637,7 +657,7 @@ const ActuationViewForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {values.form.inputs?.inputType !== "SUBMIT" && (
+                                        {values.form.inputs && values.form.inputs[0].inputType !== "SUBMIT" && (
                                             <Field
                                                 name="form.inputs.defaultValue"
                                                 render={({ input }) => (
@@ -656,7 +676,7 @@ const ActuationViewForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {values.form.inputs?.inputType === "STRING" && (
+                                        {values.form.inputs && values.form.inputs[0].inputType === "STRING" && (
                                             <Field
                                                 name="form.inputs.pattern"
                                                 render={({ input }) => (
@@ -675,8 +695,8 @@ const ActuationViewForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {(values.form.inputs?.inputType === "INTEGER" ||
-                                            values.form.inputs?.inputType === "DECIMAL") && (
+                                        {(values.form.inputs && values.form.inputs[0].inputType === "INTEGER" ||
+                                            values.form.inputs && values.form.inputs[0].inputType === "DECIMAL") && (
                                             <>
                                                 <Field
                                                     name="form.inputs.min"

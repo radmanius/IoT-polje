@@ -15,7 +15,7 @@ import { PAGE_ROUTES } from "utils/paths";
 import { Dropdown } from "primereact/dropdown";
 import "./measurementViewForm.scss";
 import { InputSwitch } from "primereact/inputswitch";
-import { viewInputsOptions } from "models/viewsInterfaces/inputs";
+import { IInput, viewInputsOptions } from "models/viewsInterfaces/inputs";
 import keycloak from "keycloak";
 import { useDispatch } from "react-redux";
 import { showToastMessage } from "redux/actions/toastMessageActions";
@@ -45,6 +45,8 @@ const MeasurementViewForm = () => {
     const [message, setMessage] = useState<string>("");
     const [spremnaScena, setSpremnaScena] = useState<IScene>(scene);
 
+    const [inputsNumber, setInputsNumber] = useState<string[]>([""]);
+
     const assembleViews = (data: MeasurementsView) => {
         let newData = { ...data };
         if (dataFormat === "csv") {
@@ -65,122 +67,93 @@ const MeasurementViewForm = () => {
             };
         }
         data = newData;
-        switch (data.selectForm.inputs?.inputType) {
-            case "BOOLEAN": {
+        if (data.selectForm.inputs) {
+            let listaInputa: IInput[] = [];
+            console.log(data.selectForm.inputs);
+            data.selectForm.inputs.forEach((input, index) => {
+                switch (input.inputType) {
+                    case "BOOLEAN": {
+                        listaInputa.push({
+                                    name: input.name ?? "",
+                                    title: input.title ?? "",
+                                    description: input.description,
+                                    defaultValue: input.defaultValue,
+                                    inputType: "BOOLEAN",
+                                    });
+                        break;
+                    }
+                    case "INTEGER": {
+                        listaInputa.push({
+                                    name: input.name ?? "",
+                                    title: input.title ?? "",
+                                    description: input.description,
+                                    defaultValue: input.defaultValue ?? -1,
+                                    min: input.min,
+                                    max: input.max,
+                                    inputType: "INTEGER",
+                                    });
+                        break;
+                    }
+                    case "DECIMAL": {
+                        listaInputa.push({
+                                    name: input.name ?? "",
+                                    title: input.title ?? "",
+                                    description: input.description,
+                                    defaultValue: input.defaultValue ?? -1,
+                                    min: input.min,
+                                    max: input.max,
+                                    inputType: "DECIMAL",
+                                    });
+                        break;
+                    }
+                    case "DATE": {
+                        listaInputa.push({
+                                    name: input.name ?? "",
+                                    title: input.title ?? "",
+                                    description: input.description,
+                                    defaultValue: input.defaultValue ?? "",
+                                    inputType: "DATE",
+                                    });
+                        break;
+                    }
+                    case "TIME": {
+                        listaInputa.push({
+                                    name: input.name ?? "",
+                                    title: input.title ?? "",
+                                    description: input.description,
+                                    defaultValue: input.defaultValue ?? "",
+                                    inputType: "TIME",
+                                    });
+                        break;
+                    }
+                    case "STRING": {
+                        listaInputa.push({
+                                    name: input.name ?? "",
+                                    title: input.title ?? "",
+                                    description: input.description,
+                                    defaultValue: input.defaultValue ?? false,
+                                    pattern: input.pattern,
+                                    inputType: "STRING",
+                                    });
+                        break;
+                    }
+                    case "SUBMIT": {
+                        listaInputa.push({
+                                    name: input.name ?? "",
+                                    title: input.title ?? "",
+                                    inputType: "SUBMIT",
+                                    });
+                        break;
+                    }
+                }
                 newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue,
-                            inputType: "BOOLEAN",
-                        },
-                    },
-                };
-                break;
-            }
-            case "INTEGER": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue ?? -1,
-                            min: data.selectForm.inputs.min,
-                            max: data.selectForm.inputs.max,
-                            inputType: "INTEGER",
-                        },
-                    },
-                };
-                break;
-            }
-            case "DECIMAL": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue ?? -1,
-                            min: data.selectForm.inputs.min,
-                            max: data.selectForm.inputs.max,
-                            inputType: "DECIMAL",
-                        },
-                    },
-                };
-                break;
-            }
-            case "DATE": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue ?? "",
-                            inputType: "DATE",
-                        },
-                    },
-                };
-                break;
-            }
-            case "TIME": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue ?? "",
-                            inputType: "TIME",
-                        },
-                    },
-                };
-                break;
-            }
-            case "STRING": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue ?? false,
-                            pattern: data.selectForm.inputs.pattern,
-                            inputType: "STRING",
-                        },
-                    },
-                };
-                break;
-            }
-            case "SUBMIT": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            inputType: "SUBMIT",
-                        },
-                    },
-                };
-                break;
-            }
+                            ...data,
+                            selectForm: {
+                                ...data.selectForm,
+                                inputs: listaInputa,
+                            },
+                        };
+            });
         }
         let headersSubmitMap = {} as { [key: string]: string };
         headersSubmit.forEach(pair => {
@@ -361,6 +334,24 @@ const MeasurementViewForm = () => {
                                                 </div>
                                             )}
                                         />
+                                        <Field
+                                            name="description"
+                                            render={({ input }) => (
+                                                <div>
+                                                    <span>
+                                                        <p>Opis:</p>
+                                                    </span>
+                                                    <span>
+                                                        <InputTextarea
+                                                            id="description"
+                                                            rows={3}
+                                                            className="scene-field-form"
+                                                            {...input}
+                                                        />
+                                                    </span>
+                                                </div>
+                                            )}
+                                        />
                                     </div>
                                     <hr />
                                     <h3>Select form (submit selection request)</h3>
@@ -480,158 +471,202 @@ const MeasurementViewForm = () => {
                                         />
                                     </div>
                                     <hr />
-                                    <h3>Select form (inputs)</h3>
-                                    <div className="measurement-view-form-container-inputs">
-                                        <Field
-                                            name="selectForm.inputs.name"
-                                            render={({ input }) => (
-                                                <div>
-                                                    <span>
-                                                        <p>Input name:</p>
-                                                    </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="selectForm.inputs.name"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span>
-                                                </div>
-                                            )}
+                                    <p className="inputs">
+                                        Select form (inputs)
+                                        <Button
+                                        icon="fa fa-plus"
+                                        className="p-button-success"
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            if (values.selectForm.inputs) {
+                                                let inputsCopy = [...values.selectForm.inputs];
+                                                inputsCopy.push({ inputType: "BOOLEAN" });
+                                                values.selectForm.inputs = inputsCopy;
+                                                let inputsNumberCopy = [...inputsNumber];
+                                                inputsNumberCopy.push("");
+                                                setInputsNumber(inputsNumberCopy);
+                                            }
+                                            else {
+                                                values.selectForm.inputs = [{ inputType: "BOOLEAN" }];
+                                                setInputsNumber([""]);
+                                            }
+                                        }}
                                         />
-                                        <Field
-                                            name="selectForm.inputs.title"
-                                            render={({ input }) => (
-                                                <div>
-                                                    <span>
-                                                        <p>Input title:</p>
-                                                    </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="selectForm.inputs.title"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span>
-                                                </div>
-                                            )}
-                                        />
-                                        <Field
-                                            name="selectForm.inputs.inputType"
-                                            render={({ input }) => (
-                                                <div>
-                                                    <span>
-                                                        <p>Input type:</p>
-                                                    </span>
-                                                    <span>
-                                                        <Dropdown
-                                                            {...input}
-                                                            className="scene-field-form dropdown-design"
-                                                            options={viewInputsOptions}
-                                                            optionLabel="text"
-                                                            optionValue="value"
-                                                        />
-                                                    </span>
-                                                </div>
-                                            )}
-                                        />
-                                        {values.selectForm.inputs?.inputType !== "SUBMIT" && (
+                                    </p>
+                                    
+                                    {inputsNumber.map((input, index) => (
+                                        <div className="measurement-view-form-container-inputs multiple">
+                                            <Button
+                                                icon="fa-sharp fa-solid fa-xmark"
+                                                className="p-button-danger small-button deleteInput"
+                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                onClick={e => {
+                                                    e.preventDefault();
+                                                    if (values.selectForm.inputs) {
+                                                        let inputsCopy = [...values.selectForm.inputs];
+                                                        inputsCopy.splice(index, 1);
+                                                        values.selectForm.inputs = inputsCopy;
+                                                        let inputsNumberCopy = [...inputsNumber];
+                                                        inputsNumberCopy.splice(index, 1);
+                                                        setInputsNumber(inputsNumberCopy);
+                                                        console.log(values.selectForm.inputs);
+                                                    }
+                                                    else {
+                                                        values.selectForm.inputs = [];
+                                                        setInputsNumber([]);
+                                                    }
+                                                }}
+                                            />
                                             <Field
-                                                name="selectForm.inputs.description"
+                                                name={"selectForm.inputs[" + index + "].name"}
                                                 render={({ input }) => (
                                                     <div>
                                                         <span>
-                                                            <p>Description:</p>
+                                                            <p>Input name:</p>
                                                         </span>
                                                         <span>
                                                             <InputText
-                                                                {...input}
-                                                                id="selectForm.inputs.description"
+                                                                id="selectForm.inputs.name"
                                                                 className="scene-field-form"
+                                                                {...input}
                                                             />
                                                         </span>
                                                     </div>
                                                 )}
                                             />
-                                        )}
-                                        {values.selectForm.inputs?.inputType !== "SUBMIT" && (
                                             <Field
-                                                name="selectForm.inputs.defaultValue"
+                                                name={"selectForm.inputs[" + index + "].title"}
                                                 render={({ input }) => (
                                                     <div>
                                                         <span>
-                                                            <p>Default value:</p>
+                                                            <p>Input title:</p>
                                                         </span>
                                                         <span>
                                                             <InputText
-                                                                {...input}
-                                                                id="selectForm.inputs.defaultValue"
+                                                                id="selectForm.inputs.title"
                                                                 className="scene-field-form"
+                                                                {...input}
                                                             />
                                                         </span>
                                                     </div>
                                                 )}
                                             />
-                                        )}
-                                        {values.selectForm.inputs?.inputType === "STRING" && (
                                             <Field
-                                                name="selectForm.inputs.pattern"
+                                                name={"selectForm.inputs[" + index + "].inputType"}
                                                 render={({ input }) => (
                                                     <div>
                                                         <span>
-                                                            <p>Pattern:</p>
+                                                            <p>Input type:</p>
                                                         </span>
                                                         <span>
-                                                            <InputText
+                                                            <Dropdown
                                                                 {...input}
-                                                                id="selectForm.inputs.pattern"
-                                                                className="scene-field-form"
+                                                                className="scene-field-form dropdown-design"
+                                                                options={viewInputsOptions}
+                                                                optionLabel="text"
+                                                                optionValue="value"
                                                             />
                                                         </span>
                                                     </div>
                                                 )}
                                             />
-                                        )}
-                                        {(values.selectForm.inputs?.inputType === "INTEGER" ||
-                                            values.selectForm.inputs?.inputType === "DECIMAL") && (
-                                            <>
+                                            {values.selectForm.inputs && values.selectForm.inputs[index].inputType !== "SUBMIT" && (
                                                 <Field
-                                                    name="selectForm.inputs.min"
+                                                    name={"selectForm.inputs[" + index + "].description"}
                                                     render={({ input }) => (
                                                         <div>
                                                             <span>
-                                                                <p>Minimum:</p>
+                                                                <p>Description:</p>
                                                             </span>
                                                             <span>
                                                                 <InputText
                                                                     {...input}
-                                                                    id="selectForm.inputs.min"
+                                                                    id="selectForm.inputs.description"
                                                                     className="scene-field-form"
                                                                 />
                                                             </span>
                                                         </div>
                                                     )}
                                                 />
+                                            )}
+                                            {values.selectForm.inputs && values.selectForm.inputs[index].inputType !== "SUBMIT" && (
                                                 <Field
-                                                    name="selectForm.inputs.max"
+                                                    name={"selectForm.inputs[" + index + "].defaultValue"}
                                                     render={({ input }) => (
                                                         <div>
                                                             <span>
-                                                                <p>Maximum:</p>
+                                                                <p>Default value:</p>
                                                             </span>
                                                             <span>
                                                                 <InputText
                                                                     {...input}
-                                                                    id="selectForm.inputs.max"
+                                                                    id="selectForm.inputs.defaultValue"
                                                                     className="scene-field-form"
                                                                 />
                                                             </span>
                                                         </div>
                                                     )}
                                                 />
-                                            </>
-                                        )}
-                                    </div>
+                                            )}
+                                            {values.selectForm.inputs && values.selectForm.inputs[index].inputType === "STRING" && (
+                                                <Field
+                                                    name={"selectForm.inputs[" + index + "].pattern"}
+                                                    render={({ input }) => (
+                                                        <div>
+                                                            <span>
+                                                                <p>Pattern:</p>
+                                                            </span>
+                                                            <span>
+                                                                <InputText
+                                                                    {...input}
+                                                                    id="selectForm.inputs.pattern"
+                                                                    className="scene-field-form"
+                                                                />
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                />
+                                            )}
+                                            {(values.selectForm.inputs && values.selectForm.inputs[index].inputType === "INTEGER" ||
+                                                values.selectForm.inputs && values.selectForm.inputs[index].inputType === "DECIMAL") && (
+                                                    <>
+                                                        <Field
+                                                            name={"selectForm.inputs[" + index + "].min"}
+                                                            render={({ input }) => (
+                                                                <div>
+                                                                    <span>
+                                                                        <p>Minimum:</p>
+                                                                    </span>
+                                                                    <span>
+                                                                        <InputText
+                                                                            {...input}
+                                                                            id="selectForm.inputs.min"
+                                                                            className="scene-field-form"
+                                                                        />
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                        />
+                                                        <Field
+                                                            name={"selectForm.inputs[" + index + "].max"}
+                                                            render={({ input }) => (
+                                                                <div>
+                                                                    <span>
+                                                                        <p>Maximum:</p>
+                                                                    </span>
+                                                                    <span>
+                                                                        <InputText
+                                                                            {...input}
+                                                                            id="selectForm.inputs.max"
+                                                                            className="scene-field-form"
+                                                                        />
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                        />
+                                                    </>
+                                                )}
+                                        </div>))}
                                     <hr />
                                     <h3>Query</h3>
                                     <div className="measurement-view-form-container-inputs">

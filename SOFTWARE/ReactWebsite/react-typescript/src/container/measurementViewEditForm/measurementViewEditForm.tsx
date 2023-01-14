@@ -86,121 +86,123 @@ const MeasurementViewEditForm = () => {
             };
         }
         data = newData;
-        switch (data.selectForm.inputs?.inputType) {
-            case "BOOLEAN": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue,
-                            inputType: "BOOLEAN",
+        if (data.selectForm.inputs) {
+            switch (data.selectForm.inputs[0].inputType) {
+                case "BOOLEAN": {
+                    newData = {
+                        ...data,
+                        selectForm: {
+                            ...data.selectForm,
+                            inputs: [{
+                                name: data.selectForm.inputs[0].name ?? "",
+                                title: data.selectForm.inputs[0].title ?? "",
+                                description: data.selectForm.inputs[0].description,
+                                defaultValue: data.selectForm.inputs[0].defaultValue,
+                                inputType: "BOOLEAN",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "INTEGER": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue ?? -1,
-                            min: data.selectForm.inputs.min,
-                            max: data.selectForm.inputs.max,
-                            inputType: "INTEGER",
+                    };
+                    break;
+                }
+                case "INTEGER": {
+                    newData = {
+                        ...data,
+                        selectForm: {
+                            ...data.selectForm,
+                            inputs: [{
+                                name: data.selectForm.inputs[0].name ?? "",
+                                title: data.selectForm.inputs[0].title ?? "",
+                                description: data.selectForm.inputs[0].description,
+                                defaultValue: data.selectForm.inputs[0].defaultValue ?? -1,
+                                min: data.selectForm.inputs[0].min,
+                                max: data.selectForm.inputs[0].max,
+                                inputType: "INTEGER",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "DECIMAL": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue ?? -1,
-                            min: data.selectForm.inputs.min,
-                            max: data.selectForm.inputs.max,
-                            inputType: "DECIMAL",
+                    };
+                    break;
+                }
+                case "DECIMAL": {
+                    newData = {
+                        ...data,
+                        selectForm: {
+                            ...data.selectForm,
+                            inputs: [{
+                                name: data.selectForm.inputs[0].name ?? "",
+                                title: data.selectForm.inputs[0].title ?? "",
+                                description: data.selectForm.inputs[0].description,
+                                defaultValue: data.selectForm.inputs[0].defaultValue ?? -1,
+                                min: data.selectForm.inputs[0].min,
+                                max: data.selectForm.inputs[0].max,
+                                inputType: "DECIMAL",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "DATE": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue ?? "",
-                            inputType: "DATE",
+                    };
+                    break;
+                }
+                case "DATE": {
+                    newData = {
+                        ...data,
+                        selectForm: {
+                            ...data.selectForm,
+                            inputs: [{
+                                name: data.selectForm.inputs[0].name ?? "",
+                                title: data.selectForm.inputs[0].title ?? "",
+                                description: data.selectForm.inputs[0].description,
+                                defaultValue: data.selectForm.inputs[0].defaultValue ?? "",
+                                inputType: "DATE",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "TIME": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue ?? "",
-                            inputType: "TIME",
+                    };
+                    break;
+                }
+                case "TIME": {
+                    newData = {
+                        ...data,
+                        selectForm: {
+                            ...data.selectForm,
+                            inputs: [{
+                                name: data.selectForm.inputs[0].name ?? "",
+                                title: data.selectForm.inputs[0].title ?? "",
+                                description: data.selectForm.inputs[0].description,
+                                defaultValue: data.selectForm.inputs[0].defaultValue ?? "",
+                                inputType: "TIME",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "STRING": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            description: data.selectForm.inputs.description,
-                            defaultValue: data.selectForm.inputs.defaultValue ?? false,
-                            pattern: data.selectForm.inputs.pattern,
-                            inputType: "STRING",
+                    };
+                    break;
+                }
+                case "STRING": {
+                    newData = {
+                        ...data,
+                        selectForm: {
+                            ...data.selectForm,
+                            inputs: [{
+                                name: data.selectForm.inputs[0].name ?? "",
+                                title: data.selectForm.inputs[0].title ?? "",
+                                description: data.selectForm.inputs[0].description,
+                                defaultValue: data.selectForm.inputs[0].defaultValue ?? false,
+                                pattern: data.selectForm.inputs[0].pattern,
+                                inputType: "STRING",
+                            }],
                         },
-                    },
-                };
-                break;
-            }
-            case "SUBMIT": {
-                newData = {
-                    ...data,
-                    selectForm: {
-                        ...data.selectForm,
-                        inputs: {
-                            name: data.selectForm.inputs.name ?? "",
-                            title: data.selectForm.inputs.title ?? "",
-                            inputType: "SUBMIT",
+                    };
+                    break;
+                }
+                case "SUBMIT": {
+                    newData = {
+                        ...data,
+                        selectForm: {
+                            ...data.selectForm,
+                            inputs: [{
+                                name: data.selectForm.inputs[0].name ?? "",
+                                title: data.selectForm.inputs[0].title ?? "",
+                                inputType: "SUBMIT",
+                            }],
                         },
-                    },
-                };
-                break;
+                    };
+                    break;
+                }
             }
         }
 
@@ -388,6 +390,24 @@ const MeasurementViewEditForm = () => {
                                                 </div>
                                             )}
                                         />
+                                        <Field
+                                            name="description"
+                                            render={({ input }) => (
+                                                <div>
+                                                    <span>
+                                                        <p>Opis:</p>
+                                                    </span>
+                                                    <span>
+                                                        <InputTextarea
+                                                            id="description"
+                                                            rows={3}
+                                                            className="scene-field-form"
+                                                            {...input}
+                                                        />
+                                                    </span>
+                                                </div>
+                                            )}
+                                        />
                                     </div>
                                     <hr />
                                     <h3>Select form (submit selection request)</h3>
@@ -508,9 +528,10 @@ const MeasurementViewEditForm = () => {
                                     </div>
                                     <hr />
                                     <h3>Select form (inputs)</h3>
+                                    
                                     <div className="measurement-view-form-container-inputs">
                                         <Field
-                                            name="selectForm.inputs.name"
+                                            name="selectForm.inputs[0].name"
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
@@ -527,7 +548,7 @@ const MeasurementViewEditForm = () => {
                                             )}
                                         />
                                         <Field
-                                            name="selectForm.inputs.title"
+                                            name="selectForm.inputs[0].title"
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
@@ -544,7 +565,7 @@ const MeasurementViewEditForm = () => {
                                             )}
                                         />
                                         <Field
-                                            name="selectForm.inputs.inputType"
+                                            name="selectForm.inputs[0].inputType"
                                             render={({ input }) => (
                                                 <div>
                                                     <span>
@@ -562,9 +583,9 @@ const MeasurementViewEditForm = () => {
                                                 </div>
                                             )}
                                         />
-                                        {values.selectForm.inputs?.inputType !== "SUBMIT" && (
+                                        {values.selectForm.inputs && values.selectForm.inputs[0].inputType !== "SUBMIT" && (
                                             <Field
-                                                name="selectForm.inputs.description"
+                                                name="selectForm.inputs[0].description"
                                                 render={({ input }) => (
                                                     <div>
                                                         <span>
@@ -581,9 +602,9 @@ const MeasurementViewEditForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {values.selectForm.inputs?.inputType !== "SUBMIT" && (
+                                        {values.selectForm.inputs && values.selectForm.inputs[0].inputType !== "SUBMIT" && (
                                             <Field
-                                                name="selectForm.inputs.defaultValue"
+                                                name="selectForm.inputs[0].defaultValue"
                                                 render={({ input }) => (
                                                     <div>
                                                         <span>
@@ -600,9 +621,9 @@ const MeasurementViewEditForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {values.selectForm.inputs?.inputType === "STRING" && (
+                                        {values.selectForm.inputs && values.selectForm.inputs[0].inputType === "STRING" && (
                                             <Field
-                                                name="selectForm.inputs.pattern"
+                                                name="selectForm.inputs[0].pattern"
                                                 render={({ input }) => (
                                                     <div>
                                                         <span>
@@ -619,11 +640,11 @@ const MeasurementViewEditForm = () => {
                                                 )}
                                             />
                                         )}
-                                        {(values.selectForm.inputs?.inputType === "INTEGER" ||
-                                            values.selectForm.inputs?.inputType === "DECIMAL") && (
+                                        {(values.selectForm.inputs && values.selectForm.inputs[0].inputType === "INTEGER" ||
+                                            values.selectForm.inputs && values.selectForm.inputs[0].inputType === "DECIMAL") && (
                                             <>
                                                 <Field
-                                                    name="selectForm.inputs.min"
+                                                    name="selectForm.inputs[0].min"
                                                     render={({ input }) => (
                                                         <div>
                                                             <span>
@@ -640,7 +661,7 @@ const MeasurementViewEditForm = () => {
                                                     )}
                                                 />
                                                 <Field
-                                                    name="selectForm.inputs.max"
+                                                    name="selectForm.inputs[0].max"
                                                     render={({ input }) => (
                                                         <div>
                                                             <span>
