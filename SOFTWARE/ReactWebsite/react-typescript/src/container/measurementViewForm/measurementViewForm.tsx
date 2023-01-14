@@ -154,7 +154,7 @@ const MeasurementViewForm = () => {
                 inputs: listaInputa,
             },
         };
-        console.log(listaInputa);
+
         let headersSubmitMap = {} as { [key: string]: string };
         headersSubmit.forEach(pair => {
             if (pair[0] !== "") headersSubmitMap[pair[0]] = pair[1];
@@ -683,11 +683,12 @@ const MeasurementViewForm = () => {
                                                                         <InputText
                                                                             value={input.min}
                                                                             onChange={e => {
+                                                                                console.log(e.target.value)
                                                                                 setInputsNumber([
                                                                                     ...inputsNumber.slice(0, index),
                                                                                     {
                                                                                         ...inputsNumber[index],
-                                                                                        min: parseInt(e.target.value)
+                                                                                        min: e.target.value.replaceAll(',', '.')
                                                                                     },
                                                                                     ...inputsNumber.slice(index + 1)
                                                                                 ])
@@ -714,7 +715,7 @@ const MeasurementViewForm = () => {
                                                                                     ...inputsNumber.slice(0, index),
                                                                                     {
                                                                                         ...inputsNumber[index],
-                                                                                        max: parseInt(e.target.value)
+                                                                                        max: e.target.value.replaceAll(',', '.')
                                                                                     },
                                                                                     ...inputsNumber.slice(index + 1)
                                                                                 ])
