@@ -9,7 +9,7 @@ import { PAGE_ROUTES } from "utils/paths";
 import { Dropdown } from "primereact/dropdown";
 
 import "./actuationViewForm.scss";
-import { viewInputsOptions } from "models/viewsInterfaces/inputs";
+import { IInput, viewInputsOptions } from "models/viewsInterfaces/inputs";
 import { useKeycloak } from "@react-keycloak/web";
 import { useDispatch } from "react-redux";
 import { showToastMessage } from "redux/actions/toastMessageActions";
@@ -36,125 +36,97 @@ const ActuationViewForm = () => {
     const [message, setMessage] = useState<string>("");
     const [spremnaScena, setSpremnaScena] = useState<IScene>(scene);
 
+    const [inputsNumber, setInputsNumber] = useState<IInput[]>([{ inputType: "BOOLEAN" }]);
+
     const assembleViews = (data: ActuationView) => {
         let newData = { ...data };
-        switch (data.form.inputs?.inputType) {
-            case "BOOLEAN": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue,
-                            inputType: "BOOLEAN",
-                        },
-                    },
-                };
-                break;
+
+        let listaInputa: IInput[] = [];
+
+        inputsNumber.forEach((input, index) => {
+            switch (input.inputType) {
+                case "BOOLEAN": {
+                    listaInputa.push({
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue,
+                        inputType: "BOOLEAN",
+                    });
+                    break;
+                }
+                case "INTEGER": {
+                    listaInputa.push({
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue ?? -1,
+                        min: input.min,
+                        max: input.max,
+                        inputType: "INTEGER",
+                    });
+                    break;
+                }
+                case "DECIMAL": {
+                    listaInputa.push({
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue ?? -1,
+                        min: input.min,
+                        max: input.max,
+                        inputType: "DECIMAL",
+                    });
+                    break;
+                }
+                case "DATE": {
+                    listaInputa.push({
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue ?? "",
+                        inputType: "DATE",
+                    });
+                    break;
+                }
+                case "TIME": {
+                    listaInputa.push({
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue ?? "",
+                        inputType: "TIME",
+                    });
+                    break;
+                }
+                case "STRING": {
+                    listaInputa.push({
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue ?? false,
+                        pattern: input.pattern,
+                        inputType: "STRING",
+                    });
+                    break;
+                }
+                case "SUBMIT": {
+                    listaInputa.push({
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        inputType: "SUBMIT",
+                    });
+                    break;
+                }
             }
-            case "INTEGER": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue ?? -1,
-                            min: data.form.inputs.min,
-                            max: data.form.inputs.max,
-                            inputType: "INTEGER",
-                        },
-                    },
-                };
-                break;
-            }
-            case "DECIMAL": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue ?? -1,
-                            min: data.form.inputs.min,
-                            max: data.form.inputs.max,
-                            inputType: "DECIMAL",
-                        },
-                    },
-                };
-                break;
-            }
-            case "DATE": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue ?? "",
-                            inputType: "DATE",
-                        },
-                    },
-                };
-                break;
-            }
-            case "TIME": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue ?? "",
-                            inputType: "TIME",
-                        },
-                    },
-                };
-                break;
-            }
-            case "STRING": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            description: data.form.inputs.description,
-                            defaultValue: data.form.inputs.defaultValue ?? false,
-                            pattern: data.form.inputs.pattern,
-                            inputType: "STRING",
-                        },
-                    },
-                };
-                break;
-            }
-            case "SUBMIT": {
-                newData = {
-                    ...data,
-                    form: {
-                        ...data.form,
-                        inputs: {
-                            name: data.form.inputs.name ?? "",
-                            title: data.form.inputs.title ?? "",
-                            inputType: "SUBMIT",
-                        },
-                    },
-                };
-                break;
-            }
-        }
+        });
+        newData = {
+            ...data,
+            form: {
+                ...data.form,
+                inputs: listaInputa,
+            },
+        };
 
         let headersSubmitMap = {} as { [key: string]: string };
         headersSubmit.forEach(pair => {
@@ -181,7 +153,6 @@ const ActuationViewForm = () => {
                 },
             },
         };
-        console.log(newData);
 
         let views = [...scene.views];
         views.push(newData);
@@ -207,10 +178,9 @@ const ActuationViewForm = () => {
 
         try {
             await testScene(spremnaScena, keycloak.token ?? "");
-        } catch (error) {
-            console.log(error);
+        } catch (error:any) {
             setOption("submit");
-            setMessage("Scene is not valid.");
+            setMessage(error.message??error.stack);
             setPopup(true);
             dispatch(showToastMessage("Scene is not valid.", "error"));
             return;
@@ -218,7 +188,7 @@ const ActuationViewForm = () => {
 
         try {
             await editScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
-            dispatch(showToastMessage("Measurement view successfully created", "success"));
+            dispatch(showToastMessage("Actuation view successfully created", "success"));
             navigate(-1);
         } catch (error) {
             dispatch(showToastMessage("Error while adding new actuation view.", "error"));
@@ -228,7 +198,7 @@ const ActuationViewForm = () => {
     const addNewActuationView = async () => {
         try {
             await editScene(spremnaScena, keycloak.token ?? "");
-            dispatch(showToastMessage("Measurement view successfully created", "success"));
+            dispatch(showToastMessage("Actuation view successfully created", "success"));
             navigate(-1);
         } catch (error) {
             dispatch(showToastMessage("Error while adding new actuation view.", "error"));
@@ -241,10 +211,10 @@ const ActuationViewForm = () => {
             await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             dispatch(showToastMessage("Scene is valid", "success"));
 
-        } catch (error) {
+        } catch (error:any) {
             setPopup(true);
             setOption("test");
-            setMessage("Scene is not valid.");
+            setMessage(error.message??error.stack);
 
             dispatch(showToastMessage("Scene is not valid.", "error"));
         }
@@ -276,7 +246,6 @@ const ActuationViewForm = () => {
                     <div className="form-fields-container">
                         <Form
                             onSubmit={(data: ActuationView) => handleAddNewActuationView(data)}
-                            onChange={(data: any) => console.log(data)}
                             initialValues={initActuationView}
                             render={({ handleSubmit, values }) => (
                                 <form
@@ -314,6 +283,24 @@ const ActuationViewForm = () => {
                                                             id="viewType"
                                                             className="scene-field-form"
                                                             disabled
+                                                            {...input}
+                                                        />
+                                                    </span>
+                                                </div>
+                                            )}
+                                        />
+                                        <Field
+                                            name="description"
+                                            render={({ input }) => (
+                                                <div>
+                                                    <span>
+                                                        <p>Opis:</p>
+                                                    </span>
+                                                    <span>
+                                                        <InputTextarea
+                                                            id="description"
+                                                            rows={3}
+                                                            className="scene-field-form"
                                                             {...input}
                                                         />
                                                     </span>
@@ -563,158 +550,264 @@ const ActuationViewForm = () => {
                                         />
                                     </div>
                                     <hr />
-                                    <h3>Inputs</h3>
-                                    <div className="actuation-view-form-container-inputs">
-                                        <Field
-                                            name="form.inputs.name"
-                                            render={({ input }) => (
-                                                <div>
-                                                    <span>
-                                                        <p>Input name:</p>
-                                                    </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="form.inputs.name"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span>
-                                                </div>
-                                            )}
+                                    <p className="inputs">
+                                        Inputs
+                                        <Button
+                                        icon="fa fa-plus"
+                                        className="p-button-success"
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            let inputsNumberCopy = [...inputsNumber];
+                                            inputsNumberCopy.push({ inputType: "BOOLEAN" });
+                                            setInputsNumber(inputsNumberCopy);
+                                            }
+                                        }
                                         />
-                                        <Field
-                                            name="form.inputs.title"
-                                            render={({ input }) => (
-                                                <div>
-                                                    <span>
-                                                        <p>Input title:</p>
-                                                    </span>
-                                                    <span>
-                                                        <InputText
-                                                            id="form.inputs.title"
-                                                            className="scene-field-form"
-                                                            {...input}
-                                                        />
-                                                    </span>
-                                                </div>
-                                            )}
-                                        />
-                                        <Field
-                                            name="form.inputs.inputType"
-                                            render={({ input }) => (
-                                                <div>
-                                                    <span>
-                                                        <p>Input type:</p>
-                                                    </span>
-                                                    <span>
-                                                        <Dropdown
-                                                            {...input}
-                                                            className="scene-field-form dropdown-design"
-                                                            options={viewInputsOptions}
-                                                            optionLabel="text"
-                                                            optionValue="value"
-                                                        />
-                                                    </span>
-                                                </div>
-                                            )}
-                                        />
-                                        {values.form.inputs?.inputType !== "SUBMIT" && (
+                                    </p>
+                                    {inputsNumber.map((input, index) => (
+                                        <div className="actuation-view-form-container-inputs multiple">
+                                            <Button
+                                                icon="fa-sharp fa-solid fa-xmark"
+                                                className="p-button-danger small-button deleteInput"
+                                                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                                                onClick={e => {
+                                                    e.preventDefault();
+                                                    let inputsNumberCopy = [...inputsNumber];
+                                                    inputsNumberCopy.splice(index, 1);
+                                                    setInputsNumber(inputsNumberCopy);
+                                                }}
+                                            />
                                             <Field
-                                                name="form.inputs.description"
-                                                render={({ input }) => (
+                                                name={"form.inputs[" + index + "].name"}
+                                                render={({ }) => (
                                                     <div>
                                                         <span>
-                                                            <p>Description:</p>
+                                                            <p>Input name:</p>
                                                         </span>
                                                         <span>
                                                             <InputText
-                                                                {...input}
-                                                                id="form.inputs.description"
+                                                                id="form.inputs.name"
                                                                 className="scene-field-form"
+                                                                value={input.name}
+                                                                onChange={e => {
+                                                                    setInputsNumber([
+                                                                        ...inputsNumber.slice(0, index),
+                                                                        {
+                                                                            ...inputsNumber[index],
+                                                                            name: e.target.value
+                                                                        },
+                                                                        ...inputsNumber.slice(index + 1)
+                                                                    ])
+                                                                }}
                                                             />
                                                         </span>
                                                     </div>
                                                 )}
                                             />
-                                        )}
-                                        {values.form.inputs?.inputType !== "SUBMIT" && (
                                             <Field
-                                                name="form.inputs.defaultValue"
-                                                render={({ input }) => (
+                                                name={"form.inputs[" + index + "].title"}
+                                                render={({ }) => (
                                                     <div>
                                                         <span>
-                                                            <p>Default value:</p>
+                                                            <p>Input title:</p>
                                                         </span>
                                                         <span>
                                                             <InputText
-                                                                {...input}
-                                                                id="form.inputs.defaultValue"
+                                                                id="form.inputs.title"
                                                                 className="scene-field-form"
+                                                                value={input.title}
+                                                                onChange={e => {
+                                                                    setInputsNumber([
+                                                                        ...inputsNumber.slice(0, index),
+                                                                        {
+                                                                            ...inputsNumber[index],
+                                                                            title: e.target.value
+                                                                        },
+                                                                        ...inputsNumber.slice(index + 1)
+                                                                    ])
+                                                                }}
                                                             />
                                                         </span>
                                                     </div>
                                                 )}
                                             />
-                                        )}
-                                        {values.form.inputs?.inputType === "STRING" && (
                                             <Field
-                                                name="form.inputs.pattern"
-                                                render={({ input }) => (
+                                                name={"form.inputs[" + index + "].inputType"}
+                                                render={({ }) => (
                                                     <div>
                                                         <span>
-                                                            <p>Pattern:</p>
+                                                            <p>Input type:</p>
                                                         </span>
                                                         <span>
-                                                            <InputText
-                                                                {...input}
-                                                                id="form.inputs.pattern"
-                                                                className="scene-field-form"
+                                                            <Dropdown
+                                                                value={input.inputType}
+                                                                onChange={e => {
+                                                                    setInputsNumber([
+                                                                        ...inputsNumber.slice(0, index),
+                                                                        {
+                                                                            ...inputsNumber[index],
+                                                                            inputType: e.target.value
+                                                                        },
+                                                                        ...inputsNumber.slice(index + 1)
+                                                                    ])
+                                                                }}
+                                                                className="scene-field-form dropdown-design"
+                                                                options={viewInputsOptions}
+                                                                optionLabel="text"
+                                                                optionValue="value"
                                                             />
                                                         </span>
                                                     </div>
                                                 )}
                                             />
-                                        )}
-                                        {(values.form.inputs?.inputType === "INTEGER" ||
-                                            values.form.inputs?.inputType === "DECIMAL") && (
-                                            <>
+                                            {input.inputType !== "SUBMIT" && (
                                                 <Field
-                                                    name="form.inputs.min"
-                                                    render={({ input }) => (
+                                                    name={"form.inputs[" + index + "].description"}
+                                                    render={({ }) => (
                                                         <div>
                                                             <span>
-                                                                <p>Minimum:</p>
+                                                                <p>Description:</p>
                                                             </span>
                                                             <span>
                                                                 <InputText
-                                                                    {...input}
-                                                                    id="form.inputs.min"
+                                                                    value={input.description}
+                                                                    onChange={e => {
+                                                                        setInputsNumber([
+                                                                            ...inputsNumber.slice(0, index),
+                                                                            {
+                                                                                ...inputsNumber[index],
+                                                                                description: e.target.value
+                                                                            },
+                                                                            ...inputsNumber.slice(index + 1)
+                                                                        ])
+                                                                    }}
+                                                                    id="form.inputs.description"
                                                                     className="scene-field-form"
                                                                 />
                                                             </span>
                                                         </div>
                                                     )}
                                                 />
+                                            )}
+                                            {input.inputType !== "SUBMIT" && (
                                                 <Field
-                                                    name="form.inputs.max"
-                                                    render={({ input }) => (
+                                                    name={"form.inputs[" + index + "].defaultValue"}
+                                                    render={({ }) => (
                                                         <div>
                                                             <span>
-                                                                <p>Maximum:</p>
+                                                                <p>Default value:</p>
                                                             </span>
                                                             <span>
                                                                 <InputText
-                                                                    {...input}
-                                                                    id="form.inputs.max"
+                                                                    value={input.defaultValue?.toString()}
+                                                                    onChange={e => {
+                                                                        setInputsNumber([
+                                                                            ...inputsNumber.slice(0, index),
+                                                                            {
+                                                                                ...inputsNumber[index],
+                                                                                defaultValue: e.target.value
+                                                                            },
+                                                                            ...inputsNumber.slice(index + 1)
+                                                                        ])
+                                                                    }}
+                                                                    id="form.inputs.defaultValue"
                                                                     className="scene-field-form"
                                                                 />
                                                             </span>
                                                         </div>
                                                     )}
                                                 />
-                                            </>
-                                        )}
-                                    </div>
+                                            )}
+                                            {input.inputType === "STRING" && (
+                                                <Field
+                                                    name={"form.inputs[" + index + "].pattern"}
+                                                    render={({ }) => (
+                                                        <div>
+                                                            <span>
+                                                                <p>Pattern:</p>
+                                                            </span>
+                                                            <span>
+                                                                <InputText
+                                                                    value={input.pattern}
+                                                                    onChange={e => {
+                                                                        setInputsNumber([
+                                                                            ...inputsNumber.slice(0, index),
+                                                                            {
+                                                                                ...inputsNumber[index],
+                                                                                pattern: e.target.value
+                                                                            },
+                                                                            ...inputsNumber.slice(index + 1)
+                                                                        ])
+                                                                    }}
+                                                                    id="form.inputs.pattern"
+                                                                    className="scene-field-form"
+                                                                />
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                />
+                                            )}
+                                            {(input.inputType === "INTEGER" ||
+                                                input.inputType === "DECIMAL") && (
+                                                    <>
+                                                        <Field
+                                                            name={"form.inputs[" + index + "].min"}
+                                                            render={({ }) => (
+                                                                <div>
+                                                                    <span>
+                                                                        <p>Minimum:</p>
+                                                                    </span>
+                                                                    <span>
+                                                                        <InputText
+                                                                            value={input.min}
+                                                                            onChange={e => {
+                                                                                setInputsNumber([
+                                                                                    ...inputsNumber.slice(0, index),
+                                                                                    {
+                                                                                        ...inputsNumber[index],
+                                                                                        min: e.target.value.replaceAll(',', '.')
+                                                                                    },
+                                                                                    ...inputsNumber.slice(index + 1)
+                                                                                ])
+                                                                            }}
+                                                                            id="form.inputs.min"
+                                                                            className="scene-field-form"
+                                                                        />
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                        />
+                                                        <Field
+                                                            name={"form.inputs[" + index + "].max"}
+                                                            render={({ }) => (
+                                                                <div>
+                                                                    <span>
+                                                                        <p>Maximum:</p>
+                                                                    </span>
+                                                                    <span>
+                                                                        <InputText
+                                                                            value={input.max}
+                                                                            onChange={e => {
+                                                                                setInputsNumber([
+                                                                                    ...inputsNumber.slice(0, index),
+                                                                                    {
+                                                                                        ...inputsNumber[index],
+                                                                                        max: e.target.value.replaceAll(',', '.')
+                                                                                    },
+                                                                                    ...inputsNumber.slice(index + 1)
+                                                                                ])
+                                                                            }}
+                                                                            id="form.inputs.max"
+                                                                            className="scene-field-form"
+                                                                        />
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                        />
+                                                    </>
+                                                )}
+                                        </div>
+                                    ))}
                                     <div className="scene-form-buttons">
                                         <Button
                                             label="Dodaj"
