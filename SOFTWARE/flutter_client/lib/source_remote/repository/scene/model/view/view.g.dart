@@ -20,16 +20,12 @@ View _$ViewFromJson(Map<String, dynamic> json) => View(
           ? null
           : Response.fromJson(
               json['responseExtracting'] as Map<String, dynamic>),
-      json['form'] == null
-          ? null
-          : ActuationForm.fromJson(json['form'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ViewToJson(View instance) => <String, dynamic>{
       'title': instance.title,
       'viewType': instance.viewType,
       'measurementUnit': instance.measurementUnit,
-      'form': instance.form,
       'selectForm': instance.selectForm,
       'query': instance.query,
       'responseExtracting': instance.responseExtracting,

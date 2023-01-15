@@ -1,19 +1,13 @@
 import 'dart:core';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pdp2022/source_remote/repository/scene/model/key.dart';
-import 'package:pdp2022/source_remote/repository/scene/model/role.dart';
-import 'package:pdp2022/source_remote/repository/scene/model/tag.dart';
 import 'package:pdp2022/source_remote/repository/scene/model/view/view.dart';
-
-import 'layout.dart';
 
 part 'scene.g.dart';
 
 @JsonSerializable()
 class Scene {
   Scene(
-    this.id,
     this.title,
     this.subtitle,
     this.layout,
@@ -23,8 +17,6 @@ class Scene {
     this.roles,
     this.keys,
   );
-
-  final int id;
 
   final String title;
   final String subtitle;

@@ -5,14 +5,13 @@ part 'actuation_form.g.dart';
 
 @JsonSerializable()
 class ActuationForm {
-  ActuationForm(this.inputs,this.defaultValuesRequest,this.submitFormRequest,this.submitSelectionRequest);
+  ActuationForm(this.inputs, this.defaultValuesRequest, this.submitFormRequest, this.submitSelectionRequest);
 
- // final int id;
   final Request? defaultValuesRequest;
   final Request? submitFormRequest;
   final Request? submitSelectionRequest;
-  final Map<String, dynamic> inputs;
-  
+  final List<Map<String, dynamic>> inputs;
+
   factory ActuationForm.fromJson(Map<String, dynamic> json) => _$ActuationFormFromJson(json);
 
   Map<String, dynamic> toJson() => _$ActuationFormToJson(this);

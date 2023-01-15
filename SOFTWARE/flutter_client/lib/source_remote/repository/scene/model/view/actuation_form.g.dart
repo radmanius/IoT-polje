@@ -8,7 +8,9 @@ part of 'actuation_form.dart';
 
 ActuationForm _$ActuationFormFromJson(Map<String, dynamic> json) =>
     ActuationForm(
-      json['inputs'] as Map<String, dynamic>,
+      (json['inputs'] as List<dynamic>)
+          .map((e) => e as Map<String, dynamic>)
+          .toList(),
       json['defaultValuesRequest'] == null
           ? null
           : Request.fromJson(

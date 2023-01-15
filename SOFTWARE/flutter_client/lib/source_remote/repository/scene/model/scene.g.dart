@@ -7,7 +7,6 @@ part of 'scene.dart';
 // **************************************************************************
 
 Scene _$SceneFromJson(Map<String, dynamic> json) => Scene(
-      json['id'] as int,
       json['title'] as String,
       json['subtitle'] as String,
       json['layout'] as String,
@@ -21,7 +20,6 @@ Scene _$SceneFromJson(Map<String, dynamic> json) => Scene(
     );
 
 Map<String, dynamic> _$SceneToJson(Scene instance) => <String, dynamic>{
-      'id': instance.id,
       'title': instance.title,
       'subtitle': instance.subtitle,
       'layout': instance.layout,
