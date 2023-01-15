@@ -50,49 +50,41 @@ class _GraphScreenState extends ConsumerState<GraphScreen> {
                       orElse: () => const CircularProgressIndicator(),
                       failure: (e) => Text(e.toString()),
                       success: (graph) => Expanded(
-                        child: SizedBox(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: AspectRatio(
-                              aspectRatio: 0.65,
-                              child: LineChart(
-                                LineChartData(
-                                  lineBarsData: [
-                                    LineChartBarData(
-                                      spots: graph
-                                          .map(
-                                            (point) => FlSpot(
-                                              point.time.millisecondsSinceEpoch.toDouble(),
-                                              point.value,
-                                            ),
-                                          )
-                                          .toList(),
-                                      isCurved: false,
-                                      dotData: FlDotData(
-                                        show: true,
+                        child: LineChart(
+                          LineChartData(
+                            lineBarsData: [
+                              LineChartBarData(
+                                spots: graph
+                                    .map(
+                                      (point) => FlSpot(
+                                        point.time.millisecondsSinceEpoch.toDouble(),
+                                        point.value,
                                       ),
-                                    ),
-                                  ],
-                                  borderData: FlBorderData(
-                                    show: false,
-                                  ),
-                                  titlesData: FlTitlesData(
-                                    show: true,
-                                    topTitles: AxisTitles(
-                                      axisNameSize: 10,
-                                      sideTitles: SideTitles(
-                                        showTitles: true,
-                                        getTitlesWidget: getTitlesWidget,
-                                      ),
-                                    ),
-                                    bottomTitles: AxisTitles(
-                                      axisNameSize: 30,
-                                      sideTitles: SideTitles(
-                                        showTitles: true,
-                                        getTitlesWidget: getTitlesWidget,
-                                      ),
-                                    ),
-                                  ),
+                                    )
+                                    .toList(),
+                                isCurved: false,
+                                dotData: FlDotData(
+                                  show: true,
+                                ),
+                              ),
+                            ],
+                            borderData: FlBorderData(
+                              show: false,
+                            ),
+                            titlesData: FlTitlesData(
+                              show: true,
+                              topTitles: AxisTitles(
+                                axisNameSize: 10,
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  getTitlesWidget: getTitlesWidget,
+                                ),
+                              ),
+                              bottomTitles: AxisTitles(
+                                axisNameSize: 30,
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  getTitlesWidget: getTitlesWidget,
                                 ),
                               ),
                             ),
