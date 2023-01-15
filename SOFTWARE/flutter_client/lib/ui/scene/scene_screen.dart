@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pdp2022/ui/scene/provider/scene_provider.dart';
+import 'package:pdp2022/ui/home/widget/short_scene_list_widget.dart';
+import 'package:pdp2022/ui/home/widget/view_list_widget.dart';
 
 class SceneScreen extends HookConsumerWidget {
   const SceneScreen._(this.sceneId, {Key? key}) : super(key: key);
@@ -36,6 +38,9 @@ class SceneScreen extends HookConsumerWidget {
                       placeholder: (context, url) => const CircularProgressIndicator(),
                     ),
                     Text(scene.subtitle),
+                      Expanded(
+                child: ViewListWidget(views:scene.views ),
+              ),
                   ],
                 ),
               ),

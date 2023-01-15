@@ -4,9 +4,9 @@ part 'response.g.dart';
 
 @JsonSerializable()
 class Response {
-  Response(this.id, this.dataFormat, this.timeColumn, this.valueColumn);
+  Response(this.dataFormat, this.timeColumn, this.valueColumn);
 
-  final int id;
+  //final int id;
   final String dataFormat;
   final String timeColumn;
   final String valueColumn;

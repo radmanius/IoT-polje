@@ -27,7 +27,7 @@ class HomeScreenPresenter extends RequestNotifier<HomeScreenViewState> {
       final Set<String> tags = {};
 
       for (var e in allScenes) {
-        tags.addAll(e.tags.map((e) => e.name));
+        tags.addAll(e.tags);
       }
 
       return HomeScreenViewState(tags: tags.toList(), shortScenes: allScenes, selectedTags: tags.toList());
@@ -49,7 +49,7 @@ class HomeScreenPresenter extends RequestNotifier<HomeScreenViewState> {
     final Set<String> selectedTags = {};
 
     for (var e in newScenes) {
-      selectedTags.addAll(e.tags.map((e) => e.name));
+      selectedTags.addAll(e.tags);
     }
 
     state = RequestState.success(HomeScreenViewState(
@@ -73,7 +73,7 @@ class HomeScreenPresenter extends RequestNotifier<HomeScreenViewState> {
       selectedTags.remove(tag);
     }
 
-    final newScenes = allScenes.where((scene) => scene.tags.any((tag) => selectedTags.contains(tag.name))).toList();
+    final newScenes = allScenes.where((scene) => scene.tags.any((tag) => selectedTags.contains(tag))).toList();
 
     state = RequestState.success(HomeScreenViewState(
       tags: state.value!.tags,

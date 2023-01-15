@@ -28,12 +28,12 @@ class Scene {
 
   final String title;
   final String subtitle;
-  final Layout layout;
+  final String layout;
   final String pictureLink;
-  final List<Tag> tags;
+  final List<String> tags;
   final List<View> views;
-  final List<Role> roles;
-  final List<Key> keys;
+  final List<String> roles;
+  final List<String> keys;
 
   factory Scene.fromJson(Map<String, dynamic> json) => _$SceneFromJson(json);
 
