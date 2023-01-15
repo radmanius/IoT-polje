@@ -42,69 +42,123 @@ class _GraphScreenState extends ConsumerState<GraphScreen> {
         title: Text(widget.title),
       ),
       body: SafeArea(
-          child: Column(children: <Widget>[
-        TimePeriodPicker(widget.query),
-        (widget.query != null)
-            ? ref.watch(graphProvider).maybeWhen(
-                orElse: () => const CircularProgressIndicator(),
-                failure: (e) => Text(e.toString()),
-                success: (graph) => Expanded(
-                      child: SizedBox(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: AspectRatio(
-                            aspectRatio: 0.65,
-                            child: LineChart(
-                              LineChartData(
-                                //  borderData: FlBorderData(border: const Border(bottom: BorderSide(),left: BorderSide()), ),
-                                //   titlesData: FlTitlesData(bottomTitles: AxisTitles(sideTitles: SideTitles(interval: 10,
-
-                                //       showTitles: true,
-                                //    getTitlesWidget: (value, meta) {
-                                //    return  Text("e");
-                                //    },))),
-                                lineBarsData: [
-                                  LineChartBarData(
-                                    spots: (graph)
-                                        .map((point) => FlSpot(
-                                            DateTime.parse(point.time
-                                                    .toString()
-                                                    .substring(0, point.time.toString().length - 2))
-                                                .millisecondsSinceEpoch
-                                                .toDouble(),
-                                            point.value))
-                                        .toList(),
-                                    isCurved: false,
-                                    dotData: FlDotData(
-                                      show: true,
+        child: Column(
+          children: <Widget>[
+            TimePeriodPicker(widget.query),
+            widget.query != null
+                ? ref.watch(graphProvider).maybeWhen(
+                      orElse: () => const CircularProgressIndicator(),
+                      failure: (e) => Text(e.toString()),
+                      success: (graph) => Expanded(
+                        child: SizedBox(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: AspectRatio(
+                              aspectRatio: 0.65,
+                              child: LineChart(
+                                LineChartData(
+                                  lineBarsData: [
+                                    LineChartBarData(
+                                      spots: graph
+                                          .map(
+                                            (point) => FlSpot(
+                                              point.time.millisecondsSinceEpoch.toDouble(),
+                                              point.value,
+                                            ),
+                                          )
+                                          .toList(),
+                                      isCurved: false,
+                                      dotData: FlDotData(
+                                        show: true,
+                                      ),
+                                    ),
+                                  ],
+                                  borderData: FlBorderData(
+                                    show: false,
+                                  ),
+                                  titlesData: FlTitlesData(
+                                    show: true,
+                                    topTitles: AxisTitles(
+                                      axisNameSize: 10,
+                                      sideTitles: SideTitles(
+                                        showTitles: true,
+                                        getTitlesWidget: getTitlesWidget,
+                                      ),
+                                    ),
+                                    bottomTitles: AxisTitles(
+                                      axisNameSize: 30,
+                                      sideTitles: SideTitles(
+                                        showTitles: true,
+                                        getTitlesWidget: getTitlesWidget,
+                                      ),
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
                     )
-
-//               SingleChildScrollView(
-//   physics: const BouncingScrollPhysics(),
-//   scrollDirection: Axis.vertical,
-//   child:DataTable(
-//    columns: [
-//      DataColumn(label: Text('DATE')),
-//      DataColumn(label: Text('VALUE')),
-//    ],
-//   rows: [ for(Graph g in graph)
-//      DataRow(cells: [DataCell(Text(g.time.toString().substring(0,g.time.toString().length-2))), DataCell(Text(g.value.toString()))]),
-//    ],
-// )
-//               ),
-
-                //ListView(children:[for(Graph g in graph) Text(g.time.toString() +"     "+ g.value.toString())])
-                )
-            : const Text("nema grafa"),
-      ])),
+                : const Text("nema grafa"),
+          ],
+        ),
+      ),
     );
   }
+}
+
+Widget getTitlesWidget(double value, TitleMeta meta) {
+  final datetime = DateTime.fromMillisecondsSinceEpoch(value.toInt());
+
+  switch (currentTimePeriod) {
+    case "30 dana":
+      return getTitlesByMonthDays(datetime);
+    case "7 dana":
+      return getTitlesByWeekDays(datetime);
+    case "1 dan":
+      return getTitlesByHour(datetime);
+    default:
+      return const SizedBox.shrink();
+  }
+}
+
+Widget getTitlesByMonthDays(DateTime datetime) {
+  return Text('${datetime.day}.${datetime.month}.');
+}
+
+Widget getTitlesByWeekDays(DateTime dateTime) {
+  final String text;
+
+  switch (dateTime.weekday) {
+    case DateTime.monday:
+      text = "Pon";
+      break;
+    case DateTime.tuesday:
+      text = "Uto";
+      break;
+    case DateTime.wednesday:
+      text = "Sri";
+      break;
+    case DateTime.thursday:
+      text = "Čet";
+      break;
+    case DateTime.friday:
+      text = "Pet";
+      break;
+    case DateTime.saturday:
+      text = "Sub";
+      break;
+    case DateTime.sunday:
+      text = "Ned";
+      break;
+    default:
+      text = "";
+  }
+
+  return Text(text);
+}
+
+Widget getTitlesByHour(DateTime dateTime) {
+  return Text(dateTime.hour.toString() + 'h');
 }
