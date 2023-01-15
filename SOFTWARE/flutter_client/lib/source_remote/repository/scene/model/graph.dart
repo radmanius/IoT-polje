@@ -15,14 +15,12 @@ class Graph {
     this.time,
   );
 
-  
-
   final String result;
   final int table;
   final String measurement;
   final String idWasp;
   final double value;
- final DateTime time;
+  final DateTime time;
 
   factory Graph.fromJson(Map<String, dynamic> json) => _$GraphFromJson(json);
 
