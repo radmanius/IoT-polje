@@ -4,10 +4,12 @@ import { IRequest } from "./requests";
 
 export interface IView{
     title: string;
+    description: string;
 }
 
 export const initActuationView : ActuationView = {
-    title:"",
+    title: "",
+    description: "",
     viewType: "actuation",
     form: {
         defaultValuesRequest: {
@@ -24,14 +26,15 @@ export const initActuationView : ActuationView = {
             "Content-Type": "",
             },
         },
-        inputs: {
+        inputs: [{
             inputType: "BOOLEAN",
-        }
+        }]
     }
 };
 
 export const initMeasurementView: MeasurementsView = {
     title: "",
+    description: "",
     viewType: "single",
     query: {
         method: "GET",
@@ -41,9 +44,9 @@ export const initMeasurementView: MeasurementsView = {
         },
     },
     selectForm: {
-        inputs: {
+        inputs: [{
             inputType: "BOOLEAN",
-        },
+        }],
         submitSelectionRequest: {
             method: "GET",
             headers: {

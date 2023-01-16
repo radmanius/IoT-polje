@@ -10,7 +10,7 @@ class ShortScene {
   final int id;
   final String title;
   final String subtitle;
-  final List<Tag> tags;
+  final List<String> tags;
 
   factory ShortScene.fromJson(Map<String, dynamic> json) => _$ShortSceneFromJson(json);
 
