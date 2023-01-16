@@ -50,5 +50,5 @@ export const testScene = async (scene: any, token: string) => {
             'Authorization': "Bearer " + token,
         }
     });
-    return response.data;
+    return response;
 };

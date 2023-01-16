@@ -11,6 +11,7 @@ import javax.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.metrics.StartupStep.Tags;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import hr.fer.tel.server.rest.model.Tag;
 import hr.fer.tel.server.rest.service.TagService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8001")
 @RequestMapping("/rest2")
 public class TagController {
 
