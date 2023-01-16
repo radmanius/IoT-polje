@@ -36,4 +36,26 @@ class AuthRepositoryImpl implements AuthRepository {
       authorizationTokenResponse.accessTokenExpirationDateTime!,
     );
   }
+  Future<void> refreshToken() async {
+    const appAuth = FlutterAppAuth();
+
+    final request = TokenRequest(
+      'mobile-keycloak',
+      'fer.tel.iot.polje.iotpolje:/oauth2Callback',
+      discoveryUrl: 'https://iotat.tel.fer.hr:58443/auth/realms/spring/.well-known/openid-configuration',
+      refreshToken: _authTokenPersistenceManager.refreshToken,
+    );
+
+    final response = await appAuth.token(request);
+
+    if (response == null) {
+      return;
+    }
+
+    await _authTokenPersistenceManager.saveToken(
+      response.accessToken!,
+      response.refreshToken!,
+      response.accessTokenExpirationDateTime!,
+    );
+  }
 }

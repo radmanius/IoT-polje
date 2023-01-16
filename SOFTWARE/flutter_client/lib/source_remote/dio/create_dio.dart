@@ -17,7 +17,7 @@ Dio createDioRest() {
 
   dio.interceptors.addAll(<Interceptor>[
     LoggyDioInterceptor(requestBody: true, responseBody: true, requestHeader: true),
-    AuthInterceptor(GetIt.I.get()),
+    AuthInterceptor(GetIt.I.get(), GetIt.I.get()),
   ]);
 
   return dio;
