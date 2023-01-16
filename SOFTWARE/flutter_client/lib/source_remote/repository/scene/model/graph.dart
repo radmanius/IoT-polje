@@ -18,7 +18,7 @@ class Graph {
   final String result;
   final int table;
   final String measurement;
-  final String idWasp;
+  final String? idWasp;
   final double value;
   final DateTime time;
 

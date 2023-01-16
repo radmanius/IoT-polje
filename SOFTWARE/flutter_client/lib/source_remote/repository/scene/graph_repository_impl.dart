@@ -16,6 +16,14 @@ class GraphRepositoryImpl implements GraphRepository {
     final dio = createDioDatabase();
 
     if (query != null) {
+      String ferURI = "https://iotat.tel.fer.hr:57786/api/v2/query?org=fer";
+      String feritURI = "https://iotat.tel.fer.hr:57786/api/v2/query?org=ferit";
+      String influxKey = "Token bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==";
+      if(query.uri == feritURI){
+          influxKey = "Token kFNlNvr3KSAgZ0fyhY_I56bGn9HfbK6e2pu-ENx9dqltBAK38H1KySoFe27V2ri2xk3UQhO_sjP6Use0sg8q6Q==";
+          ferURI = feritURI;
+      }
+
       String data = query.payload;
       String window = "2h";
 
@@ -45,11 +53,11 @@ class GraphRepositoryImpl implements GraphRepository {
       startDate = startDate.replaceAll('/', 'Z');
       data = data.replaceAll('{{startTimeISO}}', startDate);
 
-      final response = await dio.post('',
+      final response = await dio.post(ferURI,
           data: data,
           options: Options(headers: {
             "Authorization":
-                "Token bzdHTbpCFmoByUgkC-l-m_8Lv2ohNadNwwPmV78ZfDMaENUcb-HKOEVLbv8QYt1hH-AWTUBwKu2gjJKlHqvGUQ==",
+                influxKey,
             "Accept": "application/json",
             "Content-type": "application/vnd.flux",
             // "Token":   GetIt.I.get<AuthTokenPersistenceManager>().accessToken
@@ -57,7 +65,7 @@ class GraphRepositoryImpl implements GraphRepository {
               //query.headers
               ));
       // print(jsonEncode(pl));
-//print(response.data);
+   //print(response.data);
 //print(response.data.runtimeType);
       LineSplitter ls = new LineSplitter();
       List<String> l = ls.convert(response.data);
@@ -68,9 +76,18 @@ class GraphRepositoryImpl implements GraphRepository {
         if (s.length > 0) {
           s = s.substring(1);
           List<String> p = s.split(",");
+          Graph g;
+          if(p.length == 6) {
+             g = Graph(
+                p.elementAt(0), int.parse(p.elementAt(1)), p.elementAt(2),
+                p.elementAt(3),
+                double.parse(p.elementAt(4)), DateTime.parse(p.elementAt(5)));
+          }else{
+            g = Graph(
+                p.elementAt(0), int.parse(p.elementAt(1)), p.elementAt(2), null,
+                double.parse(p.elementAt(3)), DateTime.parse(p.elementAt(4)));
+          }
 
-          Graph g = Graph(p.elementAt(0), int.parse(p.elementAt(1)), p.elementAt(2), p.elementAt(3),
-              double.parse(p.elementAt(4)), DateTime.parse(p.elementAt(5)));
           grafovi.add(g);
         }
       }
