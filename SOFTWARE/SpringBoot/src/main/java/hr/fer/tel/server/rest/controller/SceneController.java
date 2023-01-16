@@ -36,7 +36,7 @@ import hr.fer.tel.server.rest.dto.*;
 import hr.fer.tel.server.rest.service.KeyService;
 import hr.fer.tel.server.rest.service.SceneService;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:8001")
 @RestController
 @RequestMapping("/rest2")
 public class SceneController {
@@ -192,11 +192,11 @@ public class SceneController {
 				try {
 					httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
 				} catch (RestClientException e) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+					return ResponseEntity.status(HttpStatus.CREATED).body(e.getMessage());
 				}
 				
 				if (httpResponse.getStatusCode() != HttpStatus.OK) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(httpResponse.getBody());
+					return ResponseEntity.status(HttpStatus.CREATED).body(httpResponse.getBody());
 				}
 				
 			}
@@ -220,12 +220,12 @@ public class SceneController {
 				try {
 					httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
 				} catch (RestClientException e) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+					return ResponseEntity.status(HttpStatus.CREATED).body(e.getMessage());
 					
 				}
 				
 				if (httpResponse.getStatusCode() != HttpStatus.OK) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(httpResponse.getBody());
+					return ResponseEntity.status(HttpStatus.CREATED).body(httpResponse.getBody());
 				}
 			}
 

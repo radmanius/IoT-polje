@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdp2022/ui/home/provider/home_screen_presenter.dart';
-import 'package:pdp2022/ui/home/widget/short_scene_list_widget.dart';
+
+import 'widget/short_scene_list_widget.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,22 +26,11 @@ class HomeScreen extends ConsumerWidget {
           'iOT vrt',
           style: TextStyle(color: Colors.white),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              //TODO: go to account screen
-            },
-            icon: const Icon(
-              Icons.account_circle_outlined,
-              color: Colors.white,
-            ),
-          )
-        ],
       ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: ListView(
+          child: Column(
             children: [
               const SizedBox(height: 20),
               TextField(
@@ -75,7 +65,9 @@ class HomeScreen extends ConsumerWidget {
                 ),
               const SizedBox(height: 20),
               const Text('Scene:'),
-              const ShortSceneListWidget(),
+              const Expanded(
+                child: ShortSceneListWidget(),
+              ),
               const SizedBox(height: 10),
             ],
           ),
