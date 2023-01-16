@@ -230,7 +230,14 @@ const MeasurementViewEditForm = () => {
         const assembledViews = assembleViews(data);
         setSpremnaScena({ ...scene, views: assembledViews })
         try {
-            await testScene(spremnaScena, keycloak.token ?? "");
+            const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            if (response.status !== 200) {
+                setOption("submit");
+                setMessage("Error while testing measurement view.");
+                setPopup(true);
+                dispatch(showToastMessage("Error while testing measurement view.", "error"));
+                return;
+            }
         } catch (error:any) {
             setOption("submit");
             setMessage(error.message??error.stack);
@@ -261,13 +268,20 @@ const MeasurementViewEditForm = () => {
     const handleTest = async (data: MeasurementsView) => {
         let assembledViews = assembleViews(data);
         try {
-            await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
-            dispatch(showToastMessage("Scene is valid", "success"));
+            const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            if (response.status !== 200) {
+                setOption("submit");
+                setMessage("Error while testing measurement view.");
+                setPopup(true);
+                dispatch(showToastMessage("Error while testing measurement view.", "error"));
+                return;
+            } else {
+                dispatch(showToastMessage("Scene is valid", "success"));
+            }
         } catch (error:any) {
             setPopup(true);
             setOption("test");
             setMessage(error.message??error.stack);
-            
             dispatch(showToastMessage("Scene is not valid.", "error"));
         }
     };
