@@ -26,17 +26,6 @@ class HomeScreen extends ConsumerWidget {
           'iOT vrt',
           style: TextStyle(color: Colors.white),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              //TODO: go to account screen
-            },
-            icon: const Icon(
-              Icons.account_circle_outlined,
-              color: Colors.white,
-            ),
-          )
-        ],
       ),
       body: SafeArea(
         child: Padding(
