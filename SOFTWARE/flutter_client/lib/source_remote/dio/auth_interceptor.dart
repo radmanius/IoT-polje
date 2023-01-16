@@ -8,7 +8,7 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.headers.addAll({'Authorization': 'Token ${_authTokenPersistenceManager.accessToken}'});
+    options.headers.addAll({'Authorization': 'Bearer ${_authTokenPersistenceManager.accessToken}'});
     handler.next(options);
   }
 }
