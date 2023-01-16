@@ -10,6 +10,7 @@ export default function Popup(props: any) {
     return props.trigger ? (
         <div className="popupView">
             <div className="popup-inner">
+                <h2 className="">Scene test returned:</h2>
                 <h2 className="errorMsg">{props.message}</h2>
 
                 {props.option == "submit" &&

@@ -233,7 +233,7 @@ const MeasurementViewEditForm = () => {
             const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             if (response.status !== 200) {
                 setOption("submit");
-                setMessage("Error while testing measurement view.");
+                setMessage(response.data);
                 setPopup(true);
                 dispatch(showToastMessage("Error while testing measurement view.", "error"));
                 return;
@@ -270,8 +270,8 @@ const MeasurementViewEditForm = () => {
         try {
             const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             if (response.status !== 200) {
-                setOption("submit");
-                setMessage("Error while testing measurement view.");
+                setOption("test");
+                setMessage(response.data);
                 setPopup(true);
                 dispatch(showToastMessage("Error while testing measurement view.", "error"));
                 return;

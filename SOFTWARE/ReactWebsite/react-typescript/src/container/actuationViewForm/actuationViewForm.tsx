@@ -180,7 +180,7 @@ const ActuationViewForm = () => {
             const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             if (response.status !== 200) {
                 setOption("submit");
-                setMessage("Error while testing actuation view.");
+                setMessage(response.data);
                 setPopup(true);
                 dispatch(showToastMessage("Error while testing actuation view.", "error"));
                 return;
@@ -217,8 +217,8 @@ const ActuationViewForm = () => {
         try {
             const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
             if (response.status !== 200) {
-                setOption("submit");
-                setMessage("Error while testing actuation view.");
+                setOption("test");
+                setMessage(response.data);
                 setPopup(true);
                 dispatch(showToastMessage("Error while testing actuation view.", "error"));
                 return;
