@@ -15,6 +15,5 @@ services:
       - LOGGING_LEVEL_HR=INFO
       - DEBUG=true
 
-
 networks:
   iot-platform:

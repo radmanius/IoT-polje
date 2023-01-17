@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import hr.fer.tel.server.rest.model.ActuationForm;
@@ -34,6 +35,7 @@ import hr.fer.tel.server.rest.repository.dao.SceneRepository;
 import hr.fer.tel.server.rest.service.KeyService;
 
 @Component
+@Profile("dev")
 public class IotFieldDataInitializer implements CommandLineRunner {
 	protected final Log logger = LogFactory.getLog(getClass());
 
