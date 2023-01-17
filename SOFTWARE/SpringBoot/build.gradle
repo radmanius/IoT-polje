@@ -4,6 +4,10 @@ plugins {
 	id 'java'
 }
 
+dependencies {
+    compile project(':')
+}
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
@@ -25,19 +29,16 @@ dependencies {
   	runtimeOnly 'com.h2database:h2'
   	
   	implementation 'org.hibernate:hibernate-core:5.6.14.Final'
-  	//implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
   	
   	compileOnly 'org.projectlombok:lombok:1.18.24'
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
   	
   	implementation 'com.jayway.jsonpath:json-path:2.7.0'
-	//implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
   	
     
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.keycloak:keycloak-spring-boot-starter:15.0.2'
-	//implementation 'org.projectlombok:lombok:1.18.18'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
