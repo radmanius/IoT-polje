@@ -5,6 +5,9 @@ plugins {
 
 targetCompatibility="17"
 
+//rest2/ui/
+//konfiguracija za produkicuje
+
 webjar {
     distDir = "dist"
     webjarDir = "static/ui"
