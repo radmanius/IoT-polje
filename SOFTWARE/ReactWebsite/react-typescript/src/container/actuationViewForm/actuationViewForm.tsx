@@ -38,7 +38,7 @@ const ActuationViewForm = () => {
 
     const [inputsNumber, setInputsNumber] = useState<IInput[]>([{ inputType: "BOOLEAN" }]);
 
-    const assembleViews = (data: ActuationView) => {
+    const assembleView = (data: ActuationView) => {
         let newData = { ...data };
 
         let listaInputa: IInput[] = [];
@@ -153,6 +153,11 @@ const ActuationViewForm = () => {
                 },
             },
         };
+        return newData;
+    };
+
+    const assembleViews = (newView: ActuationView) => {
+        const newData = assembleView(newView);
 
         let views = [...scene.views];
         views.push(newData);
@@ -172,12 +177,12 @@ const ActuationViewForm = () => {
 
 
     const handleAddNewActuationView = async (data: ActuationView) => {
-
-        const assembledViews = assembleViews(data);
+        const newView = assembleView(data);
+        const assembledViews = assembleViews(newView);
         setSpremnaScena({ ...scene, views: assembledViews })
 
         try {
-            const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            const response = await testScene({ ...scene, views: [newView] }, keycloak.token ?? "");
             if (response.status !== 200) {
                 setOption("submit");
                 setMessage(response.data);
@@ -187,7 +192,7 @@ const ActuationViewForm = () => {
             }
         } catch (error:any) {
             setOption("submit");
-            setMessage(error.message??error.stack);
+            setMessage(error.message??error.stack??"Something went wrong");
             setPopup(true);
             dispatch(showToastMessage("Scene is not valid.", "error"));
             return;
@@ -213,9 +218,9 @@ const ActuationViewForm = () => {
     };
 
     const handleTest = async (data: ActuationView) => {
-        let assembledViews = assembleViews(data);
+        const newView = assembleView(data);
         try {
-            const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            const response = await testScene({ ...scene, views: [newView] }, keycloak.token ?? "");
             if (response.status !== 200) {
                 setOption("test");
                 setMessage(response.data);
@@ -229,7 +234,7 @@ const ActuationViewForm = () => {
         } catch (error:any) {
             setPopup(true);
             setOption("test");
-            setMessage(error.message??error.stack);
+            setMessage(error.message??error.stack??"Something went wrong");
             dispatch(showToastMessage("Scene is not valid.", "error"));
         }
     };
