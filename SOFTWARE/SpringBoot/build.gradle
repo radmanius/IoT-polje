@@ -4,10 +4,6 @@ plugins {
 	id 'java'
 }
 
-dependencies {
-    compile project(':')
-}
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
@@ -22,6 +18,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(":react-typecript")
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'org.postgresql:postgresql'
     
