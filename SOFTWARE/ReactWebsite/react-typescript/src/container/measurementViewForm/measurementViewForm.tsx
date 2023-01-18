@@ -47,7 +47,7 @@ const MeasurementViewForm = () => {
 
     const [inputsNumber, setInputsNumber] = useState<IInput[]>([{ inputType: "BOOLEAN" }]);
 
-    const assembleViews = (data: MeasurementsView) => {
+    const assembleView = (data: MeasurementsView) => {
         let newData = { ...data };
         if (dataFormat === "csv") {
             newData = {
@@ -74,75 +74,75 @@ const MeasurementViewForm = () => {
             switch (input.inputType) {
                 case "BOOLEAN": {
                     listaInputa.push({
-                                name: input.name ?? "",
-                                title: input.title ?? "",
-                                description: input.description,
-                                defaultValue: input.defaultValue,
-                                inputType: "BOOLEAN",
-                                });
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue,
+                        inputType: "BOOLEAN",
+                    });
                     break;
                 }
                 case "INTEGER": {
                     listaInputa.push({
-                                name: input.name ?? "",
-                                title: input.title ?? "",
-                                description: input.description,
-                                defaultValue: input.defaultValue ?? -1,
-                                min: input.min,
-                                max: input.max,
-                                inputType: "INTEGER",
-                                });
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue ?? -1,
+                        min: input.min,
+                        max: input.max,
+                        inputType: "INTEGER",
+                    });
                     break;
                 }
                 case "DECIMAL": {
                     listaInputa.push({
-                                name: input.name ?? "",
-                                title: input.title ?? "",
-                                description: input.description,
-                                defaultValue: input.defaultValue ?? -1,
-                                min: input.min,
-                                max: input.max,
-                                inputType: "DECIMAL",
-                                });
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue ?? -1,
+                        min: input.min,
+                        max: input.max,
+                        inputType: "DECIMAL",
+                    });
                     break;
                 }
                 case "DATE": {
                     listaInputa.push({
-                                name: input.name ?? "",
-                                title: input.title ?? "",
-                                description: input.description,
-                                defaultValue: input.defaultValue ?? "",
-                                inputType: "DATE",
-                                });
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue ?? "",
+                        inputType: "DATE",
+                    });
                     break;
                 }
                 case "TIME": {
                     listaInputa.push({
-                                name: input.name ?? "",
-                                title: input.title ?? "",
-                                description: input.description,
-                                defaultValue: input.defaultValue ?? "",
-                                inputType: "TIME",
-                                });
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue ?? "",
+                        inputType: "TIME",
+                    });
                     break;
                 }
                 case "STRING": {
                     listaInputa.push({
-                                name: input.name ?? "",
-                                title: input.title ?? "",
-                                description: input.description,
-                                defaultValue: input.defaultValue ?? false,
-                                pattern: input.pattern,
-                                inputType: "STRING",
-                                });
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        description: input.description,
+                        defaultValue: input.defaultValue ?? false,
+                        pattern: input.pattern,
+                        inputType: "STRING",
+                    });
                     break;
                 }
                 case "SUBMIT": {
                     listaInputa.push({
-                                name: input.name ?? "",
-                                title: input.title ?? "",
-                                inputType: "SUBMIT",
-                                });
+                        name: input.name ?? "",
+                        title: input.title ?? "",
+                        inputType: "SUBMIT",
+                    });
                     break;
                 }
             }
@@ -180,6 +180,11 @@ const MeasurementViewForm = () => {
                 headers: headersQueryMap,
             },
         };
+        return newData;
+    };
+
+    const assembleViews = (newView: MeasurementsView) => {
+        let newData = assembleView(newView);
 
         let views = [...scene.views];
         views.push(newData);
@@ -199,11 +204,12 @@ const MeasurementViewForm = () => {
 
     const handleAddNewMeasurementView = async (data: MeasurementsView) => {
 
-        const assembledViews = assembleViews(data);
+        const newView = assembleView(data);
+        const assembledViews = assembleViews(newView);
         setSpremnaScena({ ...scene, views: assembledViews })
 
         try {
-            const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            const response = await testScene({ ...scene, views: [newView] }, keycloak.token ?? "");
             if (response.status !== 200) {
                 setOption("submit");
                 setMessage(response.data);
@@ -213,7 +219,7 @@ const MeasurementViewForm = () => {
             }
         } catch (error:any) {
             setOption("submit");
-            setMessage(error.message??error.stack);
+            setMessage(error.message??error.stack??"Something went wrong");
             setPopup(true);
             dispatch(showToastMessage("Scene is not valid.", "error"));
             return;
@@ -239,9 +245,9 @@ const MeasurementViewForm = () => {
     };
 
     const handleTest = async (data: MeasurementsView) => {
-        let assembledViews = assembleViews(data);
+        const newView = assembleView(data);
         try {
-            const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            const response = await testScene({ ...scene, views: [newView] }, keycloak.token ?? "");
             if (response.status !== 200) {
                 setOption("test");
                 setMessage(response.data);
@@ -254,7 +260,7 @@ const MeasurementViewForm = () => {
         } catch (error:any) {
             setPopup(true);
             setOption("test");
-            setMessage(error.message??error.stack);
+            setMessage(error.message??error.stack??"Something went wrong");
             dispatch(showToastMessage("Scene is not valid.", "error"));
         }
     };
