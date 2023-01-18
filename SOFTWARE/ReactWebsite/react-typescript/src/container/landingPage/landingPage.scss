@@ -50,17 +50,17 @@
 
 .taskWrapper.first{
     width: 40vw;
-    height: 15vh;
+    height: 12vh;
 }
 
 .taskWrapper.second{
     width: 50vw;
-    height: 15vh;
+    height: 12vh;
 }
 
 .taskWrapper.third{
     width: 60vw;
-    height: 15vh;
+    height: 12vh;
 }
 
 .tasks > div > div > h1{
@@ -108,10 +108,12 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 100%;
 }
 
 .leaves{
+    position: absolute;
+    bottom: 0;
+    right: 0;
     display: flex;
     margin-left: auto;
     width: 50%;
