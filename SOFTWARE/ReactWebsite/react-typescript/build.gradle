@@ -12,7 +12,7 @@ webjar {
     distDir = "dist"
     webjarDir = "static/ui"
     taskNames {
-        clean = "clean"
+        // clean = "clean"
         build = "prod"
     }
     cache {

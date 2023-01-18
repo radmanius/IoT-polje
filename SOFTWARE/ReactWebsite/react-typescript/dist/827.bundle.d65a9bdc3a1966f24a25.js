@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_typescript=self.webpackChunkreact_typescript||[]).push([[827],{57827:(e,r,t)=>{t.r(r),t.d(r,{default:()=>p});var c=t(96740),s=t(24246);const p=function(){return(0,s.jsx)("div",{children:(0,s.jsx)("div",{className:"react-typescript__wrapper",children:(0,s.jsx)(c.j3,{})})})}}}]);
+//# sourceMappingURL=827.bundle.d65a9bdc3a1966f24a25.js.map

@@ -3,8 +3,12 @@ const common = require("./webpack.common.js");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const webpack = require("webpack");
-const { merge } = require("webpack-merge");
-const { ModuleFederationPlugin } = require("webpack").container;
+const {
+    merge
+} = require("webpack-merge");
+const {
+    ModuleFederationPlugin
+} = require("webpack").container;
 
 module.exports = merge(common, {
     mode: "development", // mode for build-in optimizations to correnspond for each environment
@@ -16,7 +20,11 @@ module.exports = merge(common, {
             favicon: "./src/icon.ico",
         }),
         new webpack.DefinePlugin({
-            process: { env: { REACT_APP_KEY: '"REACT_APP_KEY"' } },
+            process: {
+                env: {
+                    REACT_APP_KEY: '"REACT_APP_KEY"'
+                }
+            },
         }),
         new ForkTsCheckerWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin(), // DEV ONLY!!! HMR exchanges, adds, or removes modules while an application is running, without a full reload
@@ -28,12 +36,11 @@ module.exports = merge(common, {
     devServer: {
         hot: true, // HMR
         historyApiFallback: true,
-        port: 8001,
+        port: 8080,
     },
     module: {
         // determine how the different types of modules within a project will be treated
-        rules: [
-            {
+        rules: [{
                 test: /\.ts$|tsx/, // Include all modules that pass test assertion
                 exclude: /node_modules/, // Exclude all modules matching any of these conditions
                 loader: require.resolve("babel-loader"), // which loader to use
