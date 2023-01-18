@@ -74,7 +74,7 @@ const MeasurementViewEditForm = () => {
         }
     };
 
-    const assembleViews = (data: MeasurementsView) => {
+    const assembleView = (data: MeasurementsView) => {
         let newData = { ...data };
         if (dataFormat === "csv") {
             newData = {
@@ -208,6 +208,11 @@ const MeasurementViewEditForm = () => {
                 headers: headersQueryMap,
             },
         };
+        return newData;
+    };
+
+    const assembleViews = (newView: MeasurementsView) => {
+        let newData = assembleView(newView);
 
         let views = [...scene.views];
         const index = views.indexOf(view);
@@ -227,10 +232,12 @@ const MeasurementViewEditForm = () => {
     };
 
     const handleAddNewMeasurementView = async (data: MeasurementsView) => {
-        const assembledViews = assembleViews(data);
+        
+        const newView = assembleView(data);
+        const assembledViews = assembleViews(newView);
         setSpremnaScena({ ...scene, views: assembledViews })
         try {
-            const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            const response = await testScene({ ...scene, views: [newView] }, keycloak.token ?? "");
             if (response.status !== 200) {
                 setOption("submit");
                 setMessage(response.data);
@@ -240,7 +247,7 @@ const MeasurementViewEditForm = () => {
             }
         } catch (error:any) {
             setOption("submit");
-            setMessage(error.message??error.stack);
+            setMessage(error.message??error.stack??"Something went wrong");
             setPopup(true);
             dispatch(showToastMessage("Scene is not valid.", "error"));
             return;
@@ -266,9 +273,9 @@ const MeasurementViewEditForm = () => {
     };
 
     const handleTest = async (data: MeasurementsView) => {
-        let assembledViews = assembleViews(data);
+        const newView = assembleView(data);
         try {
-            const response = await testScene({ ...scene, views: assembledViews }, keycloak.token ?? "");
+            const response = await testScene({ ...scene, views: [newView] }, keycloak.token ?? "");
             if (response.status !== 200) {
                 setOption("test");
                 setMessage(response.data);
@@ -281,7 +288,7 @@ const MeasurementViewEditForm = () => {
         } catch (error:any) {
             setPopup(true);
             setOption("test");
-            setMessage(error.message??error.stack);
+            setMessage(error.message??error.stack??"Something went wrong");
             dispatch(showToastMessage("Scene is not valid.", "error"));
         }
     };

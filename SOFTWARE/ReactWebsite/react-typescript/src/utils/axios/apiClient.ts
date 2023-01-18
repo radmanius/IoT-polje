@@ -56,7 +56,7 @@ axios.interceptors.response.use(
 
         return Promise.reject({
             name: error.name,
-            message: error.response?.data.Message,
+            message: error.response?.data.message,
             code: error.response?.status?.toString(),
             stack: error.stack,
         });
