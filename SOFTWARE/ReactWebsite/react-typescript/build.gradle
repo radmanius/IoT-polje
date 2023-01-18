@@ -10,7 +10,7 @@ targetCompatibility="17"
 
 webjar {
     distDir = "dist"
-    webjarDir = "static/ui"
+    webjarDir = "static/rest2/ui"
     taskNames {
         // clean = "clean"
         build = "prod"
