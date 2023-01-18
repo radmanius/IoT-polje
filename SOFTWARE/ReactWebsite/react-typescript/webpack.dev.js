@@ -28,7 +28,7 @@ module.exports = merge(common, {
     devServer: {
         hot: true, // HMR
         historyApiFallback: true,
-        port: 8001,
+        port: 8080,
     },
     module: {
         // determine how the different types of modules within a project will be treated

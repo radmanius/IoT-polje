@@ -36,7 +36,7 @@ import hr.fer.tel.server.rest.dto.*;
 import hr.fer.tel.server.rest.service.KeyService;
 import hr.fer.tel.server.rest.service.SceneService;
 
-@CrossOrigin(origins = "http://localhost:8001")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/rest2")
 public class SceneController {

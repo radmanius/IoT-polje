@@ -18,7 +18,7 @@ render(
     <ReactKeycloakProvider
         authClient={keycloak}
         initOptions={{
-            redirectUri: "http://localhost:8001/",
+            redirectUri: "http://localhost:8080/",
             pkceMethod: "S256",
             onLoad: "login-required",
         }}
