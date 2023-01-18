@@ -5,6 +5,11 @@
 /.pnp
 .pnp.js
 
+.node
+/dist
+./node
+./.node
+
 #visual studio
 .vs/
 .vs/slnx.sqlite
