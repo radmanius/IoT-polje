@@ -45,13 +45,6 @@ const SpecificSceneView = () => {
 
     async function handleClickDelete() {
         setPopup(true);
-        // try {
-        //     await deleteScene(shortScene.id);
-        //     navigate(PAGE_ROUTES.ShortSceneView);
-        // }
-        // catch {
-        //     console.log("Error");
-        // }
     }
 
     useEffect(() => {

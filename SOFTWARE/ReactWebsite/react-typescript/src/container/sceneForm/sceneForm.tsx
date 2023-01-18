@@ -228,7 +228,6 @@ const SceneForm = () => {
                                     <Button
                                         label="Odustani"
                                         onClick={() => navigate(PAGE_ROUTES.ShortSceneView)}
-                                        //onClick={ () => console.log(multiselectRef.current.getSelectedItems())}
                                     />
                                 </div>
                             </form>

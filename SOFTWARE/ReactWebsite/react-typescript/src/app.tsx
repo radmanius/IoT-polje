@@ -22,9 +22,6 @@ const App = () => {
         return <></>;
     }
 
-    console.log(keycloak.refreshToken);
-    console.log(keycloak.token);
-
     return (
         <div className="app">
             <AppHeader />
