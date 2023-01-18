@@ -12,7 +12,7 @@ const {
 module.exports = merge(common, {
 
     output: {
-        publicPath: "/rest2/ui/"
+        publicPath: "/ui/"
     },
 
 
