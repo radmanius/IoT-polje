@@ -13,18 +13,21 @@ import keycloak from "keycloak";
 import store from "redux/store/store";
 import { ToastMessage } from "container/toastMessage/toastMessage";
 
+
+const prefix = "/ui"
+
 const rootElement = document.getElementById("root");
 render(
     <ReactKeycloakProvider
         authClient={keycloak}
         initOptions={{
-            redirectUri: "http://localhost:8001/",
+            redirectUri: "http://localhost:8001" + prefix,
             pkceMethod: "S256",
             onLoad: "login-required",
         }}
     >
         <Provider store={store}>
-            <BrowserRouter>
+            <BrowserRouter basename={prefix}>
                 <App />
             </BrowserRouter>
             <ToastMessage />
