@@ -1,0 +1,19 @@
+version: '3.1'
+services:
+  rest-server2:
+    image: rest-server:0.0.1-SNAPSHOT
+    networks:
+      - iot-platform
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - LOGGING_LEVEL_HR=INFO
+      - DEBUG=true
+
+networks:
+  iot-platform:

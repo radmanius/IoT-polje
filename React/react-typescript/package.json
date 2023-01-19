@@ -1,0 +1,21 @@
+{
+    "name": "react-typescript",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "webpack serve  --hot --open --config webpack.dev.js",
+        "build": "webpack --config webpack.dev.js --mode development",
+        "prod": "webpack --config webpack.prod.js --mode production",
+        "format": "prettier --write ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {},
+    "lint-staged": {
+        "*.*": [
+            "prettier --write"
+        ]
+    }
+}

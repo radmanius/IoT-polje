@@ -1,0 +1,4 @@
+rootProject.name = 'rest-server'
+
+include ":react-typecript"
+project(":react-typecript").projectDir = file("../ReactWebsite/react-typescript")
