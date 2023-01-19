@@ -1,4 +1,0 @@
-INDEX VERSION 1.131+C:\Users\filip\Desktop\azure-deploy\.metadata\.plugins\org.eclipse.jdt.core
-1865797976.index
-2509210843.index
-1372677264.index
