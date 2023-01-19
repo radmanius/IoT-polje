@@ -25,7 +25,7 @@ import hr.fer.tel.server.rest.model.ShortKeyDTO;
 import hr.fer.tel.server.rest.service.KeyService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*")
 @RequestMapping("/rest2")
 public class KeysController {
 

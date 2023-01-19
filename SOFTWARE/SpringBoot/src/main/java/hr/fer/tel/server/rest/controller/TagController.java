@@ -21,7 +21,7 @@ import hr.fer.tel.server.rest.model.Tag;
 import hr.fer.tel.server.rest.service.TagService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*")
 @RequestMapping("/rest2")
 public class TagController {
 
