@@ -8,7 +8,7 @@ if (location.hostname == "localhost") {
     axios.defaults.baseURL = "http://" + location.hostname + ":" + port + "/rest2";
 } else {
     // axios.defaults.baseURL = "https://iotat.tel.fer.hr:58443/rest2";
-    axios.defaults.baseURL = "https://iot-fer.duckdns.org/ui/rest2";
+    axios.defaults.baseURL = "https://iot-fer.duckdns.org/rest2";
 }
 
 // Add a request interceptor
