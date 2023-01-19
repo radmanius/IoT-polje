@@ -33,17 +33,8 @@ public class TagController {
     this.tagService = tagService;
   }
 
-  //@RolesAllowed("iot-read")
-//  @GetMapping("/tags22")
-//  public ResponseEntity<Set<Tag>> getTags2() {
-//    Set<Tag> result = new TreeSet<>((o1, o2) -> o1.getName().compareTo(o2.getName()));
-//    tagService.getAll().stream()
-//      .forEach(t -> result.add(t));
-//
-//    return ResponseEntity.ok(result);
-//  }
-
   @GetMapping("/tags")
+  @RolesAllowed("iot-read")
   public ResponseEntity<Collection<Tag>> getTags() {
      return ResponseEntity.ok(tagService.getAllTags());
   }

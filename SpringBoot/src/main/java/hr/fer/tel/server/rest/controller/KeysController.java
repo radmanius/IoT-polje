@@ -32,8 +32,6 @@ public class KeysController {
   @Autowired
   private KeyService keyService;
 
-
-//  @RolesAllowed("iot-read")
   @GetMapping("/keys")
   public ResponseEntity<Collection<ShortKeyDTO>> getKeys() {
     Set<ShortKeyDTO> result = keyService.getAll().stream()

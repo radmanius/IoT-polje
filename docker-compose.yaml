@@ -11,15 +11,15 @@ services:
     ports:
       - "8080:8080"
 
-  frontend:
-    build:
-      context: ./React
-      dockerfile: Dockerfile
-    ports:
-      - "8001:8001"
-    depends_on:
-      - "backend"
-    stdin_open: true
+  # frontend:
+  #   build:
+  #     context: ./React
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8001:8001"
+  #   depends_on:
+  #     - "backend"
+  #   stdin_open: true
 
   db:
     image: docker.io/bitnami/postgresql:11.18.0
@@ -35,11 +35,11 @@ services:
       - POSTGRESQL_USERNAME=postgres
       - POSTGRESQL_PASSWORD=postgres
       - POSTGRESQL_DATABASE=projektR
-    # volumes:
-    #   - 'rest2_postgresql_data:/bitnami/postgresql'
-    # volumes:
-    #   rest2_postgresql_data:
-    #     driver: local
+    volumes:
+      - 'rest2_postgresql_data:/bitnami/postgresql'
 
-    #docker compose up -d
-    #docker container exec -it b51 bash
+volumes:
+  rest2_postgresql_data:
+    driver: local
+  #docker compose up -d
+  #docker container exec -it b51 bash

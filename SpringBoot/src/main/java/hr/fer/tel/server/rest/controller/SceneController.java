@@ -81,10 +81,7 @@ public class SceneController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("given key does not exist in database");
 
 		}
-
-
 	}
-
 	@PutMapping("/scene2/{id}")
 	@RolesAllowed("iot-read")
 	public ResponseEntity<?> sceneEdit2(@RequestBody String model, @PathVariable("id") Long id)
@@ -150,15 +147,16 @@ public class SceneController {
 		} else {
 
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("given key does not exist in database");
-
 		}
 	}
 
 	@PostMapping("/check/scene")
+	@RolesAllowed("iot-read")
 	public ResponseEntity<String> checkPayload(@RequestBody String model) throws RestClientException {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 		SceneDTO sceneDTO = new SceneDTO();
 
@@ -205,7 +203,28 @@ public class SceneController {
 				tmp = (MesurmentView) tmp;
 				MeasurmentSelectForm form2 = ((MesurmentView) tmp).getSelectForm();
 
-				Request req1 = form2.getSubmitSelectionRequest();
+				if (form2.getSubmitSelectionRequest() != null) {
+					Request req = form2.getSubmitSelectionRequest();
+					Map<String, String> headers = req.getHeaders();
+					String payload1 = req.getPayload();
+					String uri1 = req.getUri();
+					
+					RestTemplate template = new RestTemplate();
+					HttpHeaders headersObj = new HttpHeaders();
+					
+					for(Entry<String, String> ent : headers.entrySet()) {
+						headersObj.set(ent.getKey(), ent.getValue());
+					}
+					HttpEntity<String> request = new HttpEntity<>(payload1, headersObj);
+					try {
+						httpResponse = template.exchange(uri1, HttpMethod.POST, request, String.class);
+					} catch (RestClientException e) {
+						return ResponseEntity.status(HttpStatus.CREATED).body(e.getMessage());
+						
+					}
+				}
+				
+				Request req1 = ((MesurmentView) tmp).getQuery();
 				Map<String, String> headers1 = req1.getHeaders();
 				String payload1 = req1.getPayload();
 				String uri1 = req1.getUri();
@@ -357,7 +376,6 @@ public class SceneController {
 		}
 
 		return ResponseEntity.status(HttpStatus.OK).body("deleted scene with id: " + id);
-
 	}
 
 }
