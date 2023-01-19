@@ -84,6 +84,18 @@ const ShortSceneView = () => {
         return false;
     };
 
+    const getUnique = (arr: IShortScene[]) => {
+        const unique = [...arr];
+        for (let i = 0; i < unique.length; i++) {
+            for (let j = i + 1; j < unique.length; j++) {
+                if (unique[i].id === unique[j].id) {
+                    unique.splice(j, 1);
+                }
+            }
+        }
+        return unique;
+    }
+
     const actionColumnDelete = (rowData: IShortScene) => {
         return (
             <Button
@@ -135,7 +147,7 @@ const ShortSceneView = () => {
                 <DataTable
                     resizableColumns
                     showGridlines
-                    value={shortScene?.filter(scene => sceneFilter(scene))}
+                    value={shortScene ? getUnique(shortScene.filter(scene => sceneFilter(scene))) : []}
                     emptyMessage={"Trenutno nema rezultata"}
                     responsiveLayout="stack"
                     onRowClick={rowData => {
