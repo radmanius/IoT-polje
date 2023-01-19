@@ -1,4 +1,0 @@
-./gradlew bootJar
-
-
-\l
