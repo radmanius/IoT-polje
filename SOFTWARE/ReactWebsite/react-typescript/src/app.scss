@@ -1,0 +1,29 @@
+@import "reactTypescriptVariables";
+
+.react-typescript__toast {
+    .Toastify__toast {
+        font-family: $default-font-family;
+        &.Toastify__toast--success .Toastify__toast-icon svg {
+            fill: green;
+        }
+        &.Toastify__toast--error .Toastify__toast-icon svg {
+            fill: red;
+        }
+        &.Toastify__toast--info .Toastify__toast-icon svg {
+            fill: cyan;
+        }
+        .Toastify__progress-bar--info {
+            background-color: cyan;
+        }
+        .Toastify__progress-bar--error {
+            background-color: red;
+        }
+        .Toastify__progress-bar--success {
+            background-color: green;
+        }
+    }
+}
+
+.app {
+    background: white;
+}

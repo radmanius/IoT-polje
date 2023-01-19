@@ -1,0 +1,60 @@
+.scene-page {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.scene-view-table {
+    display: flex;
+    justify-content: center;
+}
+
+.scene-view-table > div{
+    margin-bottom: 30px;
+}
+
+.iot-img {
+    width: 30vw;
+    height: auto;
+    margin-bottom: 20px
+}
+
+.specific-scene-buttons-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.align-left-button {
+    display: flex;
+    justify-content: flex-start;
+    margin: 2% 2%;
+}
+
+.edit-button {
+    margin-top: 2% !important;
+    margin-right: 2% !important;
+    width: 10vw !important;
+}
+
+.delete-button {
+    margin-top: 2% !important;
+    margin-right: -300px !important;
+    background-color: red;
+    width: 10vw;
+}
+
+.edit-and-delete-scene-btn {
+    display: inline;
+    justify-items: end;
+}
+
+.view-form-create-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.view-form-create-buttons > button {
+    margin-right: 20px;
+    width: 15vw;
+}
