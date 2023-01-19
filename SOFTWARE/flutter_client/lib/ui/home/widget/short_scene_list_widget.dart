@@ -9,8 +9,8 @@ class ShortSceneListWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(homeScreenPresenter).when(
-          initial: () => const CircularProgressIndicator(),
-          loading: () => const CircularProgressIndicator(),
+          initial: () => Center(child: SizedBox(width: 70, height: 70, child: CircularProgressIndicator())),
+          loading: () => Center(child: SizedBox(width: 70, height: 70, child: CircularProgressIndicator())),
           failure: (error) => Text(error.toString()),
           success: (viewState) => ListView.separated(
             itemCount: viewState.shortScenes.length,

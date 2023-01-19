@@ -45,9 +45,9 @@ class AuthTokenPersistenceManager {
   }
 
   Future<void> clearToken() async {
-    _flutterSecureStorage.delete(key: SecureStorageKeys.accessToken);
-    _flutterSecureStorage.delete(key: SecureStorageKeys.refreshToken);
-    _flutterSecureStorage.delete(key: SecureStorageKeys.accessTokenExpirationDateTime);
+    await _flutterSecureStorage.delete(key: SecureStorageKeys.accessToken);
+    await _flutterSecureStorage.delete(key: SecureStorageKeys.refreshToken);
+    await _flutterSecureStorage.delete(key: SecureStorageKeys.accessTokenExpirationDateTime);
     _accessToken = null;
     _refreshToken = null;
     _accessTokenExpirationDateTime = null;

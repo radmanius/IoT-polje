@@ -36,6 +36,8 @@ class AuthRepositoryImpl implements AuthRepository {
       authorizationTokenResponse.accessTokenExpirationDateTime!,
     );
   }
+
+  @override
   Future<void> refreshToken() async {
     const appAuth = FlutterAppAuth();
 

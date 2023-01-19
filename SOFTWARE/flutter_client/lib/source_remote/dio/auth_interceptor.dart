@@ -21,5 +21,3 @@ class AuthInterceptor extends Interceptor {
     handler.next(options);
   }
 }
-
-// Expiration date: 2023-01-16 17:57:48
