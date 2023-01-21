@@ -1,0 +1,20 @@
+:: Base project template
+
+:: project: PrezentacijskiR
+target: PrezentacijskiR
+
+type: executable
+
+sources: {
+    main.c
+}
+
+depends: {
+    MikroSDK.Board
+    MikroSDK.Driver
+    MikroC.Core
+    Click.USBUART
+    Click.Weather
+    MikroSDK.Log
+    Click.LR4
+}

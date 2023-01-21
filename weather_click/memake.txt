@@ -1,0 +1,24 @@
+type: executable
+target: example_weather
+
+depends: {
+    MikroC.Core
+    MikroSDK.Board
+    MikroSDK.Log
+    MikroSDK.Driver
+    Click.Weather
+    Click.LR4
+    Click.USBUART
+}
+
+sources: {
+    main.c
+    weather.c
+}
+
+headers: {
+    weather.h
+}
+
+
+
